@@ -4,10 +4,10 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ### Quick Start (Recommended)
 
-1. Make sure you have `make` installed on your system. On macOS, you can install it using:
-```bash
-brew install make
-```
+1. Make sure you have `make` installed on your system:
+   - On macOS: `brew install make`
+   - On Linux: `sudo apt-get install make` (Ubuntu/Debian) or `sudo yum install make` (Fedora)
+   - On Windows: Install via [Chocolatey](https://chocolatey.org/) with `choco install make`
 
 2. Run the setup command:
 ```bash
@@ -18,6 +18,7 @@ This will:
 - Install all project dependencies
 - Initialize shadcn/ui
 - Install all required UI components
+- Install the correct SWC dependencies for your system (automatically detected)
 
 3. Start the development server:
 ```bash
@@ -30,10 +31,27 @@ make dev
 - `make install` - Install dependencies
 - `make dev` - Start development server
 - `make clean` - Clean build artifacts and dependencies
+- `make reset` - Reset the project (clean and setup, useful for completely resetting the project)
 - `make lint` - Run linter
 - `make build` - Build for production
 - `make start` - Start production server
+- `make fix` - Fix the searchParams issue in search-results page
 - `make help` - Show available commands
+
+### Troubleshooting
+
+If you encounter any issues:
+
+1. For SWC dependency issues:
+   ```bash
+   make reset
+   ```
+   The Makefile will automatically detect your system and install the correct SWC dependencies.
+
+2. For the searchParams error in the search-results page:
+   ```bash
+   make fix
+   ```
 
 ### Manual Setup
 
