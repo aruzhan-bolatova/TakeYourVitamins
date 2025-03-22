@@ -2,19 +2,56 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
-First, 
+### Quick Start (Recommended)
+
+1. Make sure you have `make` installed on your system. On macOS, you can install it using:
+```bash
+brew install make
+```
+
+2. Run the setup command:
+```bash
+make setup
+```
+
+This will:
+- Install all project dependencies
+- Initialize shadcn/ui
+- Install all required UI components
+
+3. Start the development server:
+```bash
+make dev
+```
+
+### Available Make Commands
+
+- `make setup` - Set up the project (install dependencies and initialize shadcn/ui)
+- `make install` - Install dependencies
+- `make dev` - Start development server
+- `make clean` - Clean build artifacts and dependencies
+- `make lint` - Run linter
+- `make build` - Build for production
+- `make start` - Start production server
+- `make help` - Show available commands
+
+### Manual Setup
+
+If you prefer to set up the project manually, follow these steps:
+
+First, install the dependencies:
 
 ```bash
 npm install
 ```
 
-Then, initialize shadcn/ui if not already initialized :
+Then, initialize shadcn/ui if not already initialized:
 
 ```bash
 npx shadcn@latest init
 ```
 
-Thenm install UI components: 
+Then install UI components:
 ```bash
 npx shadcn@latest add button
 npx shadcn@latest add card
@@ -35,14 +72,28 @@ npx shadcn@latest add switch
 npx shadcn@latest add slider
 ```
 
-Lastly, run the development server:
+If you see a warning about missing SWC dependencies, run:
+```bash
+npm install
+```
+
+Finally, run the development server:
 
 ```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result. If port 3000 is in use, the server will automatically use the next available port (e.g., 3001).
 
+## Project Structure
+
+This is a Next.js application that helps users track their vitamin and supplement intake. It includes:
+
+- User authentication
+- Supplement tracking
+- Symptom logging
+- Calendar integration
+- Responsive UI with shadcn/ui components
 
 ## Learn More
 
@@ -50,6 +101,7 @@ To learn more about Next.js, take a look at the following resources:
 
 - [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [shadcn/ui Documentation](https://ui.shadcn.com) - learn about the UI components used in this project.
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
