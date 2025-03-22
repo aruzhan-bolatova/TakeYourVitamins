@@ -2,23 +2,47 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
-First, run the development server:
+First, 
+
+```bash
+npm install
+```
+
+Then, initialize shadcn/ui if not already initialized :
+
+```bash
+npx shadcn@latest init
+```
+
+Thenm install UI components: 
+```bash
+npx shadcn@latest add button
+npx shadcn@latest add card
+npx shadcn@latest add input
+npx shadcn@latest add label
+npx shadcn@latest add textarea
+npx shadcn@latest add select
+npx shadcn@latest add alert
+npx shadcn@latest add avatar
+npx shadcn@latest add badge
+npx shadcn@latest add calendar
+npx shadcn@latest add dropdown-menu
+npx shadcn@latest add popover
+npx shadcn@latest add alert-dialog
+npx shadcn@latest add separator
+npx shadcn@latest add tabs
+npx shadcn@latest add switch
+npx shadcn@latest add slider
+```
+
+Lastly, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
 ## Learn More
 
