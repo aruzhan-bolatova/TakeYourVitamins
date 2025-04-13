@@ -21,7 +21,7 @@ class TestUser(unittest.TestCase):
             'password': 'hashed_password',  # This would be a hashed password in reality
             'age': 30,
             'gender': 'Male',
-            'createdAt': datetime.datetime.now(datetime.UTC).isoformat(),
+            'createdAt': datetime.datetime.now(datetime.timezone.utc).isoformat(),
             'updatedAt': None,
             'deletedAt': None
         }

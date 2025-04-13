@@ -1,6 +1,6 @@
 from app.db.db import get_database as get_db
 from app.db.utils import hash_password, check_password
-from datetime import datetime, UTC
+from datetime import datetime, timezone
 
 class User:
     def __init__(self, user_data: dict):
@@ -19,7 +19,7 @@ class User:
         db = get_db()
         if db.Users.find_one({'email': email}):
             raise ValueError('Email already exists')
-        user_id = f"USER{str(datetime.now(UTC).timestamp()).replace('.', '')}"
+        user_id = f"USER{str(datetime.now(timezone.utc).timestamp()).replace('.', '')}"
         user = {
             'userId': user_id,
             'name': name,
@@ -27,7 +27,7 @@ class User:
             'password': hash_password(password),
             'age': age,
             'gender': gender,
-            'createdAt': datetime.now(UTC).isoformat(),
+            'createdAt': datetime.now(timezone.utc).isoformat(),
             'updatedAt': None,
             'deletedAt': None
         }
