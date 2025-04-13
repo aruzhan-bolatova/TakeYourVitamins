@@ -2,6 +2,7 @@
 from app.routes import auth, users, supplements, intake_logs, symptom_logs, interactions, alerts
 from app.db import close_connection
 from app.models import init_db, TokenBlacklist
+from app.utils.error_handlers import register_error_handlers, APIError, handle_api_error
 from flask import Flask, jsonify, redirect
 from flask_jwt_extended import JWTManager
 from app.swagger import swagger_template, swagger_ui_blueprint
@@ -40,6 +41,12 @@ def create_app():
     
     # Register Swagger UI blueprint
     app.register_blueprint(swagger_ui_blueprint)
+    
+    # Register error handlers
+    register_error_handlers(app)
+    
+    # Register custom error handler for APIError
+    app.errorhandler(APIError)(handle_api_error)
     
     # Create a route for the Swagger JSON
     @app.route('/static/swagger.json')

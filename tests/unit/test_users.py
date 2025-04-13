@@ -33,13 +33,19 @@ class TestUser(unittest.TestCase):
     
     @patch('app.models.user.get_db')
     @patch('app.models.user.hash_password')
-    def test_create_user(self, mock_hash_password, mock_get_db):
+    @patch('app.models.user.User.validate_email')
+    @patch('app.models.user.User.is_email_unique')
+    def test_create_user(self, mock_is_email_unique, mock_validate_email, mock_hash_password, mock_get_db):
         """Test creating a new user."""
         # Setup mocks
         mock_db = MagicMock()
         mock_db.Users.find_one.return_value = None  # No existing user with same email
         mock_get_db.return_value = mock_db
         mock_hash_password.return_value = 'hashed_password'
+        
+        # Mock the email validation and uniqueness check to return True
+        mock_validate_email.return_value = True
+        mock_is_email_unique.return_value = True
         
         # Call the create method
         user = User.create(
@@ -56,8 +62,11 @@ class TestUser(unittest.TestCase):
         self.assertEqual(user.age, 30)
         self.assertEqual(user.gender, 'Male')
         
-        # Verify the database was called correctly
-        mock_db.Users.find_one.assert_called_once_with({'email': 'test@example.com'})
+        # Verify the validation methods were called correctly
+        mock_validate_email.assert_called_once_with('test@example.com')
+        mock_is_email_unique.assert_called_once_with('test@example.com')
+        
+        # Verify the database calls were made correctly
         mock_db.Users.insert_one.assert_called_once()
         mock_hash_password.assert_called_once_with('password123')
     

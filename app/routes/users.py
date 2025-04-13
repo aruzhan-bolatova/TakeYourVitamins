@@ -58,21 +58,28 @@ def update_user_profile(user_id):
     if not data:
         return jsonify({"error": "No update data provided"}), 400
     
-    # Update the user
-    updated_user = User.update(user_id, data)
-    
-    if not updated_user:
-        return jsonify({"error": "User not found"}), 404
-    
-    return jsonify({
-        "message": "User updated successfully",
-        "userId": updated_user.user_id,
-        "name": updated_user.name,
-        "email": updated_user.email,
-        "age": updated_user.age,
-        "gender": updated_user.gender,
-        "role": updated_user.role
-    }), 200
+    try:
+        # Update the user
+        updated_user = User.update(user_id, data)
+        
+        if not updated_user:
+            return jsonify({"error": "User not found"}), 404
+        
+        return jsonify({
+            "message": "User updated successfully",
+            "userId": updated_user.user_id,
+            "name": updated_user.name,
+            "email": updated_user.email,
+            "age": updated_user.age,
+            "gender": updated_user.gender,
+            "role": updated_user.role
+        }), 200
+    except ValueError as e:
+        # Handle validation errors
+        return jsonify({"error": str(e)}), 400
+    except Exception as e:
+        # Handle unexpected errors
+        return jsonify({"error": "Failed to update user", "details": str(e)}), 500
 
 
 @bp.route('/<user_id>', methods=['DELETE'])

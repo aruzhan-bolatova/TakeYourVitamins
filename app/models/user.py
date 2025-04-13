@@ -1,6 +1,7 @@
 from app.db.db import get_database as get_db
 from app.db.utils import hash_password, check_password
 from datetime import datetime, timezone
+import re
 
 class User:
     def __init__(self, user_data: dict):
@@ -16,10 +17,49 @@ class User:
         self.deleted_at = user_data.get('deletedAt')
 
     @staticmethod
-    def create(name: str, email: str, password: str, age: int, gender: str, role: str = 'user'):
+    def validate_email(email: str) -> bool:
+        """
+        Validate email format using a regex pattern.
+        Returns True if the email is valid, False otherwise.
+        """
+        # More comprehensive email validation regex pattern
+        # This pattern rejects emails with double periods in the domain
+        pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$'
+        return bool(re.match(pattern, email))
+    
+    @staticmethod
+    def is_email_unique(email: str, exclude_user_id: str = None) -> bool:
+        """
+        Check if an email is unique in the database.
+        
+        Args:
+            email: The email to check
+            exclude_user_id: Optional user ID to exclude from the check (for updates)
+        
+        Returns:
+            bool: True if the email is unique, False otherwise
+        """
         db = get_db()
-        if db.Users.find_one({'email': email}):
+        query = {'email': email, 'deletedAt': None}
+        
+        # If exclude_user_id is provided, exclude that user from the check
+        if exclude_user_id:
+            query['userId'] = {'$ne': exclude_user_id}
+            
+        existing_user = db.Users.find_one(query)
+        return existing_user is None
+
+    @staticmethod
+    def create(name: str, email: str, password: str, age: int, gender: str, role: str = 'user'):
+        # Validate email format
+        if not User.validate_email(email):
+            raise ValueError('Invalid email format')
+            
+        db = get_db()
+        # Check if email already exists
+        if not User.is_email_unique(email):
             raise ValueError('Email already exists')
+            
         user_id = f"USER{str(datetime.now(timezone.utc).timestamp()).replace('.', '')}"
         user = {
             'userId': user_id,
@@ -61,8 +101,18 @@ class User:
             return None
         
         # Fields that can be updated
-        allowed_fields = ['name', 'age', 'gender']
+        allowed_fields = ['name', 'age', 'gender', 'email']
         update_data = {k: v for k, v in data.items() if k in allowed_fields}
+        
+        # Validate and check email uniqueness if being updated
+        if 'email' in update_data:
+            # Validate email format
+            if not User.validate_email(update_data['email']):
+                raise ValueError('Invalid email format')
+                
+            # Check if new email is unique (excluding current user)
+            if not User.is_email_unique(update_data['email'], user_id):
+                raise ValueError('Email already exists')
         
         # Handle password separately for security
         if 'password' in data and data['password']:
