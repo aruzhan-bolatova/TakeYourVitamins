@@ -1,4 +1,4 @@
-.PHONY: setup venv install run clean import help
+.PHONY: setup venv install run clean import help test lint format check
 
 # Python interpreter to use
 PYTHON = python3
@@ -14,6 +14,10 @@ help:
 	@echo "  make run        - Setup environment, install dependencies, and run the Flask application"
 	@echo "  make import     - Import sample data into MongoDB"
 	@echo "  make clean      - Remove virtual environment and cached files"
+	@echo "  make test       - Run tests"
+	@echo "  make lint       - Run linting checks"
+	@echo "  make format     - Format code with black"
+	@echo "  make check      - Run tests, lint, and format checks"
 
 setup: venv install
 
@@ -25,6 +29,7 @@ venv:
 install: venv
 	@echo "Installing dependencies..."
 	@$(PIP) install -r requirements.txt
+	@$(PIP) install -r requirements-dev.txt
 	@echo "Dependencies installed!"
 
 run: setup
@@ -50,9 +55,27 @@ import:
 	@echo "Importing sample data..."
 	@$(PYTHON_VENV) scripts/import_data.py
 
+test: install
+	@echo "Running tests..."
+	@$(PYTHON_VENV) -m pytest
+
+lint: install
+	@echo "Running linting checks..."
+	@$(PYTHON_VENV) -m flake8 app scripts tests
+	@$(PYTHON_VENV) -m pylint app scripts tests
+
+format: install
+	@echo "Formatting code with black..."
+	@$(PYTHON_VENV) -m black app scripts tests
+
+check: install
+	@$(MAKE) test
+	@$(MAKE) lint
+	@$(MAKE) format
+
 clean:
 	@echo "Cleaning up..."
-	@rm -rf $(VENV) __pycache__ .pytest_cache .coverage
+	@rm -rf $(VENV) __pycache__ .pytest_cache .coverage htmlcov
 	@find . -type d -name __pycache__ -exec rm -rf {} +
 	@find . -type d -name "*.egg-info" -exec rm -rf {} +
 	@find . -type f -name "*.pyc" -delete

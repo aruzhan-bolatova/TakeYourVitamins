@@ -149,6 +149,41 @@ The project includes a Makefile with the following commands:
 
 Swagger UI is available at http://localhost:5000/api/docs to explore and test the API interactively.
 
+## Testing and CI/CD
+
+The project includes automated testing and continuous integration using GitHub Actions.
+
+### Running Tests Locally
+
+You can run tests locally using these commands:
+
+```bash
+# Run all tests
+make test
+
+# Run linting checks
+make lint
+
+# Format code with black
+make format
+
+# Run all checks (tests, lint, format)
+make check
+```
+
+### Continuous Integration
+
+This project uses GitHub Actions for continuous integration. The CI pipeline runs whenever code is pushed to the main branch or when a pull request is opened.
+
+The pipeline performs the following tasks:
+1. Runs all unit tests with pytest
+2. Checks code quality with flake8
+3. Verifies code formatting with black
+4. Runs pylint for additional code quality checks
+5. Generates code coverage reports
+
+The complete configuration can be found in `.github/workflows/ci.yml`.
+
 ## API Endpoints
 
 ### Vitamins API
