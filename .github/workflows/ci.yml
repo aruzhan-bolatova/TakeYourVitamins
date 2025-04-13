@@ -1,0 +1,51 @@
+name: TakeYourVitamins CI
+
+on:
+  push:
+    branches: main
+  pull_request:
+    branches: main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    services:
+      mongodb:
+        image: mongo:4.4
+        ports:
+          - 27017:27017
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        if [ -f requirements-dev.txt ]; then pip install -r requirements-dev.txt; fi
+    
+    - name: Create test environment file
+      run: |
+        echo "MONGO_URI=mongodb://localhost:27017/" > .env.test
+        echo "DB_NAME=test_vitamins_db" >> .env.test
+        echo "SECRET_KEY=${{ secrets.TEST_SECRET_KEY || 'test_secret_key_default' }}" >> .env.test
+        echo "JWT_SECRET_KEY=${{ secrets.TEST_JWT_SECRET_KEY || 'test_jwt_secret_key_default' }}" >> .env.test
+    
+    - name: Test with pytest
+      run: |
+        pytest
+      env:
+        DOTENV_FILE: .env.test
+    
+    - name: Upload coverage report
+      if: success()
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./coverage.xml
+        fail_ci_if_error: false 

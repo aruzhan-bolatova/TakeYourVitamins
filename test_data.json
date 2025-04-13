@@ -1,0 +1,140 @@
+[
+  {
+    "collection": "Supplements",
+    "data": {
+      "_id": "507f1f77bcf86cd799439011",
+      "supplementId": "SUPP001",
+      "name": "Vitamin B1",
+      "aliases": ["Thiamin", "Thiamine"],
+      "description": "Vitamin B1, also known as thiamin, is a water-soluble vitamin essential for carbohydrate metabolism and nerve function. It supports energy production and is critical for maintaining healthy nerve cells and heart function.",
+      "intakePractices": {
+        "dosage": "Recommended Dietary Allowance (RDA) for adults is 1.1-1.2 mg/day. Supplements typically provide 50-100 mg for therapeutic use.",
+        "timing": "Can be taken any time of day, preferably with a meal to enhance absorption.",
+        "specialInstructions": "High doses should be used under medical supervision to avoid potential side effects. Store in a cool, dry place."
+      },
+      "scientificDetails": {
+        "benefits": ["Supports energy metabolism", "Promotes nerve health", "Aids heart function"],
+        "sideEffects": ["Rare at recommended doses", "High doses may cause mild upset stomach"],
+        "studies": [
+          {
+            "title": "Thiamin supplementation and energy metabolism",
+            "journal": "Journal of Nutrition",
+            "year": 2005,
+            "summary": "Confirmed role in carbohydrate metabolism and nerve function."
+          }
+        ]
+      },
+      "category": "Vitamin",
+      "updatedAt": null
+    }
+  },
+  {
+    "collection": "Supplements",
+    "data": {
+      "_id": "507f1f77bcf86cd799439012",
+      "supplementId": "SUPP002",
+      "name": "Vitamin B2",
+      "aliases": ["Riboflavin"],
+      "description": "Vitamin B2, also known as riboflavin, is a water-soluble vitamin crucial for energy metabolism, red blood cell formation, and maintaining healthy skin and eyes. It supports cellular energy production and antioxidant activity.",
+      "intakePractices": {
+        "dosage": "Recommended Dietary Allowance (RDA) for adults is 1.1-1.3 mg/day. Supplements typically provide 25-100 mg for therapeutic use.",
+        "timing": "Best taken with a meal to improve absorption.",
+        "specialInstructions": "High doses may cause yellowing of urine, which is harmless. Consult a doctor for prolonged high-dose use."
+      },
+      "scientificDetails": {
+        "benefits": ["Enhances energy production", "Supports skin and eye health", "Aids red blood cell formation"],
+        "sideEffects": ["Generally safe", "Excessive doses may cause mild diarrhea"],
+        "studies": [
+          {
+            "title": "Riboflavin and cellular energy production",
+            "journal": "American Journal of Clinical Nutrition",
+            "year": 2006,
+            "summary": "Demonstrated role in energy metabolism and antioxidant protection."
+          }
+        ]
+      },
+      "category": "Vitamin",
+      "updatedAt": null
+    }
+  },
+  {
+    "collection": "Interactions",
+    "data": {
+      "_id": "507f1f77bcf86cd799439013",
+      "interactionId": "INT001",
+      "supplementId1": "SUPP001",
+      "supplementId2": null,
+      "foodItem": "Raw fish",
+      "interactionType": "Conflict",
+      "effect": "Reduces absorption",
+      "description": "Raw fish contains thiaminases, enzymes that degrade thiamin, reducing its bioavailability.",
+      "severity": "Moderate",
+      "recommendation": "Avoid consuming raw fish when taking Vitamin B1 supplements to ensure optimal absorption.",
+      "sources": [
+        "The Health Professional's Guide to Dietary Supplements, Talbott & Hughes, 2007",
+        "Journal of Nutritional Biochemistry, 2004"
+      ],
+      "updatedAt": null
+    }
+  },
+  {
+    "collection": "Interactions",
+    "data": {
+      "_id": "507f1f77bcf86cd799439014",
+      "interactionId": "INT002",
+      "supplementId1": "SUPP001",
+      "supplementId2": "SUPP003",
+      "foodItem": null,
+      "interactionType": "Synergy",
+      "effect": "Enhances activation",
+      "description": "Magnesium enhances the conversion of thiamin into its active form, thiamin pyrophosphate, improving its efficacy.",
+      "severity": "Low",
+      "recommendation": "Consider taking Vitamin B1 with magnesium supplements for improved metabolic effects.",
+      "sources": [
+        "The Health Professional's Guide to Dietary Supplements, Talbott & Hughes, 2007",
+        "Nutritional Reviews, 2003"
+      ],
+      "updatedAt": null
+    }
+  },
+  {
+    "collection": "Interactions",
+    "data": {
+      "_id": "507f1f77bcf86cd799439015",
+      "interactionId": "INT003",
+      "supplementId1": "SUPP002",
+      "supplementId2": null,
+      "foodItem": "Dairy products",
+      "interactionType": "Synergy",
+      "effect": "Enhances absorption",
+      "description": "Dairy products are naturally rich in riboflavin and can complement supplementation, improving overall intake.",
+      "severity": "Low",
+      "recommendation": "Take Vitamin B2 supplements with dairy products, if tolerated, to enhance absorption.",
+      "sources": [
+        "The Health Professional's Guide to Dietary Supplements, Talbott & Hughes, 2007",
+        "Journal of Dairy Science, 2005"
+      ],
+      "updatedAt": null
+    }
+  },
+  {
+    "collection": "Interactions",
+    "data": {
+      "_id": "507f1f77bcf86cd799439016",
+      "interactionId": "INT004",
+      "supplementId1": "SUPP002",
+      "supplementId2": "SUPP004",
+      "foodItem": null,
+      "interactionType": "Synergy",
+      "effect": "Improves utilization",
+      "description": "Iron supplementation may improve riboflavin’s role in red blood cell production, supporting anemia treatment.",
+      "severity": "Low",
+      "recommendation": "Combine Vitamin B2 with iron supplements if addressing iron-deficiency anemia, under medical supervision.",
+      "sources": [
+        "The Health Professional's Guide to Dietary Supplements, Talbott & Hughes, 2007",
+        "American Journal of Hematology, 2006"
+      ],
+      "updatedAt": null
+    }
+  }
+]
