@@ -4,10 +4,15 @@ from app.db import close_connection
 from app.models import init_db
 from flask import Flask
 from flask_jwt_extended import JWTManager
+import os
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 def create_app():
     app = Flask(__name__)
-    app.config['JWT_SECRET_KEY'] = 'your_jwt_secret_key'
+    app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY', 'fallback_secret_key')
     jwt = JWTManager(app)
 
     app.register_blueprint(auth.bp)

@@ -17,14 +17,14 @@ class SymptomLog:
     def create(user_id: str, symptom: str, rating: int, log_date: str, comments: str = None, intake_log_id: str = None):
         db = get_db()
         symptom_log = {
-            'symptomLogId': f"SYMPTOM{str(datetime.utcnow().timestamp()).replace('.', '')}",
+            'symptomLogId': f"SYMPTOM{str(datetime.now(UTC).timestamp()).replace('.', '')}",
             'userId': user_id,
             'symptom': symptom,
             'rating': rating,
             'logDate': log_date,
             'comments': comments,
             'intakeLogId': intake_log_id,
-            'createdAt': datetime.utcnow().isoformat(),
+            'createdAt': datetime.now(UTC).isoformat(),
             'updatedAt': None
         }
         db.SymptomLogs.insert_one(symptom_log)

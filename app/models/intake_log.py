@@ -20,14 +20,14 @@ class IntakeLog:
         if not db.Supplements.find_one({'supplementId': supplement_id}):
             raise ValueError('Supplement not found')
         intake_log = {
-            'intakeLogId': f"INTAKE{str(datetime.utcnow().timestamp()).replace('.', '')}",
+            'intakeLogId': f"INTAKE{str(datetime.now(UTC).timestamp()).replace('.', '')}",
             'userId': user_id,
             'supplementId': supplement_id,
             'intakeDate': intake_date,
             'intakeTime': intake_time,
             'dosage': dosage,
             'notes': notes,
-            'createdAt': datetime.utcnow().isoformat(),
+            'createdAt': datetime.now(UTC).isoformat(),
             'updatedAt': None,
             'isDeleted': False
         }
