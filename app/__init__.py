@@ -1,41 +1,28 @@
-from flask import Flask, jsonify
-from dotenv import load_dotenv
-from flask_swagger_ui import get_swaggerui_blueprint
-import os
+# In app/__init__.py
+from app.routes import auth, users, supplements, intake_logs, symptom_logs, interactions, alerts
+from app.db import close_connection
+from app.models import init_db
+from flask import Flask
+from flask_jwt_extended import JWTManager
 
 def create_app():
-    # Load environment variables
-    load_dotenv()
-    
-    # Create Flask app
     app = Flask(__name__)
-    
-    # Configure app
-    app.config.from_pyfile('../app/config.py')
-    
-    # Register API blueprints
-    from app.apis.vitamins import vitamins_blueprint
-    app.register_blueprint(vitamins_blueprint)
-    
-    # Register Swagger UI blueprint
-    from app.swagger import swagger_template
-    
-    SWAGGER_URL = '/api/docs'
-    API_URL = '/api/swagger.json'
-    
-    swaggerui_blueprint = get_swaggerui_blueprint(
-        SWAGGER_URL,
-        API_URL,
-        config={
-            'app_name': "Take Your Vitamins API"
-        }
-    )
-    
-    app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
-    
-    # Add route for swagger.json
-    @app.route(API_URL)
-    def swagger_json():
-        return jsonify(swagger_template)
-    
+    app.config['JWT_SECRET_KEY'] = 'your_jwt_secret_key'
+    jwt = JWTManager(app)
+
+    app.register_blueprint(auth.bp)
+    app.register_blueprint(users.bp)
+    app.register_blueprint(supplements.bp)
+    app.register_blueprint(intake_logs.bp)
+    app.register_blueprint(symptom_logs.bp)
+    app.register_blueprint(interactions.bp)
+    app.register_blueprint(alerts.bp)
+
+    with app.app_context():
+        init_db()
+
+    @app.teardown_appcontext
+    def teardown_db(exception):
+        close_connection()
+
     return app

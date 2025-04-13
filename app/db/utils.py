@@ -1,96 +1,50 @@
-from app.db.db import get_collection
-from app.db.constants import VITAMINS_COLLECTION
-from bson import ObjectId
-import json
+import bcrypt
+from datetime import datetime
+import time
 
-def insert_vitamin(vitamin_data):
+def hash_password(password: str) -> str:
     """
-    Insert a new vitamin record.
+    Hash a password using bcrypt.
+    Args:
+        password (str): The plaintext password to hash.
+    Returns:
+        str: The hashed password.
     """
-    # Remove the id field if present (MongoDB will generate one)
-    if 'id' in vitamin_data:
-        del vitamin_data['id']
-    
-    collection = get_collection(VITAMINS_COLLECTION)
-    result = collection.insert_one(vitamin_data)
-    return str(result.inserted_id)
+    return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
 
-def get_vitamin_by_id(vitamin_id):
+def check_password(password: str, hashed: str) -> bool:
     """
-    Get a vitamin by its ID.
+    Check if a plaintext password matches a hashed password.
+    Args:
+        password (str): The plaintext password to check.
+        hashed (str): The hashed password to compare against.
+    Returns:
+        bool: True if the password matches, False otherwise.
     """
-    collection = get_collection(VITAMINS_COLLECTION)
-    result = collection.find_one({"_id": ObjectId(vitamin_id)})
-    if result:
-        result["id"] = str(result["_id"])
-        del result["_id"]
-    return result
+    return bcrypt.checkpw(password.encode('utf-8'), hashed.encode('utf-8'))
 
-def get_all_vitamins():
+def generate_unique_id(prefix: str) -> str:
     """
-    Get all vitamins.
+    Generate a unique ID with a given prefix.
+    Args:
+        prefix (str): The prefix for the ID (e.g., 'INTAKE', 'SYMPTOM').
+    Returns:
+        str: A unique ID in the format <prefix><timestamp>.
     """
-    collection = get_collection(VITAMINS_COLLECTION)
-    vitamins = list(collection.find())
-    for vitamin in vitamins:
-        vitamin["id"] = str(vitamin["_id"])
-        del vitamin["_id"]
-    return vitamins
+    timestamp = str(time.time()).replace('.', '')
+    return f"{prefix}{timestamp}"
 
-def search_vitamins_by_name(name):
+def validate_date(date_str: str, date_format: str = "%Y-%m-%d") -> bool:
     """
-    Search vitamins by name or aliases.
+    Validate a date string against a specified format.
+    Args:
+        date_str (str): The date string to validate (e.g., '2025-04-13').
+        date_format (str): The expected date format (default: '%Y-%m-%d').
+    Returns:
+        bool: True if the date is valid, False otherwise.
     """
-    collection = get_collection(VITAMINS_COLLECTION)
-    vitamins = list(collection.find({
-        "$or": [
-            {"name": {"$regex": name, "$options": "i"}},
-            {"aliases": {"$elemMatch": {"$regex": name, "$options": "i"}}}
-        ]
-    }))
-    
-    for vitamin in vitamins:
-        vitamin["id"] = str(vitamin["_id"])
-        del vitamin["_id"]
-    return vitamins
-
-def update_vitamin(vitamin_id, vitamin_data):
-    """
-    Update a vitamin record.
-    """
-    # Remove the id field if present
-    if 'id' in vitamin_data:
-        del vitamin_data['id']
-        
-    collection = get_collection(VITAMINS_COLLECTION)
-    result = collection.update_one(
-        {"_id": ObjectId(vitamin_id)},
-        {"$set": vitamin_data}
-    )
-    return result.modified_count > 0
-
-def delete_vitamin(vitamin_id):
-    """
-    Delete a vitamin record.
-    """
-    collection = get_collection(VITAMINS_COLLECTION)
-    result = collection.delete_one({"_id": ObjectId(vitamin_id)})
-    return result.deleted_count > 0
-
-def import_vitamins_from_json(json_data):
-    """
-    Import multiple vitamins from JSON data.
-    """
-    vitamins = json.loads(json_data) if isinstance(json_data, str) else json_data
-    ids = []
-    
-    for vitamin in vitamins:
-        # Remove the id field if present
-        if 'id' in vitamin:
-            del vitamin['id']
-        
-        collection = get_collection(VITAMINS_COLLECTION)
-        result = collection.insert_one(vitamin)
-        ids.append(str(result.inserted_id))
-    
-    return ids
+    try:
+        datetime.strptime(date_str, date_format)
+        return True
+    except ValueError:
+        return False

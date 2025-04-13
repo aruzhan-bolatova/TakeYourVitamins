@@ -6,3 +6,5 @@ click==8.0.1
 pymongo==4.3.3
 python-dotenv==0.19.1
 flask-swagger-ui==3.36.0
+bcrypt==4.0.1
+flask-jwt-extended==4.2.3
