@@ -1,5 +1,5 @@
 from app.db.db import get_database as get_db
-from datetime import datetime, UTC
+from datetime import datetime, timezone
 
 class Interaction:
     def __init__(self, interaction_data: dict):
