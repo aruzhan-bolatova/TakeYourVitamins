@@ -1,0 +1,84 @@
+[
+  {
+    "name": "Vitamin B1",
+    "aliases": ["Thiamin", "Thiamine"],
+    "category": "Vitamin",
+    "description": "Vitamin B1, also known as thiamin, is a water-soluble vitamin essential for carbohydrate metabolism and nerve function. It is commonly included in energy supplements to support energy production in the body.",
+    "intakePractices": {
+      "dosage": "The RDA for adults is 1.1-1.2 mg per day. Supplements typically range from 50-100 mg per dose for therapeutic purposes.",
+      "timing": "Can be taken any time of day, preferably with a meal to enhance absorption.",
+      "specialInstructions": "No specific restrictions noted, but high doses should be used under medical supervision to avoid potential side effects."
+    },
+    "supplementInteractions": [
+      {
+        "supplementName": "Magnesium",
+        "effect": "positive",
+        "severity": "low",
+        "description": "Magnesium can enhance the activation of thiamin into its active form, thiamin pyrophosphate.",
+        "recommendation": "Consider taking thiamin with magnesium-containing supplements for optimal effect."
+      },
+      {
+        "supplementName": "Alcohol",
+        "effect": "negative",
+        "severity": "high",
+        "description": "Chronic alcohol consumption can deplete thiamin levels, increasing deficiency risk.",
+        "recommendation": "Avoid excessive alcohol when supplementing with thiamin, and consider higher doses under medical guidance if deficient."
+      }
+    ],
+    "foodInteractions": [
+      {
+        "foodName": "High-carbohydrate foods",
+        "effect": "increases demand",
+        "description": "Diets high in refined carbohydrates can increase the body's need for thiamin.",
+        "recommendation": "Ensure adequate thiamin intake when consuming a high-carb diet."
+      },
+      {
+        "foodName": "Raw fish",
+        "effect": "reduces absorption",
+        "description": "Raw fish contains thiaminases, enzymes that can degrade thiamin and reduce its availability.",
+        "recommendation": "Avoid consuming raw fish when relying on thiamin supplements."
+      }
+    ]
+  },
+  {
+    "name": "Vitamin B2",
+    "aliases": ["Riboflavin"],
+    "category": "Vitamin",
+    "description": "Vitamin B2, also known as riboflavin, is a water-soluble vitamin critical for energy metabolism, red blood cell formation, and maintaining healthy skin and eyes. It is often included in energy supplements to support cellular energy production.",
+    "intakePractices": {
+      "dosage": "The RDA for adults is 1.1-1.3 mg per day. Supplements typically range from 25-100 mg for therapeutic use.",
+      "timing": "Best taken with a meal to improve absorption.",
+      "specialInstructions": "High doses may cause yellowing of urine, which is harmless. Consult a healthcare provider for prolonged high-dose use."
+    },
+    "supplementInteractions": [
+      {
+        "supplementName": "Iron",
+        "effect": "positive",
+        "severity": "low",
+        "description": "Riboflavin may enhance iron absorption and utilization, supporting red blood cell production.",
+        "recommendation": "Consider taking riboflavin with iron supplements if addressing anemia."
+      },
+      {
+        "supplementName": "Antidepressants (Tricyclics)",
+        "effect": "negative",
+        "severity": "medium",
+        "description": "Tricyclic antidepressants may reduce riboflavin levels in the body.",
+        "recommendation": "Monitor riboflavin status if on tricyclic antidepressants and supplement if necessary."
+      }
+    ],
+    "foodInteractions": [
+      {
+        "foodName": "Dairy products",
+        "effect": "enhances absorption",
+        "description": "Dairy products are rich in riboflavin and can complement supplementation.",
+        "recommendation": "Consider taking riboflavin supplements with dairy if tolerated."
+      },
+      {
+        "foodName": "Alcohol",
+        "effect": "reduces absorption",
+        "description": "Chronic alcohol consumption can impair riboflavin absorption and increase deficiency risk.",
+        "recommendation": "Limit alcohol intake to optimize riboflavin supplementation."
+      }
+    ]
+  }
+] 
