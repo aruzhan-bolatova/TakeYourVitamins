@@ -1,7 +1,7 @@
 # In app/__init__.py
 from app.routes import auth, users, supplements, intake_logs, symptom_logs, interactions, alerts
 from app.db import close_connection
-from app.models import init_db
+from app.models import init_db, TokenBlacklist
 from flask import Flask, jsonify, redirect
 from flask_jwt_extended import JWTManager
 from app.swagger import swagger_template, swagger_ui_blueprint
@@ -15,6 +15,19 @@ def create_app():
     app = Flask(__name__)
     app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY', 'fallback_secret_key')
     jwt = JWTManager(app)
+    
+    # JWT configuration to check for blacklisted tokens
+    @jwt.token_in_blocklist_loader
+    def check_if_token_revoked(jwt_header, jwt_payload):
+        jti = jwt_payload["jti"]
+        return TokenBlacklist.is_blacklisted(jti)
+    
+    @jwt.revoked_token_loader
+    def revoked_token_callback(jwt_header, jwt_payload):
+        return jsonify({
+            'error': 'Token has been revoked',
+            'code': 'token_revoked'
+        }), 401
 
     # Register route blueprints
     app.register_blueprint(auth.bp)
