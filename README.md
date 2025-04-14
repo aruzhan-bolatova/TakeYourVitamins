@@ -66,6 +66,8 @@ The project includes a Makefile for easy setup and management:
 3. Start MongoDB:
    ```
    # On macOS with Homebrew
+   brew tap mongodb/brew
+   brew install mongodb-community
    brew services start mongodb-community
    
    # On Ubuntu
@@ -147,7 +149,7 @@ The project includes a Makefile with the following commands:
 
 ### API Documentation
 
-Swagger UI is available at http://localhost:5000/api/docs to explore and test the API interactively.
+Swagger UI is available at http://localhost:5001/api/docs to explore and test the API interactively.
 
 ## Testing and CI/CD
 
