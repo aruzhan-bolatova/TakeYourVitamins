@@ -1,10 +1,25 @@
-.PHONY: setup venv install run clean import help test lint format check
+.PHONY: setup venv install run clean import help test lint format check windows
 
-# Python interpreter to use
-PYTHON = python3
-VENV = venv
-PIP = $(VENV)/bin/pip
-PYTHON_VENV = $(VENV)/bin/python
+# Check for Windows vs Unix
+ifeq ($(OS),Windows_NT)
+    # Windows settings
+    PYTHON = python
+    VENV = venv
+    PIP = $(VENV)\Scripts\pip
+    PYTHON_VENV = $(VENV)\Scripts\python
+    RM = rmdir /s /q
+    ACTIVATE = $(VENV)\Scripts\activate
+    SEP = \\
+else
+    # Unix settings
+    PYTHON = python3
+    VENV = venv
+    PIP = $(VENV)/bin/pip
+    PYTHON_VENV = $(VENV)/bin/python
+    RM = rm -rf
+    ACTIVATE = . $(VENV)/bin/activate
+    SEP = /
+endif
 
 help:
 	@echo "Available commands:"
@@ -12,6 +27,7 @@ help:
 	@echo "  make venv       - Create virtual environment only"
 	@echo "  make install    - Install dependencies in virtual environment"
 	@echo "  make run        - Setup environment, install dependencies, and run the Flask application"
+	@echo "  make windows    - Run on Windows systems"
 	@echo "  make import     - Import sample data into MongoDB"
 	@echo "  make clean      - Remove virtual environment and cached files"
 	@echo "  make test       - Run tests"
@@ -32,7 +48,18 @@ install: venv
 	@$(PIP) install -r requirements-dev.txt
 	@echo "Dependencies installed!"
 
+# Special Windows run target
+windows: setup
+	@echo "Running Flask application on Windows..."
+	@echo "Importing sample data (if needed)..."
+	@$(PYTHON_VENV) scripts$(SEP)import_data.py
+	@echo "Starting Flask application..."
+	@$(PYTHON_VENV) -c "import os; os.environ['FLASK_APP']='run.py'; os.environ['FLASK_ENV']='development'; import run"
+
 run: setup
+ifeq ($(OS),Windows_NT)
+	@$(MAKE) windows
+else
 	@echo "Checking if MongoDB is running..."
 	@if ! pgrep -x mongod > /dev/null; then \
 		echo "⚠️  MongoDB is not running. Please start it before running the application."; \
@@ -50,10 +77,11 @@ run: setup
 	
 	@echo "Starting Flask application..."
 	@FLASK_APP=run.py FLASK_ENV=development $(PYTHON_VENV) run.py
+endif
 
 import:
 	@echo "Importing sample data..."
-	@$(PYTHON_VENV) scripts/import_data.py
+	@$(PYTHON_VENV) scripts$(SEP)import_data.py
 
 test: install
 	@echo "Running tests..."
@@ -75,10 +103,21 @@ check: install
 
 clean:
 	@echo "Cleaning up..."
-	@rm -rf $(VENV) __pycache__ .pytest_cache .coverage htmlcov
-	@find . -type d -name __pycache__ -exec rm -rf {} +
-	@find . -type d -name "*.egg-info" -exec rm -rf {} +
+ifeq ($(OS),Windows_NT)
+	@if exist $(VENV) $(RM) $(VENV)
+	@if exist __pycache__ $(RM) __pycache__
+	@if exist .pytest_cache $(RM) .pytest_cache
+	@if exist .coverage del .coverage
+	@if exist htmlcov $(RM) htmlcov
+	@for /d /r . %%d in (__pycache__) do @if exist "%%d" $(RM) "%%d"
+	@for /d /r . %%d in (*.egg-info) do @if exist "%%d" $(RM) "%%d"
+	@del /s /q *.pyc > NUL 2>&1
+else
+	@$(RM) $(VENV) __pycache__ .pytest_cache .coverage htmlcov
+	@find . -type d -name __pycache__ -exec $(RM) {} +
+	@find . -type d -name "*.egg-info" -exec $(RM) {} +
 	@find . -type f -name "*.pyc" -delete
+endif
 	@echo "Cleanup complete!"
 
 # Default target
