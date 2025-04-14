@@ -11,21 +11,17 @@ TakeYourVitamins
 │   ├── __init__.py           # App initialization
 │   ├── config.py             # Application configuration
 │   ├── swagger.py            # Swagger documentation
-│   ├── apis/                 # API endpoints
-│   │   └── vitamins.py       # Vitamins API
+│   ├── utils/                # Utility functions
+│   ├── models/               # Data models
+│   ├── routes/               # API routes
+│   ├── middleware/           # Middleware components
 │   └── db/                   # Database related functionality
-│       ├── db.py             # Database connection handling
-│       ├── constants.py      # Database constants
-│       └── utils.py          # Database utilities
 │
 ├── tests/                    # Test directory
 │   ├── unit/                 # Unit tests
-│   ├── integration/          # Integration tests
-│   ├── system/               # System tests
 │   └── utils.py              # Testing utilities
 │
 ├── scripts/                  # Utility scripts
-│   └── import_data.py        # Data import script
 │
 ├── run.py                    # Application entry point
 ├── requirements.txt          # Production dependencies
