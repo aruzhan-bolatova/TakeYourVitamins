@@ -1,5 +1,5 @@
 from app.db.db import get_database as get_db
-from datetime import datetime, UTC
+from datetime import datetime, timezone
 
 class IntakeLog:
     def __init__(self, log_data: dict):
@@ -20,14 +20,14 @@ class IntakeLog:
         if not db.Supplements.find_one({'supplementId': supplement_id}):
             raise ValueError('Supplement not found')
         intake_log = {
-            'intakeLogId': f"INTAKE{str(datetime.now(UTC).timestamp()).replace('.', '')}",
+            'intakeLogId': f"INTAKE{str(datetime.now(timezone.utc).timestamp()).replace('.', '')}",
             'userId': user_id,
             'supplementId': supplement_id,
             'intakeDate': intake_date,
             'intakeTime': intake_time,
             'dosage': dosage,
             'notes': notes,
-            'createdAt': datetime.now(UTC).isoformat(),
+            'createdAt': datetime.now(timezone.utc).isoformat(),
             'updatedAt': None,
             'isDeleted': False
         }
