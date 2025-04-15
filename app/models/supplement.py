@@ -20,8 +20,8 @@ class Supplement:
                 raise ValueError(f"Missing required field: {field}")
             
     def to_dict(self):
-        return {
-            "_id": str(self._id) if self._id else None,
+        # Create base dictionary
+        result = {
             "supplementId": self.supplement_id,
             "name": self.name,
             "aliases": self.aliases,
@@ -31,6 +31,12 @@ class Supplement:
             "category": self.category,
             "updatedAt": self.updated_at
         }
+        
+        # Only include _id if it exists
+        if self._id:
+            result["_id"] = str(self._id)
+            
+        return result
 
     @staticmethod
     def search(search_query: str, field: str = 'name'):

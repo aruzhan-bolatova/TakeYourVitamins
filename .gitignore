@@ -4,3 +4,24 @@
 *.pyc 
 __pycache__/
 .venv/
+
+# Environment variables
+.env
+env/
+
+# Testing
+.pytest_cache/
+htmlcov/
+coverage.xml
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Build files
+*.egg-info/
+dist/
+build/
+venv

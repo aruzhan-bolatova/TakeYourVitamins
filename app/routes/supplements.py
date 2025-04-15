@@ -92,19 +92,39 @@ def get_supplement_by_id(supplement_id):
 def create_supplement():
     """Create a new supplement"""
     try:
+        # Validate request has JSON content
+        if not request.is_json:
+            return jsonify({"error": "Missing JSON in request"}), 400
+            
         supplement_data = request.json
+        
+        # Validate supplement data exists
+        if not supplement_data:
+            return jsonify({"error": "Empty supplement data"}), 400
+            
         supplement = Supplement(supplement_data)
         supplement.validate_data(supplement_data)  # Validate the incoming data
         
         # Insert the supplement into the database
         db = get_db()
-        db.Supplements.insert_one(supplement.to_dict())
+        supplement_dict = supplement.to_dict()
+        result = db.Supplements.insert_one(supplement_dict)
         
+        # Verify insertion was successful
+        if not result.inserted_id:
+            return jsonify({"error": "Failed to insert supplement"}), 500
+            
         # Return the newly created document's _id
-        return jsonify({"message": "Supplement created successfully", "_id": str(result.inserted_id)}), 201
+        response = {
+            "message": "Supplement created successfully", 
+            "_id": str(result.inserted_id)
+        }
+        return jsonify(response), 201
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
     except Exception as e:
+        import traceback
+        traceback.print_exc()
         return jsonify({"error": "An error occurred", "details": str(e)}), 500
 
 
