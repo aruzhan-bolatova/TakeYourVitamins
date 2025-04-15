@@ -4,6 +4,8 @@ import sys
 import os
 import json
 from bson.objectid import ObjectId
+from datetime import datetime
+import uuid
 
 
 
@@ -12,15 +14,48 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../.
 
 from app import create_app
 from app.models.supplement import Supplement
+from app.models.user import User
+from app.models.intake_log import IntakeLog
 
 
 class TestSupplements(unittest.TestCase):
     def setUp(self):
         """Set up test fixtures before each test method is run."""
         self.app = create_app()
+        self.app.config['TESTING'] = True
+        self.app.config['JWT_ENABLED'] = False  # Disable JWT for testing
+        
         self.client = self.app.test_client()
         self.app_context = self.app.app_context()
         self.app_context.push()
+        
+        # Generate test user IDs
+        self.test_user_id = f"TEST_USER_{uuid.uuid4().hex[:8]}"
+        self.test_admin_id = f"ADMIN_USER_{uuid.uuid4().hex[:8]}"
+        
+        # Mock users for permission tests
+        self.mock_user = MagicMock()
+        self.mock_user.user_id = self.test_user_id
+        self.mock_user.role = "user"
+        
+        self.mock_admin = MagicMock()
+        self.mock_admin.user_id = self.test_admin_id
+        self.mock_admin.role = "admin"
+        
+        # Set up JWT mocking
+        self.jwt_patcher = patch('flask_jwt_extended.view_decorators.verify_jwt_in_request')
+        self.get_jwt_identity_patcher = patch('app.routes.supplements.get_jwt_identity')
+        self.admin_required_patcher = patch('app.routes.supplements.admin_required')
+        
+        # Start the patchers
+        self.mock_verify_jwt = self.jwt_patcher.start()
+        self.mock_jwt_identity = self.get_jwt_identity_patcher.start()
+        self.mock_admin_required = self.admin_required_patcher.start()
+        
+        # Configure mocks - default to regular user with admin permissions (for legacy tests)
+        self.mock_verify_jwt.return_value = None  # Skip JWT verification
+        self.mock_jwt_identity.return_value = self.test_user_id
+        self.mock_admin_required.return_value = True  # Default to admin access for legacy tests
         
         # Mock ObjectId
         self.test_id = "507f1f77bcf86cd799439011"
@@ -58,17 +93,206 @@ class TestSupplements(unittest.TestCase):
         self.mock_supplement.category = self.test_supplement_data["category"]
         self.mock_supplement.updated_at = self.test_supplement_data["updatedAt"]
         self.mock_supplement.to_dict.return_value = self.test_supplement_data
+        
+        # Sample intake log data
+        timestamp = datetime.now().isoformat()
+        self.test_intake_log_data = {
+            "_id": str(ObjectId()),
+            "intakeLogId": f"INTAKE_{uuid.uuid4().hex[:8]}",
+            "userId": self.test_user_id,
+            "supplementId": self.test_id,
+            "timestamp": timestamp,
+            "dosage": "1000 IU",
+            "notes": "Taken with breakfast",
+            "createdAt": timestamp,
+            "updatedAt": None,
+            "isDeleted": False
+        }
+        
+        # Mock intake log
+        self.mock_intake_log = MagicMock()
+        self.mock_intake_log._id = self.test_intake_log_data["_id"]
+        self.mock_intake_log.intake_log_id = self.test_intake_log_data["intakeLogId"]
+        self.mock_intake_log.user_id = self.test_intake_log_data["userId"]
+        self.mock_intake_log.supplement_id = self.test_intake_log_data["supplementId"]
+        self.mock_intake_log.timestamp = self.test_intake_log_data["timestamp"]
+        self.mock_intake_log.dosage = self.test_intake_log_data["dosage"]
+        self.mock_intake_log.notes = self.test_intake_log_data["notes"]
+        self.mock_intake_log.created_at = self.test_intake_log_data["createdAt"]
+        self.mock_intake_log.updated_at = self.test_intake_log_data["updatedAt"]
+        self.mock_intake_log.is_deleted = self.test_intake_log_data["isDeleted"]
+        self.mock_intake_log.to_dict.return_value = self.test_intake_log_data
     
     def tearDown(self):
         """Tear down test fixtures after each test method is run."""
+        # Stop the patchers
+        self.jwt_patcher.stop()
+        self.get_jwt_identity_patcher.stop()
+        self.admin_required_patcher.stop()
         self.app_context.pop()
     
+    # GET /api/supplements/ - Get supplements with pagination
+    @patch('app.routes.supplements.get_db')
+    def test_get_supplements_with_pagination(self, mock_get_db):
+        """Test getting supplements with pagination."""
+        # Setup mock DB
+        mock_db = MagicMock()
+        mock_collection = MagicMock()
+        mock_db.Supplements = mock_collection
+        mock_get_db.return_value = mock_db
+        
+        # Setup mock query results
+        mock_cursor = MagicMock()
+        mock_cursor.skip.return_value = mock_cursor
+        mock_cursor.limit.return_value = [self.test_supplement_data]
+        mock_collection.find.return_value = mock_cursor
+        mock_collection.count_documents.return_value = 15  # Total of 15 supplements
+        
+        # Make request with pagination
+        response = self.client.get('/api/supplements/?page=2&limit=5')
+        
+        # Assert response
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(data["supplements"]), 1)
+        self.assertEqual(data["supplements"][0]["name"], "Vitamin D")
+        
+        # Verify pagination info is correct
+        pagination = data["pagination"]
+        self.assertEqual(pagination["page"], 2)
+        self.assertEqual(pagination["limit"], 5)
+        self.assertEqual(pagination["totalItems"], 15)
+        self.assertEqual(pagination["totalPages"], 3)
+        self.assertTrue(pagination["hasPrev"])
+        self.assertTrue(pagination["hasNext"])
+        
+        # Verify correct skip and limit were used
+        mock_cursor.skip.assert_called_once_with(5)  # Skip first 5 items (page 1)
+        mock_cursor.limit.assert_called_once_with(5)  # Limit to 5 items per page
+    
+    @patch('app.routes.supplements.get_db')
+    def test_get_supplements_with_category_filter(self, mock_get_db):
+        """Test getting supplements with category filter."""
+        # Setup mock DB
+        mock_db = MagicMock()
+        mock_collection = MagicMock()
+        mock_db.Supplements = mock_collection
+        mock_get_db.return_value = mock_db
+        
+        # Setup mock query results
+        mock_cursor = MagicMock()
+        mock_cursor.skip.return_value = mock_cursor
+        mock_cursor.limit.return_value = [self.test_supplement_data]
+        mock_collection.find.return_value = mock_cursor
+        mock_collection.count_documents.return_value = 3  # 3 vitamins
+        
+        # Make request with category filter
+        response = self.client.get('/api/supplements/?category=Vitamins')
+        
+        # Assert response
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(data["supplements"]), 1)
+        
+        # Verify correct query was used
+        expected_query = {
+            'category': {'$regex': 'Vitamins', '$options': 'i'},
+            'deletedAt': {'$exists': False}
+        }
+        mock_collection.find.assert_called_once()
+        call_args = mock_collection.find.call_args[0][0]
+        self.assertIn('category', call_args)
+        self.assertIn('deletedAt', call_args)
+    
+    # Test autocomplete endpoint
+    @patch('app.routes.supplements.get_db')
+    def test_autocomplete_supplements(self, mock_get_db):
+        """Test autocomplete for supplement names."""
+        # Setup mock DB
+        mock_db = MagicMock()
+        mock_collection = MagicMock()
+        mock_db.Supplements = mock_collection
+        mock_get_db.return_value = mock_db
+        
+        # Setup mock document data
+        mock_supplement = {
+            "_id": self.test_object_id,
+            "supplementId": "SUPP001",
+            "name": "Vitamin D",
+            "aliases": ["Cholecalciferol", "Vitamin D3"],
+            "category": "Vitamins"
+        }
+        
+        # Create a proper mock cursor that can be chained and iterated
+        mock_cursor = MagicMock()
+        mock_cursor.limit.return_value = [mock_supplement]  # Return list for iteration
+        mock_collection.find.return_value = mock_cursor
+        
+        # Make request to autocomplete endpoint
+        response = self.client.get('/api/supplements/autocomplete?q=vita')
+        
+        # Assert response
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("results", data)
+        self.assertEqual(len(data["results"]), 1, f"Expected 1 result, got: {data}")
+        
+        # Verify find was called with correct parameters
+        mock_collection.find.assert_called_once()
+        # First argument is the query
+        find_args = mock_collection.find.call_args[0][0]
+        self.assertIn('$or', find_args)
+        self.assertIn('deletedAt', find_args)
+        # Second argument should be the projection
+        self.assertEqual(len(mock_collection.find.call_args[0]), 2, "find() should be called with a projection")
+    
+    # Test search endpoint
+    @patch('app.routes.supplements.get_db')
+    def test_search_supplements(self, mock_get_db):
+        """Test searching supplements by keyword."""
+        # Setup mock DB
+        mock_db = MagicMock()
+        mock_collection = MagicMock()
+        mock_db.Supplements = mock_collection
+        mock_get_db.return_value = mock_db
+        
+        # Create a proper mock cursor that can be chained and iterated
+        mock_cursor = MagicMock()
+        mock_cursor.limit.return_value = [self.test_supplement_data]  # Return list for iteration
+        mock_collection.find.return_value = mock_cursor
+        
+        # Make request to search endpoint
+        response = self.client.get('/api/supplements/search?q=bone')
+        
+        # Assert response
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("results", data)
+        self.assertEqual(len(data["results"]), 1, f"Expected 1 result, got: {data}")
+        self.assertEqual(data["results"][0]["name"], "Vitamin D")
+        
+        # Verify correct query was used
+        mock_collection.find.assert_called_once()
+        find_args = mock_collection.find.call_args[0][0]
+        self.assertIn('$or', find_args)
+        self.assertIn('deletedAt', find_args)
+    
     # GET /api/supplements/ - Get all supplements with optional search
-    @patch('app.models.supplement.Supplement.search')
-    def test_get_supplements_no_search(self, mock_search):
+    @patch('app.routes.supplements.get_db')
+    def test_get_supplements_no_search(self, mock_get_db):
         """Test getting all supplements with no search query."""
-        # Setup mock to return a list of supplements
-        mock_search.return_value = [self.mock_supplement]
+        # Setup mock DB
+        mock_db = MagicMock()
+        mock_collection = MagicMock()
+        mock_db.Supplements = mock_collection
+        mock_get_db.return_value = mock_db
+        
+        # Setup mock query results
+        mock_cursor = MagicMock()
+        mock_cursor.skip.return_value = mock_cursor
+        mock_cursor.limit.return_value = [self.test_supplement_data]
+        mock_collection.find.return_value = mock_cursor
+        mock_collection.count_documents.return_value = 1
         
         # Make request
         response = self.client.get('/api/supplements/')
@@ -76,18 +300,30 @@ class TestSupplements(unittest.TestCase):
         # Assert response
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(data), 1)
-        self.assertEqual(data[0]["supplementId"], "SUPP001")
-        self.assertEqual(data[0]["name"], "Vitamin D")
+        self.assertIn("supplements", data)
+        self.assertEqual(len(data["supplements"]), 1)
+        self.assertEqual(data["supplements"][0]["supplementId"], "SUPP001")
+        self.assertEqual(data["supplements"][0]["name"], "Vitamin D")
         
-        # Verify mock was called with empty search
-        mock_search.assert_called_once_with('', field='name')
+        # Verify pagination info is present
+        self.assertIn("pagination", data)
+        self.assertEqual(data["pagination"]["totalItems"], 1)
     
-    @patch('app.models.supplement.Supplement.search')
-    def test_get_supplements_with_search(self, mock_search):
+    @patch('app.routes.supplements.get_db')
+    def test_get_supplements_with_search(self, mock_get_db):
         """Test getting supplements with a search query."""
-        # Setup mock to return a list of supplements
-        mock_search.return_value = [self.mock_supplement]
+        # Setup mock DB
+        mock_db = MagicMock()
+        mock_collection = MagicMock()
+        mock_db.Supplements = mock_collection
+        mock_get_db.return_value = mock_db
+        
+        # Setup mock query results
+        mock_cursor = MagicMock()
+        mock_cursor.skip.return_value = mock_cursor
+        mock_cursor.limit.return_value = [self.test_supplement_data]
+        mock_collection.find.return_value = mock_cursor
+        mock_collection.count_documents.return_value = 1
         
         # Make request with search query
         response = self.client.get('/api/supplements/?search=vitamin')
@@ -95,17 +331,25 @@ class TestSupplements(unittest.TestCase):
         # Assert response
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(data), 1)
-        self.assertEqual(data[0]["name"], "Vitamin D")
-        
-        # Verify mock was called with search query
-        mock_search.assert_called_once_with('vitamin', field='name')
+        self.assertIn("supplements", data)
+        self.assertEqual(len(data["supplements"]), 1)
+        self.assertEqual(data["supplements"][0]["name"], "Vitamin D")
     
-    @patch('app.models.supplement.Supplement.search')
-    def test_get_supplements_empty_results(self, mock_search):
+    @patch('app.routes.supplements.get_db')
+    def test_get_supplements_empty_results(self, mock_get_db):
         """Test getting supplements with no results."""
-        # Setup mock to return empty list
-        mock_search.return_value = []
+        # Setup mock DB
+        mock_db = MagicMock()
+        mock_collection = MagicMock()
+        mock_db.Supplements = mock_collection
+        mock_get_db.return_value = mock_db
+        
+        # Setup mock query results
+        mock_cursor = MagicMock()
+        mock_cursor.skip.return_value = mock_cursor
+        mock_cursor.limit.return_value = []
+        mock_collection.find.return_value = mock_cursor
+        mock_collection.count_documents.return_value = 0
         
         # Make request
         response = self.client.get('/api/supplements/?search=nonexistent')
@@ -113,10 +357,8 @@ class TestSupplements(unittest.TestCase):
         # Assert response
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(data), 0)
-        
-        # Verify mock was called
-        mock_search.assert_called_once_with('nonexistent', field='name')
+        self.assertIn("supplements", data)
+        self.assertEqual(len(data["supplements"]), 0)
     
     # GET /api/supplements/<supplement_id> - Get a specific supplement
     @patch('app.models.supplement.Supplement.find_by_id')
