@@ -59,6 +59,7 @@ DELETE /api/supplements/<supplement_id>:
 
 from flask import Blueprint, jsonify, request
 from app.models.supplement import Supplement
+from app.models.interaction import Interaction
 # Import the database connection function
 from app.db.db import get_database as get_db
 from bson.objectid import ObjectId  # Import ObjectId to handle MongoDB _id
@@ -152,5 +153,49 @@ def delete_supplement(supplement_id):
         if not success:
             return jsonify({"error": "Supplement not found"}), 404
         return jsonify({"message": "Supplement deleted successfully"}), 200
+    except Exception as e:
+        return jsonify({"error": "An error occurred", "details": str(e)}), 500
+
+@bp.route('/<string:supplement_id>/interactions', methods=['GET'])
+def get_supplement_interactions(supplement_id):
+    """Get all interactions for a specific supplement"""
+    try:
+        # Validate the supplement exists
+        try:
+            _id = ObjectId(supplement_id)
+            supplement = Supplement.find_by_id(_id)
+            if not supplement:
+                return jsonify({"error": "Supplement not found"}), 404
+        except Exception:
+            return jsonify({"error": "Invalid supplement ID format"}), 400
+            
+        # Get interactions
+        interactions = Interaction.get_supplement_interactions(supplement_id)
+        
+        # Categorize interactions by type
+        categorized = {
+            'supplement': [],
+            'food': [],
+            'medication': []
+        }
+        
+        for interaction in interactions:
+            if interaction.interaction_type == 'Supplement-Supplement':
+                categorized['supplement'].append(interaction.to_dict())
+            elif interaction.interaction_type == 'Supplement-Food':
+                categorized['food'].append(interaction.to_dict())
+            elif interaction.interaction_type == 'Supplement-Medication':
+                categorized['medication'].append(interaction.to_dict())
+        
+        # Return interactions
+        return jsonify({
+            "supplementId": supplement_id,
+            "supplementName": supplement.name if hasattr(supplement, 'name') else "Unknown",
+            "interactions": [i.to_dict() for i in interactions],
+            "count": len(interactions),
+            "categorized": categorized
+        }), 200
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
     except Exception as e:
         return jsonify({"error": "An error occurred", "details": str(e)}), 500
