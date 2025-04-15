@@ -8,6 +8,14 @@ from bson.objectid import ObjectId
 # Create the blueprint
 bp = Blueprint('interactions', __name__, url_prefix='/api/interactions')
 
+# Helper function to check admin privileges
+def is_admin(user_id):
+    """Check if user has admin role"""
+    user = User.find_by_id(user_id)
+    if not user or user.role != 'admin':
+        return False
+    return True
+
 @bp.route('/', methods=['GET'])
 @jwt_required()
 def get_interactions():
@@ -47,10 +55,14 @@ def get_interactions():
 
 @bp.route('/', methods=['POST'])
 @jwt_required()
-@admin_required
 def create_interaction():
     """Create a new interaction (admin only)"""
     try:
+        # Get user ID and check if admin
+        user_id = get_jwt_identity()
+        if not is_admin(user_id):
+            return jsonify({"error": "Admin privileges required"}), 403
+        
         # Check for JSON content
         if not request.is_json:
             return jsonify({"error": "Missing JSON in request"}), 400
@@ -91,10 +103,14 @@ def get_interaction(interaction_id):
 
 @bp.route('/<interaction_id>', methods=['PUT'])
 @jwt_required()
-@admin_required
 def update_interaction(interaction_id):
     """Update an interaction (admin only)"""
     try:
+        # Get user ID and check if admin
+        user_id = get_jwt_identity()
+        if not is_admin(user_id):
+            return jsonify({"error": "Admin privileges required"}), 403
+            
         # Check for JSON content
         if not request.is_json:
             return jsonify({"error": "Missing JSON in request"}), 400
@@ -120,10 +136,14 @@ def update_interaction(interaction_id):
 
 @bp.route('/<interaction_id>', methods=['DELETE'])
 @jwt_required()
-@admin_required
 def delete_interaction(interaction_id):
     """Delete an interaction (admin only)"""
     try:
+        # Get user ID and check if admin
+        user_id = get_jwt_identity()
+        if not is_admin(user_id):
+            return jsonify({"error": "Admin privileges required"}), 403
+            
         # Get soft delete parameter
         soft_delete = request.args.get('soft', 'true').lower() == 'true'
         

@@ -195,7 +195,7 @@ def update_intake_log(log_id):
         data = request.json
         
         if not data:
-            return jsonify({"error": "No update data provided"}), 400
+            return jsonify({"error": "Empty update data"}), 400
             
         # Check user permission
         user_id = get_jwt_identity()
@@ -209,9 +209,43 @@ def update_intake_log(log_id):
             user = User.find_by_id(user_id)
             if not user or user.role != 'admin':
                 return jsonify({"error": "You do not have permission to update this log"}), 403
+        
+        # Check if log is within 7-day update window
+        try:
+            # Handle timestamp in different formats
+            if isinstance(log.timestamp, str):
+                # Try to parse as ISO format with timezone
+                if 'Z' in log.timestamp or '+' in log.timestamp or '-' in log.timestamp and 'T' in log.timestamp:
+                    log_timestamp = datetime.fromisoformat(log.timestamp.replace('Z', '+00:00'))
+                    # Convert to naive datetime for comparison
+                    log_timestamp = log_timestamp.replace(tzinfo=None)
+                else:
+                    # Already naive ISO format
+                    log_timestamp = datetime.fromisoformat(log.timestamp)
+            else:
+                # Already a datetime object
+                log_timestamp = log.timestamp
+                # Convert to naive if it has timezone info
+                if log_timestamp.tzinfo is not None:
+                    log_timestamp = log_timestamp.replace(tzinfo=None)
+            
+            # Get current time (naive)
+            current_time = datetime.now()
+            
+            # Calculate time difference
+            time_difference = current_time - log_timestamp
+            if time_difference.days > 7:
+                return jsonify({"error": "Cannot update logs older than 7 days"}), 403
+        except Exception as e:
+            return jsonify({"error": f"Error processing timestamp: {str(e)}"}), 400
             
         # Update log
-        updated_log = IntakeLog.update(log_id, data)
+        try:
+            updated_log = IntakeLog.update(log_id, data)
+        except ValueError as e:
+            return jsonify({"error": str(e)}), 400
+        except Exception as e:
+            raise
         
         # Return response
         return jsonify({
