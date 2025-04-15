@@ -449,6 +449,91 @@ class TestUserRoutes(unittest.TestCase):
         data = json.loads(response.data)
         self.assertEqual(data['error'], 'Admin privileges required')
 
+    @patch('flask_jwt_extended.utils.get_jwt_identity')
+    @patch('app.models.user.User.find_by_id')
+    def test_get_current_user_profile_not_found(self, mock_find_by_id, mock_get_jwt_identity):
+        """Test getting current user profile when the user doesn't exist."""
+        # Setup mocks
+        mock_get_jwt_identity.return_value = 'NONEXISTENT_USER_ID'
+        mock_find_by_id.return_value = None
+        
+        # Make request
+        response = self.client.get(
+            '/api/users/',
+            headers=self.get_auth_headers(self.test_user_data['userId'])
+        )
+        
+        # Assert response
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(data['error'], 'User not found')
+
+    @patch('flask_jwt_extended.utils.get_jwt_identity')
+    @patch('app.models.user.User.find_by_id')
+    def test_update_user_profile_no_data(self, mock_find_by_id, mock_get_jwt_identity):
+        """Test updating a user profile with no data provided."""
+        # Setup mocks
+        mock_get_jwt_identity.return_value = self.test_user_data['userId']
+        mock_find_by_id.return_value = self.mock_user
+        
+        # Make request with empty JSON
+        response = self.client.put(
+            f'/api/users/{self.test_user_data["userId"]}',
+            data=json.dumps({}),
+            content_type='application/json',
+            headers=self.get_auth_headers(self.test_user_data['userId'])
+        )
+        
+        # Assert response
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(data['error'], 'No update data provided')
+
+    @patch('flask_jwt_extended.utils.get_jwt_identity')
+    @patch('app.models.user.User.find_by_id')
+    @patch('app.models.user.User.update')
+    def test_update_user_profile_server_error(self, mock_update, mock_find_by_id, mock_get_jwt_identity):
+        """Test handling server errors during user profile update."""
+        # Setup mocks
+        mock_get_jwt_identity.return_value = self.test_user_data['userId']
+        mock_find_by_id.return_value = self.mock_user
+        mock_update.side_effect = Exception('Database error')
+        
+        # Make request
+        response = self.client.put(
+            f'/api/users/{self.test_user_data["userId"]}',
+            data=json.dumps({'name': 'Updated Name'}),
+            content_type='application/json',
+            headers=self.get_auth_headers(self.test_user_data['userId'])
+        )
+        
+        # Assert response
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 500)
+        self.assertEqual(data['error'], 'Failed to update user')
+        self.assertIn('Database error', data['details'])
+
+    @patch('flask_jwt_extended.utils.get_jwt_identity')
+    @patch('app.models.user.User.find_by_id')
+    @patch('app.models.user.User.delete')
+    def test_delete_user_not_found(self, mock_delete, mock_find_by_id, mock_get_jwt_identity):
+        """Test deleting a non-existent user."""
+        # Setup mocks
+        mock_get_jwt_identity.return_value = self.test_user_data['userId']
+        mock_find_by_id.return_value = self.mock_user
+        mock_delete.return_value = None  # Indicates user not found or deletion failed
+        
+        # Make request
+        response = self.client.delete(
+            f'/api/users/{self.test_user_data["userId"]}',
+            headers=self.get_auth_headers(self.test_user_data['userId'])
+        )
+        
+        # Assert response
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(data['error'], 'User not found')
+
 
 if __name__ == '__main__':
     unittest.main()
