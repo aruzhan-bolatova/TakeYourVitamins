@@ -68,6 +68,9 @@ The project includes a Makefile for easy setup and management:
    
    # On Ubuntu
    sudo systemctl start mongodb
+
+   # On Windows
+   mongosh.exe
    ```
 
 4. Run the application with a single command:
