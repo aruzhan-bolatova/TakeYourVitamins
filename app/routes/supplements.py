@@ -62,6 +62,9 @@ from app.models.supplement import Supplement
 # Import the database connection function
 from app.db.db import get_database as get_db
 from bson.objectid import ObjectId  # Import ObjectId to handle MongoDB _id
+from flask_jwt_extended import (create_access_token, jwt_required, get_jwt_identity, 
+                               get_jwt, current_user)
+from app.middleware.auth import check_user_access, admin_required
 
 # Create the blueprint
 bp = Blueprint('supplements', __name__, url_prefix='/api/supplements')
@@ -89,16 +92,27 @@ def get_supplement_by_id(supplement_id):
 
 
 @bp.route('/', methods=['POST'])
+# @admin_required
 def create_supplement():
     """Create a new supplement"""
     try:
         supplement_data = request.json
+        
+        if supplement_data is None:  # Check if the request body is not JSON
+            return jsonify({"error": "Missing JSON in request"}), 400
+        
+        if not supplement_data:  # Check for empty data
+            return jsonify({"error": "Empty supplement data"}), 400
+
         supplement = Supplement(supplement_data)
         supplement.validate_data(supplement_data)  # Validate the incoming data
         
         # Insert the supplement into the database
         db = get_db()
-        db.Supplements.insert_one(supplement.to_dict())
+        result = db.Supplements.insert_one(supplement.to_dict())
+        
+        if not result.inserted_id:  # Check if insertion failed
+            return jsonify({"error": "Failed to insert supplement"}), 500
         
         # Return the newly created document's _id
         return jsonify({"message": "Supplement created successfully", "_id": str(result.inserted_id)}), 201
@@ -109,6 +123,7 @@ def create_supplement():
 
 
 @bp.route('/<string:supplement_id>', methods=['PUT'])
+# @admin_required
 def update_supplement(supplement_id):
     """Update an existing supplement"""
     try:
@@ -123,6 +138,7 @@ def update_supplement(supplement_id):
 
 
 @bp.route('/<string:supplement_id>', methods=['DELETE'])
+# @admin_required
 def delete_supplement(supplement_id):
     """Delete a supplement (soft delete by default)"""
     try:
