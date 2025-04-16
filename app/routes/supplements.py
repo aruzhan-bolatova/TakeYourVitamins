@@ -92,7 +92,7 @@ def get_supplement_by_id(supplement_id):
 
 
 @bp.route('/', methods=['POST'])
-# @admin_required
+@admin_required
 def create_supplement():
     """Create a new supplement"""
     try:
@@ -123,7 +123,7 @@ def create_supplement():
 
 
 @bp.route('/<string:supplement_id>', methods=['PUT'])
-# @admin_required
+@admin_required
 def update_supplement(supplement_id):
     """Update an existing supplement"""
     try:
@@ -138,7 +138,7 @@ def update_supplement(supplement_id):
 
 
 @bp.route('/<string:supplement_id>', methods=['DELETE'])
-# @admin_required
+@admin_required
 def delete_supplement(supplement_id):
     """Delete a supplement (soft delete by default)"""
     try:
