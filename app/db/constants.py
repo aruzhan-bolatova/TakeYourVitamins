@@ -59,8 +59,10 @@ SYMPTOM_LOG_FIELDS = {
 
 INTERACTION_FIELDS = {
     "INTERACTION_ID": "interactionId",
-    "SUPPLEMENT_ID1": "supplementId1",
-    "SUPPLEMENT_ID2": "supplementId2",
+    "SUPPLEMENTS": [
+        {"supplementId": "supplementId1", "name": "Vitamin C"},
+        {"supplementId": "supplementId2", "name": "Zinc"}
+    ],
     "FOOD_ITEM": "foodItem",
     "INTERACTION_TYPE": "interactionType",
     "EFFECT": "effect",

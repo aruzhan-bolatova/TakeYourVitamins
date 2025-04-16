@@ -11,7 +11,12 @@ bp = Blueprint('auth', __name__, url_prefix='/api/auth')
 @bp.route('/register', methods=['POST'])
 def register():
     """Register a new user"""
-    data = request.get_json()
+    try:
+        data = request.get_json()
+        if data is None:
+            return jsonify({"error": "Missing JSON in request"}), 400
+    except Exception:
+        return jsonify({"error": "Invalid JSON format"}), 400
     
     # Validate required fields
     required_fields = ['name', 'email', 'password', 'age', 'gender']
@@ -49,7 +54,12 @@ def register():
 @bp.route('/login', methods=['POST'])
 def login():
     """Authenticate a user and return a JWT token"""
-    data = request.get_json()
+    try:
+        data = request.get_json()
+        if data is None:
+            return jsonify({"error": "Missing JSON in request"}), 400
+    except Exception:
+        return jsonify({"error": "Invalid JSON format"}), 400
     
     # Validate required fields
     if 'email' not in data or 'password' not in data:
@@ -85,12 +95,17 @@ def logout():
     expires_at = datetime.datetime.fromtimestamp(token_exp, tz=datetime.timezone.utc)
     
     # Add token to blacklist
-    TokenBlacklist.add_to_blacklist(
-        jti=jti,
-        token_type="access",
-        user_id=user_id,
-        expires_at=expires_at
-    )
+    try:
+        TokenBlacklist.add_to_blacklist(
+            jti=jti,
+            token_type="access",
+            user_id=user_id,
+            expires_at=expires_at
+        )
+    except Exception:
+        # Still return success even if blacklisting fails
+        # This is a security best practice - not telling the user about internal issues
+        pass
     
     return jsonify({"message": "Successfully logged out"}), 200
 

@@ -1,0 +1,389 @@
+[
+  {
+    "supplementId": "SUPP100",
+    "name": "Aloe",
+    "aliases": [
+      "Aloe Vera",
+      "Aloe Barbadensis"
+    ],
+    "description": "Used internally, aloe may regulate blood sugar levels and control diabetes, treat mouth and stomach ulcers, lower cholesterol, and iprovide immune system support, treat inflammatory bowel disease, and act as a laxative. Externally, it is used for skin conditions, burns, and wounds.",
+    "intakePractices": {
+      "dosage": "Generally, as a laxative, aloe is used in the range of 50-200 mg/day or about 1-3 oz orally. For topical use, apply as needed.",
+      "timing": "Can be taken any time of day.",
+      "specialInstructions": "Consuming aloe vera before meals can help improve digestion and reduce bloating and indigestion. Drinking aloe vera juice after meals can help soothe the digestive tract and reduce inflammation. It can also help regulate blood sugar levels and prevent spikes in insulin after eating."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Acts as a laxative",
+        "Provides immune system support",
+        "Heals wounds, burns, and skin conditions"
+      ],
+      "sideEffects": [
+        "Rare at recommended doses",
+        "No significant side effects of aloe vera gel have been noted, except the occasional allergy."
+      ],
+      "studies": [
+        {
+          "title": "Aloe Vera",
+          "journal": "The Health Professional's Guide to Dietary Supplements",
+          "year": 2007,
+          "summary": ""
+        }
+      ]
+    },
+    "category": "",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP101",
+    "name": "Cayenne",
+    "aliases": [
+      "Chili",
+      "Capsicum annuum",
+      "Capsicum frutescens"
+    ],
+    "description": "Capsaicin or chili peppers of many varieties have both internal and topical uses, including gastrointestinal health, headache, pain (both rheumatoid arthritis and osteoarthritis), and psoriasis and dermatitis. ",
+    "intakePractices": {
+      "dosage": "The usual dosage for internal use of capsicum is in the range of 30-120 mg, with 60 mg most common. Patients should be advised not to bite or chew on the capsules. For topical applications for pain or skin irritation, the content of creams in clinical studies has been 0.025-0.075% capsaicin, with application 4-5 times daily.",
+      "timing": "Can be taken any time of day.",
+      "specialInstructions": "Capsaicin is best absorbed when taken with food. It is important to avoid contact with the eyes and mucous membranes when applying topical capsaicin."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Improves digestion",
+        "Aids with skin conditions",
+        "Reduces pain and inflammation"
+      ],
+      "sideEffects": [
+        "For the topical use might cause burning sensation",
+        "Capsaicin and the capsaicinoids are strong irritants to the mucous membranes and can produce dermatitis."
+      ],
+      "studies": [
+        {
+          "title": "Cayenne",
+          "journal": "The Health Professional's Guide to Dietary Supplements",
+          "year": 2007,
+          "summary": ""
+        }
+      ]
+    },
+    "category": "",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP102",
+    "name": "Fiber",
+    "aliases": [
+      "Dietary Fiber",
+      "Soluble Fiber",
+      "Insoluble Fiber"
+    ],
+    "description": "Dietary fiber is a carbohydrate that is not digested in the small intestine. It is found in fruits, vegetables, whole grains, and legumes. It is important for digestive health and can help prevent constipation, lower cholesterol levels, and control blood sugar levels. Fiber can be classified into two main types: soluble and insoluble. ",
+    "intakePractices": {
+      "dosage": "Total daily fiber consumption should be within the range of 20-40 g. Popular fiber supplements (taken with 8 oz of water) are psyllium (7 g up to 3 times daily), methylcellulose (10 g up to 3 times daily), and polycarbophil (1 g up to 4 times daily).",
+      "timing": "Can be taken any time of day, preferably with meals.",
+      "specialInstructions": "To prevent dehydration, adequate fluid must be consumed."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Prevents constipation",
+        "Soluble fiber reduces the risk of heart disease by lowering cholesterol levels.",
+        "Diets high in insoluble fiber reduce the risk of colon cancer."
+      ],
+      "sideEffects": [
+        "The intake of dietary fiber or fiber supplements within the recommended doses is considered safe. ",
+        "Excessive fiber intake may cause bloating, gas, and diarrhea.",
+        "Some sources of the fiber are common allergens"
+      ],
+      "studies": [
+        {
+          "title": "Fiber",
+          "journal": "The Health Professional's Guide to Dietary Supplements",
+          "year": 2007,
+          "summary": ""
+        }
+      ]
+    },
+    "category": "",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP103",
+    "name": "Ginger",
+    "aliases": [
+      "Zingiber Offcinale",
+      "Zingiberaceae"
+    ],
+    "description": "Ginger is a flowering plant whose rhizome is widely used as a spice and folk medicine. It is used to treat nausea, vomiting, and digestive issues. It is also used for its anti-inflammatory and antioxidant properties.",
+    "intakePractices": {
+      "dosage": "The usual dosage for ginger is in the range of 1-2 g/day.",
+      "timing": "No specific timing, can be taken any time of day.",
+      "specialInstructions": "In the case of gallstones should be taken only after consulting a physician."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Relieves nausea",
+        "Reduces inflammation",
+        "Aids digestion"
+      ],
+      "sideEffects": [
+        "Generally safe",
+        "High doses may cause heartburn or upset stomach"
+      ],
+      "studies": [
+        {
+          "title": "Ginger",
+          "journal": "The Health Professional's Guide to Dietary Supplements",
+          "year": 2007,
+          "summary": ""
+        }
+      ]
+    },
+    "category": "herbs",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP104",
+    "name": "Mastic",
+    "aliases": [
+      "Mastic Gum",
+      "Pistacia lentiscus"
+    ],
+    "description": "Mastic is a resin obtained from the mastic tree. It is used for digestive issues, oral health, and as an anti-inflammatory agent. It is also used for its antimicrobial properties.",
+    "intakePractices": {
+      "dosage": "For treating ulcers and gastrointestinal discomfort, 1 g of mastic is used.",
+      "timing": "No specific timing, can be taken any time of day.",
+      "specialInstructions": ""
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Relieves heartburn",
+        "Treats and prevents ulcers",
+        "Prevents bad breath"
+      ],
+      "sideEffects": [
+        "Considered safe"
+      ],
+      "studies": [
+        {
+          "title": "Mastic",
+          "journal": "The Health Professional's Guide to Dietary Supplements",
+          "year": 2007,
+          "summary": ""
+        }
+      ]
+    },
+    "category": "herbs",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP105",
+    "name": "Milk Thistle",
+    "aliases": [
+      "Silybum marianum",
+      "Silymarin"
+    ],
+    "description": "Milk thistle is a flowering herb used for liver health and detoxification. It is known for its antioxidant and anti-inflammatory properties. It is often used to support liver function and protect against liver damage.",
+    "intakePractices": {
+      "dosage": "Usual of milk thistle is 175 mg/day for extract standardized to 80% silymarin flavonoids. Other daily dosage recommendations vary depending on the preparation",
+      "timing": "No specific timing, can be taken any time of day.",
+      "specialInstructions": "Recommended to be taken before meal."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Supports liver health",
+        "Detoxifies the liver",
+        "Reduces inflammation"
+      ],
+      "sideEffects": [
+        "Considered safe"
+      ],
+      "studies": [
+        {
+          "title": "Milk Thistle",
+          "journal": "The Health Professional's Guide to Dietary Supplements",
+          "year": 2007,
+          "summary": ""
+        }
+      ]
+    },
+    "category": "herbs",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP106",
+    "name": "Prebiotics",
+    "aliases": [
+      "Inulin",
+      "Oligofructose",
+      "Fructo-Oligosaccharides"
+    ],
+    "description": "Prebiotics are non-digestible food ingredients that promote the growth of beneficial bacteria in the gut. They are found in foods like garlic, onions, and bananas. They are used to improve gut health and digestion.",
+    "intakePractices": {
+      "dosage": "The usual dosage for prebiotics is around 10 g/day.",
+      "timing": "No specific timing, can be taken any time of day.",
+      "specialInstructions": "Recommended to be taken before meal."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Supports gut health",
+        "Promotes growth of beneficial bacteria",
+        "Provides immune system support"
+      ],
+      "sideEffects": [
+        "Flatulation",
+        "Bloating",
+        "Diarrhea"
+      ],
+      "studies": [
+        {
+          "title": "Prebiotics",
+          "journal": "The Health Professional's Guide to Dietary Supplements",
+          "year": 2007,
+          "summary": ""
+        }
+      ]
+    },
+    "category": "",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP107",
+    "name": "Probiotics",
+    "aliases": [
+      "Acidophilus",
+      "Bifidus",
+      "Lactobacillus"
+    ],
+    "description": "Probiotics are live microorganisms that provide health benefits when consumed in adequate amounts. They are found in fermented foods like yogurt and sauerkraut. They are used to improve gut health and digestion.",
+    "intakePractices": {
+      "dosage": "The usual dosage for probiotics is around 1-10 billion CFU/day.",
+      "timing": "No specific timing, can be taken any time of day.",
+      "specialInstructions": "People with severe gastrointestinal ailments (e.g., Crohn disease, ulcerative colitis) should consult with their personal physician before consuming probiotic supplements."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Supports gut health",
+        "Supports immune system",
+        "Improves digestion"
+      ],
+      "sideEffects": [
+        "Considered safe at recommended levels"
+      ],
+      "studies": [
+        {
+          "title": "Probiotics",
+          "journal": "The Health Professional's Guide to Dietary Supplements",
+          "year": 2007,
+          "summary": ""
+        }
+      ]
+    },
+    "category": "",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP108",
+    "name": "Slippery Elm",
+    "aliases": [
+      "Ulmus rubra",
+      "Ulmus fulva"
+    ],
+    "description": "Slippery elm is a tree whose inner bark is used for its soothing properties. It is used to treat digestive issues, sore throat, and skin conditions.",
+    "intakePractices": {
+      "dosage": "The usual dosage for slippery elm is around 1-2 g/day.",
+      "timing": "No specific timing, can be taken any time of day.",
+      "specialInstructions": "People with severe gastrointestinal ailments (e.g., Crohn disease, ulcerative colitis) should consult with their personal physician before consuming probiotic supplements."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Soothes digestive tract",
+        "Relieves sore throat",
+        "Moisturizes skin",
+        "Alleviates dry cough"
+      ],
+      "sideEffects": [
+        "Considered to be safe and nontoxic, with no drug interactions."
+      ],
+      "studies": [
+        {
+          "title": "Slipperhy Elm",
+          "journal": "The Health Professional's Guide to Dietary Supplements",
+          "year": 2007,
+          "summary": ""
+        }
+      ]
+    },
+    "category": "",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP109",
+    "name": "Yellow Dock",
+    "aliases": [
+      "Rumex Crispus",
+      "Curly Dock",
+      "Sour Dock"
+    ],
+    "description": "Yellow dock is a member of the buckwheat family that can be found naturalized in many parts of the world. Used in traditional medicines as a digestive aid, for skin conditions, and for liver health.",
+    "intakePractices": {
+      "dosage": "The usual dosage is 1 g/day of the dried root or 3-4 mL of the root extract 3 times daily.",
+      "timing": "No specific timing, can be taken any time of day.",
+      "specialInstructions": "Might be toxic if not properly prepared, must consult the doctor before taking. Not recommended while pregnant or breast-feeding."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Acts as a laxative",
+        "Supports gut health and liver health"
+      ],
+      "sideEffects": [
+        "Contains oxalates that may inhibit nutrients absorption.",
+        "Might be toxic if taken raw"
+      ],
+      "studies": [
+        {
+          "title": "Yellow Dock",
+          "journal": "The Health Professional's Guide to Dietary Supplements",
+          "year": 2007,
+          "summary": ""
+        }
+      ]
+    },
+    "category": "herbs",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP110",
+    "name": "Alpha-Lipoic Acid",
+    "aliases": [
+      "Lipoic Acid",
+      "Thiotic Acid"
+    ],
+    "description": "Generally lipoic acid is involved in cellular energy production. Additionally, as a dietary supplement it acts as a powerful antioxidant, helps to control blood sugar levels and has antiaging benefits. Alpha-lipoic acid can be eaten in foods, such as red meat, carrots, beets, spinach, broccoli, and potatoes. It is also available in supplements.",
+    "intakePractices": {
+      "dosage": "For antioxidant benefits, recommended dosage is 50-100 mg/day. For preventing and treating complications of diabetes, recommended dosage is 300-600 mg/day.",
+      "timing": "No specific timing, can be taken any time of day.",
+      "specialInstructions": ""
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Powerful antioxidant",
+        "Improves insulin function",
+        "Provides protection to the brain"
+      ],
+      "sideEffects": [
+        "Considered safe"
+      ],
+      "studies": [
+        {
+          "title": "Alpha-Lipoic Acid",
+          "journal": "The Health Professional's Guide to Dietary Supplements",
+          "year": 2007,
+          "summary": ""
+        }
+      ]
+    },
+    "category": "",
+    "updatedAt": null
+  }
+]
