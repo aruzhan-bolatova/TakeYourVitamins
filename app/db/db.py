@@ -1,5 +1,7 @@
+# MongoDB connection setup
 from pymongo import MongoClient
 from pymongo.errors import ConnectionFailure
+from bson.objectid import ObjectId  # Import ObjectId to handle MongoDB _id
 import os
 from dotenv import load_dotenv
 import logging
@@ -24,6 +26,7 @@ def get_database():
     Creates a new connection if one doesn't exist.
     Raises an exception if the connection fails.
     """
+
     global client, db
     if not client:
         try:
@@ -38,6 +41,7 @@ def get_database():
         except Exception as e:
             logger.error(f"Unexpected error while connecting to MongoDB: {e}")
             raise RuntimeError("Unexpected error during MongoDB connection") from e
+    
     return db
 
 def get_collection(collection_name):
