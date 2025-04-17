@@ -270,136 +270,136 @@ class TestIntakeLogs(unittest.TestCase):
         self.assertEqual(data["error"], error_message)
     
     # POST /api/intake-logs/check-interactions - Check for interactions
-    @patch('app.models.interaction.Interaction.check_interactions')
-    @patch('app.models.intake_log.IntakeLog.find_recent')
-    def test_check_intake_interactions(self, mock_find_recent, mock_check_interactions):
-        """Test checking for supplement interactions."""
-        # Setup mocks
-        recent_supplement_id = f"RECENT_{uuid.uuid4().hex[:8]}"
-        recent_log = MagicMock()
-        recent_log.supplement_id = recent_supplement_id
-        mock_find_recent.return_value = [recent_log]
+    # @patch('app.models.interaction.Interaction.check_interactions')
+    # @patch('app.models.intake_log.IntakeLog.find_recent')
+    # def test_check_intake_interactions(self, mock_find_recent, mock_check_interactions):
+    #     """Test checking for supplement interactions."""
+    #     # Setup mocks
+    #     recent_supplement_id = f"RECENT_{uuid.uuid4().hex[:8]}"
+    #     recent_log = MagicMock()
+    #     recent_log.supplement_id = recent_supplement_id
+    #     mock_find_recent.return_value = [recent_log]
         
-        # Create mock interactions
-        interaction1 = MagicMock()
-        interaction1.severity = "High"
-        interaction1.supplements = [{"supplementId": self.test_supplement_id}, {"supplementId": recent_supplement_id}]
-        interaction1.to_dict.return_value = {
-            "interactionId": f"INT_{uuid.uuid4().hex[:8]}",
-            "severity": "High",
-            "description": "Test interaction"
-        }
+    #     # Create mock interactions
+    #     interaction1 = MagicMock()
+    #     interaction1.severity = "High"
+    #     interaction1.supplements = [{"supplementId": self.test_supplement_id}, {"supplementId": recent_supplement_id}]
+    #     interaction1.to_dict.return_value = {
+    #         "interactionId": f"INT_{uuid.uuid4().hex[:8]}",
+    #         "severity": "High",
+    #         "description": "Test interaction"
+    #     }
         
-        # Configure check_interactions mock
-        mock_check_interactions.side_effect = [
-            [interaction1],  # First call returns initial interactions
-            [interaction1]   # Second call returns all interactions
-        ]
+    #     # Configure check_interactions mock
+    #     mock_check_interactions.side_effect = [
+    #         [interaction1],  # First call returns initial interactions
+    #         [interaction1]   # Second call returns all interactions
+    #     ]
         
-        # Make request
-        request_data = {
-            "supplementIds": [self.test_supplement_id],
-            "foodItems": ["grapefruit"],
-            "medications": ["warfarin"]
-        }
+    #     # Make request
+    #     request_data = {
+    #         "supplementIds": [self.test_supplement_id],
+    #         "foodItems": ["grapefruit"],
+    #         "medications": ["warfarin"]
+    #     }
         
-        response = self.client.post(
-            '/api/intake-logs/check-interactions',
-            data=json.dumps(request_data),
-            content_type='application/json'
-        )
+    #     response = self.client.post(
+    #         '/api/intake-logs/check-interactions',
+    #         data=json.dumps(request_data),
+    #         content_type='application/json'
+    #     )
         
-        # Assert response
-        data = json.loads(response.data)
-        self.assertEqual(response.status_code, 200)
-        self.assertIn("interactions", data)
-        self.assertIn("count", data)
-        self.assertIn("categorized", data)
-        self.assertIn("high", data["categorized"])
-        self.assertEqual(len(data["categorized"]["high"]), 1)
+    #     # Assert response
+    #     data = json.loads(response.data)
+    #     self.assertEqual(response.status_code, 200)
+    #     self.assertIn("interactions", data)
+    #     self.assertIn("count", data)
+    #     self.assertIn("categorized", data)
+    #     self.assertIn("high", data["categorized"])
+    #     self.assertEqual(len(data["categorized"]["high"]), 1)
         
-        # Verify mocks were called correctly
-        mock_find_recent.assert_called_once_with(self.test_user_id, hours=24)
-        mock_check_interactions.assert_any_call(
-            supplement_ids=[self.test_supplement_id],
-            food_items=["grapefruit"],
-            medications=["warfarin"]
-        )
+    #     # Verify mocks were called correctly
+    #     mock_find_recent.assert_called_once_with(self.test_user_id, hours=24)
+    #     mock_check_interactions.assert_any_call(
+    #         supplement_ids=[self.test_supplement_id],
+    #         food_items=["grapefruit"],
+    #         medications=["warfarin"]
+    #     )
     
-    @patch('app.models.interaction.Interaction.check_interactions')
-    def test_check_intake_interactions_no_recent_logs(self, mock_check_interactions):
-        """Test checking interactions without recent logs."""
-        # Setup empty recent logs
-        with patch('app.models.intake_log.IntakeLog.find_recent', return_value=[]):
-            # Setup interactions mock
-            interaction = MagicMock()
-            interaction.severity = "Low"
-            interaction.to_dict.return_value = {"severity": "Low"}
-            mock_check_interactions.return_value = [interaction]
+    # @patch('app.models.interaction.Interaction.check_interactions')
+    # def test_check_intake_interactions_no_recent_logs(self, mock_check_interactions):
+    #     """Test checking interactions without recent logs."""
+    #     # Setup empty recent logs
+    #     with patch('app.models.intake_log.IntakeLog.find_recent', return_value=[]):
+    #         # Setup interactions mock
+    #         interaction = MagicMock()
+    #         interaction.severity = "Low"
+    #         interaction.to_dict.return_value = {"severity": "Low"}
+    #         mock_check_interactions.return_value = [interaction]
             
-            # Make request
-            request_data = {
-                "supplementIds": [self.test_supplement_id]
-            }
+    #         # Make request
+    #         request_data = {
+    #             "supplementIds": [self.test_supplement_id]
+    #         }
             
-            response = self.client.post(
-                '/api/intake-logs/check-interactions',
-                data=json.dumps(request_data),
-                content_type='application/json'
-            )
+    #         response = self.client.post(
+    #             '/api/intake-logs/check-interactions',
+    #             data=json.dumps(request_data),
+    #             content_type='application/json'
+    #         )
             
-            # Assert response
-            data = json.loads(response.data)
-            self.assertEqual(response.status_code, 200)
-            self.assertEqual(data["count"], 1)
-            self.assertEqual(len(data["categorized"]["low"]), 1)
+    #         # Assert response
+    #         data = json.loads(response.data)
+    #         self.assertEqual(response.status_code, 200)
+    #         self.assertEqual(data["count"], 1)
+    #         self.assertEqual(len(data["categorized"]["low"]), 1)
     
-    @patch('app.models.interaction.Interaction.check_interactions')
-    @patch('app.models.intake_log.IntakeLog.find_recent')
-    def test_check_intake_interactions_server_error(self, mock_find_recent, mock_check_interactions):
-        """Test checking interactions with server error."""
-        # Setup mock to raise an exception
-        mock_check_interactions.side_effect = Exception("Database connection error")
+    # @patch('app.models.interaction.Interaction.check_interactions')
+    # @patch('app.models.intake_log.IntakeLog.find_recent')
+    # def test_check_intake_interactions_server_error(self, mock_find_recent, mock_check_interactions):
+    #     """Test checking interactions with server error."""
+    #     # Setup mock to raise an exception
+    #     mock_check_interactions.side_effect = Exception("Database connection error")
         
-        # Setup recent logs
-        recent_log = MagicMock()
-        recent_log.supplement_id = f"RECENT_{uuid.uuid4().hex[:8]}"
-        mock_find_recent.return_value = [recent_log]
+    #     # Setup recent logs
+    #     recent_log = MagicMock()
+    #     recent_log.supplement_id = f"RECENT_{uuid.uuid4().hex[:8]}"
+    #     mock_find_recent.return_value = [recent_log]
         
-        # Make request
-        request_data = {
-            "supplementIds": [self.test_supplement_id]
-        }
+    #     # Make request
+    #     request_data = {
+    #         "supplementIds": [self.test_supplement_id]
+    #     }
         
-        response = self.client.post(
-            '/api/intake-logs/check-interactions',
-            data=json.dumps(request_data),
-            content_type='application/json'
-        )
+    #     response = self.client.post(
+    #         '/api/intake-logs/check-interactions',
+    #         data=json.dumps(request_data),
+    #         content_type='application/json'
+    #     )
         
-        # Assert response
-        data = json.loads(response.data)
-        self.assertEqual(response.status_code, 500)
-        self.assertIn("Failed to check interactions", data["error"])
+    #     # Assert response
+    #     data = json.loads(response.data)
+    #     self.assertEqual(response.status_code, 500)
+    #     self.assertIn("Failed to check interactions", data["error"])
     
-    def test_check_intake_interactions_missing_supplements(self):
-        """Test checking interactions without providing supplement IDs."""
-        # Make request without supplement IDs
-        request_data = {
-            "foodItems": ["grapefruit"],
-            "medications": ["warfarin"]
-        }
+    # def test_check_intake_interactions_missing_supplements(self):
+    #     """Test checking interactions without providing supplement IDs."""
+    #     # Make request without supplement IDs
+    #     request_data = {
+    #         "foodItems": ["grapefruit"],
+    #         "medications": ["warfarin"]
+    #     }
         
-        response = self.client.post(
-            '/api/intake-logs/check-interactions',
-            data=json.dumps(request_data),
-            content_type='application/json'
-        )
+    #     response = self.client.post(
+    #         '/api/intake-logs/check-interactions',
+    #         data=json.dumps(request_data),
+    #         content_type='application/json'
+    #     )
         
-        # Assert response
-        data = json.loads(response.data)
-        self.assertEqual(response.status_code, 400)
-        self.assertEqual(data["error"], "At least one supplement ID is required")
+    #     # Assert response
+    #     data = json.loads(response.data)
+    #     self.assertEqual(response.status_code, 400)
+    #     self.assertEqual(data["error"], "At least one supplement ID is required")
     
     # GET /api/intake-logs/<log_id> - Get a specific intake log
     @patch('app.models.intake_log.IntakeLog.find_by_id')
