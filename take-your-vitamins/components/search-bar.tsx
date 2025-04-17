@@ -1,28 +1,25 @@
 "use client"
 
 import type React from "react"
-
 import { useState, useEffect, useRef } from "react"
 import { Search } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation"
-import { getSuggestions } from "@/lib/supplements"
+import { getAutocompleteSuggestions, AutocompleteSuggestion } from "@/lib/supplements"
 
 export function SearchBar() {
   const [query, setQuery] = useState("")
-  const [suggestions, setSuggestions] = useState<string[]>([])
+  const [suggestions, setSuggestions] = useState<AutocompleteSuggestion[]>([])
   const [showSuggestions, setShowSuggestions] = useState(false)
   const [activeSuggestion, setActiveSuggestion] = useState(-1)
   const router = useRouter()
-  const suggestionRef = useRef<HTMLDivElement>(null)    //Creates a reference to an HTML <div> element
-                        // useRef is a React Hook that returns a mutable reference (ref) to a DOM element or a value that persists across renders without causing re-renders.
-                        // Unlike useState, updating ref.current does not trigger a re-render
-                        // Can be used for dropdowns, modals, or suggestion lists (e.g., auto-suggest inputs).
+  const suggestionRef = useRef<HTMLDivElement>(null)
+
   useEffect(() => {
     const fetchSuggestions = async () => {
       if (query.trim().length > 0) {
-        const results = await getSuggestions(query)
+        const results = await getAutocompleteSuggestions(query)
         setSuggestions(results)
         setShowSuggestions(results.length > 0)
       } else {
@@ -50,36 +47,27 @@ export function SearchBar() {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
     if (query.trim()) {
-      // Use the new simplified route
       window.location.href = `/search-results?q=${encodeURIComponent(query.trim())}`
     }
   }
 
-  const handleSuggestionClick = (suggestion: string) => {
-    setQuery(suggestion)
-    // Use the new simplified route
-    window.location.href = `/search-results?q=${encodeURIComponent(suggestion)}`
+  const handleSuggestionClick = (suggestion: AutocompleteSuggestion) => {
+    setQuery(suggestion.name)
+    router.push(`/supplements/${suggestion.id}`)
     setShowSuggestions(false)
   }
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    // Arrow down
     if (e.key === "ArrowDown") {
       e.preventDefault()
       setActiveSuggestion((prev) => (prev < suggestions.length - 1 ? prev + 1 : prev))
-    }
-    // Arrow up
-    else if (e.key === "ArrowUp") {
+    } else if (e.key === "ArrowUp") {
       e.preventDefault()
       setActiveSuggestion((prev) => (prev > 0 ? prev - 1 : 0))
-    }
-    // Enter
-    else if (e.key === "Enter" && activeSuggestion >= 0) {
+    } else if (e.key === "Enter" && activeSuggestion >= 0) {
       e.preventDefault()
       handleSuggestionClick(suggestions[activeSuggestion])
-    }
-    // Escape
-    else if (e.key === "Escape") {
+    } else if (e.key === "Escape") {
       setShowSuggestions(false)
     }
   }
@@ -111,14 +99,14 @@ export function SearchBar() {
               <ul className="py-1">
                 {suggestions.map((suggestion, index) => (
                   <li
-                    key={index}
+                    key={suggestion.id}
                     className={`px-4 py-2 cursor-pointer hover:bg-muted ${
                       index === activeSuggestion ? "bg-muted" : ""
                     }`}
                     onClick={() => handleSuggestionClick(suggestion)}
                     onMouseEnter={() => setActiveSuggestion(index)}
                   >
-                    {suggestion}
+                    {suggestion.name}
                   </li>
                 ))}
               </ul>
@@ -130,4 +118,3 @@ export function SearchBar() {
     </form>
   )
 }
-

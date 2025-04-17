@@ -8,29 +8,45 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import Link from "next/link"
-import { useAuth } from "@/contexts/auth-context"
 
 export default function SignupPage() {
   const router = useRouter()
-  const { signUp, isLoading } = useAuth()
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [age, setAge] = useState("")
+  const [gender, setGender] = useState("")
   const [error, setError] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError("")
+    setIsLoading(true)
 
     try {
-      const success = await signUp(name, email, password)
-      if (success) {
-        router.push("/dashboard")
-      } else {
-        setError("Failed to create account")
+      console.log(JSON.stringify({ name, email, password, age, gender }))
+
+      const response = await fetch("http://10.228.244.25:5001/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email, password, age, gender }),
+      })
+
+      console.log(response)
+      if (response.ok) {
+        router.push("/login")
+      } 
+      else {
+        const data = await response.json()
+        setError(data.message || "Failed to create account")
       }
     } catch (error) {
       setError("Something went wrong. Please try again.")
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -76,6 +92,18 @@ export default function SignupPage() {
                 required
               />
             </div>
+            <div className="space-y-2">
+              <label htmlFor="age" className="text-sm font-medium">
+                Age
+              </label>
+              <Input id="age" value={age} onChange={(e) => setAge(e.target.value)} placeholder="21" required />
+            </div>
+            <div className="space-y-2">
+              <label htmlFor="gender" className="text-sm font-medium">
+                Gender
+              </label>
+              <Input id="gender" value={gender} onChange={(e) => setGender(e.target.value)} placeholder="Female" required />
+            </div>
             <Button type="submit" className="w-full" disabled={isLoading}>
               {isLoading ? "Creating account..." : "Sign Up"}
             </Button>
@@ -91,4 +119,3 @@ export default function SignupPage() {
     </div>
   )
 }
-

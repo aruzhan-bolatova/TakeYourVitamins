@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
@@ -11,25 +10,19 @@ import Link from "next/link"
 import { useAuth } from "@/contexts/auth-context"
 
 export default function LoginPage() {
-  const router = useRouter()
   const { signIn, isLoading } = useAuth()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const [error, setError] = useState("")
+  const [error, setError] = useState<string | null>(null)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setError("")
+    setError(null)
+    console.log("Logging in with:", { email, password })
 
-    try {
-      const success = await signIn(email, password)
-      if (success) {
-        router.push("/dashboard")
-      } else {
-        setError("Invalid email or password")
-      }
-    } catch (error) {
-      setError("Something went wrong. Please try again.")
+    const success = await signIn(email, password)
+    if (!success) {
+      setError("Invalid email or password. Please try again.")
     }
   }
 
@@ -89,4 +82,3 @@ export default function LoginPage() {
     </div>
   )
 }
-

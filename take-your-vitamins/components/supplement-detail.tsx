@@ -1,13 +1,32 @@
-import type { Supplement } from "@/lib/types"
+"use client"
+
+import type { Supplement, CategorizedInteractions } from "@/lib/types"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Clock, AlertTriangle, Utensils, ChevronLeft } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-
+import { useEffect, useState } from "react"
+import { getSupplementInteractions } from "@/lib/supplements"
 
 export function SupplementDetail({ supplement }: { supplement: Supplement }) {
+    console.log("Supplement Detail:", supplement)
+    const [interactions, setInteractions] = useState<CategorizedInteractions | null>(null)
+
+    useEffect(() => {
+        const fetchInteractions = async () => {
+            if (supplement._id) {
+                 // Fetch interactions for the supplement
+                const results = await getSupplementInteractions(supplement._id)
+                setInteractions(results)
+              } else {
+                setInteractions(null)
+              }
+        }
+        fetchInteractions()
+    }, [supplement._id])
+
     return (
         <div className="space-y-6">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -16,7 +35,9 @@ export function SupplementDetail({ supplement }: { supplement: Supplement }) {
                     <div className="flex items-center gap-2 mt-2">
                         <Badge variant="outline">{supplement.category}</Badge>
                         {supplement.aliases.length > 0 && (
-                            <p className="text-sm text-muted-foreground">Also known as: {supplement.aliases.join(", ")}</p>
+                            <p className="text-sm text-muted-foreground">
+                                Also known as: {supplement.aliases.join(", ")}
+                            </p>
                         )}
                     </div>
                 </div>
@@ -77,6 +98,7 @@ export function SupplementDetail({ supplement }: { supplement: Supplement }) {
                     </Card>
                 </TabsContent>
 
+                {/* Supplement Interactions */}
                 <TabsContent value="supplement-interactions" className="mt-4">
                     <Card>
                         <CardHeader>
@@ -84,27 +106,41 @@ export function SupplementDetail({ supplement }: { supplement: Supplement }) {
                             <CardDescription>How {supplement.name} interacts with other supplements</CardDescription>
                         </CardHeader>
                         <CardContent>
-                            {supplement.supplementInteractions.length > 0 ? (
+                            {(interactions?.supplementSupplementInteractions ?? []).length > 0 ? (
                                 <ul className="space-y-4">
-                                    {supplement.supplementInteractions.map((interaction, index) => (
+                                    {interactions?.supplementSupplementInteractions.map((interaction, index) => (
                                         <li key={index} className="border-b pb-4 last:border-0 last:pb-0">
                                             <div className="flex items-start">
                                                 <div className="mr-2">
                                                     <Badge
                                                         variant={
-                                                            interaction.severity === "high"
+                                                            interaction.severity?.toLowerCase() === "negative"
                                                                 ? "destructive"
-                                                                : interaction.severity === "medium"
+                                                                : interaction.severity?.toLowerCase() === "positive"
                                                                     ? "warning"
                                                                     : "outline"
                                                         }
                                                     >
-                                                        {interaction.severity.charAt(0).toUpperCase() + interaction.severity.slice(1)}
+                                                        {interaction.severity
+                                                            ? interaction.severity.charAt(0).toUpperCase() +
+                                                            interaction.severity.slice(1)
+                                                            : "Unknown"}
                                                     </Badge>
                                                 </div>
                                                 <div>
-                                                    <h3 className="font-medium">With {interaction.supplementName}</h3>
+                                                    <h3 className="font-medium">
+                                                        With{" "}
+                                                        {interaction.supplements
+                                                            .filter((s) => s.supplementId !== supplement._id)
+                                                            .map((s) => s.name)
+                                                            .join(", ")}
+                                                    </h3>
                                                     <p>{interaction.effect}</p>
+                                                    {interaction.description && (
+                                                        <p className="text-sm text-muted-foreground mt-1">
+                                                            Description: {interaction.description}
+                                                        </p>
+                                                    )}
                                                     {interaction.recommendation && (
                                                         <p className="text-sm text-muted-foreground mt-1">
                                                             Recommendation: {interaction.recommendation}
@@ -122,6 +158,7 @@ export function SupplementDetail({ supplement }: { supplement: Supplement }) {
                     </Card>
                 </TabsContent>
 
+                {/* Food Interactions */}
                 <TabsContent value="food-interactions" className="mt-4">
                     <Card>
                         <CardHeader>
@@ -129,33 +166,30 @@ export function SupplementDetail({ supplement }: { supplement: Supplement }) {
                             <CardDescription>How {supplement.name} interacts with food</CardDescription>
                         </CardHeader>
                         <CardContent>
-                            {supplement.foodInteractions.length > 0 ? (
+                            {(interactions?.supplementFoodInteractions?.length ?? 0) > 0 ? (
                                 <ul className="space-y-4">
-                                    {supplement.foodInteractions.map((interaction, index) => (
+                                    {interactions?.supplementFoodInteractions.map((interaction, index) => (
                                         <li key={index} className="border-b pb-4 last:border-0 last:pb-0">
                                             <div className="flex items-start">
                                                 <div className="mr-2">
                                                     <Badge
                                                         variant={
-                                                            interaction.effect === "enhances absorption"
+                                                            interaction.effect.includes("Enhances")
                                                                 ? "success"
-                                                                : interaction.effect === "reduces absorption"
+                                                                : interaction.effect.includes("Reduces")
                                                                     ? "destructive"
                                                                     : "outline"
                                                         }
                                                     >
-                                                        {interaction.effect.includes("enhances")
-                                                            ? "Enhances"
-                                                            : interaction.effect.includes("reduces")
-                                                                ? "Reduces"
-                                                                : "Affects"}
+                                                        {interaction.effect}
                                                     </Badge>
                                                 </div>
                                                 <div>
-                                                    <h3 className="font-medium">{interaction.foodName}</h3>
+                                                    <h3 className="font-medium">{interaction.foodItem || "Unknown Food"}</h3>
                                                     <p>{interaction.description}</p>
                                                     {interaction.recommendation && (
                                                         <p className="text-sm text-muted-foreground mt-1">
+                                                            Description: {interaction.description}
                                                             Recommendation: {interaction.recommendation}
                                                         </p>
                                                     )}
@@ -174,4 +208,3 @@ export function SupplementDetail({ supplement }: { supplement: Supplement }) {
         </div>
     )
 }
-

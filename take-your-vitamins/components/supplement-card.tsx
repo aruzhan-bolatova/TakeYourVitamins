@@ -5,7 +5,7 @@ import type { Supplement } from "@/lib/types"
 
 export function SupplementCard({ supplement }: { supplement: Supplement }) {
   return (
-    <Link href={`/supplements/${supplement.id}`}>
+    <Link href={`/supplements/${supplement._id}`}>
       <Card className="hover:shadow-md transition-shadow">
         <CardHeader>
           <CardTitle className="flex items-center justify-between">

@@ -1,40 +1,16 @@
 import { getSupplementById } from "@/lib/supplements"
 import { SupplementDetail } from "@/components/supplement-detail"
-import { notFound } from "next/navigation"
-import type { Metadata } from "next"
 
-interface SupplementPageProps {
-  params: {
-    id: string
-  }
+type Props = {
+  params: { id: string }
 }
 
-export async function generateMetadata({ params }: SupplementPageProps): Promise<Metadata> {
+export default async function SupplementPage({ params }: Props) {
   const supplement = await getSupplementById(params.id)
 
   if (!supplement) {
-    return {
-      title: "Supplement Not Found",
-    }
+    return <div> Supplement not found. </div>
   }
 
-  return {
-    title: `${supplement.name} - Take Your Vitamins`,
-    description: supplement.description,
-  }
+  return <SupplementDetail supplement={supplement} />
 }
-
-export default async function SupplementPage({ params }: SupplementPageProps) {
-  const supplement = await getSupplementById(params.id)
-
-  if (!supplement) {
-    notFound()
-  }
-
-  return (
-    <main className="container mx-auto px-4 py-8">
-      <SupplementDetail supplement={supplement} />
-    </main>
-  )
-}
-

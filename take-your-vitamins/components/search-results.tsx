@@ -13,6 +13,7 @@ export async function SearchResults({ query }: { query: string }) {
   }
 
   const results = await searchSupplements(query)
+  console.log("Search results:", results)
 
   if (results.length === 0) {
     return (
@@ -26,7 +27,7 @@ export async function SearchResults({ query }: { query: string }) {
   return (
     <div className="space-y-4">
       {results.map((supplement) => (
-        <SupplementCard key={supplement.id} supplement={supplement} />
+        <SupplementCard key={supplement._id} supplement={supplement} />
       ))}
     </div>
   )

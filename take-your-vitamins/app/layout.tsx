@@ -24,7 +24,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <AuthProvider>
             <TrackerProvider>
-              <div className="flex min-h-screen flex-col">
+              <div className="flex min-h-screen flex-col px-10">
                 <NavBar />
                 <main className="flex-1">{children} </main>
               </div>

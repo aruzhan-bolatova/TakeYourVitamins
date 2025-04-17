@@ -108,7 +108,7 @@ export function NavBar() {
           </div>
         ) : (
           <div className="flex items-center gap-4 mr-8">
-            <Link href="/login" className="text-base font-medium text-white hover:text-primary">
+            <Link href="/login" className="text-base font-medium text-black hover:text-primary">
               Login/Sign Up
             </Link>
           </div>
