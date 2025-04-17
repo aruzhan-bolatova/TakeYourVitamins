@@ -8,12 +8,14 @@ from flask_jwt_extended import JWTManager
 from app.swagger import swagger_template, swagger_ui_blueprint
 import os
 from dotenv import load_dotenv
+from flask_cors import CORS
 
 # Load environment variables
 load_dotenv()
 
 def create_app():
     app = Flask(__name__)
+    CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000"}})
     app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY', 'fallback_secret_key')
     jwt = JWTManager(app)
     

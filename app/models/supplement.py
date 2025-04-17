@@ -65,6 +65,8 @@ class Supplement:
             
             # Merge the existing data with the new data
             updated_data = {**existing_supplement, **supplement_data}
+            print(updated_data)
+            updated_data['updatedAt'] = datetime.now().isoformat()
             
             # Validate the merged data
             supplement = Supplement(updated_data)
@@ -92,3 +94,21 @@ class Supplement:
             # Perform a hard delete by removing the document
             result = db.Supplements.delete_one({'_id': _id})
         return result.deleted_count > 0 if not soft_delete else result.modified_count > 0
+    
+    @staticmethod
+    def autocomplete(search_query: str):
+        db = get_db()
+        if not search_query:
+            return []
+
+        # Build query to search both name and aliases fields
+        query = {
+            '$or': [
+                {'name': {'$regex': search_query, '$options': 'i'}},
+                {'aliases': {'$regex': search_query, '$options': 'i'}}
+            ]
+        }
+
+        # Fetch only _id and name fields to keep response light
+        results = db.Supplements.find(query, {'_id': 1, 'name': 1})
+        return [{'id': str(item['_id']), 'name': item['name']} for item in results]
