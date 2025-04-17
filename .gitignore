@@ -26,3 +26,10 @@ dist/
 build/
 venv
 coverage.xml
+
+# Next.js build output
+.next
+*.pack.gz
+build-manifest.json
+app-build-manifest.json
+*.rscinfo
