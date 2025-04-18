@@ -1,4 +1,6 @@
 import { toast } from "@/components/ui/use-toast"
+import React from "react"
+import { ToastAction } from "@/components/ui/toast"
 
 type ErrorOptions = {
   showToast?: boolean
@@ -7,7 +9,11 @@ type ErrorOptions = {
   retry?: () => Promise<any>
   context?: string // Add context for better error messages
   reportToAnalytics?: boolean // For future analytics integration
+  retryCount?: number // Track retry count to prevent infinite recursion
 }
+
+// Maximum number of retry attempts to prevent infinite recursion
+const MAX_RETRY_LIMIT = 3;
 
 // Helper to check if the browser is online
 const isOnline = (): boolean => {
@@ -29,7 +35,8 @@ export function handleError(error: any, options: ErrorOptions = {}): string {
     defaultMessage = "An unexpected error occurred",
     retry,
     context = "",
-    reportToAnalytics = false
+    reportToAnalytics = false,
+    retryCount = 0
   } = options
 
   // Handle offline status specially
@@ -37,22 +44,23 @@ export function handleError(error: any, options: ErrorOptions = {}): string {
     const offlineMessage = "You appear to be offline. Please check your internet connection.";
     
     if (showToast) {
-      toast.error(offlineMessage, {
-        action: retry ? {
-          label: "Retry",
-          onClick: () => {
-            if (isOnline()) {
-              retry();
-            } else {
-              handleError(new Error(offlineMessage), options);
-            }
-          }
-        } : undefined
-      });
+      // Check if we've reached the retry limit
+      if (retryCount >= MAX_RETRY_LIMIT) {
+        toast.error("Maximum retry attempts reached. Please try again when you're back online.");
+        
+        if (logToConsole) {
+          console.warn("Maximum retry attempts reached while offline");
+        }
+        
+        return offlineMessage;
+      }
+      
+      // Show simple toast without action to avoid complexity
+      toast.error(offlineMessage);
     }
     
     if (logToConsole) {
-      console.error("Network Error: User is offline");
+      console.error(`Network Error: User is offline (retry attempt: ${retryCount}/${MAX_RETRY_LIMIT})`);
     }
     
     return offlineMessage;
@@ -123,59 +131,21 @@ export function handleError(error: any, options: ErrorOptions = {}): string {
 
   // Show toast notification
   if (showToast) {
+    // Choose the appropriate error message based on status code
     if (statusCode === 401) {
-      // Authentication error
-      toast.error("Authentication required. Please log in again.", {
-        errorDetails,
-        action: {
-          label: "Login",
-          onClick: () => {
-            window.location.href = "/login";
-          }
-        }
-      });
+      toast.error("Authentication required. Please log in again.");
     } else if (statusCode === 403) {
-      // Permission error
-      toast.error("You don't have permission to perform this action.", {
-        errorDetails
-      });
+      toast.error("You don't have permission to perform this action.");
     } else if (statusCode === 404) {
-      // Not found error
-      toast.error("The requested resource was not found.", {
-        errorDetails
-      });
+      toast.error("The requested resource was not found.");
     } else if (statusCode === 422 || statusCode === 400) {
-      // Validation error
-      toast.error(errorMessage || "Validation error. Please check your input.", {
-        errorDetails,
-        action: retry ? {
-          label: "Retry",
-          onClick: retry
-        } : undefined
-      });
+      toast.error(errorMessage || "Validation error. Please check your input.");
     } else if (statusCode === 429) {
-      // Rate limiting
-      toast.error("Too many requests. Please try again later.", {
-        errorDetails
-      });
+      toast.error("Too many requests. Please try again later.");
     } else if (statusCode >= 500) {
-      // Server error
-      toast.error("Server error. Please try again later.", {
-        errorDetails,
-        action: retry ? {
-          label: "Retry",
-          onClick: retry
-        } : undefined
-      });
+      toast.error("Server error. Please try again later.");
     } else {
-      // Generic error
-      toast.error(errorMessage, {
-        errorDetails,
-        action: retry ? {
-          label: "Retry",
-          onClick: retry
-        } : undefined
-      });
+      toast.error(errorMessage);
     }
   }
 
@@ -201,10 +171,14 @@ export function handleError(error: any, options: ErrorOptions = {}): string {
  */
 export async function fetchWithErrorHandling<T>(
   url: string, 
-  options?: RequestInit & { context?: string, showLoadingToast?: boolean }
+  options?: RequestInit & { 
+    context?: string, 
+    showLoadingToast?: boolean,
+    retryCount?: number
+  }
 ): Promise<T> {
-  const { context, showLoadingToast = false, ...fetchOptions } = options || {};
-  let loadingToastId;
+  const { context, showLoadingToast = false, retryCount = 0, ...fetchOptions } = options || {};
+  let loadingToast: any = null;
   
   try {
     // Check if online first
@@ -214,9 +188,7 @@ export async function fetchWithErrorHandling<T>(
     
     // Show loading toast if requested
     if (showLoadingToast) {
-      loadingToastId = toast.info("Loading...", {
-        duration: Infinity // Will be dismissed manually
-      }).id;
+      loadingToast = toast.info("Loading...");
     }
     
     // Add timeout to the fetch request
@@ -231,10 +203,8 @@ export async function fetchWithErrorHandling<T>(
     // Clear the timeout
     clearTimeout(timeoutId);
     
-    // Dismiss loading toast if it exists
-    if (loadingToastId) {
-      toast.dismiss(loadingToastId);
-    }
+    // We just let the loading toast auto-disappear
+    // No need to dismiss it manually
     
     if (!response.ok) {
       // Attempt to parse error response
@@ -258,18 +228,20 @@ export async function fetchWithErrorHandling<T>(
     
     const data = await response.json();
     return data as T;
-  } catch (error) {
-    // Dismiss loading toast if it exists
-    if (loadingToastId) {
-      toast.dismiss(loadingToastId);
-    }
+  } catch (error: unknown) {
+    // We just let the loading toast auto-disappear
+    // No need to dismiss it manually
     
     // Special handling for timeout errors
-    if (error.name === 'AbortError') {
+    if (error instanceof Error && error.name === 'AbortError') {
       const timeoutError = new Error("The request took too long to complete. Please try again.");
       handleError(timeoutError, {
         context,
-        retry: () => fetchWithErrorHandling(url, options)
+        retry: () => fetchWithErrorHandling(url, {
+          ...options,
+          retryCount: retryCount + 1
+        }),
+        retryCount
       });
       throw timeoutError;
     }
@@ -277,7 +249,11 @@ export async function fetchWithErrorHandling<T>(
     // Handle using our standardized error handler
     handleError(error, {
       context,
-      retry: () => fetchWithErrorHandling(url, options)
+      retry: () => fetchWithErrorHandling(url, {
+        ...options,
+        retryCount: retryCount + 1
+      }),
+      retryCount
     });
     
     // Re-throw the error for the calling code to handle
