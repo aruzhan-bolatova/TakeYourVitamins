@@ -10,6 +10,8 @@ from bson.objectid import ObjectId
 bp = Blueprint('intake_logs', __name__, url_prefix='/api/intake-logs')
 
 @bp.route('/', methods=['GET'])
+# TESTING on POSTMAN:
+# POST to http://localhost:5001/api/intake-logs/
 @jwt_required()
 def get_intake_logs():
     """Get a list of intake logs for the current user"""
@@ -47,6 +49,11 @@ def get_intake_logs():
         return jsonify({"error": "Failed to get intake logs", "details": str(e)}), 500
 
 @bp.route('/', methods=['POST'])
+# TESTING on POSTMAN:
+# POST to http://localhost:5001/api/intake-logs/ with JSON body 
+# {"supplementId": "SUPPLEMENT_12345","dosage": 500, 
+# "unit": "mg", "timestamp": "2025-04-17T10:00:00Z",
+# "notes": "Taking vitamin D supplement"}
 @jwt_required()
 def create_intake_log():
     """Create a new intake log"""
@@ -74,89 +81,93 @@ def create_intake_log():
     except Exception as e:
         return jsonify({"error": "Failed to create intake log", "details": str(e)}), 500
 
-@bp.route('/check-interactions', methods=['POST'])
-@jwt_required()
-def check_intake_interactions():
-    """Check for interactions in a potential intake"""
-    try:
-        # Check for JSON content
-        if not request.is_json:
-            return jsonify({"error": "Missing JSON in request"}), 400
+# @bp.route('/check-interactions', methods=['POST'])
+# @jwt_required()
+# def check_intake_interactions():
+#     """Check for interactions in a potential intake"""
+#     try:
+#         # Check for JSON content
+#         if not request.is_json:
+#             return jsonify({"error": "Missing JSON in request"}), 400
             
-        # Get data
-        data = request.json
+#         # Get data
+#         data = request.json
         
-        # Get parameters
-        supplement_ids = data.get('supplementIds', [])
-        food_items = data.get('foodItems', [])
-        medications = data.get('medications', [])
+#         # Get parameters
+#         supplement_ids = data.get('supplementIds', [])
+#         food_items = data.get('foodItems', [])
+#         medications = data.get('medications', [])
         
-        # Check for required parameters
-        if not supplement_ids:
-            return jsonify({"error": "At least one supplement ID is required"}), 400
+#         # Check for required parameters
+#         if not supplement_ids:
+#             return jsonify({"error": "At least one supplement ID is required"}), 400
             
-        # Get user ID
-        user_id = get_jwt_identity()
+#         # Get user ID
+#         user_id = get_jwt_identity()
         
-        # Check interactions with specified items
-        interactions = Interaction.check_interactions(
-            supplement_ids=supplement_ids,
-            food_items=food_items,
-            medications=medications
-        )
+#         # Check interactions with specified items
+#         interactions = Interaction.check_interactions(
+#             supplement_ids=supplement_ids,
+#             food_items=food_items,
+#             medications=medications
+#         )
         
-        # Also check interactions with supplements taken in the last 24 hours
-        recent_logs = IntakeLog.find_recent(user_id, hours=24)
-        recent_supplement_ids = [log.supplement_id for log in recent_logs 
-                              if log.supplement_id not in supplement_ids]
+#         # Also check interactions with supplements taken in the last 24 hours
+#         recent_logs = IntakeLog.find_recent(user_id, hours=24)
+#         recent_supplement_ids = [log.supplement_id for log in recent_logs 
+#                               if log.supplement_id not in supplement_ids]
         
-        if recent_supplement_ids:
-            # Combine with current supplements to check all interactions
-            all_supplement_ids = supplement_ids + recent_supplement_ids
-            all_interactions = Interaction.check_interactions(
-                supplement_ids=all_supplement_ids
-            )
+#         if recent_supplement_ids:
+#             # Combine with current supplements to check all interactions
+#             all_supplement_ids = supplement_ids + recent_supplement_ids
+#             all_interactions = Interaction.check_interactions(
+#                 supplement_ids=all_supplement_ids
+#             )
             
-            # Filter out interactions that don't involve any supplements from the current request
-            additional_interactions = []
-            for interaction in all_interactions:
-                if interaction not in interactions:  # This won't work without proper __eq__ implementation
-                    # Check if any supplements in this interaction are in the current request
-                    interaction_supp_ids = [s.get('supplementId') for s in interaction.supplements]
-                    if any(sid in supplement_ids for sid in interaction_supp_ids):
-                        additional_interactions.append(interaction)
+#             # Filter out interactions that don't involve any supplements from the current request
+#             additional_interactions = []
+#             for interaction in all_interactions:
+#                 if interaction not in interactions:  # This won't work without proper __eq__ implementation
+#                     # Check if any supplements in this interaction are in the current request
+#                     interaction_supp_ids = [s.get('supplementId') for s in interaction.supplements]
+#                     if any(sid in supplement_ids for sid in interaction_supp_ids):
+#                         additional_interactions.append(interaction)
             
-            # Add additional interactions
-            interactions.extend(additional_interactions)
+#             # Add additional interactions
+#             interactions.extend(additional_interactions)
         
-        # Categorize interactions by severity
-        categorized = {
-            'severe': [],
-            'high': [],
-            'medium': [],
-            'low': []
-        }
+#         # Categorize interactions by severity
+#         categorized = {
+#             'severe': [],
+#             'high': [],
+#             'medium': [],
+#             'low': []
+#         }
         
-        for interaction in interactions:
-            severity = interaction.severity.lower() if interaction.severity else 'low'
-            if severity in categorized:
-                categorized[severity].append(interaction.to_dict())
-            else:
-                categorized['low'].append(interaction.to_dict())
+#         for interaction in interactions:
+#             severity = interaction.severity.lower() if interaction.severity else 'low'
+#             if severity in categorized:
+#                 categorized[severity].append(interaction.to_dict())
+#             else:
+#                 categorized['low'].append(interaction.to_dict())
         
-        # Return interactions
-        return jsonify({
-            "interactions": [i.to_dict() for i in interactions],
-            "count": len(interactions),
-            "categorized": categorized,
-            "recentSupplements": recent_supplement_ids
-        }), 200
-    except ValueError as e:
-        return jsonify({"error": str(e)}), 400
-    except Exception as e:
-        return jsonify({"error": "Failed to check interactions", "details": str(e)}), 500
+#         # Return interactions
+#         return jsonify({
+#             "interactions": [i.to_dict() for i in interactions],
+#             "count": len(interactions),
+#             "categorized": categorized,
+#             "recentSupplements": recent_supplement_ids
+#         }), 200
+#     except ValueError as e:
+#         return jsonify({"error": str(e)}), 400
+#     except Exception as e:
+#         return jsonify({"error": "Failed to check interactions", "details": str(e)}), 500
 
 @bp.route('/<log_id>', methods=['GET'])
+# TESTING on POSTMAN:
+# GET to http://localhost:5001/api/intake-logs/<log_id>
+# with no body
+# link used with '_id' http://localhost:5001/api/intake-logs/680148aac6e4d1e7775e014d
 @jwt_required()
 def get_intake_log(log_id):
     """Get a specific intake log"""
@@ -183,6 +194,15 @@ def get_intake_log(log_id):
         return jsonify({"error": "Failed to get intake log", "details": str(e)}), 500
 
 @bp.route('/<log_id>', methods=['PUT'])
+# TESTING on POSTMAN:
+# PUT to http://localhost:5001/api/intake-logs/<log_id> with JSON body
+# {"dosage": 1000, "unit": "mg", "notes": "Updated notes"}
+# link used with '_id' http://localhost:5001/api/intake-logs/6800de291b91e9e05cde378e
+
+#TESTING on POSTMAN (more than 7 day validation):
+# PUT to http://localhost:5001/api/intake-logs/<log_id> with JSON body
+# {"dosage": 1000, "unit": "mg", "notes": "Updated notes"}
+# link used with '_id' http://localhost:5001/api/intake-logs/68015dda5bccfac1e83cac54
 @jwt_required()
 def update_intake_log(log_id):
     """Update an intake log"""
@@ -258,6 +278,9 @@ def update_intake_log(log_id):
         return jsonify({"error": "Failed to update intake log", "details": str(e)}), 500
 
 @bp.route('/<log_id>', methods=['DELETE'])
+# TESTING on POSTMAN:
+# DELETE to http://localhost:5001/api/intake-logs/<log_id> with no body
+# link used with '_id' http://localhost:5001/api/intake-logs/680148aac6e4d1e7775e014d
 @jwt_required()
 def delete_intake_log(log_id):
     """Delete an intake log"""
