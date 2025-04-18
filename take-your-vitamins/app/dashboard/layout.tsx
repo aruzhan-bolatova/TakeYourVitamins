@@ -35,9 +35,15 @@ export default function DashboardLayout({
 
   return (
     <div className="flex min-h-screen flex-col">
-
-      <main className="ml-8 flex-1">
-        <div className="pl-10 pr-20 py-6">{children}</div>
+      <header className="sticky top-0 z-40 border-b bg-background">
+        <div className="container flex h-16 items-center justify-between py-4">
+          <DashboardNav user={user} />
+        </div>
+      </header>
+      <main className="flex-1">
+        <div className="container py-6">
+          {children}
+        </div>
       </main>
     </div>
   )

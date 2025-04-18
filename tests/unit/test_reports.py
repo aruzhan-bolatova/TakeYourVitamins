@@ -175,10 +175,16 @@ class TestReports(unittest.TestCase):
         streaks = _calculate_streaks(self.user_id, self.sample_intake_logs)
         
         # Assertions
-        self.assertIn('currentStreak', streaks)
-        self.assertIn('longestStreak', streaks)
-        # Fix: 'totalDays' might not exist in the actual implementation
-        self.assertIn('supplementStreaks', streaks)
+        self.assertIsInstance(streaks, list)
+        self.assertTrue(len(streaks) > 0, "The streaks list should not be empty")
+        
+        # Check that each streak has the required fields
+        for streak in streaks:
+            self.assertIn('supplementId', streak)
+            self.assertIn('supplementName', streak)
+            self.assertIn('currentStreak', streak)
+            self.assertIn('longestStreak', streak)
+            self.assertIn('lastTaken', streak)
     
     def test_calculate_progress(self):
         """Test _calculate_progress helper function"""

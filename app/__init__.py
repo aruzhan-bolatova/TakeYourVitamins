@@ -1,6 +1,6 @@
 # In app/__init__.py
 from app.routes import auth, users, supplements, intake_logs, symptom_logs, interactions, alerts, reports
-from app.db import close_connection
+from app.db.db import register_shutdown_handler  # Update import for new function
 from app.models import init_db, TokenBlacklist
 from app.utils.error_handlers import register_error_handlers, APIError, handle_api_error
 from flask import Flask, jsonify, redirect
@@ -59,13 +59,20 @@ def create_app():
     with app.app_context():
         init_db()
 
-    @app.teardown_appcontext
-    def teardown_db(exception):
-        close_connection()
-        
+    # Register the improved MongoDB connection shutdown handler
+    register_shutdown_handler(app)
+    
     # Add a basic route for the root path that redirects to the Swagger UI
     @app.route('/')
     def index():
         return redirect('/api/docs')
+
+    # Add a health check endpoint
+    @app.route('/api/health')
+    def health_check():
+        return jsonify({
+            'status': 'ok',
+            'message': 'API is up and running'
+        })
 
     return app

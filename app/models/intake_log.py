@@ -2,6 +2,7 @@ from app.db.db import get_database as get_db
 from datetime import datetime, timezone, timedelta
 from bson.objectid import ObjectId
 import uuid
+import logging
 
 
 class IntakeLog:
@@ -144,15 +145,34 @@ class IntakeLog:
    
     @staticmethod
     def find_by_date_range(user_id, start_date, end_date):
-        """Find logs within a specific date range"""
+        """Find logs within a specific date range with improved error handling"""
         db = get_db()
         query = {
             'userId': user_id,
-            'timestamp': {'$gte': start_date, '$lte': end_date},
             'deletedAt': None
         }
-       
-        return [IntakeLog(log) for log in db.IntakeLogs.find(query)]
+        
+        # Add date filtering if both dates are provided
+        if start_date and end_date:
+            # Try to match against timestamp or any other date field that might exist
+            date_query = {
+                '$or': [
+                    {'timestamp': {'$gte': start_date, '$lte': end_date}},
+                    {'createdAt': {'$gte': start_date, '$lte': end_date}}
+                ]
+            }
+            # Combine with existing query using $and
+            query = {'$and': [query, date_query]}
+        
+        # Log the query for debugging
+        logging.info(f"IntakeLog find_by_date_range query: {query}")
+        
+        try:
+            logs = list(db.IntakeLogs.find(query))
+            return [IntakeLog(log) for log in logs]
+        except Exception as e:
+            logging.error(f"Error in IntakeLog.find_by_date_range: {e}")
+            return []
    
     @staticmethod
     def find_recent(user_id, hours=24):

@@ -11,7 +11,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Home, Pill, Calendar, LogOut } from "lucide-react"
+import { 
+  Home, Pill, Calendar, LogOut, BarChart3, 
+  Award, TrendingUp, LineChart, FileText 
+} from "lucide-react"
 import { useAuth } from "@/contexts/auth-context"
 import { ClassNames } from "react-day-picker"
 
@@ -32,7 +35,7 @@ export function DashboardNav({ user }: DashboardNavProps) {
   const router = useRouter()
   const { signOut } = useAuth()
 
-  // Update the navItems array to match the screenshot
+  // Update the navItems array to include the new reports pages
   const navItems = [
     {
       title: "Dashboard",
@@ -48,6 +51,21 @@ export function DashboardNav({ user }: DashboardNavProps) {
       title: "Daily Log",
       href: "/dashboard/tracker/log",
       icon: <Calendar className="mr-2 h-4 w-4" />,
+    },
+    {
+      title: "Reports",
+      href: "/dashboard/reports",
+      icon: <FileText className="mr-2 h-4 w-4" />,
+    },
+    {
+      title: "Streaks",
+      href: "/dashboard/streaks",
+      icon: <Award className="mr-2 h-4 w-4" />,
+    },
+    {
+      title: "Progress",
+      href: "/dashboard/progress",
+      icon: <TrendingUp className="mr-2 h-4 w-4" />,
     },
   ]
 
@@ -95,6 +113,25 @@ export function DashboardNav({ user }: DashboardNavProps) {
               {user.email && <p className="w-[200px] truncate text-sm text-muted-foreground">{user.email}</p>}
             </div>
           </div>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem asChild>
+            <Link href="/dashboard/reports">
+              <FileText className="mr-2 h-4 w-4" />
+              Reports
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <Link href="/dashboard/streaks">
+              <Award className="mr-2 h-4 w-4" />
+              Streaks
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <Link href="/dashboard/progress">
+              <TrendingUp className="mr-2 h-4 w-4" />
+              Progress
+            </Link>
+          </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem className="cursor-pointer" onClick={handleSignOut}>
             <LogOut className="mr-2 h-4 w-4" />
