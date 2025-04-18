@@ -31,7 +31,6 @@ class TestAlerts(unittest.TestCase):
         response = self.client.get('/api/alerts/')
         
         # Assert response
-        self.assertEqual(response.status_code, 501)
+        self.assertEqual(response.status_code, 401)
         data = json.loads(response.data)
-        self.assertIn('message', data)
-        self.assertEqual(data['message'], 'Alerts endpoint coming soon')
+        self.assertIn('msg', data)
