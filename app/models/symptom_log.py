@@ -1,6 +1,7 @@
 from app.db.db import get_database as get_db
 from datetime import datetime, timezone
 from bson.objectid import ObjectId
+import logging
 
 class SymptomLog:
     def __init__(self, log_data: dict):
@@ -151,3 +152,35 @@ class SymptomLog:
         else:
             result = db.SymptomLogs.delete_one({'_id': log_id})
             return result.deleted_count > 0
+
+    @staticmethod
+    def find_by_date_range(user_id, start_date, end_date):
+        """Find symptom logs within a specific date range"""
+        db = get_db()
+        query = {
+            'userId': user_id,
+            'isDeleted': False
+        }
+        
+        # Add date range conditions if both dates are provided
+        if start_date and end_date:
+            # Try to match against logDate or timestamp or any other date field that might exist
+            date_query = {
+                '$or': [
+                    {'logDate': {'$gte': start_date, '$lte': end_date}},
+                    {'timestamp': {'$gte': start_date, '$lte': end_date}},
+                    {'createdAt': {'$gte': start_date, '$lte': end_date}}
+                ]
+            }
+            # Combine with existing query using $and
+            query = {'$and': [query, date_query]}
+        
+        # Log the query for debugging
+        logging.info(f"SymptomLog find_by_date_range query: {query}")
+        
+        try:
+            logs = list(db.SymptomLogs.find(query))
+            return [SymptomLog(log) for log in logs]
+        except Exception as e:
+            logging.error(f"Error in SymptomLog.find_by_date_range: {e}")
+            return []
