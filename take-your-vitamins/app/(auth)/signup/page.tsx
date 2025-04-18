@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import Link from "next/link"
+import { getApiUrl } from "@/lib/api-config"
 
 export default function SignupPage() {
   const router = useRouter()
@@ -27,7 +28,7 @@ export default function SignupPage() {
     try {
       console.log(JSON.stringify({ name, email, password, age, gender }))
 
-      const response = await fetch("http://10.228.244.25:5001/api/auth/register", {
+      const response = await fetch(getApiUrl("/api/auth/register"), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
 import { useRouter } from "next/navigation"
+import { getApiUrl } from "@/lib/api-config"
 
 type User = {
   id: string
@@ -42,7 +43,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     try {
       // Make a POST request to the auth/login endpoint
-      const response = await fetch("http://10.228.244.25:5001/api/auth/login", {
+      const response = await fetch(getApiUrl("/api/auth/login"), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -54,17 +55,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         throw new Error("Failed to authenticate. Please check your credentials.")
       }
 
-    // Parse the response to get the access token and userId
-    const { access_token, message, userId } = await response.json()
-    console.log("Login successful:", message)
-    console.log("Access token received:", access_token)
-    console.log("User ID:", userId)
+      // Parse the response to get the access token and userId
+      const { access_token, message, userId } = await response.json()
+      console.log("Login successful:", message)
+      console.log("Access token received:", access_token)
+      console.log("User ID:", userId)
 
       // Save the token in localStorage
       localStorage.setItem("token", access_token)
 
       // Fetch the user details from the database using the access_token
-      const userResponse = await fetch("http://10.228.244.25:5001/api/auth/me", {
+      const userResponse = await fetch(getApiUrl("/api/auth/me"), {
         method: "GET",
         headers: {
           Authorization: `Bearer ${access_token}`,
@@ -102,7 +103,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     try {
       // Make a POST request to the auth/register endpoint
-      const response = await fetch("http://10.228.244.25:5001/api/auth/register", {
+      const response = await fetch(getApiUrl("/api/auth/register"), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -6,6 +6,7 @@ import { usePathname, useRouter } from "next/navigation"
 import { Pill, ChevronDown, Settings, LogOut } from "lucide-react"
 import { useAuth } from "@/contexts/auth-context"
 import { cn } from "@/lib/utils"
+import { AlertsDropdown } from "@/components/alerts/alerts-dropdown"
 
 export function NavBar() {
   const { user, signOut } = useAuth()
@@ -36,6 +37,11 @@ export function NavBar() {
     { name: "Search", href: "/" },
     { name: "Tracker", href: "/dashboard" },
   ]
+
+  // Add alerts to nav items if user is logged in
+  if (user) {
+    navItems.push({ name: "Alerts", href: "/alerts" })
+  }
 
   return (
     <header className="top-0 z-50 w-full border-b relative">
@@ -74,37 +80,42 @@ export function NavBar() {
 
         {/* Right section: Profile dropdown */}
         {user ? (
-          <div className="relative mr-8" ref={dropdownRef}>
-            <button
-              onClick={() => setDropdownOpen(!dropdownOpen)}
-              className="flex items-center gap-1 text-base font-medium text-gray-700 hover:text-primary"
-            >
-              Profile
-              <ChevronDown className="h-4 w-4" />
-            </button>
+          <div className="flex items-center gap-4 mr-8">
+            {/* Add alerts dropdown here */}
+            <AlertsDropdown />
+            
+            <div className="relative" ref={dropdownRef}>
+              <button
+                onClick={() => setDropdownOpen(!dropdownOpen)}
+                className="flex items-center gap-1 text-base font-medium text-gray-700 hover:text-primary"
+              >
+                Profile
+                <ChevronDown className="h-4 w-4" />
+              </button>
 
-            {dropdownOpen && (
-              <div className="absolute right-0 mt-2 w-64 rounded-md border bg-white p-4 shadow-lg">
-                <div className="mb-4 border-b pb-2">
-                  <p className="text-lg text-black font-medium">{user.name}</p>
-                  <p className="text-sm text-gray-700">{user.email}</p>
+              {dropdownOpen && (
+                <div className="absolute right-0 mt-2 w-64 rounded-md border bg-white p-4 shadow-lg">
+                  <div className="mb-4 border-b pb-2">
+                    <p className="text-lg text-black font-medium">{user.name}</p>
+                    <p className="text-sm text-gray-700">{user.email}</p>
+                  </div>
+                  <div className="space-y-2">
+                    <Link
+                      href="/settings"
+                      className="block flex w-full text-left py-1 text-black hover:text-primary"
+                      onClick={() => setDropdownOpen(false)}
+                    >
+                      <Settings />
+                      Settings
+                    </Link>
+                    <button onClick={handleSignOut} className="block flex w-full text-left py-1 text-black hover:text-primary">
+                      <LogOut />
+                      Log out
+                    </button>
+                  </div>
                 </div>
-                <div className="space-y-2">
-                  <Link
-                    href="/settings"
-                    className="block flex w-full text-left py-1 text-black hover:text-primary"
-                    onClick={() => setDropdownOpen(false)}
-                  >
-                    <Settings />
-                    Settings
-                  </Link>
-                  <button onClick={handleSignOut} className="block flex w-full text-left py-1 text-black hover:text-primary">
-                    <LogOut />
-                    Log out
-                  </button>
-                </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         ) : (
           <div className="flex items-center gap-4 mr-8">
