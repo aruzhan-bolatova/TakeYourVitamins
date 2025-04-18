@@ -1,6 +1,16 @@
 '''
-1. find the tracker_supplement_list for user, if not found, create a new one
-2. create a new tracker_supplement_list for user, only one tracker_supplement_list per user
+1. GET /api/tracker_supplements_list/ 
+    find the tracker_supplement_list for user, if not found, create a new one
+2. POST /api/tracker_supplements_list/
+    create a new tracker_supplement_list for user, only one tracker_supplement_list per user
+3. POST /api/tracker_supplements_list/<user_id>
+    add a tracked_supplement to the user's tracker_supplement_list
+4. PUT /api/tracker_supplements_list/<user_id>
+    update a tracked_supplement in the user's tracker_supplement_list
+5. DELETE /api/tracker_supplements_list/<user_id>
+    delete a tracked_supplement from the user's tracker_supplement_list
+6. GET /api/tracker_supplements_list/<user_id>
+    get the user's tracker_supplement_list by user_id
 
 
 
@@ -163,6 +173,36 @@ def delete_tracked_supplement():
     except Exception as e:
         return jsonify({"error": "Failed to delete tracked supplement", "details": str(e)}), 500
 
+@bp.route('/<string:user_id>', methods=['GET'])
+@jwt_required()
+def get_tracker_supplement_list_by_supplement_id():
+    """
+    Get the TrackerSupplementList for the current user by supplement ID.
+    """
+    try:
+        # Get the user ID from the JWT token
+        user_id = get_jwt_identity()
+
+        # Get the supplement ID from the request
+        supplement_id = request.args.get('supplementId')
+        if not supplement_id:
+            return jsonify({"error": "Missing supplement ID"}), 400
+
+        # Find the TrackerSupplementList for the user
+        tracker_supplement_list = TrackerSupplementList.find_by_user_id(user_id)
+        if not tracker_supplement_list:
+            return jsonify({"error": "TrackerSupplementList not found for the user"}), 404
+
+        # Find the tracked supplement by ID
+        tracked_supplement = next((s for s in tracker_supplement_list.tracked_supplements if str(s._id) == supplement_id), None)
+        if not tracked_supplement:
+            return jsonify({"error": "Tracked supplement not found"}), 404
+
+        # Return the tracked supplement as a JSON response
+        return jsonify({"trackedSupplement": tracked_supplement.to_dict()}), 200
+
+    except Exception as e:
+        return jsonify({"error": "Failed to retrieve TrackerSupplementList", "details": str(e)}), 500
 
 
 
