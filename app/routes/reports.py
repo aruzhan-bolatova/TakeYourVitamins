@@ -114,6 +114,7 @@ def get_user_report(user_id):
         
         # Streaks
         try:
+            # _calculate_streaks now returns a flat list of supplement streaks directly
             report_data["streaks"] = _calculate_streaks(user_id, intake_logs)
         except Exception as e:
             import logging
@@ -174,6 +175,7 @@ def get_user_streaks(user_id):
         
         # Calculate streaks with error handling
         try:
+            # _calculate_streaks now returns a flat list of supplement streaks
             response_data["streaks"] = _calculate_streaks(user_id, intake_logs)
         except Exception as e:
             import logging
@@ -562,7 +564,7 @@ def _calculate_streaks(user_id, intake_logs):
     longest_streak = max(longest_streak, current_run)
     
     # Calculate supplement streaks
-    supplement_streaks = {}
+    supplement_streaks = []
     
     for log in intake_logs:
         supp_id = log.supplement_id
@@ -572,21 +574,37 @@ def _calculate_streaks(user_id, intake_logs):
         try:
             date = datetime.fromisoformat(log.timestamp).date()
             
-            if supp_id not in supplement_streaks:
-                supplement_streaks[supp_id] = {
+            # Check if this supplement is already in our list
+            existing_supp = next((s for s in supplement_streaks if s['supplementId'] == supp_id), None)
+            
+            if not existing_supp:
+                supplement_name = log.supplement_name if hasattr(log, 'supplement_name') else 'Unknown'
+                existing_supp = {
                     'supplementId': supp_id,
-                    'supplementName': log.supplement_name if hasattr(log, 'supplement_name') else 'Unknown',
+                    'supplementName': supplement_name,
                     'dates': set(),
                     'currentStreak': 0,
-                    'longestStreak': 0
+                    'longestStreak': 0,
+                    'lastTaken': log.timestamp  # Add lastTaken field for frontend
                 }
+                supplement_streaks.append(existing_supp)
                 
-            supplement_streaks[supp_id]['dates'].add(date)
+            existing_supp['dates'].add(date)
+            
+            # Update lastTaken if this log is more recent
+            try:
+                log_date = datetime.fromisoformat(log.timestamp)
+                last_taken = datetime.fromisoformat(existing_supp['lastTaken'])
+                if log_date > last_taken:
+                    existing_supp['lastTaken'] = log.timestamp
+            except (ValueError, TypeError):
+                pass
+                
         except (ValueError, TypeError, AttributeError):
             pass
     
     # Calculate streaks for each supplement
-    for supp_id, data in supplement_streaks.items():
+    for data in supplement_streaks:
         # Sort dates
         sorted_supp_dates = sorted(data['dates'])
         
@@ -626,15 +644,16 @@ def _calculate_streaks(user_id, intake_logs):
         longest_supp_streak = max(longest_supp_streak, current_supp_run)
         
         # Update streak data
-        supplement_streaks[supp_id]['currentStreak'] = current_supp_streak
-        supplement_streaks[supp_id]['longestStreak'] = longest_supp_streak
-        supplement_streaks[supp_id]['dates'] = [d.isoformat() for d in sorted_supp_dates]
+        data['currentStreak'] = current_supp_streak
+        data['longestStreak'] = longest_supp_streak
+        
+        # Remove the dates set since we don't need it in the response
+        # and it can't be JSON serialized
+        data.pop('dates', None)
     
-    return {
-        'currentStreak': current_streak,
-        'longestStreak': longest_streak,
-        'supplementStreaks': list(supplement_streaks.values())
-    }
+    # For now, return only supplement streaks as a flat list
+    # This matches the frontend's expectations
+    return supplement_streaks
 
 def _calculate_progress(user_id, intake_logs):
     """Calculate progress for a user"""
