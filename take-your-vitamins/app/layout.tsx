@@ -6,6 +6,7 @@ import { AuthProvider } from "@/contexts/auth-context"
 import { TrackerProvider } from "@/contexts/tracker-context"
 import { AlertsProvider } from "@/contexts/alerts-context"
 import { NavBar } from "@/components/nav-bar"
+import { Toaster } from "@/components/ui/toaster"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -30,6 +31,7 @@ export default function RootLayout({
                   <NavBar />
                   <main className="flex-1">{children} </main>
                 </div>
+                <Toaster />
               </TrackerProvider>
             </AlertsProvider>
           </AuthProvider>

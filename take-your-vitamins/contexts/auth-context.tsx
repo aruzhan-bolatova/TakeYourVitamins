@@ -3,6 +3,9 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
 import { useRouter } from "next/navigation"
 import { getApiUrl } from "@/lib/api-config"
+import { handleError } from "@/lib/error-handler"
+import { fetchWithErrorHandling } from "@/lib/error-handler"
+import { toast } from "@/components/ui/use-toast"
 
 type User = {
   id: string
@@ -52,45 +55,56 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       })
 
       if (!response.ok) {
-        throw new Error("Failed to authenticate. Please check your credentials.")
+        throw { 
+          error: "Invalid email or password",
+          status: response.status, 
+          statusText: response.statusText 
+        }
       }
 
       // Parse the response to get the access token and userId
       const { access_token, message, userId } = await response.json()
-      console.log("Login successful:", message)
-      console.log("Access token received:", access_token)
-      console.log("User ID:", userId)
 
       // Save the token in localStorage
       localStorage.setItem("token", access_token)
 
-      // Fetch the user details from the database using the access_token
-      const userResponse = await fetch(getApiUrl("/api/auth/me"), {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-        },
-      })
+      try {
+        // Fetch the user details from the database using the access_token
+        const userData = await fetchWithErrorHandling<User>(getApiUrl("/api/auth/me"), {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+          },
+        })
 
-      if (!userResponse.ok) {
-        throw new Error("Failed to fetch user details.")
+        // Set the user state and save it in localStorage
+        setUser(userData)
+        localStorage.setItem("user", JSON.stringify(userData))
+
+        // Show success toast
+        toast.success("Login successful!")
+        
+        // Redirect to dashboard after a short delay to allow toast to be seen
+        setTimeout(() => {
+          router.push("/dashboard");
+        }, 1000);
+        
+        return true
+      } catch (err) {
+        // If user details fetch fails, clear the token
+        localStorage.removeItem("token")
+        handleError(err, {
+          defaultMessage: "Failed to load user details after successful login.",
+          showToast: false // Don't show toast, let login page handle UI
+        })
+        return false
       }
-
-      const userData = await userResponse.json()
-      console.log("User data received:", userData)
-
-      // Set the user state and save it in localStorage
-      setUser(userData)
-      localStorage.setItem("user", JSON.stringify(userData))
-
-      // Navigate to the dashboard
-      router.push("/dashboard")
-      return true
-    } catch (error) {
-      console.error("Error during sign-in:", error)
-      setUser(null)
-      localStorage.removeItem("access_token")
-      localStorage.removeItem("user")
+    } catch (err) {
+      handleError(err, {
+        defaultMessage: "Login failed. Please check your credentials.",
+        context: "Authentication",
+        showToast: false // Don't show toast, let login page handle UI
+      })
       return false
     } finally {
       setIsLoading(false)
@@ -112,19 +126,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       })
 
       if (!response.ok) {
-        throw new Error("Failed to register. Please check your details.")
+        const errorData = await response.json()
+        throw { 
+          ...errorData, 
+          status: response.status, 
+          statusText: response.statusText 
+        }
       }
 
-      // Parse the response and set the user
+      // Parse the response
       const userData = await response.json()
-      setUser(userData)
-
-      // Store the user in localStorage for persistence
-      localStorage.setItem("user", JSON.stringify(userData))
+      
+      // Show success notification - only display this toast here, not in the signup page
+      toast.success("Account created successfully! Please log in.")
+      
       return true
     } catch (error) {
-      console.error("Error during sign-up:", error)
-      setUser(null)
+      handleError(error, {
+        defaultMessage: "Registration failed. Please check your details.",
+        context: "Registration",
+        showToast: false // Let the signup page handle the error display
+      })
       return false
     } finally {
       setIsLoading(false)
@@ -133,10 +155,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   // Sign out function
   const signOut = () => {
-    setUser(null)
-    localStorage.removeItem("user")
+    // Clear the token and user from localStorage
     localStorage.removeItem("token")
-    router.push("/")
+    localStorage.removeItem("user")
+
+    // Clear the user state
+    setUser(null)
+
+    // Show success toast
+    toast.success("You have been logged out successfully.")
+
+    // Redirect to the login page
+    router.push("/login")
   }
 
   return (

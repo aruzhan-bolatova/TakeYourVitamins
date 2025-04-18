@@ -8,6 +8,10 @@ import { format } from "date-fns"
 import { Badge } from "@/components/ui/badge"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertCircle, CheckCircle2, Trophy } from "lucide-react"
+import { toast } from "@/components/ui/use-toast"
+import { ErrorDisplay } from "@/components/ui/error-display"
+import { handleError } from "@/lib/error-handler"
+import { RefreshCw } from "lucide-react"
 
 export default function StreaksPage() {
   const [streaksData, setStreaksData] = useState<Streak[] | null>(null)
@@ -18,16 +22,33 @@ export default function StreaksPage() {
     async function fetchStreaks() {
       setLoading(true)
       setError(null)
+      
       try {
+        // Show loading toast
+        const loadingToast = toast.info("Loading streak data...", {
+          duration: 3000
+        });
+        
         const data = await getUserStreaks()
+        
         if (data) {
           setStreaksData(data.streaks)
+          
+          // Show different toasts based on streak data
+          if (data.streaks.length === 0) {
+            toast.info("No streak data available yet. Start tracking supplements to build streaks!");
+          } else if (data.streaks.some(streak => streak.currentStreak >= 7)) {
+            toast.success("Great job! You have streaks of 7+ days.");
+          }
         } else {
           throw new Error("No data returned")
         }
       } catch (err) {
-        setError("Failed to load streaks. Please try again later.")
-        console.error("Error loading streaks:", err)
+        const errorMessage = "Failed to load streaks. Please try again later.";
+        setError(errorMessage);
+        handleError(err, {
+          defaultMessage: errorMessage
+        });
       } finally {
         setLoading(false)
       }
@@ -70,11 +91,28 @@ export default function StreaksPage() {
         )}
 
         {error && (
-          <Alert variant="destructive">
-            <AlertCircle className="h-4 w-4" />
-            <AlertTitle>Error</AlertTitle>
-            <AlertDescription>{error}</AlertDescription>
-          </Alert>
+          <ErrorDisplay 
+            message={error}
+            onRetry={() => {
+              setLoading(true);
+              setError(null);
+              getUserStreaks()
+                .then(data => {
+                  if (data) {
+                    setStreaksData(data.streaks);
+                    toast.success("Streaks refreshed successfully!");
+                  } else {
+                    throw new Error("No data returned");
+                  }
+                })
+                .catch(err => {
+                  const errorMessage = "Failed to load streaks. Please try again.";
+                  setError(errorMessage);
+                  handleError(err, { defaultMessage: errorMessage });
+                })
+                .finally(() => setLoading(false));
+            }}
+          />
         )}
 
         {streaksData && streaksData.length === 0 && (

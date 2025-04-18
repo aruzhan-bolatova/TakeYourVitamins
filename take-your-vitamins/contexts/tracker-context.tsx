@@ -4,6 +4,8 @@ import { createContext, useContext, useState, useEffect, type ReactNode } from "
 import { useAuth } from "./auth-context"
 import type { Supplement } from "@/lib/types"
 import { getSupplementById } from "@/lib/supplements"
+import { toast } from "@/components/ui/use-toast"
+import { handleError } from "@/lib/error-handler"
 
 export type TrackedSupplement = {
   id: string
@@ -162,77 +164,124 @@ export function TrackerProvider({ children }: { children: ReactNode }) {
     }
   }, [intakeLogs, user, symptomLogs])
 
-  // Add a new tracked supplement
+  // Update addTrackedSupplement to use toast for success and error notifications
   const addTrackedSupplement = async (data: Omit<TrackedSupplement, "id" | "userId" | "supplement">) => {
-    if (!user) return { success: false, warnings: [] }
-
-    // Check for interactions
-    const warnings = await checkInteractions(data.supplementId)
-
-    // Get the supplement details
-    const supplement = await getSupplementById(data.supplementId)
-    if (!supplement) return { success: false, warnings: [] }
-
-    const newTrackedSupplement: TrackedSupplement = {
-      id: `ts-${Date.now()}`,
-      userId: user.id,
-      supplementId: data.supplementId,
-      supplement,
-      startDate: data.startDate,
-      endDate: data.endDate,
-      dosage: data.dosage,
-      frequency: data.frequency,
-      notes: data.notes,
+    if (!user) {
+      toast.error("You must be logged in to track supplements");
+      return { success: false, warnings: [] };
     }
 
-    setTrackedSupplements((prev) => [...prev, newTrackedSupplement])
-    return { success: true, warnings }
-  }
-
-  // Remove a tracked supplement
-  const removeTrackedSupplement = (id: string) => {
-    setTrackedSupplements((prev) => prev.filter((item) => item.id !== id))
-    // Also remove any intake logs for this supplement
-    setIntakeLogs((prev) => prev.filter((log) => log.trackedSupplementId !== id))
-  }
-
-  // Log supplement intake
-  const logIntake = (trackedSupplementId: string, taken: boolean, date?: string, notes?: string) => {
-    if (!user) return
-
-    const timestamp = date ? new Date(`${date}T12:00:00`).toISOString() : new Date().toISOString()
-
-    // Check if there's already a log for this supplement on this date
-    const existingLogIndex = intakeLogs.findIndex((log) => {
-      const logDate = new Date(log.timestamp).toISOString().split("T")[0]
-      const targetDate = new Date(timestamp).toISOString().split("T")[0]
-      return log.trackedSupplementId === trackedSupplementId && logDate === targetDate
-    })
-
-    if (existingLogIndex >= 0) {
-      // Update existing log
-      const updatedLogs = [...intakeLogs]
-      updatedLogs[existingLogIndex] = {
-        ...updatedLogs[existingLogIndex],
-        taken,
-        notes,
-        timestamp, // Update timestamp to ensure it's consistent
+    try {
+      // Check for interactions
+      const warnings = await checkInteractions(data.supplementId);
+      
+      // Show warnings as toast if there are any
+      if (warnings.length > 0) {
+        toast.warning(`Potential interactions detected: ${warnings.length} warning(s)`, {
+          action: {
+            label: "View",
+            onClick: () => window.scrollTo(0, 0), // Scroll to top where the warnings are displayed
+          }
+        });
       }
-      setIntakeLogs(updatedLogs)
-    } else {
-      // Create new log
-      const newLog: IntakeLog = {
-        id: `log-${Date.now()}`,
+
+      // Get the supplement details
+      const supplement = await getSupplementById(data.supplementId);
+      if (!supplement) {
+        toast.error("Supplement not found");
+        return { success: false, warnings };
+      }
+
+      const newTrackedSupplement: TrackedSupplement = {
+        id: `ts-${Date.now()}`,
         userId: user.id,
-        trackedSupplementId,
-        timestamp,
-        taken,
-        notes,
-      }
+        supplementId: data.supplementId,
+        supplement,
+        startDate: data.startDate,
+        endDate: data.endDate,
+        dosage: data.dosage,
+        frequency: data.frequency,
+        notes: data.notes,
+      };
 
-      setIntakeLogs((prev) => [...prev, newLog])
+      setTrackedSupplements((prev) => [...prev, newTrackedSupplement]);
+      return { success: true, warnings };
+    } catch (error) {
+      handleError(error, {
+        defaultMessage: "Failed to add supplement"
+      });
+      return { success: false, warnings: [] };
     }
-  }
+  };
+
+  // Update removeTrackedSupplement to use toast
+  const removeTrackedSupplement = (id: string) => {
+    try {
+      setTrackedSupplements((prev) => prev.filter((item) => item.id !== id));
+      // Also remove any intake logs for this supplement
+      setIntakeLogs((prev) => prev.filter((log) => log.trackedSupplementId !== id));
+      toast.success("Supplement removed from tracking");
+    } catch (error) {
+      handleError(error, {
+        defaultMessage: "Failed to remove supplement"
+      });
+    }
+  };
+
+  // Update logIntake to use toast
+  const logIntake = (trackedSupplementId: string, taken: boolean, date?: string, notes?: string) => {
+    if (!user) {
+      toast.error("You must be logged in to log supplement intake");
+      return;
+    }
+
+    try {
+      const timestamp = date ? new Date(`${date}T12:00:00`).toISOString() : new Date().toISOString();
+      
+      // Find the supplement name for the success message
+      const supplement = trackedSupplements.find(s => s.id === trackedSupplementId);
+      const supplementName = supplement ? supplement.supplement.name : "Supplement";
+
+      // Check if there's already a log for this supplement on this date
+      const existingLogIndex = intakeLogs.findIndex((log) => {
+        const logDate = new Date(log.timestamp).toISOString().split("T")[0];
+        const targetDate = new Date(timestamp).toISOString().split("T")[0];
+        return log.trackedSupplementId === trackedSupplementId && logDate === targetDate;
+      });
+
+      if (existingLogIndex >= 0) {
+        // Update existing log
+        const updatedLogs = [...intakeLogs];
+        updatedLogs[existingLogIndex] = {
+          ...updatedLogs[existingLogIndex],
+          taken,
+          notes,
+          timestamp, // Update timestamp to ensure it's consistent
+        };
+        setIntakeLogs(updatedLogs);
+        
+        toast.success(`Updated log for ${supplementName}`);
+      } else {
+        // Create new log
+        const newLog: IntakeLog = {
+          id: `log-${Date.now()}`,
+          userId: user.id,
+          trackedSupplementId,
+          timestamp,
+          taken,
+          notes,
+        };
+
+        setIntakeLogs((prev) => [...prev, newLog]);
+        
+        toast.success(`${taken ? "Logged" : "Skipped"} ${supplementName}`);
+      }
+    } catch (error) {
+      handleError(error, {
+        defaultMessage: "Failed to log supplement intake"
+      });
+    }
+  };
 
   // Get intake logs for a specific date
   const getIntakeLogsForDate = (date: string) => {
@@ -250,76 +299,134 @@ export function TrackerProvider({ children }: { children: ReactNode }) {
 
   // Check for interactions with existing supplements
   const checkInteractions = async (supplementId: string) => {
-    if (!user || trackedSupplements.length === 0) return []
+    if (!user) return [];
+    if (!supplementId) return [];
 
-    const newSupplement = await getSupplementById(supplementId)
-    if (!newSupplement) return []
+    try {
+      // Show loading toast for interactions check
+      const loadingToast = toast.info("Checking for interactions...", { 
+        duration: 3000 
+      });
 
-    const warnings: string[] = []
+      // If there are no tracked supplements, return empty array early
+      if (trackedSupplements.length === 0) {
+        toast.dismiss(loadingToast.id);
+        return [];
+      }
 
-    // Check each tracked supplement for interactions with the new one
-    for (const tracked of trackedSupplements) {
-      // Skip if it's the same supplement
-      if (tracked.supplementId === supplementId) continue
+      const newSupplement = await getSupplementById(supplementId);
+      if (!newSupplement) {
+        toast.dismiss(loadingToast.id);
+        toast.error("Could not find supplement information");
+        return [];
+      }
 
-      // Check for interactions in the supplement data
-      const interactions = tracked.supplement.supplementInteractions.filter(
-        (interaction) => interaction.supplementName === newSupplement.name,
-      )
+      const warnings: string[] = [];
 
-      // Add warnings for each interaction
-      interactions.forEach((interaction) => {
-        warnings.push(
-          `${interaction.effect}. ${
+      // Check each tracked supplement for interactions with the new one
+      for (const tracked of trackedSupplements) {
+        // Skip if it's the same supplement
+        if (tracked.supplementId === supplementId) continue;
+
+        // Check for interactions in the supplement data
+        const interactions = tracked.supplement.supplementInteractions?.filter(
+          (interaction) => interaction.supplementName === newSupplement.name,
+        ) || [];
+
+        // Add warnings for each interaction
+        interactions.forEach((interaction) => {
+          const severityText = 
             interaction.severity === "high"
               ? "This is a serious interaction."
               : interaction.severity === "medium"
                 ? "Use caution when combining these supplements."
-                : "This is a mild interaction."
-          } ${interaction.recommendation || ""}`,
-        )
-      })
+                : "This is a mild interaction.";
+                
+          warnings.push(
+            `${tracked.supplement.name} + ${newSupplement.name}: ${interaction.effect}. ${severityText} ${interaction.recommendation || ""}`
+          );
+        });
+      }
+
+      // Dismiss loading toast
+      toast.dismiss(loadingToast.id);
+
+      // If interactions are found, show a warning toast
+      if (warnings.length > 0) {
+        toast.warning(`Found ${warnings.length} potential interaction${warnings.length > 1 ? 's' : ''}`, {
+          action: {
+            label: "View Details",
+            onClick: () => {
+              // Show a more detailed alert about interactions (could be improved with a modal in future)
+              alert(`Potential Interactions:\n\n${warnings.join('\n\n')}`);
+            }
+          }
+        });
+      }
+
+      return warnings;
+    } catch (error) {
+      handleError(error, {
+        defaultMessage: "Error checking for interactions"
+      });
+      return [];
     }
+  };
 
-    return warnings
-  }
-
-  // Add this function to log symptoms
+  // Update logSymptom to use toast
   const logSymptom = (
     symptomId: string,
     date: string,
     severity: "none" | "mild" | "average" | "severe",
     notes?: string,
   ) => {
-    if (!user) return
-
-    // Check if a log already exists for this symptom and date
-    const existingLogIndex = symptomLogs.findIndex(
-      (log) => log.symptomId === symptomId && log.date === date && log.userId === user.id,
-    )
-
-    if (existingLogIndex >= 0) {
-      // Update existing log
-      const updatedLogs = [...symptomLogs]
-      updatedLogs[existingLogIndex] = {
-        ...updatedLogs[existingLogIndex],
-        severity,
-        notes,
-      }
-      setSymptomLogs(updatedLogs)
-    } else {
-      // Create new log
-      const newLog: SymptomLog = {
-        id: `symptom-log-${Date.now()}`,
-        userId: user.id,
-        date,
-        symptomId,
-        severity,
-        notes,
-      }
-      setSymptomLogs((prev) => [...prev, newLog])
+    if (!user) {
+      toast.error("You must be logged in to log symptoms");
+      return;
     }
-  }
+    
+    try {
+      // Find the symptom name for the toast
+      const symptom = symptoms.find(s => s.id === symptomId);
+      const symptomName = symptom ? symptom.name : "Symptom";
+
+      // Check if there's already a log for this symptom on this date
+      const existingLogIndex = symptomLogs.findIndex((log) => {
+        return log.symptomId === symptomId && log.date === date;
+      });
+
+      if (existingLogIndex >= 0) {
+        // Update existing log
+        const updatedLogs = [...symptomLogs];
+        updatedLogs[existingLogIndex] = {
+          ...updatedLogs[existingLogIndex],
+          severity,
+          notes,
+        };
+        setSymptomLogs(updatedLogs);
+        
+        toast.success(`Updated log for ${symptomName}`);
+      } else {
+        // Create new log
+        const newLog: SymptomLog = {
+          id: `symptom-${Date.now()}`,
+          userId: user.id,
+          symptomId,
+          date,
+          severity,
+          notes,
+        };
+
+        setSymptomLogs((prev) => [...prev, newLog]);
+        
+        toast.success(`Logged ${symptomName} as ${severity}`);
+      }
+    } catch (error) {
+      handleError(error, {
+        defaultMessage: "Failed to log symptom"
+      });
+    }
+  };
 
   // Add this function to get symptom logs for a specific date
   const getSymptomLogsForDate = (date: string) => {
