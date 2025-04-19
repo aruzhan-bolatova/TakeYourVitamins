@@ -54,7 +54,8 @@ windows: setup
 	@echo "Importing sample data (if needed)..."
 	@$(PYTHON_VENV) scripts$(SEP)import_data.py
 	@echo "Starting Flask application..."
-	@$(PYTHON_VENV) -c "import os; os.environ['FLASK_APP']='run.py'; os.environ['FLASK_ENV']='development'; import run"
+	@set FLASK_APP=run.py && set FLASK_ENV=development && $(PYTHON_VENV) -m flask run
+
 
 run: setup
 ifeq ($(OS),Windows_NT)
