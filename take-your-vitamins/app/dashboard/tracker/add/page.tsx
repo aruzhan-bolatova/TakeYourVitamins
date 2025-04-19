@@ -4,44 +4,47 @@ import type React from "react"
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
+import { useTracker } from "@/contexts/tracker-context"
+
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertCircle } from "lucide-react"
 import type { Supplement } from "@/lib/types"
 import { DatePicker } from "@/components/date-picker"
-import { searchSupplements } from "@/lib/supplements"
-import { useTracker } from "@/contexts/tracker-context"
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select"
+import { getAllSupplements, getAutocompleteSuggestions, AutocompleteSuggestion } from "@/lib/supplements"
 
 export default function AddSupplementPage() {
   const router = useRouter()
   const { addTrackedSupplement, checkInteractions } = useTracker()
   const [supplements, setSupplements] = useState<Supplement[]>([])
   const [selectedSupplement, setSelectedSupplement] = useState<string>("")
+  const [selectedSupplementName, setSelectedSupplementName] = useState<string>("")
   const [dosage, setDosage] = useState<string>("")
+  const [unit, setUnit] = useState<string>("mg")
   const [frequency, setFrequency] = useState<string>("daily")
-  const [startDate, setStartDate] = useState<Date | null>(null);
-  const [endDate, setEndDate] = useState<Date | null>(null);
+  const [startDate, setStartDate] = useState<Date | null>(new Date())
+  const [endDate, setEndDate] = useState<Date | null>(null)
   const [notes, setNotes] = useState<string>("")
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [error, setError] = useState<string>("")
   const [interactionWarnings, setInteractionWarnings] = useState<string[]>([])
+  const [autocompleteOptions, setAutocompleteOptions] = useState<AutocompleteSuggestion[]>([])
 
   useEffect(() => {
-    // Fetch all supplements for the dropdown
     const fetchSupplements = async () => {
       try {
-        const results = await searchSupplements("")
+        const results = await getAllSupplements()
         setSupplements(results)
       } catch (error) {
         console.error("Failed to fetch supplements:", error)
       }
     }
-
+  
     fetchSupplements()
   }, [])
 
@@ -70,13 +73,35 @@ export default function AddSupplementPage() {
     setError("")
 
     try {
+      if (!selectedSupplement) {
+        setError("Please select a supplement.")
+        setIsLoading(false)
+        return
+      }
+
       if (!startDate) {
-        console.error("Start date is required!");
-        return;
+        setError("Start date is required!")
+        setIsLoading(false)
+        return
       }      
+
+      if (!dosage) {
+        setError("Dosage is required!")
+        setIsLoading(false)
+        return
+      }
+
+      if (endDate && startDate && endDate < startDate) {
+        setError("End date cannot be earlier than start date.")
+        setIsLoading(false)
+        return
+      }
+      
       const { success, warnings } = await addTrackedSupplement({
         supplementId: selectedSupplement,
+        supplementName: selectedSupplementName,
         dosage,
+        unit,
         frequency,
         startDate: startDate.toISOString(),
         endDate: endDate ? endDate.toISOString() : undefined,
@@ -128,31 +153,74 @@ export default function AddSupplementPage() {
               </Alert>
             )}
 
-            <div className="space-y-2">
-              <Label htmlFor="supplement">Supplement</Label>
-              <Select value={selectedSupplement} onValueChange={setSelectedSupplement} required>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select a supplement" />
-                </SelectTrigger>
-                <SelectContent>
-                  {supplements.map((supplement) => (
-                    <SelectItem key={supplement.id} value={supplement.id}>
-                      {supplement.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="dosage">Dosage</Label>
+            <div className="space-y-2 relative">
+              <Label htmlFor="supplement-search">Supplement</Label>
               <Input
-                id="dosage"
-                value={dosage}
-                onChange={(e) => setDosage(e.target.value)}
-                placeholder="e.g., 1000mg, 2 tablets"
+                id="supplement-search"
+                value={selectedSupplementName}
+                onChange={async (e) => {
+                  const value = e.target.value
+                  setSelectedSupplement("") // clear current selection
+                  setSelectedSupplementName(value)
+                  if (value.length > 0) {
+                    const suggestions = await getAutocompleteSuggestions(value)
+                    setAutocompleteOptions(suggestions)
+                  } else {
+                    setAutocompleteOptions([])
+                  }
+                }}
+                placeholder="Start typing to search supplements"
                 required
               />
+              {autocompleteOptions.length > 0 && (
+                <div className="absolute z-10 bg-white border rounded w-full max-h-48 overflow-y-auto mt-1">
+                  {autocompleteOptions.map((option) => (
+                    <div
+                      key={option.id}
+                      className="px-3 py-2 hover:bg-gray-100 cursor-pointer"
+                      onClick={() => {
+                        setSelectedSupplement(option.id)
+                        setSelectedSupplementName(option.name)
+                        setAutocompleteOptions([])
+                      }}
+                    >
+                      {option.name}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="dosage">Dosage</Label>
+                <Input
+                  id="dosage"
+                  value={dosage}
+                  onChange={(e) => setDosage(e.target.value)}
+                  placeholder="e.g., 1000"
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="unit">Unit</Label>
+                <Select value={unit} onValueChange={setUnit} required>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select unit" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="mg">mg (milligram)</SelectItem>
+                    <SelectItem value="g">g (gram)</SelectItem>
+                    <SelectItem value="mcg">mcg (microgram)</SelectItem>
+                    <SelectItem value="ml">ml (milliliter)</SelectItem>
+                    <SelectItem value="IU">IU (International Unit)</SelectItem>
+                    <SelectItem value="tablet">tablet</SelectItem>
+                    <SelectItem value="capsule">capsule</SelectItem>
+                    <SelectItem value="drop">drop</SelectItem>
+                    <SelectItem value="tsp">tsp (teaspoon)</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
 
             <div className="space-y-2">
@@ -195,7 +263,7 @@ export default function AddSupplementPage() {
           </form>
         </CardContent>
         <CardFooter className="flex justify-between">
-          <Button variant="outline" onClick={() => router.back()}>
+          <Button variant="outline" type="button" onClick={() => router.back()}>
             Cancel
           </Button>
           <Button type="submit" disabled={isLoading} onClick={handleSubmit}>
@@ -206,4 +274,3 @@ export default function AddSupplementPage() {
     </div>
   )
 }
-

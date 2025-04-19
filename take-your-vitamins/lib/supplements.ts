@@ -51,12 +51,62 @@ export async function getSupplementInteractions(supplementId: string): Promise<C
     }
 
     const data = await response.json()
+    console.log("Fetched interactions:", data)
     return data as CategorizedInteractions
   } catch (error) {
     console.error("Error while fetching interactions for supplement ID:", error)
     return null
   }
   }
+
+// Check interactions for a given supplement
+export async function checkInteractions(supplementId: string): Promise<string[]> {
+  if (!supplementId.trim()) return []
+
+  try {
+    // Fetch interactions for the supplement from the backend
+    const response = await fetch(
+      `http://10.228.244.25:5001/api/supplements/by-supplement/${supplementId}`
+    )
+
+    if (!response.ok) {
+      console.error("Failed to fetch interactions by supplement ID")
+      return []
+    }
+
+    const data = await response.json()
+
+    // Extract and format interaction warnings
+    const warnings: string[] = []
+
+    // Process supplement-supplement interactions
+    if (data.supplementSupplementInteractions) {
+      data.supplementSupplementInteractions.forEach((interaction: any) => {
+        const description = interaction.description || "No description provided."
+        const recommendation = interaction.recommendation || "No recommendation provided."
+        warnings.push(
+          `Interaction: ${description} Recommendation: ${recommendation}`
+        )
+      })
+    }
+
+    // Process supplement-food interactions (if applicable)
+    if (data.supplementFoodInteractions) {
+      data.supplementFoodInteractions.forEach((interaction: any) => {
+        const description = interaction.description || "No description provided."
+        const recommendation = interaction.recommendation || "No recommendation provided."
+        warnings.push(
+          `Food Interaction: ${description} Recommendation: ${recommendation}`
+        )
+      })
+    }
+
+    return warnings
+  } catch (error) {
+    console.error("Error while fetching interactions for supplement ID:", error)
+    return []
+  }
+}
 
 // Function to fetch autocomplete suggestions for supplements
 export type AutocompleteSuggestion = {
@@ -75,6 +125,7 @@ export async function getAutocompleteSuggestions(query: string): Promise<Autocom
     }
 
     const data = await response.json()
+    console.log("Autocomplete suggestions:", data)
     return data as AutocompleteSuggestion[]
   } catch (error) {
     console.error("Error while fetching autocomplete suggestions:", error)
@@ -87,6 +138,7 @@ export async function getAllSupplements(): Promise<Supplement[]> {
   try {
     // Fetch all supplements from the backend API
     const response = await fetch(`http://10.228.244.25:5001/api/supplements/`)
+    console.log("Fetched all supplements:", response)
     if (!response.ok) {
       console.error("Failed to fetch all supplements")
       return []

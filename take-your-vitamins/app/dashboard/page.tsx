@@ -2,11 +2,11 @@
 
 import { useState, useEffect } from "react"
 import { useAuth } from "@/contexts/auth-context"
-import { useTracker, type TrackedSupplement } from "@/contexts/tracker-context"
+import { useTracker, type TrackedSupplement, type IntakeLog } from "@/contexts/tracker-context"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { Pill, Search, TrendingUp, Activity, Moon, FileDown } from "lucide-react"
+import { Pill, Search, TrendingUp, Activity, FileDown } from "lucide-react"
 import { format, startOfWeek, addDays, subDays } from "date-fns"
 import { Calendar } from "@/components/ui/calendar"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
@@ -14,7 +14,15 @@ import { CategorySymptomLogger } from "@/components/category-symptom-logger"
 
 export default function DashboardPage() {
     const { user } = useAuth()
-    const { trackedSupplements, intakeLogs, logIntake, getIntakeLogsForDate, symptomLogs } = useTracker()
+    const {
+        trackedSupplements,
+        intakeLogs,
+        logIntake,
+        getIntakeLogsForDate,
+        symptomLogs,
+        logSymptom,
+        getSymptomLogsForDate
+    } = useTracker()
 
     const [selectedDate, setSelectedDate] = useState(new Date())
     const [weekStartDate, setWeekStartDate] = useState(startOfWeek(new Date(), { weekStartsOn: 1 }))
@@ -51,65 +59,130 @@ export default function DashboardPage() {
     }, [symptomLogs])
 
     useEffect(() => {
-        if (trackedSupplements.length === 0) return
+        if (trackedSupplements.length === 0) return;
 
-        // Calculate current streak
-        let currentStreak = 0
-        let currentDate = subDays(new Date(), 1) // Start from yesterday
-        let allTaken = true
+        const calculateStreak = async () => {
+            // Fetch all logs for the past 30 days at once instead of one by one
+            const today = new Date();
+            const dates = Array.from({ length: 30 }, (_, i) => {
+                const date = subDays(today, i);
+                return format(date, "yyyy-MM-dd");
+            });
 
-        while (allTaken) {
-            const dateStr = format(currentDate, "yyyy-MM-dd")
-            const logs = getIntakeLogsForDate(dateStr)
-
-            // Check if all supplements were taken on this day
-            const allSupplementsTaken = trackedSupplements.every((supplement) => {
-                return logs.some((log) => log.trackedSupplementId === supplement.id && log.taken)
-            })
-
-            if (allSupplementsTaken) {
-                currentStreak++
-                currentDate = subDays(currentDate, 1)
-            } else {
-                allTaken = false
+            // Create a map of date -> logs
+            const logsMap: Record<string, IntakeLog[]> = {};
+            for (const date of dates) {
+                logsMap[date] = await getIntakeLogsForDate(date);
             }
-        }
 
-        setStreak(currentStreak)
+            // Calculate streak
+            let currentStreak = 0;
+            for (let i = 1; i < dates.length; i++) { // Start from yesterday (index 1)
+                const dateStr = dates[i];
+                const logs = logsMap[dateStr];
 
-        // Calculate days to next achievement (10-day streak)
-        const nextAchievement = 10
-        setDaysToNextAchievement(Math.max(0, nextAchievement - currentStreak))
+                // Check if all supplements were taken on this day
+                const allSupplementsTaken = trackedSupplements.every((supplement) => {
+                    return logs.some((log) => log.tracked_supplement_id === supplement.id);
+                });
 
-        // Calculate improvement (mock data for now)
-        setImprovement(15)
-    }, [trackedSupplements, getIntakeLogsForDate])
+                if (allSupplementsTaken) {
+                    currentStreak++;
+                } else {
+                    break;
+                }
+            }
+
+            setStreak(currentStreak);
+
+            // Calculate days to next achievement
+            const nextAchievement = 10;
+            setDaysToNextAchievement(Math.max(0, nextAchievement - currentStreak));
+
+            // Calculate improvement (mock data for now)
+            setImprovement(15);
+        };
+
+        calculateStreak();
+    }, [trackedSupplements]); // Remove getIntakeLogsForDate from dependencies
 
     // Generate weekdays for the header
     const weekdays = ["M", "T", "W", "T", "F", "S", "S"]
 
     // Handle supplement intake logging
-    const handleLogIntake = (supplement: TrackedSupplement, dayIndex: number) => {
+    const handleLogIntake = async (supplement: TrackedSupplement, dayIndex: number) => {
         const date = addDays(weekStartDate, dayIndex)
         const dateStr = format(date, "yyyy-MM-dd")
 
         // Check if already logged
-        const logs = getIntakeLogsForDate(dateStr)
-        const existingLog = logs.find((log) => log.trackedSupplementId === supplement.id)
+        const logs = await getIntakeLogsForDate(dateStr)
+        const existingLog = logs.find((log: IntakeLog) => log.tracked_supplement_id === supplement.id)
 
         // Toggle the taken status
-        logIntake(supplement.id, existingLog ? !existingLog.taken : true, dateStr)
+        logIntake(supplement.id, existingLog ? !existingLog.taken : true, dateStr, "pill") // Added "pill" as the unit parameter
     }
 
-    // Check if a supplement was taken on a specific day
-    const wasSupplementTaken = (supplement: TrackedSupplement, dayIndex: number) => {
-        const date = addDays(weekStartDate, dayIndex)
-        const dateStr = format(date, "yyyy-MM-dd")
+    // 4. Optimize your wasSupplementTaken function in DashboardPage.jsx
+    const wasSupplementTaken = async (supplement: TrackedSupplement, dayIndex: number) => {
+        const date = addDays(weekStartDate, dayIndex);
+        const dateStr = format(date, "yyyy-MM-dd");
 
-        const logs = getIntakeLogsForDate(dateStr)
-        const log = logs.find((log) => log.trackedSupplementId === supplement.id)
+        // Get logs for this date (this will use the cached version if available)
+        const logs = await getIntakeLogsForDate(dateStr);
+        return logs.some((log) => log.tracked_supplement_id === supplement.id);
+    };
 
-        return log?.taken || false
+
+    // State to track which supplements have been taken
+    const [supplementsTaken, setSupplementsTaken] = useState<Record<string, Record<number, boolean>>>({})
+
+    // 5. Use a more efficient approach for initial loading
+    useEffect(() => {
+        const loadSupplementStatus = async () => {
+            // Get dates for the week
+            const dates = Array.from({ length: 7 }, (_, i) => {
+                const date = addDays(weekStartDate, i);
+                return format(date, "yyyy-MM-dd");
+            });
+
+            // Fetch logs for all dates at once to populate cache
+            const logsPromises = dates.map(date => getIntakeLogsForDate(date));
+            await Promise.all(logsPromises);
+
+            // Now build the status map (this will use cached results)
+            const supplementStatusMap: Record<string, Record<number, boolean>> = {};
+
+            for (const supplement of trackedSupplements) {
+                supplementStatusMap[supplement.id] = {};
+
+                for (let i = 0; i < 7; i++) {
+                    const date = addDays(weekStartDate, i);
+                    const dateStr = format(date, "yyyy-MM-dd");
+                    const logs = await getIntakeLogsForDate(dateStr); // Will use cache
+                    supplementStatusMap[supplement.id][i] = logs.some(log => log.tracked_supplement_id === supplement.id);
+                }
+            }
+
+            setSupplementsTaken(supplementStatusMap);
+        };
+
+        if (trackedSupplements.length > 0) {
+            loadSupplementStatus();
+        }
+    }, [trackedSupplements, weekStartDate]);
+
+    // Update the supplement taken status when logging
+    const handleLogIntakeWithState = async (supplement: TrackedSupplement, dayIndex: number) => {
+        await handleLogIntake(supplement, dayIndex)
+
+        // Update the state
+        setSupplementsTaken(prev => ({
+            ...prev,
+            [supplement.id]: {
+                ...prev[supplement.id],
+                [dayIndex]: !prev[supplement.id]?.[dayIndex]
+            }
+        }))
     }
 
     return (
@@ -119,7 +192,7 @@ export default function DashboardPage() {
             <div className="grid gap-6 md:grid-cols-3">
                 {/* Daily Supplement Log */}
                 <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle>Daily Supplement Log</CardTitle>
                         <Button variant="ghost" size="sm" asChild>
                             <Link href="/dashboard/tracker/log" className="text-xs flex items-center">
@@ -133,19 +206,19 @@ export default function DashboardPage() {
                             <div className="space-y-6">
                                 {trackedSupplements.map((supplement) => (
                                     <div key={supplement.id} className="space-y-2">
-                                        <h3 className="font-medium">{supplement.supplement.name}</h3>
+                                        <h3 className="font-medium">{supplement.supplementName}</h3>
                                         <div className="flex justify-between">
                                             {weekdays.map((day, index) => (
                                                 <div key={index} className="flex flex-col items-center">
                                                     <button
-                                                        onClick={() => handleLogIntake(supplement, index)}
-                                                        className={`w-8 h-8 rounded-full border-2 flex items-center justify-center transition-colors ${wasSupplementTaken(supplement, index)
+                                                        onClick={() => handleLogIntakeWithState(supplement, index)}
+                                                        className={`w-8 h-8 rounded-full border-2 flex items-center justify-center transition-colors ${supplementsTaken[supplement.id]?.[index]
                                                             ? "bg-green-500 border-green-600 text-white"
                                                             : "bg-background border-gray-300 hover:border-gray-400"
                                                             }`}
-                                                        aria-label={`${wasSupplementTaken(supplement, index) ? "Taken" : "Not taken"} on ${format(addDays(weekStartDate, index), "EEEE")}`}
+                                                        aria-label={`${supplementsTaken[supplement.id]?.[index] ? "Taken" : "Not taken"} on ${format(addDays(weekStartDate, index), "EEEE")}`}
                                                     >
-                                                        {wasSupplementTaken(supplement, index) ? "✓" : ""}
+                                                        {supplementsTaken[supplement.id]?.[index] ? "✓" : ""}
                                                     </button>
                                                     <span className="text-xs mt-1">{day}</span>
                                                 </div>
@@ -292,4 +365,3 @@ export default function DashboardPage() {
         </div>
     )
 }
-

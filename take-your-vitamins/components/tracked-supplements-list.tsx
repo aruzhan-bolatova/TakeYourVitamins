@@ -32,7 +32,19 @@ export function TrackedSupplementsList({ supplements }: TrackedSupplementsListPr
     setIsLogging((prev) => ({ ...prev, [id]: true }))
 
     try {
-      logIntake(id, true)
+      // Get the current date in YYYY-MM-DD format
+      const today = new Date().toISOString().split('T')[0]
+      
+      // Find the supplement to get its dosage and unit
+      const supplement = supplements.find(s => s.id === id)
+      if (!supplement) return
+      
+      // Parse dosage as a number
+      const dosageTaken = parseFloat(supplement.dosage)
+      if (isNaN(dosageTaken)) return
+      
+      // Log the intake with current date, dosage, and unit
+      await logIntake(id, today, dosageTaken, supplement.unit || "mg")
     } finally {
       setIsLogging((prev) => ({ ...prev, [id]: false }))
     }
@@ -42,7 +54,7 @@ export function TrackedSupplementsList({ supplements }: TrackedSupplementsListPr
     setIsDeleting((prev) => ({ ...prev, [id]: true }))
 
     try {
-      removeTrackedSupplement(id)
+      await removeTrackedSupplement(id)
     } finally {
       setIsDeleting((prev) => ({ ...prev, [id]: false }))
     }
@@ -56,9 +68,9 @@ export function TrackedSupplementsList({ supplements }: TrackedSupplementsListPr
             <div className="flex items-center justify-between">
               <div className="flex items-center">
                 <Pill className="mr-2 h-5 w-5 text-primary" />
-                <CardTitle>{item.supplement.name}</CardTitle>
+                <CardTitle>{item.supplementName}</CardTitle>
               </div>
-              <Badge variant="outline">{item.supplement.category}</Badge>
+              <Badge variant="outline">{item.supplementId}</Badge>
             </div>
             <CardDescription>
               Started on {format(new Date(item.startDate), "PPP")}
@@ -68,7 +80,7 @@ export function TrackedSupplementsList({ supplements }: TrackedSupplementsListPr
           <CardContent className="space-y-2">
             <div className="flex items-center text-sm">
               <Clock className="mr-2 h-4 w-4 text-muted-foreground" />
-              <span>Dosage: {item.dosage}</span>
+              <span>Dosage: {item.dosage} {item.unit}</span>
             </div>
             <div className="flex items-center text-sm">
               <Calendar className="mr-2 h-4 w-4 text-muted-foreground" />
@@ -80,7 +92,16 @@ export function TrackedSupplementsList({ supplements }: TrackedSupplementsListPr
               </div>
             )}
           </CardContent>
-          <CardFooter className="place-self-end">
+          <CardFooter className="flex justify-between">
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={() => handleLogIntake(item.id)}
+              disabled={isLogging[item.id]}
+            >
+              <Check className="mr-2 h-4 w-4" />
+              {isLogging[item.id] ? "Logging..." : "Log Intake"}
+            </Button>
             
             <AlertDialog>
               <AlertDialogTrigger asChild>
@@ -93,7 +114,7 @@ export function TrackedSupplementsList({ supplements }: TrackedSupplementsListPr
                 <AlertDialogHeader>
                   <AlertDialogTitle>Are you sure?</AlertDialogTitle>
                   <AlertDialogDescription>
-                    This will remove {item.supplement.name} from your tracked supplements. This action cannot be undone.
+                    This will remove {item.supplementName} from your tracked supplements. This action cannot be undone.
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
@@ -110,4 +131,3 @@ export function TrackedSupplementsList({ supplements }: TrackedSupplementsListPr
     </div>
   )
 }
-

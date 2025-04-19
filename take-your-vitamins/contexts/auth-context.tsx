@@ -4,7 +4,7 @@ import { createContext, useContext, useState, useEffect, type ReactNode } from "
 import { useRouter } from "next/navigation"
 
 type User = {
-  id: string
+  _id: string
   name: string
   email: string
   gender: string
@@ -32,6 +32,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const storedToken = localStorage.getItem("token")
     if (storedUser && storedToken) {
       setUser(JSON.parse(storedUser))
+      console.log("User loaded from localStorage:", JSON.parse(storedUser))
     }
     setIsLoading(false)
   }, [])
@@ -54,11 +55,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         throw new Error("Failed to authenticate. Please check your credentials.")
       }
 
-    // Parse the response to get the access token and userId
-    const { access_token, message, userId } = await response.json()
-    console.log("Login successful:", message)
-    console.log("Access token received:", access_token)
-    console.log("User ID:", userId)
+      // Parse the response to get the access token and userId
+      const { access_token, message, userId } = await response.json()
+      console.log("Login successful:", message)
+      console.log("Access token received:", access_token)
+      console.log("User ID:", userId)
 
       // Save the token in localStorage
       localStorage.setItem("token", access_token)
@@ -80,6 +81,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       // Set the user state and save it in localStorage
       setUser(userData)
+      console.log("User set in state:", userData)
       localStorage.setItem("user", JSON.stringify(userData))
 
       // Navigate to the dashboard
@@ -139,6 +141,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   return (
+    // Provide the auth context to children components
     <AuthContext.Provider value={{ user, isLoading, signIn, signUp, signOut }}>
       {children}
     </AuthContext.Provider>
