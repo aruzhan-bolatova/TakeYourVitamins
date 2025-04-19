@@ -768,7 +768,11 @@ def _calculate_progress(user_id, intake_logs):
     milestones = []
     
     # Total intake milestone
-    total_intake = sum(log.count for month in monthly_logs.values() for log in month.values())
+    total_intake = 0
+    for month_data in monthly_logs.values():
+        for supplement_data in month_data.values():
+            # Supplement data is a dictionary with 'count' key
+            total_intake += supplement_data['count']
     
     if total_intake >= 100:
         milestones.append({
