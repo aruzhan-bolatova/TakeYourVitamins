@@ -109,6 +109,9 @@ export function TrackerProvider({ children }: { children: ReactNode }) {
   const [trackedSupplements, setTrackedSupplements] = useState<TrackedSupplement[]>([])
   const [intakeLogs, setIntakeLogs] = useState<IntakeLog[]>([])
   
+  // Add a cache for intake logs by date
+  const [intakeLogsCache, setIntakeLogsCache] = useState<Record<string, IntakeLog[]>>({})
+  
   // Mock symptom tracking states
   const [symptoms, setSymptoms] = useState<Symptom[]>([
     { id: "symptom1", name: "Headache", category: "Pain", icon: "brain" },
@@ -268,9 +271,11 @@ const checkInteractions = async (supplementId: string): Promise<string[]> => {
     notes?: string
   ): Promise<boolean> => {
     try {
+      console.log("User in logIntake:", user)
       if (!user) {
         throw new Error("User not authenticated")
       }
+      console.log("Logging intake:", { tracked_supplement_id, intake_date, dosage_taken, unit, notes })
 
       const response = await fetch("http://localhost:5001/api/intake_logs/", {
         method: "POST",
@@ -309,7 +314,21 @@ const checkInteractions = async (supplementId: string): Promise<string[]> => {
         updated_at: result.updated_at
       }
       
+      // Update both the global state and the cache
       setIntakeLogs(prev => [...prev, newLog])
+      
+      // Also update the cache for this date
+      const dateStr = intake_date
+      setIntakeLogsCache(prevCache => {
+        const updatedCache = { ...prevCache }
+        if (updatedCache[dateStr]) {
+          updatedCache[dateStr] = [...updatedCache[dateStr], newLog]
+        } else {
+          updatedCache[dateStr] = [newLog]
+        }
+        return updatedCache
+      })
+      
       return true
     } catch (error) {
       console.error("Error logging intake:", error)
@@ -317,13 +336,19 @@ const checkInteractions = async (supplementId: string): Promise<string[]> => {
     }
   }
 
-  // Get intake logs for a specific date
+  // Get intake logs for a specific date (with caching)
   const getIntakeLogsForDate = async (date: string): Promise<IntakeLog[]> => {
     try {
       if (!user) {
         return []
       }
 
+      // Check if we already have cached data for this date
+      if (intakeLogsCache[date]) {
+        return intakeLogsCache[date]
+      }
+
+      // If not in cache, fetch from API
       const response = await fetch(
         `http://localhost:5001/api/intake_logs/?start_date=${date}&end_date=${date}`,
         {
@@ -332,8 +357,6 @@ const checkInteractions = async (supplementId: string): Promise<string[]> => {
           },
         }
       )
-
-      console.log("Response for intake logs:", response)  
 
       if (!response.ok) {
         throw new Error("Failed to fetch intake logs.")
@@ -357,6 +380,13 @@ const checkInteractions = async (supplementId: string): Promise<string[]> => {
       
       // Update state with the fetched logs
       setIntakeLogs(logs)
+      
+      // Store in cache
+      setIntakeLogsCache(prevCache => ({
+        ...prevCache,
+        [date]: logs
+      }))
+      
       return logs
     } catch (error) {
       console.error("Error fetching intake logs:", error)
@@ -369,6 +399,13 @@ const checkInteractions = async (supplementId: string): Promise<string[]> => {
     try {
       if (!user) {
         return []
+      }
+
+      const today = new Date().toISOString().split('T')[0] // Format as YYYY-MM-DD
+      
+      // Check if today's logs are already in cache
+      if (intakeLogsCache[today]) {
+        return intakeLogsCache[today]
       }
 
       const response = await fetch(
@@ -402,6 +439,13 @@ const checkInteractions = async (supplementId: string): Promise<string[]> => {
       
       // Update state with today's logs
       setIntakeLogs(logs)
+      
+      // Store in cache
+      setIntakeLogsCache(prevCache => ({
+        ...prevCache,
+        [today]: logs
+      }))
+      
       return logs
     } catch (error) {
       console.error("Error fetching today's intake logs:", error)
@@ -416,6 +460,15 @@ const checkInteractions = async (supplementId: string): Promise<string[]> => {
         return null
       }
 
+      // Check if we can find the log in our cache first
+      for (const date in intakeLogsCache) {
+        const log = intakeLogsCache[date].find(log => log.id === id)
+        if (log) {
+          return log
+        }
+      }
+
+      // If not found in cache, fetch from API
       const response = await fetch(
         `http://localhost:5001/api/intake_logs/${id}`,
         {
@@ -488,6 +541,21 @@ const checkInteractions = async (supplementId: string): Promise<string[]> => {
         )
       )
       
+      // Also update in cache if it exists there
+      setIntakeLogsCache(prevCache => {
+        const newCache = { ...prevCache }
+        for (const date in newCache) {
+          newCache[date] = newCache[date].map(log => 
+            log.id === id ? {
+              ...log,
+              ...data,
+              updated_at: updatedLog.updated_at
+            } : log
+          )
+        }
+        return newCache
+      })
+      
       return true
     } catch (error) {
       console.error("Error updating intake log:", error)
@@ -518,6 +586,15 @@ const checkInteractions = async (supplementId: string): Promise<string[]> => {
 
       // Remove the log from state
       setIntakeLogs(prev => prev.filter(log => log.id !== id))
+      
+      // Also remove from cache
+      setIntakeLogsCache(prevCache => {
+        const newCache = { ...prevCache }
+        for (const date in newCache) {
+          newCache[date] = newCache[date].filter(log => log.id !== id)
+        }
+        return newCache
+      })
       
       return true
     } catch (error) {
@@ -718,9 +795,6 @@ const checkInteractions = async (supplementId: string): Promise<string[]> => {
   
         // Fetch today's intake logs
         await getTodayIntakeLogs()
-
-        
-  
       } catch (error) {
         console.error("Failed to fetch tracker data:", error)
       }

@@ -16,6 +16,7 @@ export default function DashboardPage() {
     const { user } = useAuth()
     const {
         trackedSupplements,
+        deleteIntakeLog,
         intakeLogs,
         logIntake,
         getIntakeLogsForDate,
@@ -118,10 +119,17 @@ export default function DashboardPage() {
         const logs = await getIntakeLogsForDate(dateStr)
         const existingLog = logs.find((log: IntakeLog) => log.tracked_supplement_id === supplement.id)
 
-        // Toggle the taken status
-        logIntake(supplement.id, existingLog ? !existingLog.taken : true, dateStr, "pill") // Added "pill" as the unit parameter
+        // Toggle the taken status - if exists, delete it; if not, create it
+        if (existingLog) {
+            // If log exists, delete it
+            await deleteIntakeLog(existingLog.id)
+        } else {
+            // If log doesn't exist, create it
+            // Using the supplement's dosage as dosage_taken
+            const dosage = parseFloat(supplement.dosage) || 1
+            await logIntake(supplement.id, dateStr, dosage, supplement.unit || "pill", "")
+        }
     }
-
     // 4. Optimize your wasSupplementTaken function in DashboardPage.jsx
     const wasSupplementTaken = async (supplement: TrackedSupplement, dayIndex: number) => {
         const date = addDays(weekStartDate, dayIndex);

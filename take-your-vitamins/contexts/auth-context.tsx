@@ -27,13 +27,33 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const router = useRouter()
 
   // Load user and token from localStorage on initial render
+  // Helper function to check if a token is expired
+  const isTokenExpired = (token: string): boolean => {
+    try {
+      const payload = JSON.parse(atob(token.split(".")[1]))
+      const currentTime = Math.floor(Date.now() / 1000)
+      return payload.exp < currentTime
+    } catch (error) {
+      console.error("Error decoding token:", error)
+      return true
+    }
+  }
+
   useEffect(() => {
-    const storedUser = localStorage.getItem("user")
     const storedToken = localStorage.getItem("token")
-    if (storedUser && storedToken) {
+    const storedUser = localStorage.getItem("user")
+  
+    if (storedToken && isTokenExpired(storedToken)) {
+      console.log("Token expired. Logging out.")
+      signOut()
+      return
+    }
+  
+    if (storedToken && storedUser) {
       setUser(JSON.parse(storedUser))
       console.log("User loaded from localStorage:", JSON.parse(storedUser))
     }
+  
     setIsLoading(false)
   }, [])
 
