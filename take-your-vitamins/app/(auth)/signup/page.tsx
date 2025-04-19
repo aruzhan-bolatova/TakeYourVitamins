@@ -27,7 +27,7 @@ export default function SignupPage() {
     try {
       console.log(JSON.stringify({ name, email, password, age, gender }))
 
-      const response = await fetch("http://10.228.244.25:5001/api/auth/register", {
+      const response = await fetch("http://localhost:5001/api/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

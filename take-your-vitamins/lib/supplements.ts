@@ -6,7 +6,7 @@ export async function searchSupplements(query: string): Promise<Supplement[]> {
 
   try {
     // Fetch supplements from the backend API using the search query
-    const response = await fetch(`http://10.228.244.25:5001/api/supplements/?search=${encodeURIComponent(query)}`)
+    const response = await fetch(`http://localhost:5001/api/supplements/?search=${encodeURIComponent(query)}`)
     if (!response.ok) {
       console.error("Failed to fetch search results")
       return []
@@ -25,7 +25,7 @@ export async function getSupplementById(supplementId: string): Promise<Supplemen
   if (!supplementId.trim()) return null
 
   try {
-    const response = await fetch(`http://10.228.244.25:5001/api/supplements/${encodeURIComponent(supplementId)}`)
+    const response = await fetch(`http://localhost:5001/api/supplements/${encodeURIComponent(supplementId)}`)
 
     if (!response.ok) {
       console.error("Failed to fetch supplement by ID")
@@ -44,7 +44,7 @@ export async function getSupplementInteractions(supplementId: string): Promise<C
   if (!supplementId.trim()) return null
   try
   {
-    const response = await fetch(`http://10.228.244.25:5001/api/supplements/by-supplement/${supplementId}`)
+    const response = await fetch(`http://localhost:5001/api/supplements/by-supplement/${supplementId}`)
     if (!response.ok) {
       console.error("Failed to fetch interactions by supplement ID")
       return null
@@ -66,7 +66,7 @@ export async function checkInteractions(supplementId: string): Promise<string[]>
   try {
     // Fetch interactions for the supplement from the backend
     const response = await fetch(
-      `http://10.228.244.25:5001/api/supplements/by-supplement/${supplementId}`
+      `http://localhost:5001/api/supplements/by-supplement/${supplementId}`
     )
 
     if (!response.ok) {
@@ -118,7 +118,7 @@ export async function getAutocompleteSuggestions(query: string): Promise<Autocom
   if (!query.trim()) return []
 
   try {
-    const response = await fetch(`http://10.228.244.25:5001/api/supplements/autocomplete?search=${encodeURIComponent(query)}`)
+    const response = await fetch(`http://localhost:5001/api/supplements/autocomplete?search=${encodeURIComponent(query)}`)
     if (!response.ok) {
       console.error("Failed to fetch autocomplete suggestions")
       return []
@@ -137,7 +137,7 @@ export async function getAutocompleteSuggestions(query: string): Promise<Autocom
 export async function getAllSupplements(): Promise<Supplement[]> {
   try {
     // Fetch all supplements from the backend API
-    const response = await fetch(`http://10.228.244.25:5001/api/supplements/`)
+    const response = await fetch(`http://localhost:5001/api/supplements/`)
     console.log("Fetched all supplements:", response)
     if (!response.ok) {
       console.error("Failed to fetch all supplements")

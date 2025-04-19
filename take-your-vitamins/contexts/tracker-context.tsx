@@ -119,67 +119,74 @@ export function TrackerProvider({ children }: { children: ReactNode }) {
   ])
   const [symptomLogs, setSymptomLogs] = useState<SymptomLog[]>([])
 
-  // Check interactions for a given supplement
-  const checkInteractions = async (supplementId: string): Promise<string[]> => {
-    if (!supplementId.trim()) return []
-    
-    try {
-      // Fetch interactions for the supplement from the backend
-      const response = await fetch(
-        `http://10.228.244.25:5001/api/supplements/by-supplement/${supplementId}`
-      )
-      
-      if (!response.ok) {
-        console.error("Failed to fetch interactions by supplement ID")
-        return []
-      }
-      
-      const data = await response.json()
-      
-      // Extract and format interaction warnings
-      const warnings: string[] = []
-      
-      // Only display warnings for supplements that already exist in tracked supplements
-      const trackedSupplementIds = trackedSupplements.map(s => s.supplementId)
-      
-      // Process supplement-supplement interactions
-      if (data.supplementSupplementInteractions) {
-        data.supplementSupplementInteractions.forEach((interaction: any) => {
-          // Check if the interacting supplement is already being tracked
-          const interactingSupplement = interaction.supplementId || interaction.interactingSupplementId
-          
-          if (interactingSupplement && trackedSupplementIds.includes(interactingSupplement)) {
-            const interactingSupplementName = interaction.supplementName || 
-              trackedSupplements.find(s => s.supplementId === interactingSupplement)?.supplementName || 
-              "Unknown supplement"
-              
-            const description = interaction.description || "No description provided."
-            const recommendation = interaction.recommendation || "No recommendation provided."
-            
-            warnings.push(
-              `Interaction with ${interactingSupplementName}: ${description} Recommendation: ${recommendation}`
-            )
-          }
-        })
-      }
-      
-      // Process supplement-food interactions (if applicable)
-      if (data.supplementFoodInteractions) {
-        data.supplementFoodInteractions.forEach((interaction: any) => {
-          const description = interaction.description || "No description provided."
-          const recommendation = interaction.recommendation || "No recommendation provided."
-          warnings.push(
-            `Food Interaction: ${description} Recommendation: ${recommendation}`
-          )
-        })
-      }
-      
-      return warnings
-    } catch (error) {
-      console.error("Error while fetching interactions for supplement ID:", error)
+// Check interactions for a given supplement
+const checkInteractions = async (supplementId: string): Promise<string[]> => {
+  if (!supplementId.trim()) return []
+
+  try {
+    // Fetch interactions for the supplement from the backend
+    const response = await fetch(
+      `http://localhost:5001/api/supplements/by-supplement/${supplementId}`
+    )
+
+    if (!response.ok) {
+      console.error("Failed to fetch interactions by supplement ID")
       return []
     }
+
+    const data = await response.json()
+    console.log("Fetched interactions:", data)
+
+    // Extract and format interaction warnings
+    const warnings: string[] = []
+
+    // Get IDs of tracked supplements
+    const trackedSupplementIds = trackedSupplements.map((s) => s.supplementId)
+    console.log("Tracked supplement IDs:", trackedSupplementIds)
+
+    // Process supplement-supplement interactions
+    if (data.supplementSupplementInteractions) {
+      data.supplementSupplementInteractions.forEach((interaction: any) => {
+        // Check if the interacting supplement is already being tracked
+        const interactingSupplements = interaction.supplements || []
+
+        interactingSupplements.forEach((interactingSupplement: any) => {
+          if (trackedSupplementIds.includes(interactingSupplement.supplementId) && interactingSupplement.supplementId !== supplementId) {
+            const interactingSupplementName =
+              interactingSupplement.name ||
+              trackedSupplements.find((s) => s.supplementId === interactingSupplement.supplementId)
+                ?.supplementName ||
+              "Unknown supplement"
+
+            const description = interaction.description || "No description provided."
+            const recommendation = interaction.recommendation || "No recommendation provided."
+
+            warnings.push(
+              `Interaction with ${interactingSupplementName}: ${description}`
+            )
+            warnings.push('Recommendation: ' + recommendation)
+          }
+        })
+      })
+    }
+
+    // Process supplement-food interactions (if applicable)
+    if (data.supplementFoodInteractions) {
+      data.supplementFoodInteractions.forEach((interaction: any) => {
+        const description = interaction.description || "No description provided."
+        const recommendation = interaction.recommendation || "No recommendation provided."
+        warnings.push(
+          `Food Interaction: ${description} Recommendation: ${recommendation}`
+        )
+      })
+    }
+
+    return warnings
+  } catch (error) {
+    console.error("Error while fetching interactions for supplement ID:", error)
+    return []
   }
+}
 
   // Add a tracked supplement
   const addTrackedSupplement = async (
@@ -199,7 +206,7 @@ export function TrackerProvider({ children }: { children: ReactNode }) {
         throw new Error("User not authenticated")
       }
 
-      const response = await fetch(`http://10.228.244.25:5001/api/tracker_supplements_list/${user._id}`, {
+      const response = await fetch(`http://localhost:5001/api/tracker_supplements_list/${user._id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -265,7 +272,7 @@ export function TrackerProvider({ children }: { children: ReactNode }) {
         throw new Error("User not authenticated")
       }
 
-      const response = await fetch("http://10.228.244.25:5001/api/intake_logs/", {
+      const response = await fetch("http://localhost:5001/api/intake_logs/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -318,7 +325,7 @@ export function TrackerProvider({ children }: { children: ReactNode }) {
       }
 
       const response = await fetch(
-        `http://10.228.244.25:5001/api/intake_logs/?start_date=${date}&end_date=${date}`,
+        `http://localhost:5001/api/intake_logs/?start_date=${date}&end_date=${date}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -365,7 +372,7 @@ export function TrackerProvider({ children }: { children: ReactNode }) {
       }
 
       const response = await fetch(
-        "http://10.228.244.25:5001/api/intake_logs/today",
+        "http://localhost:5001/api/intake_logs/today",
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -410,7 +417,7 @@ export function TrackerProvider({ children }: { children: ReactNode }) {
       }
 
       const response = await fetch(
-        `http://10.228.244.25:5001/api/intake_logs/${id}`,
+        `http://localhost:5001/api/intake_logs/${id}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -453,7 +460,7 @@ export function TrackerProvider({ children }: { children: ReactNode }) {
       }
 
       const response = await fetch(
-        `http://10.228.244.25:5001/api/intake_logs/${id}`,
+        `http://localhost:5001/api/intake_logs/${id}`,
         {
           method: "PUT",
           headers: {
@@ -496,7 +503,7 @@ export function TrackerProvider({ children }: { children: ReactNode }) {
       }
 
       const response = await fetch(
-        `http://10.228.244.25:5001/api/intake_logs/${id}`,
+        `http://localhost:5001/api/intake_logs/${id}`,
         {
           method: "DELETE",
           headers: {
@@ -526,7 +533,7 @@ export function TrackerProvider({ children }: { children: ReactNode }) {
         throw new Error("User not authenticated")
       }
 
-      const response = await fetch(`http://10.228.244.25:5001/api/tracker_supplements_list/${user._id}`, {
+      const response = await fetch(`http://localhost:5001/api/tracker_supplements_list/${user._id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -574,7 +581,7 @@ export function TrackerProvider({ children }: { children: ReactNode }) {
         notes: data.notes !== undefined ? data.notes : supplement.notes,
       }
 
-      const response = await fetch(`http://10.228.244.25:5001/api/tracker_supplements_list/${user._id}`, {
+      const response = await fetch(`http://localhost:5001/api/tracker_supplements_list/${user._id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -668,6 +675,7 @@ export function TrackerProvider({ children }: { children: ReactNode }) {
     const fetchUserTrackerData = async () => {
       try {
         console.log(localStorage.getItem("token"))
+        console.log("User in TrackerContext:", user)
         
         if (!user) {
           setTrackedSupplements([])
@@ -677,7 +685,7 @@ export function TrackerProvider({ children }: { children: ReactNode }) {
         }
   
         // Fetch tracked supplements from backend
-        const response = await fetch("http://10.228.244.25:5001/api/tracker_supplements_list/", {
+        const response = await fetch("http://localhost:5001/api/tracker_supplements_list/", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
@@ -689,6 +697,7 @@ export function TrackerProvider({ children }: { children: ReactNode }) {
         }
         
         const data = await response.json()
+        console.log("Raw tracker data:", data)
         
         if (data && data.tracked_supplements) {
           const supplements = data.tracked_supplements.map((s: any) => ({
@@ -704,6 +713,7 @@ export function TrackerProvider({ children }: { children: ReactNode }) {
           }))
           
           setTrackedSupplements(supplements)
+          console.log("Fetched tracked supplements:", supplements)
         }
   
         // Fetch today's intake logs

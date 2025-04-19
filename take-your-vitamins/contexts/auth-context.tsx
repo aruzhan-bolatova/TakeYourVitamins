@@ -43,7 +43,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     try {
       // Make a POST request to the auth/login endpoint
-      const response = await fetch("http://10.228.244.25:5001/api/auth/login", {
+      const response = await fetch("http://localhost:5001/api/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -65,7 +65,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       localStorage.setItem("token", access_token)
 
       // Fetch the user details from the database using the access_token
-      const userResponse = await fetch("http://10.228.244.25:5001/api/auth/me", {
+      const userResponse = await fetch("http://localhost:5001/api/auth/me", {
         method: "GET",
         headers: {
           Authorization: `Bearer ${access_token}`,
@@ -104,7 +104,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     try {
       // Make a POST request to the auth/register endpoint
-      const response = await fetch("http://10.228.244.25:5001/api/auth/register", {
+      const response = await fetch("http://localhost:5001/api/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
