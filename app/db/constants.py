@@ -33,7 +33,6 @@ SUPPLEMENT_FIELDS = {
 }
 
 INTAKE_LOG_FIELDS = {
-    "INTAKE_LOG_ID": "intakeLogId",
     "USER_ID": "userId",
     "SUPPLEMENT_ID": "supplementId",
     "INTAKE_DATE": "intakeDate",

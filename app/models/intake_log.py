@@ -1,6 +1,7 @@
 from app.db.db import get_database as get_db
 from bson.objectid import ObjectId
 from datetime import datetime, timezone
+import uuid
 
 class IntakeLog:
     REQUIRED_FIELDS = ['user_id', 'tracked_supplement_id', 'intake_date']
@@ -44,7 +45,6 @@ class IntakeLog:
 
     @staticmethod
     def create(intake_log_data: dict):
-        print("Creating intake log with data:", intake_log_data)
         """Create a new intake log"""
         # Validate data
         if not intake_log_data:
@@ -58,6 +58,8 @@ class IntakeLog:
         # Default values
         intake_log_data['intake_time'] = intake_log_data.get('intake_time', now)
         intake_log_data['notes'] = intake_log_data.get('notes', '')
+        # Assign a unique intakeLogId if it doesn't exist
+        intake_log_data['intakeLogId'] = str(uuid.uuid4())
         
         # Convert string IDs to ObjectId
         if isinstance(intake_log_data.get('user_id'), str):
@@ -85,6 +87,7 @@ class IntakeLog:
         # Create object and validate
         intake_log = IntakeLog(intake_log_data)
         intake_log.validate_data()
+        print("Creating intake log with data:", intake_log_data)
         
         # Insert into database
         result = db.IntakeLogs.insert_one(intake_log_data)
