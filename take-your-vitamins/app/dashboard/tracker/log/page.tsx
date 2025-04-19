@@ -46,8 +46,22 @@ export default function DailyLogPage() {
             <Calendar
               mode="single"
               selected={selectedDate}
-              onSelect={(date) => date && setSelectedDate(date)}
+              onSelect={(date) => {
+                // Only set the date if it's valid and different from current selection
+                if (date && date.toString() !== selectedDate.toString()) {
+                  // Force create a new Date object to ensure React recognizes the state change
+                  const newDate = new Date(date.getTime());
+                  setSelectedDate(newDate);
+                }
+              }}
               className="rounded-md border"
+              classNames={{
+                day_today: "!bg-transparent !text-orange-500 border border-orange-300 hover:bg-orange-100",
+                day_selected: "!bg-primary !text-primary-foreground hover:!bg-primary hover:!text-primary-foreground"
+              }}
+              disabled={{ before: new Date(2000, 0, 1) }}
+              defaultMonth={selectedDate}
+              required
             />
           </CardContent>
         </Card>

@@ -1,6 +1,6 @@
 import type React from "react"
 import "@/app/globals.css"
-import { Inter } from "next/font/google"
+import { Montserrat } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
 import { AuthProvider } from "@/contexts/auth-context"
 import { TrackerProvider } from "@/contexts/tracker-context"
@@ -10,7 +10,7 @@ import { NavBar } from "@/components/nav-bar"
 import { Toaster } from "@/components/ui/toaster"
 import { ErrorBoundary, DefaultErrorFallback } from "@/components/error-boundary"
 
-const inter = Inter({ subsets: ["latin"] })
+const montserrat = Montserrat({ subsets: ["latin"] })
 
 export const metadata = {
   title: "Take Your Vitamins",
@@ -24,8 +24,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+      <body className={montserrat.className}>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
           <ErrorBoundary fallback={DefaultErrorFallback}>
             <NotificationProvider>
               <AuthProvider>
