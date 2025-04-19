@@ -8,52 +8,62 @@ import { format } from "date-fns"
 import { Badge } from "@/components/ui/badge"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertCircle, CheckCircle2, Trophy } from "lucide-react"
-import { toast } from "@/components/ui/use-toast"
 import { ErrorDisplay } from "@/components/ui/error-display"
 import { handleError } from "@/lib/error-handler"
 import { RefreshCw } from "lucide-react"
+import { useNotification } from "@/contexts/notification-context"
+import { Button } from "@/components/ui/button"
 
 export default function StreaksPage() {
   const [streaksData, setStreaksData] = useState<Streak[] | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const notification = useNotification()
 
-  useEffect(() => {
-    async function fetchStreaks() {
-      setLoading(true)
-      setError(null)
+  // Function to fetch streaks data
+  const fetchStreaks = async () => {
+    setLoading(true)
+    setError(null)
+    
+    try {
+      // Clear any existing notifications when starting a new fetch
+      notification.dismissAll()
       
-      try {
-        // Show loading toast
-        const loadingToast = toast.info("Loading streak data...", {
-          duration: 3000
-        });
+      // Show a single loading notification
+      notification.notifyInfo("Loading streak data...")
+      
+      const data = await getUserStreaks()
+      
+      if (data) {
+        setStreaksData(data.streaks)
         
-        const data = await getUserStreaks()
-        
-        if (data) {
-          setStreaksData(data.streaks)
-          
-          // Show different toasts based on streak data
+        // Wait until data is processed before showing any more notifications
+        setTimeout(() => {
+          // Show different notifications based on streak data, but only if needed
           if (data.streaks.length === 0) {
-            toast.info("No streak data available yet. Start tracking supplements to build streaks!");
+            notification.notifyInfo("No streak data available yet. Start tracking supplements to build streaks!")
           } else if (data.streaks.some(streak => streak.currentStreak >= 7)) {
-            toast.success("Great job! You have streaks of 7+ days.");
+            notification.notifySuccess("Great job! You have streaks of 7+ days.")
           }
-        } else {
-          throw new Error("No data returned")
-        }
-      } catch (err) {
-        const errorMessage = "Failed to load streaks. Please try again later.";
-        setError(errorMessage);
-        handleError(err, {
-          defaultMessage: errorMessage
-        });
-      } finally {
-        setLoading(false)
+        }, 500)
+      } else {
+        throw new Error("No data returned")
       }
+    } catch (err) {
+      const errorMessage = "Failed to load streaks. Please try again later."
+      setError(errorMessage)
+      handleError(err, {
+        defaultMessage: errorMessage,
+        showToast: false
+      })
+      notification.notifyError(errorMessage)
+    } finally {
+      setLoading(false)
     }
+  }
 
+  // Fetch data on component mount
+  useEffect(() => {
     fetchStreaks()
   }, [])
 
@@ -80,6 +90,16 @@ export default function StreaksPage() {
       <div className="flex flex-col gap-4">
         <div className="flex justify-between items-center">
           <h1 className="text-2xl font-bold">Your Supplement Streaks</h1>
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={fetchStreaks} 
+            disabled={loading}
+            className="flex items-center gap-1"
+          >
+            <RefreshCw className="w-4 h-4" />
+            Refresh
+          </Button>
         </div>
 
         {loading && (
@@ -93,25 +113,7 @@ export default function StreaksPage() {
         {error && (
           <ErrorDisplay 
             message={error}
-            onRetry={() => {
-              setLoading(true);
-              setError(null);
-              getUserStreaks()
-                .then(data => {
-                  if (data) {
-                    setStreaksData(data.streaks);
-                    toast.success("Streaks refreshed successfully!");
-                  } else {
-                    throw new Error("No data returned");
-                  }
-                })
-                .catch(err => {
-                  const errorMessage = "Failed to load streaks. Please try again.";
-                  setError(errorMessage);
-                  handleError(err, { defaultMessage: errorMessage });
-                })
-                .finally(() => setLoading(false));
-            }}
+            onRetry={fetchStreaks}
           />
         )}
 

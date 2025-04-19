@@ -10,7 +10,7 @@ import Link from "next/link"
 import { useAuth } from "@/contexts/auth-context"
 import { handleError } from "@/lib/error-handler"
 import { ErrorDisplay } from "@/components/ui/error-display"
-import { toast, useToast } from "@/components/ui/use-toast"
+import { useNotification } from "@/contexts/notification-context"
 
 export default function LoginPage() {
   const { signIn, isLoading } = useAuth()
@@ -18,15 +18,12 @@ export default function LoginPage() {
   const [password, setPassword] = useState("")
   const [error, setError] = useState<string | null>(null)
   const [localLoading, setLocalLoading] = useState(false)
-  const { dismiss: dismissToasts } = useToast()
+  const notification = useNotification()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError(null)
     setLocalLoading(true)
-    
-    // Clear any existing toasts
-    dismissToasts()
     
     // Validate form fields
     if (!email.trim()) {
@@ -46,14 +43,9 @@ export default function LoginPage() {
       const success = await signIn(email, password)
       
       if (!success) {
-        // Clear any existing toasts and set error
-        dismissToasts()
         setError("Invalid email or password. Please try again.");
       }
     } catch (err) {
-      // Clear any existing toasts
-      dismissToasts()
-      
       const errorMessage = handleError(err, {
         defaultMessage: "Login failed. Please check your credentials.",
         context: "Authentication",

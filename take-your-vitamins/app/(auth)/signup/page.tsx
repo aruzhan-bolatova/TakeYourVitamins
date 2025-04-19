@@ -10,7 +10,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import Link from "next/link"
 import { getApiUrl } from "@/lib/api-config"
 import { ErrorDisplay } from "@/components/ui/error-display"
-import { toast, useToast } from "@/components/ui/use-toast"
+import { useNotification } from "@/contexts/notification-context"
 import { handleError } from "@/lib/error-handler"
 import { useAuth } from "@/contexts/auth-context"
 
@@ -24,15 +24,12 @@ export default function SignupPage() {
   const [gender, setGender] = useState("")
   const [error, setError] = useState("")
   const [isLoading, setIsLoading] = useState(false)
-  const { dismiss: dismissToasts } = useToast()
+  const notification = useNotification()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError("")
     setIsLoading(true)
-    
-    // Clear any existing toasts
-    dismissToasts()
 
     if (!name.trim()) {
       setError("Name is required")
@@ -65,11 +62,6 @@ export default function SignupPage() {
     }
 
     try {
-      // Show a loading toast that will be automatically dismissed
-      const loadingToast = toast.info("Creating your account...", {
-        duration: 3000
-      })
-
       if (signUp) {
         const success = await signUp(name, email, password, age, gender)
         if (success) {
@@ -83,8 +75,6 @@ export default function SignupPage() {
         }
       } else {
         // Fallback when signUp function isn't available - should be rare
-        dismissToasts() // Clear any existing toasts first
-        
         const response = await fetch(getApiUrl("/api/auth/register"), {
           method: "POST",
           headers: {
@@ -94,7 +84,7 @@ export default function SignupPage() {
         })
 
         if (response.ok) {
-          toast.success("Account created successfully! Please log in.")
+          notification.notifySuccess("Account created successfully! Please log in.")
           setTimeout(() => {
             router.push("/login")
           }, 1500)
@@ -104,7 +94,6 @@ export default function SignupPage() {
         }
       }
     } catch (err) {
-      dismissToasts() // Dismiss any loading toasts
       const errorMessage = handleError(err, {
         defaultMessage: "Something went wrong. Please try again.",
         context: "Signup",

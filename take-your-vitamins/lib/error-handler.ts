@@ -1,6 +1,14 @@
 import { toast } from "@/components/ui/use-toast"
 import React from "react"
 import { ToastAction } from "@/components/ui/toast"
+import { 
+  formatError, 
+  getUserFriendlyErrorMessage, 
+  isNetworkError, 
+  isAuthError, 
+  isValidationError
+} from "@/lib/error-handling"
+import { useNotification } from "@/contexts/notification-context"
 
 type ErrorOptions = {
   showToast?: boolean
@@ -22,6 +30,8 @@ const isOnline = (): boolean => {
     : true;
 };
 
+// For use in components that don't have access to the notification context
+// We keep the toast-based implementation as a fallback
 /**
  * This function handles errors in a standardized way across the application
  * @param error - The error to handle
@@ -40,7 +50,7 @@ export function handleError(error: any, options: ErrorOptions = {}): string {
   } = options
 
   // Handle offline status specially
-  if (!isOnline()) {
+  if (!isOnline() || isNetworkError(error)) {
     const offlineMessage = "You appear to be offline. Please check your internet connection.";
     
     if (showToast) {
@@ -66,39 +76,13 @@ export function handleError(error: any, options: ErrorOptions = {}): string {
     return offlineMessage;
   }
 
-  // Extract error message
-  let errorMessage = defaultMessage;
-  let errorDetails = "";
+  // Create a properly formatted error
+  const formattedError = formatError(error);
+  let errorMessage = getUserFriendlyErrorMessage(formattedError);
   
-  if (typeof error === 'string') {
-    errorMessage = error;
-  } else if (error instanceof Error) {
-    errorMessage = error.message;
-    errorDetails = error.stack || "";
-  } else if (error?.message) {
-    errorMessage = error.message;
-  } else if (error?.error) {
-    errorMessage = error.error;
-  } else if (error?.statusText) {
-    errorMessage = error.statusText;
-  }
-
-  // Extract status code 
-  const statusCode = error?.status || error?.statusCode;
-
-  // Handle known authentication errors
-  if (context === "Authentication" && statusCode === 401) {
-    errorMessage = "Invalid email or password. Please try again.";
-  } else if (context === "Authentication" && statusCode === 403) {
-    errorMessage = "Your account doesn't have permission to access this resource.";
-  } else if (context === "Authentication" || context === "Registration") {
-    if (error?.statusText === "UNAUTHORIZED") {
-      errorMessage = "Invalid email or password. Please try again.";
-    } else if (statusCode === 400) {
-      errorMessage = "Please check your information and try again.";
-    } else if (statusCode === 409) {
-      errorMessage = "An account with this email already exists.";
-    }
+  // Override with default message if provided
+  if (defaultMessage && errorMessage === "An unexpected error occurred. Please try again later.") {
+    errorMessage = defaultMessage;
   }
 
   // Add context if provided
@@ -106,43 +90,26 @@ export function handleError(error: any, options: ErrorOptions = {}): string {
     errorMessage = `${context}: ${errorMessage}`;
   }
 
-  // Format error details for better readability
-  if (!errorDetails) {
-    try {
-      if (typeof error === 'object' && error !== null) {
-        errorDetails = JSON.stringify(error, null, 2);
-      } else {
-        errorDetails = String(error);
-      }
-    } catch {
-      errorDetails = "Error details could not be displayed";
-    }
-  }
-
   // Reporting for analytics (placeholder for future implementation)
   if (reportToAnalytics) {
     // In the future, could implement analytics reporting here
     console.info("Error would be reported to analytics:", {
       message: errorMessage,
-      statusCode,
-      details: errorDetails
+      statusCode: formattedError.response?.status,
+      // Only include stack if it exists on the original error object
+      details: error instanceof Error && error.stack ? error.stack : undefined
     });
   }
 
   // Show toast notification
   if (showToast) {
-    // Choose the appropriate error message based on status code
-    if (statusCode === 401) {
+    if (isAuthError(formattedError)) {
       toast.error("Authentication required. Please log in again.");
-    } else if (statusCode === 403) {
-      toast.error("You don't have permission to perform this action.");
-    } else if (statusCode === 404) {
-      toast.error("The requested resource was not found.");
-    } else if (statusCode === 422 || statusCode === 400) {
+    } else if (isValidationError(formattedError)) {
       toast.error(errorMessage || "Validation error. Please check your input.");
-    } else if (statusCode === 429) {
+    } else if (formattedError.response?.status === 429) {
       toast.error("Too many requests. Please try again later.");
-    } else if (statusCode >= 500) {
+    } else if (formattedError.response?.status && formattedError.response.status >= 500) {
       toast.error("Server error. Please try again later.");
     } else {
       toast.error(errorMessage);
@@ -153,9 +120,10 @@ export function handleError(error: any, options: ErrorOptions = {}): string {
   if (logToConsole) {
     const errorGroup = context || "Application Error";
     console.groupCollapsed(`${errorGroup}: ${errorMessage}`);
-    console.error("Error details:", error);
-    if (statusCode) console.info("Status code:", statusCode);
-    if (errorDetails) console.info("Stack trace:", errorDetails);
+    console.error("Error details:", formattedError);
+    if (formattedError.response?.status) console.info("Status code:", formattedError.response.status);
+    // Only log stack trace if it exists on the original error
+    if (error instanceof Error && error.stack) console.info("Stack trace:", error.stack);
     console.groupEnd();
   }
 
@@ -165,6 +133,7 @@ export function handleError(error: any, options: ErrorOptions = {}): string {
 
 /**
  * This function enhances a fetch request with error handling and AJAX-like features
+ * Using the notification context when available
  * @param url - The URL to fetch
  * @param options - Fetch options
  * @returns The response data
@@ -174,11 +143,11 @@ export async function fetchWithErrorHandling<T>(
   options?: RequestInit & { 
     context?: string, 
     showLoadingToast?: boolean,
-    retryCount?: number
+    retryCount?: number,
+    notification?: ReturnType<typeof useNotification>
   }
 ): Promise<T> {
-  const { context, showLoadingToast = false, retryCount = 0, ...fetchOptions } = options || {};
-  let loadingToast: any = null;
+  const { context, showLoadingToast = false, retryCount = 0, notification, ...fetchOptions } = options || {};
   
   try {
     // Check if online first
@@ -186,9 +155,13 @@ export async function fetchWithErrorHandling<T>(
       throw new Error("You are currently offline. Please check your connection and try again.");
     }
     
-    // Show loading toast if requested
+    // Show loading toast if requested - use notification context if available
     if (showLoadingToast) {
-      loadingToast = toast.info("Loading...");
+      if (notification) {
+        notification.notifyInfo("Loading...");
+      } else {
+        toast.info("Loading...");
+      }
     }
     
     // Add timeout to the fetch request
@@ -203,8 +176,7 @@ export async function fetchWithErrorHandling<T>(
     // Clear the timeout
     clearTimeout(timeoutId);
     
-    // We just let the loading toast auto-disappear
-    // No need to dismiss it manually
+    // No need to dismiss loading notifications - they auto-dismiss
     
     if (!response.ok) {
       // Attempt to parse error response
@@ -229,34 +201,45 @@ export async function fetchWithErrorHandling<T>(
     const data = await response.json();
     return data as T;
   } catch (error: unknown) {
-    // We just let the loading toast auto-disappear
-    // No need to dismiss it manually
+    // No need to dismiss loading notifications
     
     // Special handling for timeout errors
     if (error instanceof Error && error.name === 'AbortError') {
       const timeoutError = new Error("The request took too long to complete. Please try again.");
-      handleError(timeoutError, {
-        context,
-        retry: () => fetchWithErrorHandling(url, {
-          ...options,
-          retryCount: retryCount + 1
-        }),
-        retryCount
-      });
+      
+      if (notification) {
+        notification.notifyError("The request took too long to complete. Please try again.");
+      } else {
+        handleError(timeoutError, {
+          context,
+          retry: () => fetchWithErrorHandling(url, {
+            ...options,
+            retryCount: retryCount + 1
+          }),
+          retryCount
+        });
+      }
+      
       throw timeoutError;
     }
     
-    // Handle using our standardized error handler
-    handleError(error, {
-      context,
-      retry: () => fetchWithErrorHandling(url, {
-        ...options,
-        retryCount: retryCount + 1
-      }),
-      retryCount
-    });
+    // Use notification context if available
+    if (notification) {
+      notification.handleApiError(error, context ? `${context}: An error occurred` : undefined);
+    } else {
+      // Fall back to handleError for components without notification context
+      handleError(error, {
+        context,
+        retry: retryCount < MAX_RETRY_LIMIT
+          ? () => fetchWithErrorHandling(url, {
+              ...options,
+              retryCount: retryCount + 1
+            })
+          : undefined,
+        retryCount
+      });
+    }
     
-    // Re-throw the error for the calling code to handle
     throw error;
   }
 } 
