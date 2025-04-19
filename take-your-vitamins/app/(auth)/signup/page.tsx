@@ -13,6 +13,7 @@ import { ErrorDisplay } from "@/components/ui/error-display"
 import { useNotification } from "@/contexts/notification-context"
 import { handleError } from "@/lib/error-handler"
 import { useAuth } from "@/contexts/auth-context"
+import { PublicRoute } from "@/components/public-route"
 
 export default function SignupPage() {
   const { signUp } = useAuth()
@@ -106,81 +107,83 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center px-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold">Create an account</CardTitle>
-          <CardDescription>Enter your information to create an account</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            {error && (
-              <ErrorDisplay 
-                message={error}
-                onRetry={() => {
-                  setError("")
-                  if (name && email && password && age && gender) {
-                    handleSubmit(new Event('submit') as unknown as React.FormEvent)
-                  }
-                }}
-              />
-            )}
-            <div className="space-y-2">
-              <label htmlFor="name" className="text-sm font-medium">
-                Name
-              </label>
-              <Input id="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="John Doe" required />
+    <PublicRoute>
+      <div className="flex min-h-screen items-center justify-center px-4">
+        <Card className="w-full max-w-md">
+          <CardHeader className="space-y-1">
+            <CardTitle className="text-2xl font-bold">Create an account</CardTitle>
+            <CardDescription>Enter your information to create an account</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              {error && (
+                <ErrorDisplay 
+                  message={error}
+                  onRetry={() => {
+                    setError("")
+                    if (name && email && password && age && gender) {
+                      handleSubmit(new Event('submit') as unknown as React.FormEvent)
+                    }
+                  }}
+                />
+              )}
+              <div className="space-y-2">
+                <label htmlFor="name" className="text-sm font-medium">
+                  Name
+                </label>
+                <Input id="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="John Doe" required />
+              </div>
+              <div className="space-y-2">
+                <label htmlFor="email" className="text-sm font-medium">
+                  Email
+                </label>
+                <Input
+                  id="email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="name@example.com"
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <label htmlFor="password" className="text-sm font-medium">
+                  Password
+                </label>
+                <Input
+                  id="password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••"
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <label htmlFor="age" className="text-sm font-medium">
+                  Age
+                </label>
+                <Input id="age" value={age} onChange={(e) => setAge(e.target.value)} placeholder="21" required />
+              </div>
+              <div className="space-y-2">
+                <label htmlFor="gender" className="text-sm font-medium">
+                  Gender
+                </label>
+                <Input id="gender" value={gender} onChange={(e) => setGender(e.target.value)} placeholder="Female" required />
+              </div>
+              <Button type="submit" className="w-full" disabled={isLoading}>
+                {isLoading ? "Creating account..." : "Sign Up"}
+              </Button>
+            </form>
+            <div className="mt-4 text-center text-sm">
+              Already have an account?{" "}
+              <Link href="/login" className="text-primary hover:underline">
+                Login
+              </Link>
             </div>
-            <div className="space-y-2">
-              <label htmlFor="email" className="text-sm font-medium">
-                Email
-              </label>
-              <Input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="name@example.com"
-                required
-              />
-            </div>
-            <div className="space-y-2">
-              <label htmlFor="password" className="text-sm font-medium">
-                Password
-              </label>
-              <Input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                required
-              />
-            </div>
-            <div className="space-y-2">
-              <label htmlFor="age" className="text-sm font-medium">
-                Age
-              </label>
-              <Input id="age" value={age} onChange={(e) => setAge(e.target.value)} placeholder="21" required />
-            </div>
-            <div className="space-y-2">
-              <label htmlFor="gender" className="text-sm font-medium">
-                Gender
-              </label>
-              <Input id="gender" value={gender} onChange={(e) => setGender(e.target.value)} placeholder="Female" required />
-            </div>
-            <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? "Creating account..." : "Sign Up"}
-            </Button>
-          </form>
-          <div className="mt-4 text-center text-sm">
-            Already have an account?{" "}
-            <Link href="/login" className="text-primary hover:underline">
-              Login
-            </Link>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+          </CardContent>
+        </Card>
+      </div>
+    </PublicRoute>
   )
 }
