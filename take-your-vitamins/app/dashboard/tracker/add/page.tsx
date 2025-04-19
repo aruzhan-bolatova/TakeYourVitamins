@@ -16,6 +16,9 @@ import type { Supplement } from "@/lib/types"
 import { DatePicker } from "@/components/date-picker"
 import { searchSupplements } from "@/lib/supplements"
 import { useTracker } from "@/contexts/tracker-context"
+import { toast } from "@/components/ui/use-toast"
+import { handleError } from "@/lib/error-handler"
+import { ErrorDisplay } from "@/components/ui/error-display"
 
 export default function AddSupplementPage() {
   const router = useRouter()
@@ -69,11 +72,37 @@ export default function AddSupplementPage() {
     setIsLoading(true)
     setError("")
 
+    // Validate form fields
+    let hasErrors = false;
+    
+    if (!selectedSupplement) {
+      toast.error("Please select a supplement");
+      hasErrors = true;
+    }
+    
+    if (!dosage) {
+      toast.error("Please enter a dosage");
+      hasErrors = true;
+    }
+    
+    if (!startDate) {
+      toast.error("Start date is required");
+      hasErrors = true;
+    }
+    
+    if (hasErrors) {
+      setIsLoading(false);
+      return;
+    }
+
+    // AJAX-like submission
     try {
-      if (!startDate) {
-        console.error("Start date is required!");
-        return;
-      }      
+      // Start progress indication
+      const progressToast = toast.info("Adding supplement...", {
+        // Make it persistent until we dismiss it
+        duration: Infinity,
+      });
+      
       const { success, warnings } = await addTrackedSupplement({
         supplementId: selectedSupplement,
         dosage,
@@ -81,19 +110,40 @@ export default function AddSupplementPage() {
         startDate: startDate.toISOString(),
         endDate: endDate ? endDate.toISOString() : undefined,
         notes,
-      })
+      });
+
+      // Dismiss the progress toast
+      toast.dismiss(progressToast.id);
 
       if (success) {
-        router.push("/dashboard/tracker")
+        toast.success("Supplement added successfully!");
+        
+        // Redirect after a short delay to allow the success message to be seen
+        setTimeout(() => {
+          router.push("/dashboard/tracker");
+        }, 1000);
       } else {
-        setError("Failed to add supplement")
+        setError("Failed to add supplement");
+        toast.error("Failed to add supplement");
       }
     } catch (error: any) {
-      setError(error.message || "Something went wrong. Please try again.")
+      const errorMessage = handleError(error, {
+        defaultMessage: "Something went wrong. Please try again."
+      });
+      
+      // Show detailed error with potential action
+      toast.error(errorMessage, {
+        action: {
+          label: "Retry",
+          onClick: () => handleSubmit(e),
+        },
+      });
+      
+      setError(errorMessage);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
     <div className="max-w-2xl mx-auto">
@@ -107,25 +157,22 @@ export default function AddSupplementPage() {
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
             {error && (
-              <Alert variant="destructive">
-                <AlertCircle className="h-4 w-4" />
-                <AlertTitle>Error</AlertTitle>
-                <AlertDescription>{error}</AlertDescription>
-              </Alert>
+              <ErrorDisplay 
+                message={error}
+                onRetry={() => {
+                  setError("");
+                  setIsLoading(false);
+                }}
+              />
             )}
 
             {interactionWarnings.length > 0 && (
-              <Alert className="bg-amber-50 text-amber-800 border-amber-200">
-                <AlertCircle className="h-4 w-4 text-amber-800" />
-                <AlertTitle>Potential Interactions Detected</AlertTitle>
-                <AlertDescription>
-                  <ul className="list-disc pl-5 mt-2 space-y-1">
-                    {interactionWarnings.map((warning, index) => (
-                      <li key={index}>{warning}</li>
-                    ))}
-                  </ul>
-                </AlertDescription>
-              </Alert>
+              <ErrorDisplay
+                severity="warning"
+                title="Potential Interactions Detected"
+                message="The following interactions were found with your current supplements:"
+                details={interactionWarnings.join('\n\n')}
+              />
             )}
 
             <div className="space-y-2">
@@ -173,8 +220,16 @@ export default function AddSupplementPage() {
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label>Start Date</Label>
-                <DatePicker date={startDate} setDate={setStartDate} />
+                <Label>Start Date <span className="text-red-500">*</span></Label>
+                <DatePicker 
+                  date={startDate} 
+                  setDate={setStartDate} 
+                  aria-required="true"
+                  className={!startDate ? "border-red-300 focus:border-red-500" : ""}
+                />
+                {!startDate && (
+                  <p className="text-xs text-red-500 mt-1">Start date is required</p>
+                )}
               </div>
               <div className="space-y-2">
                 <Label>End Date (Optional)</Label>

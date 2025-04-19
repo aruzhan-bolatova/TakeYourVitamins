@@ -4,6 +4,9 @@ import { createContext, useContext, useState, useEffect, type ReactNode } from "
 import { useAuth } from "./auth-context"
 import type { Supplement } from "@/lib/types"
 import { getSupplementById } from "@/lib/supplements"
+import { useNotification } from "@/contexts/notification-context"
+import { handleError } from "@/lib/error-handler"
+import { tryCatch } from "@/lib/error-handling"
 
 export type TrackedSupplement = {
   id: string
@@ -68,6 +71,7 @@ const TrackerContext = createContext<TrackerContextType | undefined>(undefined)
 
 export function TrackerProvider({ children }: { children: ReactNode }) {
   const { user } = useAuth()
+  const notification = useNotification()
   const [trackedSupplements, setTrackedSupplements] = useState<TrackedSupplement[]>([])
   const [intakeLogs, setIntakeLogs] = useState<IntakeLog[]>([])
 
@@ -162,169 +166,260 @@ export function TrackerProvider({ children }: { children: ReactNode }) {
     }
   }, [intakeLogs, user, symptomLogs])
 
-  // Add a new tracked supplement
+  // Update addTrackedSupplement to use notification for success and error notifications
   const addTrackedSupplement = async (data: Omit<TrackedSupplement, "id" | "userId" | "supplement">) => {
-    if (!user) return { success: false, warnings: [] }
-
-    // Check for interactions
-    const warnings = await checkInteractions(data.supplementId)
-
-    // Get the supplement details
-    const supplement = await getSupplementById(data.supplementId)
-    if (!supplement) return { success: false, warnings: [] }
-
-    const newTrackedSupplement: TrackedSupplement = {
-      id: `ts-${Date.now()}`,
-      userId: user.id,
-      supplementId: data.supplementId,
-      supplement,
-      startDate: data.startDate,
-      endDate: data.endDate,
-      dosage: data.dosage,
-      frequency: data.frequency,
-      notes: data.notes,
+    if (!user) {
+      notification.notifyError("You must be logged in to track supplements");
+      return { success: false, warnings: [] };
     }
 
-    setTrackedSupplements((prev) => [...prev, newTrackedSupplement])
-    return { success: true, warnings }
-  }
-
-  // Remove a tracked supplement
-  const removeTrackedSupplement = (id: string) => {
-    setTrackedSupplements((prev) => prev.filter((item) => item.id !== id))
-    // Also remove any intake logs for this supplement
-    setIntakeLogs((prev) => prev.filter((log) => log.trackedSupplementId !== id))
-  }
-
-  // Log supplement intake
-  const logIntake = (trackedSupplementId: string, taken: boolean, date?: string, notes?: string) => {
-    if (!user) return
-
-    const timestamp = date ? new Date(`${date}T12:00:00`).toISOString() : new Date().toISOString()
-
-    // Check if there's already a log for this supplement on this date
-    const existingLogIndex = intakeLogs.findIndex((log) => {
-      const logDate = new Date(log.timestamp).toISOString().split("T")[0]
-      const targetDate = new Date(timestamp).toISOString().split("T")[0]
-      return log.trackedSupplementId === trackedSupplementId && logDate === targetDate
-    })
-
-    if (existingLogIndex >= 0) {
-      // Update existing log
-      const updatedLogs = [...intakeLogs]
-      updatedLogs[existingLogIndex] = {
-        ...updatedLogs[existingLogIndex],
-        taken,
-        notes,
-        timestamp, // Update timestamp to ensure it's consistent
+    try {
+      // Check for interactions
+      const warnings = await checkInteractions(data.supplementId);
+      
+      // Show warnings as notification if there are any
+      if (warnings.length > 0) {
+        notification.notifyWarning(`Potential interactions detected: ${warnings.length} warning(s)`);
       }
-      setIntakeLogs(updatedLogs)
-    } else {
-      // Create new log
-      const newLog: IntakeLog = {
-        id: `log-${Date.now()}`,
+
+      // Get the supplement details
+      const [supplement, error] = await tryCatch(async () => getSupplementById(data.supplementId));
+      
+      if (error || !supplement) {
+        notification.notifyError("Supplement not found");
+        return { success: false, warnings };
+      }
+
+      const newTrackedSupplement: TrackedSupplement = {
+        id: `ts-${Date.now()}`,
         userId: user.id,
-        trackedSupplementId,
-        timestamp,
-        taken,
-        notes,
+        supplementId: data.supplementId,
+        supplement,
+        startDate: data.startDate,
+        endDate: data.endDate,
+        dosage: data.dosage,
+        frequency: data.frequency,
+        notes: data.notes,
+      };
+
+      setTrackedSupplements((prev) => [...prev, newTrackedSupplement]);
+      notification.notifySuccess("Supplement added to tracking successfully");
+      return { success: true, warnings };
+    } catch (error) {
+      notification.handleApiError(error, "Failed to add supplement");
+      return { success: false, warnings: [] };
+    }
+  };
+
+  // Update removeTrackedSupplement to use notification
+  const removeTrackedSupplement = (id: string) => {
+    try {
+      setTrackedSupplements((prev) => prev.filter((item) => item.id !== id));
+      // Also remove any intake logs for this supplement
+      setIntakeLogs((prev) => prev.filter((log) => log.trackedSupplementId !== id));
+      notification.notifySuccess("Supplement removed from tracking");
+    } catch (error) {
+      notification.handleApiError(error, "Failed to remove supplement");
+    }
+  };
+
+  // Update logIntake to use notification
+  const logIntake = (trackedSupplementId: string, taken: boolean, date?: string, notes?: string) => {
+    if (!user) {
+      notification.notifyError("You must be logged in to log supplement intake");
+      return;
+    }
+
+    try {
+      const timestamp = date ? new Date(`${date}T12:00:00`).toISOString() : new Date().toISOString();
+      
+      // Find the supplement name for the success message
+      const supplement = trackedSupplements.find(s => s.id === trackedSupplementId);
+      const supplementName = supplement ? supplement.supplement.name : "Supplement";
+
+      // Check if there's already a log for this supplement on this date
+      const existingLogIndex = intakeLogs.findIndex((log) => {
+        const logDate = new Date(log.timestamp).toISOString().split("T")[0];
+        const targetDate = new Date(timestamp).toISOString().split("T")[0];
+        return log.trackedSupplementId === trackedSupplementId && logDate === targetDate;
+      });
+
+      // If there's already a log, update it
+      if (existingLogIndex !== -1) {
+        // Create a new array with the updated log
+        const updatedLogs = [...intakeLogs];
+        updatedLogs[existingLogIndex] = {
+          ...updatedLogs[existingLogIndex],
+          taken: taken,
+          notes: notes || updatedLogs[existingLogIndex].notes,
+        };
+        setIntakeLogs(updatedLogs);
+      } else {
+        // Otherwise, create a new log
+        const newLog: IntakeLog = {
+          id: `il-${Date.now()}`,
+          userId: user.id,
+          trackedSupplementId,
+          timestamp,
+          taken,
+          notes,
+        };
+        setIntakeLogs((prev) => [...prev, newLog]);
       }
 
-      setIntakeLogs((prev) => [...prev, newLog])
+      // Only show notifications on explicit take/skip actions (not initial state)
+      if (taken) {
+        notification.notifySuccess(`${supplementName} marked as taken`);
+      }
+    } catch (error) {
+      notification.handleApiError(error, "Failed to log supplement intake");
     }
-  }
+  };
 
-  // Get intake logs for a specific date
+  // Function to get intake logs for a specific date
   const getIntakeLogsForDate = (date: string) => {
-    const startDate = new Date(date)
-    startDate.setHours(0, 0, 0, 0)
-
-    const endDate = new Date(date)
-    endDate.setHours(23, 59, 59, 999)
-
     return intakeLogs.filter((log) => {
-      const logDate = new Date(log.timestamp)
-      return logDate >= startDate && logDate <= endDate
-    })
-  }
+      const logDate = new Date(log.timestamp).toISOString().split("T")[0];
+      return logDate === date;
+    });
+  };
 
-  // Check for interactions with existing supplements
+  // Function to check for interactions between supplements
   const checkInteractions = async (supplementId: string) => {
-    if (!user || trackedSupplements.length === 0) return []
-
-    const newSupplement = await getSupplementById(supplementId)
-    if (!newSupplement) return []
-
-    const warnings: string[] = []
-
-    // Check each tracked supplement for interactions with the new one
-    for (const tracked of trackedSupplements) {
-      // Skip if it's the same supplement
-      if (tracked.supplementId === supplementId) continue
-
-      // Check for interactions in the supplement data
-      const interactions = tracked.supplement.supplementInteractions.filter(
-        (interaction) => interaction.supplementName === newSupplement.name,
-      )
-
-      // Add warnings for each interaction
-      interactions.forEach((interaction) => {
-        warnings.push(
-          `${interaction.effect}. ${
-            interaction.severity === "high"
-              ? "This is a serious interaction."
-              : interaction.severity === "medium"
-                ? "Use caution when combining these supplements."
-                : "This is a mild interaction."
-          } ${interaction.recommendation || ""}`,
-        )
-      })
+    if (!supplementId || !user) {
+      return [];
     }
 
-    return warnings
-  }
+    try {
+      // Create a list of currently tracked supplements
+      const currentlyTakingIds = trackedSupplements.map((item) => item.supplementId);
+      
+      // If we're not adding a new supplement, return no warnings
+      if (currentlyTakingIds.includes(supplementId)) {
+        return [];
+      }
+      
+      // Get the supplement details
+      const [newSupplement, error] = await tryCatch(async () => getSupplementById(supplementId));
+      
+      if (error || !newSupplement) {
+        notification.notifyError("Failed to check interactions: Supplement not found");
+        return [];
+      }
+      
+      // Check against each existing supplement
+      const warnings: string[] = [];
+      
+      for (const currentId of currentlyTakingIds) {
+        // Get the current supplement
+        const [currentSupplement, currentError] = await tryCatch(async () => getSupplementById(currentId));
+        
+        if (currentError || !currentSupplement) continue;
 
-  // Add this function to log symptoms
+        // For this example, we'll just compare categories
+        // In a real app, you would have a more sophisticated interaction checker
+        if (
+          currentSupplement.category === newSupplement.category &&
+          currentSupplement.name !== newSupplement.name
+        ) {
+          warnings.push(
+            `You are already taking ${currentSupplement.name} which is in the same category (${currentSupplement.category}) as ${newSupplement.name}. Consider consulting with a healthcare provider.`
+          );
+        }
+        
+        // Check for known bad interactions (simplified example)
+        const badInteractions: Record<string, string[]> = {
+          "vitamin-k": ["warfarin", "blood-thinner"],
+          "st-johns-wort": ["ssri", "antidepressant", "birth-control"],
+          "iron": ["calcium", "zinc", "magnesium"],
+        };
+        
+        // Use ID or name as keys for checking interactions
+        const newKey = newSupplement.supplementId.toLowerCase();
+        const currentKey = currentSupplement.supplementId.toLowerCase();
+        
+        // Check both directions of potential interactions
+        if (badInteractions[newKey]?.includes(currentKey)) {
+          warnings.push(
+            `${newSupplement.name} may interact with ${currentSupplement.name}. This combination can be potentially dangerous. Please consult with a healthcare provider.`
+          );
+        } else if (badInteractions[currentKey]?.includes(newKey)) {
+          warnings.push(
+            `${currentSupplement.name} may interact with ${newSupplement.name}. This combination can be potentially dangerous. Please consult with a healthcare provider.`
+          );
+        }
+      }
+      
+      return warnings;
+    } catch (error) {
+      notification.handleApiError(error, "Failed to check interactions");
+      return [];
+    }
+  };
+
+  // Function to log symptoms
   const logSymptom = (
     symptomId: string,
     date: string,
     severity: "none" | "mild" | "average" | "severe",
     notes?: string,
   ) => {
-    if (!user) return
-
-    // Check if a log already exists for this symptom and date
-    const existingLogIndex = symptomLogs.findIndex(
-      (log) => log.symptomId === symptomId && log.date === date && log.userId === user.id,
-    )
-
-    if (existingLogIndex >= 0) {
-      // Update existing log
-      const updatedLogs = [...symptomLogs]
-      updatedLogs[existingLogIndex] = {
-        ...updatedLogs[existingLogIndex],
-        severity,
-        notes,
-      }
-      setSymptomLogs(updatedLogs)
-    } else {
-      // Create new log
-      const newLog: SymptomLog = {
-        id: `symptom-log-${Date.now()}`,
-        userId: user.id,
-        date,
-        symptomId,
-        severity,
-        notes,
-      }
-      setSymptomLogs((prev) => [...prev, newLog])
+    if (!user) {
+      notification.notifyError("You must be logged in to log symptoms");
+      return;
     }
-  }
 
-  // Add this function to get symptom logs for a specific date
+    try {
+      // Check if there's already a log for this symptom on this date
+      const existingLogIndex = symptomLogs.findIndex(
+        (log) => log.userId === user.id && log.symptomId === symptomId && log.date === date
+      );
+
+      // Get the symptom name for notifications
+      const symptom = symptoms.find(s => s.id === symptomId);
+      const symptomName = symptom ? symptom.name : "Symptom";
+
+      // If there's already a log, update it
+      if (existingLogIndex !== -1) {
+        // Create a new array with the updated log
+        const updatedLogs = [...symptomLogs];
+        updatedLogs[existingLogIndex] = {
+          ...updatedLogs[existingLogIndex],
+          severity,
+          // Only update notes if they're provided
+          ...(notes !== undefined && { notes }),
+        };
+        setSymptomLogs(updatedLogs);
+      } else {
+        // Otherwise, create a new log
+        const newLog: SymptomLog = {
+          id: `sl-${Date.now()}-${symptomId}`,
+          userId: user.id,
+          date,
+          symptomId,
+          severity,
+          notes,
+        };
+        setSymptomLogs((prev) => [...prev, newLog]);
+      }
+
+      // Only notify for significant changes (not for automatic updates or "none" severity)
+      if (severity !== "none") {
+        notification.notifySuccess(`Symptom logged: ${symptomName}`);
+      }
+    } catch (error) {
+      notification.handleApiError(error, "Failed to log symptom");
+    }
+  };
+
+  // Function to get symptom logs for a specific date
   const getSymptomLogsForDate = (date: string) => {
-    return symptomLogs.filter((log) => log.date === date && log.userId === user?.id)
-  }
+    if (!user) return [];
+    
+    return symptomLogs.filter((log) => {
+      return log.userId === user.id && log.date === date;
+    });
+  };
 
   return (
     <TrackerContext.Provider

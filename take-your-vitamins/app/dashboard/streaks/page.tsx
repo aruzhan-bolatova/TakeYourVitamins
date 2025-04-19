@@ -8,31 +8,62 @@ import { format } from "date-fns"
 import { Badge } from "@/components/ui/badge"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertCircle, CheckCircle2, Trophy } from "lucide-react"
+import { ErrorDisplay } from "@/components/ui/error-display"
+import { handleError } from "@/lib/error-handler"
+import { RefreshCw } from "lucide-react"
+import { useNotification } from "@/contexts/notification-context"
+import { Button } from "@/components/ui/button"
 
 export default function StreaksPage() {
   const [streaksData, setStreaksData] = useState<Streak[] | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const notification = useNotification()
 
-  useEffect(() => {
-    async function fetchStreaks() {
-      setLoading(true)
-      setError(null)
-      try {
-        const data = await getUserStreaks()
-        if (data) {
-          setStreaksData(data.streaks)
-        } else {
-          throw new Error("No data returned")
-        }
-      } catch (err) {
-        setError("Failed to load streaks. Please try again later.")
-        console.error("Error loading streaks:", err)
-      } finally {
-        setLoading(false)
+  // Function to fetch streaks data
+  const fetchStreaks = async () => {
+    setLoading(true)
+    setError(null)
+    
+    try {
+      // Clear any existing notifications when starting a new fetch
+      notification.dismissAll()
+      
+      // Show a single loading notification
+      notification.notifyInfo("Loading streak data...")
+      
+      const data = await getUserStreaks()
+      
+      if (data) {
+        setStreaksData(data.streaks)
+        
+        // Wait until data is processed before showing any more notifications
+        setTimeout(() => {
+          // Show different notifications based on streak data, but only if needed
+          if (data.streaks.length === 0) {
+            notification.notifyInfo("No streak data available yet. Start tracking supplements to build streaks!")
+          } else if (data.streaks.some(streak => streak.currentStreak >= 7)) {
+            notification.notifySuccess("Great job! You have streaks of 7+ days.")
+          }
+        }, 500)
+      } else {
+        throw new Error("No data returned")
       }
+    } catch (err) {
+      const errorMessage = "Failed to load streaks. Please try again later."
+      setError(errorMessage)
+      handleError(err, {
+        defaultMessage: errorMessage,
+        showToast: false
+      })
+      notification.notifyError(errorMessage)
+    } finally {
+      setLoading(false)
     }
+  }
 
+  // Fetch data on component mount
+  useEffect(() => {
     fetchStreaks()
   }, [])
 
@@ -59,6 +90,16 @@ export default function StreaksPage() {
       <div className="flex flex-col gap-4">
         <div className="flex justify-between items-center">
           <h1 className="text-2xl font-bold">Your Supplement Streaks</h1>
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={fetchStreaks} 
+            disabled={loading}
+            className="flex items-center gap-1"
+          >
+            <RefreshCw className="w-4 h-4" />
+            Refresh
+          </Button>
         </div>
 
         {loading && (
@@ -70,11 +111,10 @@ export default function StreaksPage() {
         )}
 
         {error && (
-          <Alert variant="destructive">
-            <AlertCircle className="h-4 w-4" />
-            <AlertTitle>Error</AlertTitle>
-            <AlertDescription>{error}</AlertDescription>
-          </Alert>
+          <ErrorDisplay 
+            message={error}
+            onRetry={fetchStreaks}
+          />
         )}
 
         {streaksData && streaksData.length === 0 && (
