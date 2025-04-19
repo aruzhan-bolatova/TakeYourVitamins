@@ -1,5 +1,5 @@
 # In app/__init__.py
-from app.routes import auth, users, supplements, intake_logs, symptom_logs, interactions, alerts, reports
+from app.routes import auth, users, supplements, intake_logs, symptom_logs, interactions, alerts, reports, tracker_supplements_lists
 from app.db import close_connection
 from app.models import init_db, TokenBlacklist
 from app.utils.error_handlers import register_error_handlers, APIError, handle_api_error
@@ -41,6 +41,7 @@ def create_app():
     app.register_blueprint(interactions.bp)
     app.register_blueprint(alerts.bp)
     app.register_blueprint(reports.bp)
+    app.register_blueprint(tracker_supplements_lists.bp)
     
     # Register Swagger UI blueprint
     app.register_blueprint(swagger_ui_blueprint)

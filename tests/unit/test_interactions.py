@@ -38,7 +38,6 @@ class TestInteractions(unittest.TestCase):
             "_id": self.test_id,
             "interactionId": f"INTERACTION_{timestamp.timestamp()}",
             "interactionType": "supplement_supplement",
-            "severity": "Medium",
             "effect": f"Test effect {uuid.uuid4().hex[:10]}",
             "description": f"Test description {uuid.uuid4().hex[:10]}",
             "recommendation": f"Test recommendation {uuid.uuid4().hex[:10]}",
@@ -47,7 +46,6 @@ class TestInteractions(unittest.TestCase):
                 {"supplementId": f"SUPPLEMENT_{uuid.uuid4().hex[:8]}", "name": f"Supplement {uuid.uuid4().hex[:8]}"}
             ],
             "foodItems": [],
-            "medications": [],
             "references": [f"Reference {uuid.uuid4().hex[:8]}"],
             "createdAt": timestamp.isoformat(),
             "updatedAt": None,
@@ -65,7 +63,6 @@ class TestInteractions(unittest.TestCase):
         self.mock_interaction.recommendation = self.test_interaction_data["recommendation"]
         self.mock_interaction.supplements = self.test_interaction_data["supplements"]
         self.mock_interaction.food_items = self.test_interaction_data["foodItems"]
-        self.mock_interaction.medications = self.test_interaction_data["medications"]
         self.mock_interaction.references = self.test_interaction_data["references"]
         self.mock_interaction.created_at = self.test_interaction_data["createdAt"]
         self.mock_interaction.updated_at = self.test_interaction_data["updatedAt"]
@@ -531,7 +528,6 @@ class TestInteractions(unittest.TestCase):
         check_data = {
             "supplementIds": [self.test_supplement_id],
             "foodItems": ["Grapefruit"],
-            "medications": ["Warfarin"]
         }
         
         response = self.client.post(
@@ -550,7 +546,6 @@ class TestInteractions(unittest.TestCase):
         mock_check_interactions.assert_called_once_with(
             supplement_ids=[self.test_supplement_id],
             food_items=["Grapefruit"],
-            medications=["Warfarin"]
         )
     
     def test_check_interactions_invalid_json(self):
@@ -572,7 +567,6 @@ class TestInteractions(unittest.TestCase):
         # Make request without supplement IDs
         request_data = {
             "foodItems": ["Grapefruit"],
-            "medications": ["Warfarin"]
         }
         
         response = self.client.post(

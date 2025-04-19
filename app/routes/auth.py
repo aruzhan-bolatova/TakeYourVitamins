@@ -1,9 +1,16 @@
+'''
+GET http://10.228.244.25:5001/api/auth/me
+POST http://10.228.244.25:5001/api/auth/register
+POST http://10.228.244.25:5001/api/auth/login
+POST http://10.228.244.25:5001/api/auth/logout
+'''
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import (create_access_token, jwt_required, get_jwt_identity, 
                                get_jwt, current_user)
 from app.models.user import User
 from app.models.token_blacklist import TokenBlacklist
 import datetime
+from bson.objectid import ObjectId  # Import ObjectId to handle MongoDB _id
 
 # Create the blueprint
 bp = Blueprint('auth', __name__, url_prefix='/api/auth')
@@ -36,13 +43,13 @@ def register():
         
         # Generate access token
         access_token = create_access_token(
-            identity=user.user_id,
-            expires_delta=datetime.timedelta(days=1)
+            identity=str(user._id),
+            expires_delta=datetime.timedelta(hours=1)
         )
         
         return jsonify({
             "message": "User registered successfully",
-            "userId": user.user_id,
+            "_id": str(user._id),
             "access_token": access_token
         }), 201
         
@@ -73,13 +80,13 @@ def login():
     
     # Generate access token
     access_token = create_access_token(
-        identity=user.user_id,
-        expires_delta=datetime.timedelta(days=1)
+        identity=str(user._id),
+        expires_delta=datetime.timedelta(hours=1)
     )
     
     return jsonify({
         "message": "Login successful",
-        "userId": user.user_id,
+        "_id": str(user._id),
         "access_token": access_token
     }), 200
 
@@ -114,12 +121,16 @@ def logout():
 def get_current_user():
     """Get the current authenticated user's details"""
     user_id = get_jwt_identity()
+    print(f"User ID from JWT: {user_id}")
+    
+    user_id = ObjectId(user_id)
     user = User.find_by_id(user_id)
     
     if not user:
         return jsonify({"error": "User not found"}), 404
     
     return jsonify({
+        "_id": str(user._id),
         "userId": user.user_id,
         "name": user.name,
         "email": user.email,
