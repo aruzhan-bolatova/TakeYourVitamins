@@ -56,15 +56,15 @@ export function Toaster() {
           className="bg-blue-50 border-blue-200 dark:bg-blue-950 dark:border-blue-800"
         >
           <div className="flex justify-between items-center w-full">
-            <div className="flex items-center gap-2">
-              <Info className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+            <div className="flex items-center gap-1">
+              <Info className="h-3.5 w-3.5 text-blue-600 dark:text-blue-400" />
               <ToastTitle>{hiddenToastCount} more notification{hiddenToastCount > 1 ? 's' : ''}</ToastTitle>
             </div>
             <Button 
               variant="ghost" 
               size="sm" 
               onClick={clearAllToasts}
-              className="h-6 px-2 text-xs flex items-center gap-1"
+              className="h-5 px-1 text-xs flex items-center gap-1"
             >
               <X className="h-3 w-3" />
               Clear all
@@ -83,19 +83,19 @@ export function Toaster() {
 
         return (
           <Toast key={id} variant={variant} {...props}>
-            <div className="flex gap-3 items-start">
-              <Icon className="h-5 w-5" />
-              <div className="grid gap-1">
+            <div className="flex gap-2 items-start">
+              <Icon className="h-4 w-4 mt-0.5 flex-shrink-0" />
+              <div className="grid gap-0.5 flex-1 min-w-0">
                 {title && <ToastTitle>{title}</ToastTitle>}
                 {description && (
-                  <ToastDescription>{description}</ToastDescription>
+                  <ToastDescription className="break-words">{description}</ToastDescription>
                 )}
                 {errorDetails && (
-                  <details className="mt-2 text-xs">
-                    <summary className="cursor-pointer hover:underline">
+                  <details className="mt-1 text-xs">
+                    <summary className="cursor-pointer hover:underline text-[10px]">
                       View details
                     </summary>
-                    <div className="mt-2 max-h-32 overflow-auto p-2 bg-gray-100 dark:bg-gray-800 rounded text-xs whitespace-pre-wrap font-mono">
+                    <div className="mt-1 max-h-24 overflow-auto p-1.5 bg-gray-100 dark:bg-gray-800 rounded text-[10px] whitespace-pre-wrap font-mono">
                       {errorDetails}
                     </div>
                   </details>

@@ -84,6 +84,19 @@ export default function NotificationTestPage() {
             </Button>
           </div>
           
+          <div className="mt-4 flex justify-center">
+            <Button 
+              onClick={() => {
+                console.log("Manually clearing all notifications")
+                notification.dismissAll()
+              }} 
+              className="bg-gray-800 hover:bg-gray-900 text-white px-8"
+              size="lg"
+            >
+              Clear All Notifications
+            </Button>
+          </div>
+          
           <div className="mt-8 p-4 bg-gray-100 dark:bg-gray-800 rounded-md">
             <h3 className="text-lg font-medium mb-2">Debugging Tips</h3>
             <ul className="list-disc pl-5 space-y-1">

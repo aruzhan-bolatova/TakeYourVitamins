@@ -188,9 +188,12 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
   
   // Function to dismiss all active notifications
   const dismissAll = () => {
+    console.log("Dismissing all notifications")
+    // Call the dismiss function from useToast which will dismiss all toasts
     dismiss()
-    // Also clear the tracking set
+    // Also clear the tracking set to reset duplicate tracking
     recentMessages.clear()
+    console.log("All notifications dismissed and tracking reset")
   }
 
   const value = useMemo(() => ({
