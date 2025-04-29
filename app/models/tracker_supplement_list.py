@@ -71,9 +71,6 @@ class TrackedSupplement:
         return tracked_supplement_info
 
 
-
-
-
 class TrackerSupplementList:
     REQUIRED_FIELDS = ['user_id']
     
