@@ -114,16 +114,16 @@ export function SupplementDetail({ supplement }: { supplement: Supplement }) {
                                                 <div className="mr-2">
                                                     <Badge
                                                         variant={
-                                                            interaction.severity?.toLowerCase() === "negative"
+                                                            interaction.effect?.toLowerCase() === "negative"
                                                                 ? "destructive"
-                                                                : interaction.severity?.toLowerCase() === "positive"
+                                                                : interaction.effect?.toLowerCase() === "positive"
                                                                     ? "warning"
                                                                     : "outline"
                                                         }
                                                     >
-                                                        {interaction.severity
-                                                            ? interaction.severity.charAt(0).toUpperCase() +
-                                                            interaction.severity.slice(1)
+                                                        {interaction.effect
+                                                            ? interaction.effect.charAt(0).toUpperCase() +
+                                                            interaction.effect.slice(1)
                                                             : "Unknown"}
                                                     </Badge>
                                                 </div>
@@ -135,7 +135,7 @@ export function SupplementDetail({ supplement }: { supplement: Supplement }) {
                                                             .map((s) => s.name)
                                                             .join(", ")}
                                                     </h3>
-                                                    <p>{interaction.effect}</p>
+                                        
                                                     {interaction.description && (
                                                         <p className="text-sm text-muted-foreground mt-1">
                                                             Description: {interaction.description}
@@ -174,9 +174,9 @@ export function SupplementDetail({ supplement }: { supplement: Supplement }) {
                                                 <div className="mr-2">
                                                     <Badge
                                                         variant={
-                                                            interaction.effect.includes("Enhances")
+                                                            interaction.effect.includes("Positive")
                                                                 ? "success"
-                                                                : interaction.effect.includes("Reduces")
+                                                                : interaction.effect.includes("Negative")
                                                                     ? "destructive"
                                                                     : "outline"
                                                         }
@@ -189,7 +189,6 @@ export function SupplementDetail({ supplement }: { supplement: Supplement }) {
                                                     <p>{interaction.description}</p>
                                                     {interaction.recommendation && (
                                                         <p className="text-sm text-muted-foreground mt-1">
-                                                            Description: {interaction.description}
                                                             Recommendation: {interaction.recommendation}
                                                         </p>
                                                     )}

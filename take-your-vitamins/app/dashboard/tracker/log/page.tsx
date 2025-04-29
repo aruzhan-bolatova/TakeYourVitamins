@@ -17,13 +17,13 @@ export default function DailyLogPage() {
   const [dateIntakeLogs, setDateIntakeLogs] = useState<IntakeLog[]>([])
   const [dosageInputs, setDosageInputs] = useState<Record<string, number>>({})
   const [notes, setNotes] = useState<Record<string, string>>({})
-  
-  const { 
-    trackedSupplements, 
-    logIntake, 
+
+  const {
+    trackedSupplements,
+    logIntake,
     getIntakeLogsForDate,
     updateIntakeLog,
-    deleteIntakeLog 
+    deleteIntakeLog
   } = useTracker()
 
   // Format date for display and API
@@ -36,15 +36,15 @@ export default function DailyLogPage() {
     try {
       const logs = await getIntakeLogsForDate(dateString)
       setDateIntakeLogs(logs)
-      
+
       // Initialize dosage inputs based on supplements
       const initialDosages: Record<string, number> = {}
       const initialNotes: Record<string, string> = {}
-      
+
       trackedSupplements.forEach(supplement => {
         // Find if there's a log for this supplement
         const log = logs.find(log => log.tracked_supplement_id === supplement.id)
-        
+
         if (log) {
           initialDosages[supplement.id] = log.dosage_taken
           initialNotes[supplement.id] = log.notes || ''
@@ -54,7 +54,7 @@ export default function DailyLogPage() {
           initialNotes[supplement.id] = ''
         }
       })
-      
+
       setDosageInputs(initialDosages)
       setNotes(initialNotes)
     } finally {
@@ -77,31 +77,45 @@ export default function DailyLogPage() {
     const dosage = parseFloat(value) || 0
     setDosageInputs(prev => ({ ...prev, [supplementId]: dosage }))
   }
-  
+
   const handleNotesChange = (supplementId: string, value: string) => {
     setNotes(prev => ({ ...prev, [supplementId]: value }))
   }
 
   const handleLogIntake = async (supplementId: string) => {
+    // Check if selected date is in the future
+    const today = new Date()
+    const isFutureDate = selectedDate > today
+    // Define trackerStartDate or remove this line if unnecessary
+        const trackerStartDate = "2025-04-20"; // Example: Replace with the actual start date
+        const isBeforeStartDate = selectedDate < new Date(trackerStartDate)
+    
+
+    if (selectedDate > today) {
+      alert("You cannot log for a future date.")
+      return
+    }
+  
+    if (selectedDate < new Date(trackerStartDate)) {
+      alert("You cannot log for a date before your tracking start date.")
+      return
+    }
     try {
       setIsLoading(true)
       const supplement = trackedSupplements.find(s => s.id === supplementId)
       if (!supplement) return
-      
+
       const dosage = dosageInputs[supplementId] || parseFloat(supplement.dosage) || 0
       const noteText = notes[supplementId] || ''
-      
-      // Check if we already have a log for this supplement on this date
+
       const existingLog = supplementLogMap.get(supplementId)
-      
+
       if (existingLog) {
-        // Update existing log
         await updateIntakeLog(existingLog.id, {
           dosage_taken: dosage,
           notes: noteText
         })
       } else {
-        // Create new log
         await logIntake(
           supplementId,
           dateString,
@@ -110,19 +124,18 @@ export default function DailyLogPage() {
           noteText
         )
       }
-      
-      // Refresh logs without making too many requests
+
       await fetchLogs()
     } finally {
       setIsLoading(false)
     }
   }
-  
+
   const handleDeleteLog = async (supplementId: string) => {
     try {
       setIsLoading(true)
       const existingLog = supplementLogMap.get(supplementId)
-      
+
       if (existingLog) {
         await deleteIntakeLog(existingLog.id)
         // Refresh logs using our memoized function
@@ -175,7 +188,7 @@ export default function DailyLogPage() {
                 {trackedSupplements.map((supplement) => {
                   const existingLog = supplementLogMap.get(supplement.id)
                   const hasLoggedToday = !!existingLog
-                  
+
                   return (
                     <div key={supplement.id} className="border rounded-lg p-4">
                       <div className="flex items-center justify-between mb-3">
@@ -186,7 +199,7 @@ export default function DailyLogPage() {
                           </Badge>
                         )}
                       </div>
-                      
+
                       <div className="space-y-4">
                         <div className="grid grid-cols-2 gap-4">
                           <div className="space-y-2">
@@ -209,7 +222,7 @@ export default function DailyLogPage() {
                             />
                           </div>
                         </div>
-                        
+
                         <div className="flex justify-end gap-3">
                           {hasLoggedToday && (
                             <Button
