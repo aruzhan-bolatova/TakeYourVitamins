@@ -1,0 +1,1004 @@
+[{
+  "_id": {
+    "$oid": "6810873d6231749f338901a5"
+  },
+  "supplementId": "SUPP100",
+  "name": "Aloe",
+  "aliases": [
+    "Aloe Vera",
+    "Aloe Barbadensis"
+  ],
+  "description": "Used internally, aloe may regulate blood sugar levels and control diabetes, treat mouth and stomach ulcers, lower cholesterol, and iprovide immune system support, treat inflammatory bowel disease, and act as a laxative. Externally, it is used for skin conditions, burns, and wounds.",
+  "intakePractices": {
+    "dosage": "Generally, as a laxative, aloe is used in the range of 50-200 mg/day or about 1-3 oz orally. For topical use, apply as needed.",
+    "timing": "Can be taken any time of day.",
+    "specialInstructions": "Consuming aloe vera before meals can help improve digestion and reduce bloating and indigestion. Drinking aloe vera juice after meals can help soothe the digestive tract and reduce inflammation. It can also help regulate blood sugar levels and prevent spikes in insulin after eating."
+  },
+  "scientificDetails": {
+    "benefits": [
+      "Acts as a laxative",
+      "Provides immune system support",
+      "Heals wounds, burns, and skin conditions"
+    ],
+    "sideEffects": [
+      "Rare at recommended doses",
+      "No significant side effects of aloe vera gel have been noted, except the occasional allergy."
+    ],
+    "studies": [
+      {
+        "title": "Aloe Vera",
+        "journal": "The Health Professional's Guide to Dietary Supplements",
+        "year": 2007,
+        "summary": ""
+      }
+    ]
+  },
+  "category": "",
+  "updatedAt": null
+},
+{
+  "_id": {
+    "$oid": "6810873d6231749f338901a6"
+  },
+  "supplementId": "SUPP101",
+  "name": "Cayenne",
+  "aliases": [
+    "Chili",
+    "Capsicum annuum",
+    "Capsicum frutescens"
+  ],
+  "description": "Capsaicin or chili peppers of many varieties have both internal and topical uses, including gastrointestinal health, headache, pain (both rheumatoid arthritis and osteoarthritis), and psoriasis and dermatitis. ",
+  "intakePractices": {
+    "dosage": "The usual dosage for internal use of capsicum is in the range of 30-120 mg, with 60 mg most common. Patients should be advised not to bite or chew on the capsules. For topical applications for pain or skin irritation, the content of creams in clinical studies has been 0.025-0.075% capsaicin, with application 4-5 times daily.",
+    "timing": "Can be taken any time of day.",
+    "specialInstructions": "Capsaicin is best absorbed when taken with food. It is important to avoid contact with the eyes and mucous membranes when applying topical capsaicin."
+  },
+  "scientificDetails": {
+    "benefits": [
+      "Improves digestion",
+      "Aids with skin conditions",
+      "Reduces pain and inflammation"
+    ],
+    "sideEffects": [
+      "For the topical use might cause burning sensation",
+      "Capsaicin and the capsaicinoids are strong irritants to the mucous membranes and can produce dermatitis."
+    ],
+    "studies": [
+      {
+        "title": "Cayenne",
+        "journal": "The Health Professional's Guide to Dietary Supplements",
+        "year": 2007,
+        "summary": ""
+      }
+    ]
+  },
+  "category": "",
+  "updatedAt": null
+},
+{
+  "_id": {
+    "$oid": "6810873d6231749f338901a7"
+  },
+  "supplementId": "SUPP102",
+  "name": "Fiber",
+  "aliases": [
+    "Dietary Fiber",
+    "Soluble Fiber",
+    "Insoluble Fiber"
+  ],
+  "description": "Dietary fiber is a carbohydrate that is not digested in the small intestine. It is found in fruits, vegetables, whole grains, and legumes. It is important for digestive health and can help prevent constipation, lower cholesterol levels, and control blood sugar levels. Fiber can be classified into two main types: soluble and insoluble. ",
+  "intakePractices": {
+    "dosage": "Total daily fiber consumption should be within the range of 20-40 g. Popular fiber supplements (taken with 8 oz of water) are psyllium (7 g up to 3 times daily), methylcellulose (10 g up to 3 times daily), and polycarbophil (1 g up to 4 times daily).",
+    "timing": "Can be taken any time of day, preferably with meals.",
+    "specialInstructions": "To prevent dehydration, adequate fluid must be consumed."
+  },
+  "scientificDetails": {
+    "benefits": [
+      "Prevents constipation",
+      "Soluble fiber reduces the risk of heart disease by lowering cholesterol levels.",
+      "Diets high in insoluble fiber reduce the risk of colon cancer."
+    ],
+    "sideEffects": [
+      "The intake of dietary fiber or fiber supplements within the recommended doses is considered safe. ",
+      "Excessive fiber intake may cause bloating, gas, and diarrhea.",
+      "Some sources of the fiber are common allergens"
+    ],
+    "studies": [
+      {
+        "title": "Fiber",
+        "journal": "The Health Professional's Guide to Dietary Supplements",
+        "year": 2007,
+        "summary": ""
+      }
+    ]
+  },
+  "category": "",
+  "updatedAt": null
+},
+{
+  "_id": {
+    "$oid": "6810873d6231749f338901a8"
+  },
+  "supplementId": "SUPP103",
+  "name": "Ginger",
+  "aliases": [
+    "Zingiber Offcinale",
+    "Zingiberaceae"
+  ],
+  "description": "Ginger is a flowering plant whose rhizome is widely used as a spice and folk medicine. It is used to treat nausea, vomiting, and digestive issues. It is also used for its anti-inflammatory and antioxidant properties.",
+  "intakePractices": {
+    "dosage": "The usual dosage for ginger is in the range of 1-2 g/day.",
+    "timing": "No specific timing, can be taken any time of day.",
+    "specialInstructions": "In the case of gallstones should be taken only after consulting a physician."
+  },
+  "scientificDetails": {
+    "benefits": [
+      "Relieves nausea",
+      "Reduces inflammation",
+      "Aids digestion"
+    ],
+    "sideEffects": [
+      "Generally safe",
+      "High doses may cause heartburn or upset stomach"
+    ],
+    "studies": [
+      {
+        "title": "Ginger",
+        "journal": "The Health Professional's Guide to Dietary Supplements",
+        "year": 2007,
+        "summary": ""
+      }
+    ]
+  },
+  "category": "herbs",
+  "updatedAt": null
+},
+{
+  "_id": {
+    "$oid": "6810873d6231749f338901a9"
+  },
+  "supplementId": "SUPP104",
+  "name": "Mastic",
+  "aliases": [
+    "Mastic Gum",
+    "Pistacia lentiscus"
+  ],
+  "description": "Mastic is a resin obtained from the mastic tree. It is used for digestive issues, oral health, and as an anti-inflammatory agent. It is also used for its antimicrobial properties.",
+  "intakePractices": {
+    "dosage": "For treating ulcers and gastrointestinal discomfort, 1 g of mastic is used.",
+    "timing": "No specific timing, can be taken any time of day.",
+    "specialInstructions": ""
+  },
+  "scientificDetails": {
+    "benefits": [
+      "Relieves heartburn",
+      "Treats and prevents ulcers",
+      "Prevents bad breath"
+    ],
+    "sideEffects": [
+      "Considered safe"
+    ],
+    "studies": [
+      {
+        "title": "Mastic",
+        "journal": "The Health Professional's Guide to Dietary Supplements",
+        "year": 2007,
+        "summary": ""
+      }
+    ]
+  },
+  "category": "herbs",
+  "updatedAt": null
+},
+{
+  "_id": {
+    "$oid": "6810873d6231749f338901aa"
+  },
+  "supplementId": "SUPP105",
+  "name": "Milk Thistle",
+  "aliases": [
+    "Silybum marianum",
+    "Silymarin"
+  ],
+  "description": "Milk thistle is a flowering herb used for liver health and detoxification. It is known for its antioxidant and anti-inflammatory properties. It is often used to support liver function and protect against liver damage.",
+  "intakePractices": {
+    "dosage": "Usual of milk thistle is 175 mg/day for extract standardized to 80% silymarin flavonoids. Other daily dosage recommendations vary depending on the preparation",
+    "timing": "No specific timing, can be taken any time of day.",
+    "specialInstructions": "Recommended to be taken before meal."
+  },
+  "scientificDetails": {
+    "benefits": [
+      "Supports liver health",
+      "Detoxifies the liver",
+      "Reduces inflammation"
+    ],
+    "sideEffects": [
+      "Milk thistle may cause allergic reactions, particularly among people who are allergic to related plants (for example, ragweed, chrysanthemum, marigold, and daisy). Little is known about whether it’s safe to use milk thistle during pregnancy or while breastfeeding"
+    ],
+    "studies": [
+      {
+        "title": "Milk Thistle",
+        "journal": "The Health Professional's Guide to Dietary Supplements",
+        "year": 2007,
+        "summary": ""
+      }
+    ]
+  },
+  "category": "herbs",
+  "updatedAt": null
+},
+{
+  "_id": {
+    "$oid": "6810873d6231749f338901ab"
+  },
+  "supplementId": "SUPP106",
+  "name": "Prebiotics",
+  "aliases": [
+    "Inulin",
+    "Oligofructose",
+    "Fructo-Oligosaccharides"
+  ],
+  "description": "Prebiotics are non-digestible food ingredients that promote the growth of beneficial bacteria in the gut. They are found in foods like garlic, onions, and bananas. They are used to improve gut health and digestion.",
+  "intakePractices": {
+    "dosage": "The usual dosage for prebiotics is around 10 g/day.",
+    "timing": "No specific timing, can be taken any time of day.",
+    "specialInstructions": "Recommended to be taken before meal."
+  },
+  "scientificDetails": {
+    "benefits": [
+      "Supports gut health",
+      "Promotes growth of beneficial bacteria",
+      "Provides immune system support"
+    ],
+    "sideEffects": [
+      "Flatulation",
+      "Bloating",
+      "Diarrhea"
+    ],
+    "studies": [
+      {
+        "title": "Prebiotics",
+        "journal": "The Health Professional's Guide to Dietary Supplements",
+        "year": 2007,
+        "summary": ""
+      }
+    ]
+  },
+  "category": "",
+  "updatedAt": null
+},
+{
+  "_id": {
+    "$oid": "6810873d6231749f338901ac"
+  },
+  "supplementId": "SUPP107",
+  "name": "Probiotics",
+  "aliases": [
+    "Acidophilus",
+    "Bifidus",
+    "Lactobacillus"
+  ],
+  "description": "Probiotics are live microorganisms that provide health benefits when consumed in adequate amounts. They are found in fermented foods like yogurt and sauerkraut. They are used to improve gut health and digestion.",
+  "intakePractices": {
+    "dosage": "The usual dosage for probiotics is around 1-10 billion CFU/day.",
+    "timing": "No specific timing, can be taken any time of day.",
+    "specialInstructions": "People with severe gastrointestinal ailments (e.g., Crohn disease, ulcerative colitis) should consult with their personal physician before consuming probiotic supplements."
+  },
+  "scientificDetails": {
+    "benefits": [
+      "Supports gut health",
+      "Supports immune system",
+      "Improves digestion"
+    ],
+    "sideEffects": [
+      "Considered safe at recommended levels"
+    ],
+    "studies": [
+      {
+        "title": "Probiotics",
+        "journal": "The Health Professional's Guide to Dietary Supplements",
+        "year": 2007,
+        "summary": ""
+      }
+    ]
+  },
+  "category": "",
+  "updatedAt": null
+},
+{
+  "_id": {
+    "$oid": "6810873d6231749f338901ad"
+  },
+  "supplementId": "SUPP108",
+  "name": "Slippery Elm",
+  "aliases": [
+    "Ulmus rubra",
+    "Ulmus fulva"
+  ],
+  "description": "Slippery elm is a tree whose inner bark is used for its soothing properties. It is used to treat digestive issues, sore throat, and skin conditions.",
+  "intakePractices": {
+    "dosage": "The usual dosage for slippery elm is around 1-2 g/day.",
+    "timing": "No specific timing, can be taken any time of day.",
+    "specialInstructions": "People with severe gastrointestinal ailments (e.g., Crohn disease, ulcerative colitis) should consult with their personal physician before consuming probiotic supplements."
+  },
+  "scientificDetails": {
+    "benefits": [
+      "Soothes digestive tract",
+      "Relieves sore throat",
+      "Moisturizes skin",
+      "Alleviates dry cough"
+    ],
+    "sideEffects": [
+      "Considered to be safe and nontoxic, with no drug interactions."
+    ],
+    "studies": [
+      {
+        "title": "Slipperhy Elm",
+        "journal": "The Health Professional's Guide to Dietary Supplements",
+        "year": 2007,
+        "summary": ""
+      }
+    ]
+  },
+  "category": "",
+  "updatedAt": null
+},
+{
+  "_id": {
+    "$oid": "6810873d6231749f338901ae"
+  },
+  "supplementId": "SUPP109",
+  "name": "Yellow Dock",
+  "aliases": [
+    "Rumex Crispus",
+    "Curly Dock",
+    "Sour Dock"
+  ],
+  "description": "Yellow dock is a member of the buckwheat family that can be found naturalized in many parts of the world. Used in traditional medicines as a digestive aid, for skin conditions, and for liver health.",
+  "intakePractices": {
+    "dosage": "The usual dosage is 1 g/day of the dried root or 3-4 mL of the root extract 3 times daily.",
+    "timing": "No specific timing, can be taken any time of day.",
+    "specialInstructions": "Might be toxic if not properly prepared, must consult the doctor before taking. Not recommended while pregnant or breast-feeding."
+  },
+  "scientificDetails": {
+    "benefits": [
+      "Acts as a laxative",
+      "Supports gut health and liver health"
+    ],
+    "sideEffects": [
+      "Contains oxalates that may inhibit nutrients absorption.",
+      "Might be toxic if taken raw"
+    ],
+    "studies": [
+      {
+        "title": "Yellow Dock",
+        "journal": "The Health Professional's Guide to Dietary Supplements",
+        "year": 2007,
+        "summary": ""
+      }
+    ]
+  },
+  "category": "herbs",
+  "updatedAt": null
+},
+{
+  "_id": {
+    "$oid": "6810873d6231749f338901af"
+  },
+  "supplementId": "SUPP110",
+  "name": "Alpha-Lipoic Acid",
+  "aliases": [
+    "Lipoic Acid",
+    "Thiotic Acid"
+  ],
+  "description": "Generally lipoic acid is involved in cellular energy production. Additionally, as a dietary supplement it acts as a powerful antioxidant, helps to control blood sugar levels and has antiaging benefits. Alpha-lipoic acid can be eaten in foods, such as red meat, carrots, beets, spinach, broccoli, and potatoes. It is also available in supplements.",
+  "intakePractices": {
+    "dosage": "For antioxidant benefits, recommended dosage is 50-100 mg/day. For preventing and treating complications of diabetes, recommended dosage is 300-600 mg/day.",
+    "timing": "No specific timing, can be taken any time of day.",
+    "specialInstructions": ""
+  },
+  "scientificDetails": {
+    "benefits": [
+      "Powerful antioxidant",
+      "Improves insulin function",
+      "Provides protection to the brain"
+    ],
+    "sideEffects": [
+      " It is usually well-tolerated. The most common side effects are headache, heartburn, nausea, and vomiting."
+    ],
+    "studies": [
+      {
+        "title": "Alpha-Lipoic Acid",
+        "journal": "The Health Professional's Guide to Dietary Supplements",
+        "year": 2007,
+        "summary": ""
+      }
+    ]
+  },
+  "category": "",
+  "updatedAt": null
+},
+{
+  "_id": {
+    "$oid": "6810873d6231749f338901b0"
+  },
+  "supplementId": "SUPP701",
+  "name": "Alfalfa",
+  "aliases": [
+    "Medicago Sativa"
+  ],
+  "description": "Alfalfa truly is a nutritive food, with high levels of protein (up to 50%), B vitamins, and minerals. These characteristics may play a large part in explaining alfalfa's claims for energy and reduction of fatigue. Additionally, alfalfa contains saponins, which could explain some of its adaptogenic reputation; its antioxidants and alkalizing nature could explain its detoxification claims. The use of alfalfa for hot flashes and cancer may be explained by its high estrogenic activity.",
+  "intakePractices": {
+    "dosage": "Although the clinical study on alfalfa for lowering cholesterol used an extremely high dosage (120 g/day), typical dosages for alfalfa tend to range from 250-1,000 mg 2-3 times daily with meals.",
+    "timing": "With meals",
+    "specialInstructions": null
+  },
+  "scientificDetails": {
+    "benefits": [
+      "Increase cell proliferation",
+      "Lower cholesterol levels",
+      "Increase energy levels",
+      "Promote liver health and detoxification"
+    ],
+    "sideEffects": [
+      "Possible mild blood-thinng effect"
+    ],
+    "studies": []
+  },
+  "category": "Herbs",
+  "updatedAt": null
+},
+{
+  "_id": {
+    "$oid": "6810873d6231749f338901b1"
+  },
+  "supplementId": "SUPP702",
+  "name": "Arginine",
+  "aliases": [
+    "L-arginine"
+  ],
+  "description": "Arginine is a substance that is produced in the body. It plays an essential role in the nitric oxide pathway—a pathway involved in the cascade reactions responsible for vasodilation. Thus, arginine supplements are associated with cardiovascular health, especially in conditions in which the nitric oxide pathway may not be working sufficiently.",
+  "intakePractices": {
+    "dosage": "The daily requirement of arginine supplementation has been calculated to be approximately 8 g/day (for a 70-kg person). Supplements in the range of 8-21 g/day have been used clinically.",
+    "timing": "",
+    "specialInstructions": ""
+  },
+  "scientificDetails": {
+    "benefits": [
+      "Combat cardiovascular disease",
+      "Combat sexual dysfunction",
+      "Improve immune function"
+    ],
+    "sideEffects": [
+      "May be dangerous to patients recovering from heart attacks",
+      "May be dangerous for patients infected with simplex virus"
+    ],
+    "studies": []
+  },
+  "category": "Amino acids",
+  "updatedAt": null
+},
+{
+  "_id": {
+    "$oid": "6810873d6231749f338901b2"
+  },
+  "supplementId": "SUPP703",
+  "name": "Vitamin B-6",
+  "aliases": [
+    "Vitamin B6",
+    "Pyridoxine",
+    "Pyridoxamine",
+    "Pyridoxal"
+  ],
+  "description": "Vitamin B6 is a water-soluble vitamin. It is also known by the names pyridoxine, pyridoxamine, and pyridoxal. Vitamin B6 performs functions as a cofactor for about 70 enzyme systems, most ofwhich have something to do with amino acid and protein metabolism. Because vitamin B6 is also involved in the synthesis of neurotransmitters in the brain and nerve cells, it is frequently recommended as a nutrient to support mental function (mood) and nerve conduction.",
+  "intakePractices": {
+    "dosage": "2-12.5 mg/day",
+    "timing": "",
+    "specialInstructions": ""
+  },
+  "scientificDetails": {
+    "benefits": [
+      "Control homocysteine levels for heart health",
+      "Support mental and nervous function"
+    ],
+    "sideEffects": [
+      "Long-term use of very high dosages (500 to 5,000 mg/day) is associated with neuropathy that is reversible with discontinuation."
+    ],
+    "studies": []
+  },
+  "category": "Vitamins",
+  "updatedAt": null
+},
+{
+  "_id": {
+    "$oid": "6810873d6231749f338901b3"
+  },
+  "supplementId": "SUPP704",
+  "name": "Vitamin B-12",
+  "aliases": [
+    "Vitamin B12",
+    "Cobalamin",
+    "Cyanocobalamin"
+  ],
+  "description": "The water-soluble vitamin B12 is also known as cobalamin because it contains cobalt. The B12 form most commonly used in dietary supplements is called cyanocobalamin. Vitamin B12 is only produced by bacteria, so it is only found in food products of animal origin and in some fermented vegetable products such as tempeh and miso (fermented soybeans).",
+  "intakePractices": {
+    "dosage": "50-800 μg/day",
+    "timing": "",
+    "specialInstructions": ""
+  },
+  "scientificDetails": {
+    "benefits": [
+      "Control homocysteine levels for heart health"
+    ],
+    "sideEffects": [],
+    "studies": []
+  },
+  "category": "Vitamins",
+  "updatedAt": null
+},
+{
+  "_id": {
+    "$oid": "6810873d6231749f338901b4"
+  },
+  "supplementId": "SUPP705",
+  "name": "Folate",
+  "aliases": [
+    "Folic Acid",
+    "Vitamin B9",
+    "Vitamin B-9"
+  ],
+  "description": "Folic acid is a B vitamin that plays an important role in the synthesis of DNA and RNA, the production ofred blood cells, and the maintenance of the nervous system.",
+  "intakePractices": {
+    "dosage": "400-1,000 μg/day",
+    "timing": "",
+    "specialInstructions": "Extremely high intakes of folic acid (1-5 mg/day) have been associated with masking the signs and symptoms of pernicious anemia (vitamin B12 deficiency) and should be avoided"
+  },
+  "scientificDetails": {
+    "benefits": [
+      "Control homocysteine levels for heart health",
+      "Prevent neural tube defects during pregnancy"
+    ],
+    "sideEffects": [
+      "Very high dosages may induce sleep and mental disturbances"
+    ],
+    "studies": []
+  },
+  "category": "Vitamins",
+  "updatedAt": null
+},
+{
+  "_id": {
+    "$oid": "6810873d6231749f338901b5"
+  },
+  "supplementId": "SUPP706",
+  "name": "Vitamin B-3",
+  "aliases": [
+    "Niacin",
+    "Vitamin B3"
+  ],
+  "description": "Niacin is a water-soluble B vitamin and the common name for two very different compounds: nicotinic acid and niacinamide. Like all B vitamins, niacin plays a role in many aspects of energy metabolism and nervous system function.",
+  "intakePractices": {
+    "dosage": "250-2,000 μg/day",
+    "timing": "For niacinamide, take with food to reduce gastrointestinal side effects. For nicotinic acid, take on an empty stomach to reduce flushing and itching of the skin.",
+    "specialInstructions": "For high dosages, divide into two or three doses throughout the day. "
+  },
+  "scientificDetails": {
+    "benefits": [
+      "Control cholesterol"
+    ],
+    "sideEffects": [
+      "With high doses of niacin used for controlling cholesterol levels (anything above 100 mg/ day), nicotinic acid can cause skin flushing and itching of the skin as well as headaches and hypotension."
+    ],
+    "studies": []
+  },
+  "category": "Vitamins",
+  "updatedAt": null
+},
+{
+  "_id": {
+    "$oid": "6810873d6231749f338901b6"
+  },
+  "supplementId": "SUPP707",
+  "name": "Coenzyme Q10",
+  "aliases": [
+    "CoQ10"
+  ],
+  "description": "Coenzyme Q10 (CoQ10) is found in the mitochondria of all cells and is particularly enriched in tissues ofthe heart, liver, kidney, and pancreas. CoQ10 functions as part ofthe cellular system that generates energy from oxygen (in the form of ATP) for bodily processes and can act as an antioxidant to help prevent cellular damage from free radicals created during exercise and during the generation ofenergy.",
+  "intakePractices": {
+    "dosage": "50-100mg/day",
+    "timing": "With a meal",
+    "specialInstructions": ""
+  },
+  "scientificDetails": {
+    "benefits": [
+      "Beneficial for heart patients",
+      "Serve as antioxidant"
+    ],
+    "sideEffects": [
+      "Possible epigastric distress (heartburn, nausea, stomachache)"
+    ],
+    "studies": []
+  },
+  "category": "Other",
+  "updatedAt": null
+},
+{
+  "_id": {
+    "$oid": "6810873d6231749f338901b7"
+  },
+  "supplementId": "SUPP708",
+  "name": "Essential Fatty Acids",
+  "aliases": [
+    "Fish Oil",
+    "Evening Primrose Oil",
+    "Flaxseed"
+  ],
+  "description": "The term essential fatty acids refers to two fatty adds, linoleic acid and linolenic acid, that our bodies cannot synthesize. These fatty acids, like the essential vitamins and minerals, must be consumed in the diet. These essential fatty acids are needed for the production of prostaglandins and eicosanoids, which help regulate blood clotting, blood pressure, heart rate, immune response, and a wide variety of other biological processes.",
+  "intakePractices": {
+    "dosage": "Product-specific, typically 1-3 g/day",
+    "timing": "With meals",
+    "specialInstructions": ""
+  },
+  "scientificDetails": {
+    "benefits": [
+      "Promote heart health",
+      "Reduce inflammation"
+    ],
+    "sideEffects": [
+      ""
+    ],
+    "studies": []
+  },
+  "category": "Other",
+  "updatedAt": null
+},
+{
+  "_id": {
+    "$oid": "6810873d6231749f338901b8"
+  },
+  "supplementId": "SUPP709",
+  "name": "Garlic",
+  "aliases": [
+    "Allium sativum"
+  ],
+  "description": "Modern-day use of garlic as a dietary supplement generally centers around promotion of heart health by reducing serum lipid levels (total cholesterol, LDL, triglycerides), lowering blood pressure, and inhibiting blood clotting.",
+  "intakePractices": {
+    "dosage": "4-10g/day",
+    "timing": "With meals",
+    "specialInstructions": ""
+  },
+  "scientificDetails": {
+    "benefits": [
+      "Control blood pressure",
+      "Control cholesterol"
+    ],
+    "sideEffects": [
+      "Mild gastrointestinal symptoms such as heartburn and nausea may occur with high intakes"
+    ],
+    "studies": []
+  },
+  "category": "Herbs",
+  "updatedAt": null
+},
+{
+  "_id": {
+    "$oid": "6810873d6231749f338901b9"
+  },
+  "supplementId": "SUPP710",
+  "name": "Hawthorn",
+  "aliases": [
+    "Crataegus oxmcmum L."
+  ],
+  "description": "Hawthorn is an English shrub that has a long history of medicinal use in herbal medicine, including cardiovascular disorders, digestive complaints, dyspnea, and kidney stones. Today, hawthorn is a popular phytomedicine in Europe for use in cardiovascular disorders. With its ability to increase the integrity of the blood vessel walls, hawthorne can improve coronary blood flow and oxygen utilization and possesses positive inotropic activity.",
+  "intakePractices": {
+    "dosage": "160-900mg, 2-3 times daily",
+    "timing": "",
+    "specialInstructions": ""
+  },
+  "scientificDetails": {
+    "benefits": [
+      "Improve cardiovascular health",
+      "Serve as antioxidant",
+      "Control blood pressure"
+    ],
+    "sideEffects": [
+      ""
+    ],
+    "studies": []
+  },
+  "category": "Herbs",
+  "updatedAt": null
+},
+{
+  "_id": {
+    "$oid": "6810873d6231749f338901ba"
+  },
+  "supplementId": "SUPP711",
+  "name": "Red yeast rice",
+  "aliases": [
+    ""
+  ],
+  "description": "In Traditional Chinese Medicine (TCM), red yeast rice is used for healthy blood and to strengthen the heart; modern dietary supplements use red yeast rice to lower cholesterol levels.",
+  "intakePractices": {
+    "dosage": "1-3g/day",
+    "timing": "",
+    "specialInstructions": ""
+  },
+  "scientificDetails": {
+    "benefits": [
+      "Control cholesterol"
+    ],
+    "sideEffects": [
+      "May affect liver functions"
+    ],
+    "studies": []
+  },
+  "category": "Herbs",
+  "updatedAt": null
+},
+{
+  "_id": {
+    "$oid": "6810873d6231749f338901bb"
+  },
+  "supplementId": "SUPP712",
+  "name": "Soy",
+  "aliases": [
+    "Soybean",
+    "Soy protein",
+    "Isoflavones"
+  ],
+  "description": "In terms of health and wellness, the two most important dietary supplements derived from soybeans are isolated or concentrated soy proteins and soy extracts containing high amounts of compounds called isoflavones. Isoflavones have been associated with many beneficial health effects, ranging from protection from cancer and osteoporosis to a reduction in hot flashes and other symptoms of menopause. Soy protein, which may or may not contain a high level of isoflavones (depending on how it is processed) has been associated with a reduction in serum cholesterol and triglyceride levels and may protect against the development of coronary heart disease.",
+  "intakePractices": {
+    "dosage": "25-50g/day",
+    "timing": "",
+    "specialInstructions": ""
+  },
+  "scientificDetails": {
+    "benefits": [
+      "Combat cardiovascular disease",
+      "Reduce menopausal symptoms",
+      "Combat osteoporosis",
+      "Combat cancer"
+    ],
+    "sideEffects": [
+      "Might cause bloating, constipation, diarrhea and nausea"
+    ],
+    "studies": []
+  },
+  "category": "Herbs",
+  "updatedAt": null
+},
+{
+  "_id": {
+    "$oid": "6810873d6231749f338901bc"
+  },
+  "supplementId": "SUPP801",
+  "name": "Astragalus",
+  "aliases": [
+    ""
+  ],
+  "description": "Astragalus is an herb used in Traditional Chinese Medicine (TCM) for its immune-enhancing properties, but is also recommended in TCM for \"deficiency of chi\" (life force), which might include symptoms such as lack of energy and fatigue.",
+  "intakePractices": {
+    "dosage": "100-500mg/day",
+    "timing": "",
+    "specialInstructions": ""
+  },
+  "scientificDetails": {
+    "benefits": [
+      "Stimulate immunes system",
+      "Promote resistance to stress"
+    ],
+    "sideEffects": [
+      "Gastrointestinal distress and diarrhea are possible at high intakes"
+    ],
+    "studies": []
+  },
+  "category": "Herbs",
+  "updatedAt": null
+},
+{
+  "_id": {
+    "$oid": "6810873d6231749f338901bd"
+  },
+  "supplementId": "SUPP802",
+  "name": "Cat's claw",
+  "aliases": [
+    "Una de gato",
+    "Uncaria tomentosa"
+  ],
+  "description": "Although cat's claw (or una de gato) is generally thought of as only coming from the rainforests of Peru, it is also found in the rainforests of surrounding countries such as Brazil and Bolivia. It has a number of traditional medicine uses, along with current uses such as immune system stimulation and modulation.",
+  "intakePractices": {
+    "dosage": "20-60mg/day",
+    "timing": "",
+    "specialInstructions": ""
+  },
+  "scientificDetails": {
+    "benefits": [
+      "Immune modulation",
+      "Anti-inflammatory",
+      "Treat infections"
+    ],
+    "sideEffects": [
+      "Not recommended for pregnant patients"
+    ],
+    "studies": []
+  },
+  "category": "Herbs",
+  "updatedAt": null
+},
+{
+  "_id": {
+    "$oid": "6810873d6231749f338901be"
+  },
+  "supplementId": "SUPP803",
+  "name": "Colostrum",
+  "aliases": [
+    "Bovine colostrum"
+  ],
+  "description": "Colostrum is the clear or cloudy \"premilk\" that female mammals secrete after giving birth and before producing milk. Colostrum for dietary supplements is usually derived from bovine sources and contains various immunoglobulins (also called antibodies) and antimicrobial factors (i.e., lactoferrin, lactoperoxidase, lysozyme) as well as insulin-like growth factors such as IGF-I and IGF-II.",
+  "intakePractices": {
+    "dosage": "1-60g/day",
+    "timing": "",
+    "specialInstructions": ""
+  },
+  "scientificDetails": {
+    "benefits": [
+      "Boost gastrointestitinal immunity",
+      "boost systemic immunity"
+    ],
+    "sideEffects": [
+      ""
+    ],
+    "studies": []
+  },
+  "category": "Other",
+  "updatedAt": null
+},
+{
+  "_id": {
+    "$oid": "6810873d6231749f338901bf"
+  },
+  "supplementId": "SUPP804",
+  "name": "Echinacea",
+  "aliases": [
+    "Echinacea angustifolia",
+    "Echinacea purpurea",
+    "Echinacea pallida"
+  ],
+  "description": "Echinacea is native to the United States and a small region ofsouthern Canada. Although there are nine species of echinacea (Echinacea angustifolia, E. dicksoni, E. dubia, E. gloruisa, E. pallida, E. paradoxa, E. purpurea, E. simulate, and E. angustifolia), only three are normally harvested for medicinal purposes (E. angustifolia, E. pallida, and E. purpurea). Echinacea was originally used in North America by Native Americansfortherapeutic uses such as blood purification and treatment ofsnake bites, infections, and malignancy.",
+  "intakePractices": {
+    "dosage": "1-2g 3 times a day in dired or tea form; reduced dosages for exract or freeze-dried form",
+    "timing": "",
+    "specialInstructions": "Long term use recommended, chronic use discouraged"
+  },
+  "scientificDetails": {
+    "benefits": [
+      "For prophylaxis and treatment of cold and flu symptoms",
+      "Increase resistance to flus and colds",
+      "For wounds and skin inflammations"
+    ],
+    "sideEffects": [
+      "May cause allergic reaction in patients with asthma, atopy, or allergies to grass pollens"
+    ],
+    "studies": []
+  },
+  "category": "Herbs",
+  "updatedAt": null
+},
+{
+  "_id": {
+    "$oid": "6810873d6231749f338901c0"
+  },
+  "supplementId": "SUPP805",
+  "name": "Glutamine",
+  "aliases": [
+    ""
+  ],
+  "description": "Glutamine is the most abundant amino acid in the body, comprising approximately half of the free amino acids in the blood and muscle. Glutamine has two main functions in the body: as a precursor in the synthesis of other amino acids and to convert into glucose for energy.",
+  "intakePractices": {
+    "dosage": "1-20g/day",
+    "timing": "",
+    "specialInstructions": ""
+  },
+  "scientificDetails": {
+    "benefits": [
+      "Promote tissue repair",
+      "Promote immune function",
+      "reduce muscle catabolism"
+    ],
+    "sideEffects": [
+      "May cause mild gastrointestinal distress at high dosages"
+    ],
+    "studies": []
+  },
+  "category": "Amino acids",
+  "updatedAt": null
+},
+{
+  "_id": {
+    "$oid": "6810873d6231749f338901c1"
+  },
+  "supplementId": "SUPP806",
+  "name": "Goldenseal",
+  "aliases": [
+    "Berberine"
+  ],
+  "description": "Many people consider the main active constituent in goldenseal to be berberine, and most ofthe clinical studies have been done on the single compound. Berberine is an alkaloid that also comes from several other plants which has a long history in folk medicine for diarrhea.",
+  "intakePractices": {
+    "dosage": "4-6g/day for powedered root, 250-500mg/day for extract",
+    "timing": "",
+    "specialInstructions": "Do not use during pregnancy or lactation."
+  },
+  "scientificDetails": {
+    "benefits": [
+      "Ease diarrhea",
+      "For immune system support",
+      "Antimicrobial"
+    ],
+    "sideEffects": [
+      "Long-term use at high doses (500 mg berberine) has been associated with cardiac spasms and death."
+    ],
+    "studies": []
+  },
+  "category": "Herbs",
+  "updatedAt": null
+},
+{
+  "_id": {
+    "$oid": "6810873d6231749f338901c2"
+  },
+  "supplementId": "SUPP807",
+  "name": "Vitamin A",
+  "aliases": [
+    "Retinol",
+    "Beta carotene"
+  ],
+  "description": "Vitamin A is a fat-soluble vitamin that is part of a family of compounds including retinol, retinal, and  beta-carotene. Vitamin A is involved in myriad metabolic reactions in the body. As a dietary supplement, however, the most prevalent claims are for promoting skin health, eyesight, and general immune function, with occasional claims made for antiaging and anticancer effects.",
+  "intakePractices": {
+    "dosage": "900 μg/day for men; 700 μg/day for nonpregnant, nonlactating women",
+    "timing": "",
+    "specialInstructions": "Pregnant women on balanced diets should not take supplemental vitamin A"
+  },
+  "scientificDetails": {
+    "benefits": [
+      "Correct vitamin A deficiency",
+      "Support immune function",
+      "Support eye health"
+    ],
+    "sideEffects": [
+      "Very high dosages are toxic and can cause nausea, vomiting, headache, dizziness, and blurred vision, and abortion and birth defects for pregnant women"
+    ],
+    "studies": []
+  },
+  "category": "Vitamins",
+  "updatedAt": null
+},
+{
+  "_id": {
+    "$oid": "6810873d6231749f338901c3"
+  },
+  "supplementId": "SUPP808",
+  "name": "Zinc",
+  "aliases": [
+    ""
+  ],
+  "description": "Zinc is an essential trace mineral that functions as part of about 300 enzymes. As such, zinc plays a role in numerous biochemical pathways and physiological processes. More than 90% ofthe body's zinc is stored in the bones (30%) and muscles (60%), but zinc is also found widely distributed in small amounts in virtually all body tissues.",
+  "intakePractices": {
+    "dosage": "13-23mg every 2-4 hours",
+    "timing": "",
+    "specialInstructions": "Not recommended to take at periods of more than two weeks"
+  },
+  "scientificDetails": {
+    "benefits": [
+      "Support immune function",
+      "Treat colds",
+      "Serve as a general antioxidant"
+    ],
+    "sideEffects": [
+      "High doses of zinc (gram levels) can cause nausea, diarrhea, and vomiting"
+    ],
+    "studies": []
+  },
+  "category": "Minerals",
+  "updatedAt": null
+}]
