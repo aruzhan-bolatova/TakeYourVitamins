@@ -682,5 +682,729 @@
       "https://medlineplus.gov/druginfo/natural/1017.html#HerbInteractions"
     ],
     "updatedAt": ""
-  }
-]
+  },
+  {
+    "interactionId": "INT720",
+    "supplements": [
+      {
+        "supplementId": "SUPP725",
+        "name": "Guarana"
+      },
+      {
+        "supplementId": "",
+        "name": "Ma Huang"
+      }
+    ],
+    "foodItem": null,
+    "interactionType": "Supplement-Supplement",
+    "effect": "Negative",
+    "description": "Guarana, a source of caffeine, and Ma Huang, containing ephedrine alkaloids, have a synergistic effect that increases cardiovascular risks, including elevated heart rate, blood pressure, and potential heart palpitations. This combination is particularly dangerous for individuals with pre-existing cardiovascular conditions.",
+    "recommendation": "Avoid combining Guarana with Ma Huang due to significant cardiovascular risks.",
+    "sources": [
+      "The Health Professional's Guide to Dietary Supplements, Shawn M. Talbott, Kerry Hughes, 2007, p. 18"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT721",
+    "supplements": [
+      {
+        "supplementId": "SUPP725",
+        "name": "Guarana"
+      },
+      {
+        "supplementId": "SUPP723",
+        "name": "Citrus Aurantium"
+      }
+    ],
+    "foodItem": null,
+    "interactionType": "Supplement-Supplement",
+    "effect": "Negative",
+    "description": "Guarana, a source of caffeine, and Citrus Aurantium, containing synephrine, are both stimulants that may increase heart rate and blood pressure. Combining them could amplify cardiovascular effects, potentially leading to overstimulation, increased blood pressure, or heart palpitations, especially in individuals sensitive to stimulants or with pre-existing cardiac conditions.",
+    "recommendation": "Avoid combining Guarana with Citrus Aurantium, particularly in individuals with cardiovascular issues, hypertension, or sensitivity to stimulants.",
+    "sources": [
+      "The Health Professional's Guide to Dietary Supplements, Shawn M. Talbott, Kerry Hughes, 2007, pp. 12-14, 17-18"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT722",
+    "supplements": [
+      {
+        "supplementId": "SUPP726",
+        "name": "DHEA"
+      },
+      {
+        "supplementId": "SUPP732",
+        "name": "Tribulus Terrestris"
+      }
+    ],
+    "foodItem": null,
+    "interactionType": "Supplement-Supplement",
+    "effect": "Negative",
+    "description": "DHEA and Tribulus Terrestris both increase testosterone levels, with DHEA acting as a precursor to sex hormones and Tribulus converting protodioscin to DHEA. Combining them may lead to excessive testosterone elevation, potentially causing side effects such as virilization in women, gynecomastia in men, or increased risk of hormone-related issues like prostate hyperplasia.",
+    "recommendation": "Avoid combining DHEA with Tribulus Terrestris to prevent excessive hormonal changes and associated side effects.",
+    "sources": [
+      "The Health Professional's Guide to Dietary Supplements, Shawn M. Talbott, Kerry Hughes, 2007, pp. 54-55, 69-71"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT723",
+    "supplements": [
+      {
+        "supplementId": "SUPP730",
+        "name": "Proteolytic Enzymes"
+      },
+      {
+        "supplementId": "",
+        "name": "White Willow Bark"
+      }
+    ],
+    "foodItem": null,
+    "interactionType": "Supplement-Supplement",
+    "effect": "Negative",
+    "description": "Proteolytic enzymes have a modest anticoagulant effect, which may enhance the blood-thinning properties of White Willow Bark, a source of salicylates similar to aspirin. Combining them could increase the risk of bleeding, particularly in individuals taking other blood-thinning medications or with bleeding disorders.",
+    "recommendation": "Avoid combining Proteolytic Enzymes with White Willow Bark to minimize the risk of excessive bleeding.",
+    "sources": [
+      "The Health Professional's Guide to Dietary Supplements, Shawn M. Talbott, Kerry Hughes, 2007, pp. 1, 65-66"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT701",
+    "interactionType": "Supplement-Food",
+    "supplements": [
+      {
+        "supplementId": "",
+        "name": "Vitamin B-6"
+      }
+    ],
+    "foodItem": "Amiodarone",
+    "effect": "negative",
+    "description": "Combining vitamin B-6 with amiodarone may increase risk for photosensitivity.",
+    "recommendation": "Avoid taking vitamin B-6 with amiodarone",
+    "sources": [],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT702",
+    "interactionType": "Supplement-Food",
+    "supplements": [
+      {
+        "supplementId": "",
+        "name": "Vitamin B-6"
+      }
+    ],
+    "foodItem": "levodopa",
+    "effect": "negative",
+    "description": "Pyridoxine increases levodopa clearance, which reduces the drug's efficacy in Parkinson's disease treatment.",
+    "recommendation": "Avoid taking Vitamin B-6 with levodopa",
+    "sources": [],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT703",
+    "interactionType": "Supplement-Supplement",
+    "supplements": [
+      {
+        "supplementId": "",
+        "name": "Vitamin B-12"
+      },
+      {
+        "supplementId": "",
+        "name": "Folate"
+      }
+    ],
+    "foodItem": "",
+    "effect": "negative",
+    "description": "Folic acid supplementation may mask vitamin B-12 deficiency.",
+    "recommendation": "Avoid taking Vitamin B-12 with folate",
+    "sources": [],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT704",
+    "interactionType": "Supplement-Supplement",
+    "supplements": [
+      {
+        "supplementId": "",
+        "name": "Vitamin B-12"
+      },
+      {
+        "supplementId": "",
+        "name": "Vitamin C"
+      }
+    ],
+    "foodItem": "",
+    "effect": "negative",
+    "description": "Supplemental vitamin C may interfere with the bioavailability of vitamin B-12.",
+    "recommendation": "Avoid taking Vitamin B-12 with Vitamin C",
+    "sources": [],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT705",
+    "interactionType": "Supplement-Supplement",
+    "supplements": [
+      {
+        "supplementId": "",
+        "name": "Vitamin B-12"
+      },
+      {
+        "supplementId": "",
+        "name": "Iron"
+      }
+    ],
+    "foodItem": "",
+    "effect": "negative",
+    "description": "Supplemental iron may interfere with the bioavailability of vitamin B-12.",
+    "recommendation": "Avoid taking Vitamin B-12 with Iron",
+    "sources": [],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT706",
+    "interactionType": "Supplement-Food",
+    "supplements": [
+      {
+        "supplementId": "",
+        "name": "Coenzyme Q10"
+      }
+    ],
+    "foodItem": "Smoking",
+    "effect": "positive",
+    "description": "CoQ10 may help reduce the oxidative stress caused by smoking.",
+    "recommendation": "If you smoke, taking CoQ10 may be beneficial",
+    "sources": [],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT801",
+    "interactionType": "Supplement-Food",
+    "supplements": [
+      {
+        "supplementId": "",
+        "name": "Vitamin A"
+      }
+    ],
+    "foodItem": "Bile acid sequestrants",
+    "effect": "positive",
+    "description": "Bile acid sequestrants reduces vitamin A absorption, so supplementation may be necessary.",
+    "recommendation": "Taking supplemental vitamin A may be beneficial when taking bile acid sequestrants",
+    "sources": [],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT802",
+    "interactionType": "Supplement-Food",
+    "supplements": [
+      {
+        "supplementId": "",
+        "name": "Vitamin A"
+      }
+    ],
+    "foodItem": "Mineral oil",
+    "effect": "positive",
+    "description": "Mineral oil reduces vitamin A absorption, so supplementation may be necessary.",
+    "recommendation": "Taking supplemental vitamin A may be beneficial when taking mineral oil",
+    "sources": [],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT803",
+    "interactionType": "Supplement-Food",
+    "supplements": [
+      {
+        "supplementId": "",
+        "name": "Vitamin A"
+      }
+    ],
+    "foodItem": "Isotretinoin (Accutane)",
+    "effect": "negative",
+    "description": "Isotretinoin (Accutane) is similar in structure to vitamin A. Using vitamin A supplements with this drug may result in toxicity.",
+    "recommendation": "Avoid taking vitamin A supplements with isotretinoin (Accutane)",
+    "sources": [],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT804",
+    "interactionType": "Supplement-Food",
+    "supplements": [
+      {
+        "supplementId": "",
+        "name": "Zinc"
+      }
+    ],
+    "foodItem": "Copper",
+    "effect": "negative",
+    "description": "Zinc supplements interfere with copper absorption.",
+    "recommendation": "Avoid taking excessive zinc supplements, or taking zinc for periods of more than 2 weeks",
+    "sources": [],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT805",
+    "interactionType": "Supplement-Supplement",
+    "supplements": [
+      {
+        "supplementId": "",
+        "name": "Zinc"
+      },
+      {
+        "supplementId": "",
+        "name": "Iron"
+      }
+    ],
+    "foodItem": "",
+    "effect": "negative",
+    "description": "Zinc and iron may interfere with the absorption of one another.",
+    "recommendation": "Avoid taking Zinc with Iron",
+    "sources": [],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT806",
+    "interactionType": "Supplement-Food",
+    "supplements": [
+      {
+        "supplementId": "",
+        "name": "Zinc"
+      }
+    ],
+    "foodItem": "Penicilin",
+    "effect": "negative",
+    "description": "Zinc and penicillin bind, interfering with the absorption of both.",
+    "recommendation": "Avoid taking Zinc with Penicillin",
+    "sources": [],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT807",
+    "interactionType": "Supplement-Food",
+    "supplements": [
+      {
+        "supplementId": "",
+        "name": "Zinc"
+      }
+    ],
+    "foodItem": "tetracycline",
+    "effect": "negative",
+    "description": "Zinc may reduce the absorption of tetracycline (antibiotic).",
+    "recommendation": "Avoid taking Zinc with tetracycline",
+    "sources": [],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT808",
+    "interactionType": "Supplement-Food",
+    "supplements": [
+      {
+        "supplementId": "",
+        "name": "Zinc"
+      }
+    ],
+    "foodItem": "warfarin",
+    "effect": "negative",
+    "description": "Zinc may bind with warfarin (anticoagulant), thus reducing efficacy.",
+    "recommendation": "Avoid taking Zinc with warfarin",
+    "sources": [],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT809",
+    "interactionType": "Supplement-Food",
+    "supplements": [
+      {
+        "supplementId": "",
+        "name": "Zinc"
+      }
+    ],
+    "foodItem": "cisplatin",
+    "effect": "negative",
+    "description": "Zinc may increase toxicity of cisplatin.",
+    "recommendation": "Avoid taking Zinc with cisplatin",
+    "sources": [],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT901",
+    "interactionType": "Supplement-Supplement",
+    "supplements": [
+      {
+        "supplementId": "",
+        "name": "Green tea"
+      },
+      {
+        "supplementId": "",
+        "name": "Vitamin E"
+      }
+    ],
+    "foodItem": "",
+    "effect": "negative",
+    "description": "Possible inhibition of blood clotting capability, prolonging bleeding time.",
+    "recommendation": "Avoid taking Vitamin E with green tea",
+    "sources": [],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT902",
+    "interactionType": "Supplement-Supplement",
+    "supplements": [
+      {
+        "supplementId": "",
+        "name": "Green tea"
+      },
+      {
+        "supplementId": "",
+        "name": "Ginkgo biloba"
+      }
+    ],
+    "foodItem": "",
+    "effect": "negative",
+    "description": "Possible inhibition of blood clotting capability, prolonging bleeding time.",
+    "recommendation": "Avoid taking Ginkgo with green tea",
+    "sources": [],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT903",
+    "interactionType": "Supplement-Food",
+    "supplements": [
+      {
+        "supplementId": "",
+        "name": "Green tea"
+      }
+    ],
+    "foodItem": "Aspirin",
+    "effect": "negative",
+    "description": "Possible inhibition of blood clotting capability, prolonging bleeding time.",
+    "recommendation": "Avoid taking aspirin with green tea",
+    "sources": [],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT904",
+    "interactionType": "Supplement-Supplement",
+    "supplements": [
+      {
+        "supplementId": "",
+        "name": "Vitamin C"
+      },
+      {
+        "supplementId": "",
+        "name": "Iron"
+      }
+    ],
+    "foodItem": "",
+    "effect": "positive",
+    "description": "Vitamin C increases iron absorption (ferric acid).",
+    "recommendation": "Taking Vitamin C and iron together may be beneficial",
+    "sources": [],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT905",
+    "interactionType": "Supplement-Supplement",
+    "supplements": [
+      {
+        "supplementId": "",
+        "name": "Vitamin C"
+      },
+      {
+        "supplementId": "",
+        "name": "Chromium"
+      }
+    ],
+    "foodItem": "",
+    "effect": "negative",
+    "description": "Excessive vitamin C intake may interfere with chromium absorption and metabolism.",
+    "recommendation": "Avoid taking high dosages of vitamin C with chromium",
+    "sources": [],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT906",
+    "interactionType": "Supplement-Food",
+    "supplements": [
+      {
+        "supplementId": "",
+        "name": "Vitamin C"
+      }
+    ],
+    "foodItem": "Copper",
+    "effect": "negative",
+    "description": "Excessive vitamin C intake may interfere with copper absorption and metabolism.",
+    "recommendation": "Avoid taking high dosages of vitamin C with copper or copper-rich foods",
+    "sources": [],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT907",
+    "interactionType": "Supplement-Food",
+    "supplements": [
+      {
+        "supplementId": "",
+        "name": "Vitamin C"
+      }
+    ],
+    "foodItem": "Aspirin",
+    "effect": "positive",
+    "description": "Aspirin increases urinary vitamin C losses.",
+    "recommendation": "Taking supplemental vitamin C may be beneficial when taking aspirin",
+    "sources": [],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT908",
+    "interactionType": "Supplement-Food",
+    "supplements": [
+      {
+        "supplementId": "",
+        "name": "Vitamin E"
+      }
+    ],
+    "foodItem": "Mineral oil",
+    "effect": "positive",
+    "description": "Mineral oil reduces vitamin E absorption, so supplementation may be necessary.",
+    "recommendation": "Taking supplemental vitamin E may be beneficial when taking mineral oil",
+    "sources": [],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT909",
+    "interactionType": "Supplement-Supplement",
+    "supplements": [
+      {
+        "supplementId": "",
+        "name": "Biotin"
+      },
+      {
+        "supplementId": "",
+        "name": "Alpha-Lipoic Acid"
+      }
+    ],
+    "foodItem": null,
+    "effect": "Negative",
+    "description": "Taking alpha-lipoic acid and biotin together can reduce the absorption of both alpha-lipoic acid and biotin into the body.",
+    "recommendation": "Avoid taking alpha-lipoic acid with biotin.",
+    "sources": [
+      "https://medlineplus.gov/druginfo/natural/313.html"
+    ],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT910",
+    "interactionType": "Supplement-Supplement",
+    "supplements": [
+      {
+        "supplementId": "",
+        "name": "Biotin"
+      },
+      {
+        "supplementId": "",
+        "name": "Vitamin B-5"
+      }
+    ],
+    "foodItem": null,
+    "effect": "Negative",
+    "description": "Taking biotin and vitamin B5 together can reduce the absorption of both biotin and vitamin B5 into the body.",
+    "recommendation": "Avoid taking biotin with vitamin B5.",
+    "sources": [
+      "https://medlineplus.gov/druginfo/natural/313.html"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT911",
+    "interactionType": "Supplement-Food",
+    "supplements": [
+      {
+        "supplementId": "",
+        "name": "Biotin"
+      }
+    ],
+    "foodItem": "Egg whites",
+    "effect": "Negative",
+    "description": "Raw egg whites contain avidin, which can bind to biotin and reduce its absorption in the body. Eating 2 or more uncooked egg whites daily for several months can cause biotin deficiency.",
+    "recommendation": "Avoid eating raw egg whites if you are taking biotin supplements.",
+    "sources": [
+      "https://medlineplus.gov/druginfo/natural/313.html"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT912",
+    "interactionType": "Supplement-Supplement",
+    "supplements": [
+      {
+        "supplementId": "",
+        "name": "Ashwagandha"
+      },
+      {
+        "supplementId": "",
+        "name": "Green tea"
+      }
+    ],
+    "foodItem": null,
+    "effect": "Negative",
+    "description": "Both Ashwagandha and Green tea have  side effects on liver function. Taking them together may increase the risk of liver damage.",
+    "recommendation": "Avoid taking Ashwagandha with Green tea.",
+    "sources": [
+      "https://medlineplus.gov/druginfo/natural/953.html"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT913",
+    "interactionType": "Supplement-Supplement",
+    "supplements": [
+      {
+        "supplementId": "",
+        "name": "Ashwagandha"
+      },
+      {
+        "supplementId": "",
+        "name": "L-arginine"
+      }
+    ],
+    "foodItem": null,
+    "effect": "Negative",
+    "description": "Both Ashwagandha and L-arginine have blood pressure-lowering effects. Taking them together may cause blood pressure to drop too low.",
+    "recommendation": "Avoid taking Ashwagandha with L-arginine.",
+    "sources": [
+      "https://medlineplus.gov/druginfo/natural/953.html"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT914",
+    "interactionType": "Supplement-Supplement",
+    "supplements": [
+      {
+        "supplementId": "",
+        "name": "Ashwagandha"
+      },
+      {
+        "supplementId": "",
+        "name": "Andrographis"
+      }
+    ],
+    "foodItem": null,
+    "effect": "Negative",
+    "description": "Both Ashwagandha and Andrographis have blood pressure-lowering effects. Taking them together may cause blood pressure to drop too low.",
+    "recommendation": "Avoid taking Ashwagandha with Andrographis.",
+    "sources": [
+      "https://medlineplus.gov/druginfo/natural/953.html"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT915",
+    "interactionType": "Supplement-Supplement",
+    "supplements": [
+      {
+        "supplementId": "",
+        "name": "Ashwagandha"
+      },
+      {
+        "supplementId": "",
+        "name": "Casein Peptides"
+      }
+    ],
+    "foodItem": null,
+    "effect": "Negative",
+    "description": "Both Ashwagandha and Casein Peptides have blood pressure-lowering effects. Taking them together may cause blood pressure to drop too low.",
+    "recommendation": "Avoid taking Ashwagandha with Casein Peptides.",
+    "sources": [
+      "https://medlineplus.gov/druginfo/natural/953.html"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT916",
+    "interactionType": "Supplement-Supplement",
+    "supplements": [
+      {
+        "supplementId": "",
+        "name": "Ashwagandha"
+      },
+      {
+        "supplementId": "",
+        "name": "Niacin"
+      }
+    ],
+    "foodItem": null,
+    "effect": "Negative",
+    "description": "Both Ashwagandha and Niacin have blood pressure-lowering effects. Taking them together may cause blood pressure to drop too low.",
+    "recommendation": "Avoid taking Ashwagandha with Niacin.",
+    "sources": [
+      "https://medlineplus.gov/druginfo/natural/953.html"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT917",
+    "interactionType": "Supplement-Supplement",
+    "supplements": [
+      {
+        "supplementId": "",
+        "name": "Ashwagandha"
+      },
+      {
+        "supplementId": "",
+        "name": "Stinging Nettle"
+      }
+    ],
+    "foodItem": null,
+    "effect": "Negative",
+    "description": "Both Ashwagandha and Stinging Nettle have blood pressure-lowering effects. Taking them together may cause blood pressure to drop too low.",
+    "recommendation": "Avoid taking Ashwagandha with Stinging Nettle.",
+    "sources": [
+      "https://medlineplus.gov/druginfo/natural/953.html"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT918",
+    "interactionType": "Supplement-Supplement",
+    "supplements": [
+      {
+        "supplementId": "",
+        "name": "Ashwagandha"
+      },
+      {
+        "supplementId": "",
+        "name": "Valerian"
+      }
+    ],
+    "foodItem": null,
+    "effect": "Negative",
+    "description": "Both Ashwagandha and Valerian have sedative effects. Taking them together may cause excessive drowsiness.",
+    "recommendation": "Avoid taking Ashwagandha with Valerian.",
+    "sources": [
+      "https://medlineplus.gov/druginfo/natural/953.html"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT919",
+    "interactionType": "Supplement-Supplement",
+    "supplements": [
+      {
+        "supplementId": "",
+        "name": "Ashwagandha"
+      },
+      {
+        "supplementId": "",
+        "name": "Melatonin"
+      }
+    ],
+        "description": "Melatonin is a hormone that regulates sleep-wake cycles. Ashwagandha may enhance the effects of melatonin, potentially leading to excessive drowsiness or sedation.",
+        "recommendation": "Avoid taking Ashwagandha with Melatonin.",
+        "sources": [
+          "https://medlineplus.gov/druginfo/natural/953.html"
+        ],
+        "updatedAt": ""
+      }
+    ]
