@@ -48,11 +48,13 @@ token required
 
 
 '''
-from flask import Blueprint, request, jsonify, g
+from flask import Blueprint, request, jsonify, g, send_file
 from app.models.intake_log import IntakeLog
 from datetime import datetime, timedelta
 from bson.objectid import ObjectId
 from flask_jwt_extended import jwt_required, get_jwt_identity
+from app.utils.pdf_utils import generate_supplement_pdf
+
 
 bp = Blueprint('intake_logs', __name__, url_prefix='/api/intake_logs')
 
@@ -239,3 +241,35 @@ def delete_intake_log(log_id):
         return jsonify({"error": str(e)}), 400
     except Exception as e:
         return jsonify({"error": f"Error deleting intake log: {str(e)}"}), 500
+
+@bp.route('/download', methods=['GET'])
+@jwt_required()
+def download_user_intake_logs_pdf():
+    """
+    Generate a PDF report of the user's supplement intake logs.
+    """
+    try:
+        user_id = ObjectId(get_jwt_identity())
+        today = datetime.now().strftime("%Y-%m-%d")
+        start = (datetime.now() - timedelta(days=90)).strftime("%Y-%m-%d")
+        logs = IntakeLog.find_by_date_range(user_id, start, today)
+
+        # Ensure logs are in a format the PDF function can use
+        class LogWrapper:
+            def __init__(self, log_dict):
+                self.supplement_name = log_dict.get("supplement_name", "Unknown")
+                self.intake_date = log_dict.get("intake_date", "N/A")
+                self.intake_time = log_dict.get("intake_time", "N/A")
+                self.dosage_taken = log_dict.get("dosage_taken", "N/A")
+                self.unit = log_dict.get("unit", "")
+                self.notes = log_dict.get("notes", "")
+
+        wrapped_logs = [LogWrapper(log.to_dict()) for log in logs]
+
+        pdf_buffer = generate_supplement_pdf(wrapped_logs)
+        return send_file(pdf_buffer,
+                         as_attachment=True,
+                         download_name="supplement_logs.pdf",
+                         mimetype="application/pdf")
+    except Exception as e:
+        return jsonify({"error": f"Failed to generate PDF: {str(e)}"}), 500
