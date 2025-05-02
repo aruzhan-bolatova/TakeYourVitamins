@@ -127,6 +127,7 @@ def delete_tracked_supplement(user_id):
     Delete a tracked supplement from the user's TrackerSupplementList.
     """
     try:
+        print(f"User ID received: {user_id}")
         
         # Get the supplement ID from the request
         supplement_id = request.json.get('_id')

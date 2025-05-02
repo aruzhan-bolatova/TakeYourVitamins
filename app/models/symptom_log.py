@@ -2,6 +2,7 @@ from app.db.db import get_database as get_db
 from bson.objectid import ObjectId
 from datetime import datetime, timezone
 from typing import List, Dict, Optional, Any, Union
+import uuid
 
 class SymptomLog:
     SEVERITY_LEVELS = ["none", "mild", "average", "severe"]
@@ -64,6 +65,7 @@ class SymptomLog:
         if isinstance(symptom_log_data.get('symptom_id'), str):
             symptom_log_data['symptom_id'] = ObjectId(symptom_log_data['symptom_id'])
         
+        symptom_log_data['symptomLogId'] = symptom_log_data.get('symptomLogId', str(uuid.uuid4()))
         # Add timestamps
         symptom_log_data['created_at'] = now
         symptom_log_data['updated_at'] = now
@@ -74,7 +76,7 @@ class SymptomLog:
         symptom_log.validate_data()
         
         # Check if a log already exists for this user, symptom, and date
-        existing_log = db.symptom_logs.find_one({
+        existing_log = db.SymptomLogs.find_one({
             "user_id": symptom_log_data['user_id'],
             "symptom_id": symptom_log_data['symptom_id'],
             "date": symptom_log_data['date'],
@@ -88,22 +90,22 @@ class SymptomLog:
                 "notes": symptom_log_data['notes'],
                 "updated_at": now
             }
-            db.symptom_logs.update_one(
+            db.SymptomLogs.update_one(
                 {"_id": existing_log["_id"]},
                 {"$set": update_dict}
             )
             # Return the updated log
-            updated_log = db.symptom_logs.find_one({"_id": existing_log["_id"]})
+            updated_log = db.SymptomLogs.find_one({"_id": existing_log["_id"]})
             return SymptomLog(updated_log)
         else:
             # Insert into database
-            result = db.symptom_logs.insert_one(symptom_log_data)
+            result = db.SymptomLogs.insert_one(symptom_log_data)
             
             if not result.inserted_id:
                 raise ValueError("Failed to create symptom log")
                 
             # Get the created symptom log with its ID
-            created_log = db.symptom_logs.find_one({"_id": result.inserted_id})
+            created_log = db.SymptomLogs.find_one({"_id": result.inserted_id})
             return SymptomLog(created_log)
 
     @staticmethod
@@ -114,7 +116,7 @@ class SymptomLog:
             if isinstance(log_id, str):
                 log_id = ObjectId(log_id)
                 
-            symptom_log = db.symptom_logs.find_one({'_id': log_id, 'deleted_at': None})
+            symptom_log = db.SymptomLogs.find_one({'_id': log_id, 'deleted_at': None})
             return SymptomLog(symptom_log) if symptom_log else None
         except Exception as e:
             raise ValueError(f"Error finding symptom log: {e}")
@@ -127,8 +129,8 @@ class SymptomLog:
             if isinstance(user_id, str):
                 user_id = ObjectId(user_id)
                 
-            symptom_logs = db.symptom_logs.find({'user_id': user_id, 'deleted_at': None})
-            return [SymptomLog(log) for log in symptom_logs]
+            SymptomLogs = db.SymptomLogs.find({'user_id': user_id, 'deleted_at': None})
+            return [SymptomLog(log) for log in SymptomLogs]
         except Exception as e:
             raise ValueError(f"Error finding symptom logs: {e}")
 
@@ -140,12 +142,12 @@ class SymptomLog:
             if isinstance(user_id, str):
                 user_id = ObjectId(user_id)
                 
-            symptom_logs = db.symptom_logs.find({
+            SymptomLogs = db.SymptomLogs.find({
                 'user_id': user_id,
                 'date': date,
                 'deleted_at': None
             })
-            return [SymptomLog(log) for log in symptom_logs]
+            return [SymptomLog(log) for log in SymptomLogs]
         except Exception as e:
             raise ValueError(f"Error finding symptom logs for date: {e}")
 
@@ -157,13 +159,13 @@ class SymptomLog:
             if isinstance(user_id, str):
                 user_id = ObjectId(user_id)
                 
-            symptom_logs = db.symptom_logs.find({
+            SymptomLogs = db.SymptomLogs.find({
                 'user_id': user_id,
                 'date': date,
                 'severity': {'$ne': 'none'},
                 'deleted_at': None
             })
-            return [SymptomLog(log) for log in symptom_logs]
+            return [SymptomLog(log) for log in SymptomLogs]
         except Exception as e:
             raise ValueError(f"Error finding active symptoms for date: {e}")
 
@@ -175,12 +177,12 @@ class SymptomLog:
             if isinstance(user_id, str):
                 user_id = ObjectId(user_id)
                 
-            symptom_logs = db.symptom_logs.find({
+            SymptomLogs = db.SymptomLogs.find({
                 'user_id': user_id,
                 'date': {'$gte': start_date, '$lte': end_date},
                 'deleted_at': None
             })
-            return [SymptomLog(log) for log in symptom_logs]
+            return [SymptomLog(log) for log in SymptomLogs]
         except Exception as e:
             raise ValueError(f"Error finding symptom logs by date range: {e}")
 
@@ -198,7 +200,7 @@ class SymptomLog:
                 {"$sort": {"_id": 1}}
             ]
             
-            result = db.symptom_logs.aggregate(pipeline)
+            result = db.SymptomLogs.aggregate(pipeline)
             return [doc["_id"] for doc in result]
         except Exception as e:
             raise ValueError(f"Error finding dates with symptoms: {e}")
@@ -212,7 +214,7 @@ class SymptomLog:
             if isinstance(log_id, str):
                 log_id = ObjectId(log_id)
                 
-            existing_log = db.symptom_logs.find_one({'_id': log_id, 'deleted_at': None})
+            existing_log = db.SymptomLogs.find_one({'_id': log_id, 'deleted_at': None})
             if not existing_log:
                 raise ValueError("Symptom log not found")
             
@@ -222,13 +224,13 @@ class SymptomLog:
             
             if update_dict:
                 update_dict['updated_at'] = datetime.now(timezone.utc).isoformat()
-                db.symptom_logs.update_one(
+                db.SymptomLogs.update_one(
                     {'_id': log_id},
                     {'$set': update_dict}
                 )
             
             # Return the updated log
-            updated_log = db.symptom_logs.find_one({'_id': log_id})
+            updated_log = db.SymptomLogs.find_one({'_id': log_id})
             return SymptomLog(updated_log)
         except Exception as e:
             raise ValueError(f"Error updating symptom log: {e}")
@@ -236,26 +238,30 @@ class SymptomLog:
     @staticmethod
     def delete(log_id: str):
         """Soft delete a symptom log"""
+        print(f"[DEBUG] Attempting to delete symptom log with ID: {log_id}")
         db = get_db()
         try:
+            # Convert string ID to ObjectId
             if isinstance(log_id, str):
-                log_id = ObjectId(log_id)
-                
+                try:
+                    log_id = ObjectId(log_id)
+                except Exception as e:
+                    print(f"[ERROR] Failed to convert log_id to ObjectId: {e}")
+                                
             # Find the log first
-            existing_log = db.symptom_logs.find_one({'_id': log_id, 'deleted_at': None})
+            existing_log = db.SymptomLogs.find_one({'_id': log_id, 'deleted_at': None})
             if not existing_log:
                 raise ValueError("Symptom log not found")
             
             # Soft delete by setting deleted_at
             now = datetime.now(timezone.utc).isoformat()
-            db.symptom_logs.update_one(
+            db.SymptomLogs.update_one(
                 {'_id': log_id},
                 {'$set': {
                     'deleted_at': now,
                     'updated_at': now
                 }}
             )
-            
             return True
         except Exception as e:
             raise ValueError(f"Error deleting symptom log: {e}")
@@ -268,7 +274,7 @@ class SymptomLog:
             pipeline = [
                 {
                     "$lookup": {
-                        "from": "symptom_categories",
+                        "from": "SymptomCategories",
                         "localField": "categoryId",
                         "foreignField": "_id",
                         "as": "category"
@@ -289,7 +295,7 @@ class SymptomLog:
                 }
             ]
             
-            symptoms = list(db.symptoms.aggregate(pipeline))
+            symptoms = list(db.Symptoms.aggregate(pipeline))
             return {str(symptom["_id"]): symptom for symptom in symptoms}
         except Exception as e:
             raise ValueError(f"Error getting symptom details: {e}")
@@ -303,7 +309,7 @@ class SymptomLog:
                 user_id = ObjectId(user_id)
                 
             # Get active logs
-            active_logs = db.symptom_logs.find({
+            active_logs = db.SymptomLogs.find({
                 'user_id': user_id,
                 'date': date,
                 'severity': {'$ne': 'none'},
@@ -331,7 +337,7 @@ class SymptomLog:
                     break
             
             # Reset cursor
-            active_logs = db.symptom_logs.find({
+            active_logs = db.SymptomLogs.find({
                 'user_id': user_id,
                 'date': date,
                 'severity': {'$ne': 'none'},
@@ -387,7 +393,8 @@ class SymptomCategoryManager:
         db = get_db()
         
         # Only initialize if symptom_categories collection is empty
-        if db.symptom_categories.count_documents({}) == 0:
+        if db.SymptomCategories.count_documents({}) == 0:
+            print("[DEBUG] Initializing symptom categories and symptoms...")
             # Create symptom categories
             categories = [
                 {"name": "General", "id": "general", "icon": "🔍"},
@@ -401,8 +408,9 @@ class SymptomCategoryManager:
             # Insert categories
             category_ids = {}
             for category in categories:
-                result = db.symptom_categories.insert_one(category)
+                result = db.SymptomCategories.insert_one(category)
                 category_ids[category["id"]] = result.inserted_id
+                print(f"[DEBUG] Inserted category: {category['name']} with ID: {result.inserted_id}")
             
             # Define symptoms for each category
             symptoms = [
@@ -452,5 +460,14 @@ class SymptomCategoryManager:
                 {"name": "Aerobics/Dancing", "icon": "💃", "categoryId": category_ids["activity"]}
             ]
             
+            
             # Insert symptoms
-            db.symptoms.insert_many(symptoms)
+            for symptom in symptoms:
+                symptom["symptomId"] = symptom["name"].lower().replace(" ", "_")
+                # Insert into database
+                result = db.Symptoms.insert_one(symptom)
+                print(f"[DEBUG] Inserted symptom: {symptom['name']} with ID: {result.inserted_id}")
+            
+            
+        else:
+            print("[DEBUG] Symptom categories and symptoms already initialized: ", db.SymptomCategories.count_documents({}))
