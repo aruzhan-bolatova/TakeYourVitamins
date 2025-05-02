@@ -7,12 +7,13 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 bp = Blueprint('symptom_logs', __name__, url_prefix='/api/symptom-logs')
 
 
-@bp.before_app_first_request
+@bp.before_app_first_request    # This function will run once when the app starts
 def initialize_database():
     """Initialize database with symptom categories and symptoms"""
     try:
         SymptomCategoryManager.initialize_symptom_data()
         current_app.logger.info("Database initialized with symptom categories and symptoms")
+        print("Database initialized with symptom categories and symptoms")
     except Exception as e:
         current_app.logger.error(f"Error initializing database: {str(e)}")
 
@@ -41,6 +42,15 @@ def get_all_symptoms():
 @jwt_required()
 def create_symptom_log():
     """Create or update a symptom log"""
+    ''' 
+    Example request body:
+        {
+            "date": "2025-05-01",
+            "severity": "average",
+            "notes": "after taking iron",
+            "symptom_id": "6813aa988a26dd0e3989ba01"
+        }
+    '''
     try:
         user_id = get_jwt_identity()
         
@@ -263,10 +273,8 @@ def get_dates_with_symptoms():
 def delete_symptom_log(log_id):
     """Delete a symptom log"""
     try:
-        user_id = get_jwt_identity()
-        
         # Delete log
-        deleted = SymptomLog.delete_log(user_id, log_id)
+        deleted = SymptomLog.delete(log_id)
         if not deleted:
             return jsonify({"error": "Symptom log not found"}), 404
         

@@ -61,5 +61,14 @@ def init_db():
         db.IntakeLogs.create_index('userId')
         db.IntakeLogs.create_index('trackedSupplementId')
         logger.info("Created IntakeLogs collection and indexes")
+        
+    if 'SymptomLogs' not in db.list_collection_names():
+        db.create_collection('SymptomLogs')
+        db.create_collection('Symptoms')
+        db.create_collection('SymptomCategories')
+        db.SymptomLogs.create_index('userId')
+        db.SymptomLogs.create_index('trackedSupplementId')
+        logger.info("Created SymptomLogs collection and indexes")
+    
     
     logger.info("Database initialization complete") 

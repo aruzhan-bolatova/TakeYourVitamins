@@ -18,6 +18,7 @@ class TrackedSupplement:
         self.notes = tracked_supplement_data.get('notes')
         self.created_at = tracked_supplement_data.get('createdAt')
         self.updated_at = tracked_supplement_data.get('updatedAt')
+        self.deleted_at = tracked_supplement_data.get('deletedAt')
 
     def to_dict(self):
         """Convert tracked supplement to dictionary"""
@@ -33,7 +34,9 @@ class TrackedSupplement:
             "endDate": self.end_date,
             "notes": self.notes,
             "createdAt": self.created_at,
-            "updatedAt": self.updated_at
+            "updatedAt": self.updated_at,
+            "deletedAt": self.deleted_at
+            
         }
 
     def validate_data(self):
@@ -44,6 +47,7 @@ class TrackedSupplement:
         
         # Additional validation can be added here as needed
 
+    
     @staticmethod
     def create(tracked_supplement_data: dict):
         """Create a new interaction"""
@@ -170,7 +174,7 @@ class TrackerSupplementList:
         # Remove the supplement from the list
         db.TrackerSupplementList.update_one(
             {'user_id': ObjectId(user_id)},
-            {'$pull': {'tracked_supplements': {'_id': ObjectId(supplement_id)}}}
+            {'$pull': {'tracked_supplements': {'_id': supplement_id}}}
         )
 
         # Return the updated list
@@ -191,99 +195,3 @@ class TrackerSupplementList:
         # Return the updated list
         updated_list = db.TrackerSupplementList.find_one({'user_id': ObjectId(user_id)})
         return TrackerSupplementList(updated_list)
-    
-    
-    # @staticmethod
-    # def create(userId: str):
-    #     # Validate data
-    #     tracker_supplement_list = TrackerSupplementList(userId)
-        
-    #     # Add timestamps
-    #     now = datetime.now().isoformat()
-    #     tracker_supplement_list_data = {
-    #         "user_id": userId,
-    #         "createdAt": now,
-    #         "updatedAt": now,
-    #         "tracked_supplements": []
-    #     }
-        
-    #     # Insert into database
-    #     db = get_db()
-    #     result = db.TrackerSupplementList.insert_one(tracker_supplement_list_data)
-        
-    #     if not result.inserted_id:
-    #         raise ValueError("Failed to create tracker supplement list")
-            
-    #     # Return the created tracker supplement list
-    #     created_data = tracker_supplement_list_data.copy()
-    #     created_data['_id'] = result.inserted_id
-    #     return TrackerSupplementList(userId)
-    
-    # @staticmethod
-    # def find_by_user_id(user_id):
-    #     """Find tracker supplement list by user ID"""
-    #     db = get_db()
-    #     try:
-    #         # Find tracker supplement list
-    #         tracker_supplement_list = db.TrackerSupplementList.find_one({'user_id': user_id, 'deletedAt': None})
-    #         return TrackerSupplementList(user_id) if tracker_supplement_list else None
-    #     except Exception as e:
-    #         raise ValueError(f"Error finding tracker supplement list: {e}")
-    
-    # @staticmethod
-    # def add_tracked_supplement(user_id, tracked_supplement_data):
-    #     """Add a tracked supplement to the list"""
-    #     db = get_db()
-    #     try:
-    #         # Validate data
-    #         tracked_supplement = TrackedSupplement.create(tracked_supplement_data)
-            
-    #         # Add to database
-    #         db.TrackerSupplementList.update_one(
-    #             {'user_id': user_id},
-    #             {'$push': {'tracked_supplements': tracked_supplement.to_dict()}}
-    #         )
-            
-    #         # Return updated tracker supplement list
-    #         updated_list = db.Tracker_Supplement_List.find_one({'user_id': user_id})
-    #         return TrackerSupplementList(user_id) if updated_list else None
-    #     except Exception as e:
-    #         raise ValueError(f"Error adding tracked supplement: {e}")
-    
-    # @staticmethod
-    # def delete_tracked_supplement(user_id, supplement_id):
-    #     """Delete a tracked supplement from the list"""
-    #     db = get_db()
-    #     try:
-    #         # Remove from database
-    #         db.TrackerSupplementList.update_one(
-    #             {'user_id': user_id},
-    #             {'$pull': {'tracked_supplements': {'_id': ObjectId(supplement_id)}}}
-    #         )
-            
-    #         # Return updated tracker supplement list
-    #         updated_list = db.TrackerSupplementList.find_one({'user_id': user_id})
-    #         return TrackerSupplementList(user_id) if updated_list else None
-    #     except Exception as e:
-    #         raise ValueError(f"Error deleting tracked supplement: {e}")
-    
-    # @staticmethod
-    # def update_tracked_supplement(user_id, supplement_id, updated_data):
-    #     """Update a tracked supplement in the list"""
-    #     db = get_db()
-    #     try:
-    #         # Update in database
-    #         db.TrackerSupplementList.update_one(
-    #             {'user_id': user_id, 'tracked_supplements._id': ObjectId(supplement_id)},
-    #             {'$set': {'tracked_supplements.$': updated_data}}
-    #         )
-            
-    #         # Return updated tracker supplement list
-    #         updated_list = db.TrackerSupplementList.find_one({'user_id': user_id})
-    #         return TrackerSupplementList(user_id) if updated_list else None
-    #     except Exception as e:
-    #         raise ValueError(f"Error updating tracked supplement: {e}")
-
-    # #possible TODO: delete the entire tracker supplement list for a user
-    
-    

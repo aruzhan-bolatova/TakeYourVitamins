@@ -176,27 +176,19 @@ class IntakeLog:
 
     @staticmethod
     def delete(log_id: str):
-        """Soft delete an intake log"""
+        """Permanently delete an intake log"""
         db = get_db()
         try:
-            # Find the log first
-            existing_log = db.IntakeLogs.find_one({'_id': ObjectId(log_id), 'deleted_at': None})
-            if not existing_log:
-                raise ValueError("Intake log not found")
+            # Attempt to delete the log
+            result = db.IntakeLogs.delete_one({'_id': ObjectId(log_id)})
             
-            # Soft delete by setting deleted_at
-            now = datetime.now(timezone.utc).isoformat()
-            db.IntakeLogs.update_one(
-                {'_id': ObjectId(log_id)},
-                {'$set': {
-                    'deleted_at': now,
-                    'updated_at': now
-                }}
-            )
+            # Check if a document was deleted
+            if result.deleted_count == 0:
+                raise ValueError("Intake log not found or already deleted")
             
             return True
         except Exception as e:
-            raise ValueError(f"Error deleting intake log: {e}")
+            raise ValueError(f"Error performing hard delete on intake log: {e}")
 
     @staticmethod
     def get_intake_summary(user_id: str, start_date: str = None, end_date: str = None):
