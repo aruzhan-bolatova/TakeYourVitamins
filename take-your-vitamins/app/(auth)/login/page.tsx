@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -10,10 +10,18 @@ import Link from "next/link"
 import { useAuth } from "@/contexts/auth-context"
 
 export default function LoginPage() {
-  const { signIn, isLoading } = useAuth()
+  const { signIn, isLoading, user } = useAuth()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState<string | null>(null)
+  const router = useRouter()
+
+  // Redirect to dashboard if user is already logged in
+  useEffect(() => {
+    if (user) {
+      router.push("/dashboard")
+    }
+  }, [user, router])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -26,14 +34,25 @@ export default function LoginPage() {
     }
   }
 
+  // Show loading state while checking authentication or redirect is happening
+  if (isLoading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent"></div>
+      </div>
+    )
+  }
+
+  // If user is authenticated, this will be redirected by the useEffect
+
   return (
     <div className="flex min-h-screen items-center justify-center px-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="space-y-1">
+      <Card className="w-full max-w-md shadow-lg border-primary/20">
+        <CardHeader className="space-y-1 bg-primary/5 rounded-t-lg">
           <CardTitle className="text-2xl font-bold">Login</CardTitle>
           <CardDescription>Enter your email and password to access your account</CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="pt-6">
           <form onSubmit={handleSubmit} className="space-y-4">
             {error && <div className="text-sm text-red-500">{error}</div>}
             <div className="space-y-2">
@@ -47,6 +66,7 @@ export default function LoginPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="name@example.com"
                 required
+                className="border-primary/20 focus-visible:ring-primary/30"
               />
             </div>
             <div className="space-y-2">
@@ -65,6 +85,7 @@ export default function LoginPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
                 required
+                className="border-primary/20 focus-visible:ring-primary/30"
               />
             </div>
             <Button type="submit" className="w-full" disabled={isLoading}>

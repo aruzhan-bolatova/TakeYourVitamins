@@ -114,11 +114,50 @@ export function TrackerProvider({ children }: { children: ReactNode }) {
   
   // Mock symptom tracking states
   const [symptoms, setSymptoms] = useState<Symptom[]>([
-    { id: "symptom1", name: "Headache", category: "Pain", icon: "brain" },
-    { id: "symptom2", name: "Nausea", category: "Digestive", icon: "stomach" },
-    { id: "symptom3", name: "Fatigue", category: "Energy", icon: "battery-low" },
-    { id: "symptom4", name: "Joint Pain", category: "Pain", icon: "bone" },
-    { id: "symptom5", name: "Insomnia", category: "Sleep", icon: "moon" },
+    // General
+    { id: "fine", name: "Everything is fine", category: "general", icon: "👍" },
+    { id: "acne", name: "Skin issues", category: "general", icon: "🤡" },
+    { id: "fatigue", name: "Fatigue", category: "general", icon: "🫠" },
+    { id: "headache", name: "Headache", category: "general", icon: "🤕" },
+    { id: "abdominal-pain", name: "Abdominal Pain", category: "general", icon: "😣" },
+    { id: "dizziness", name: "Dizziness", category: "general", icon: "😵‍💫" },
+    
+    // Mood
+    { id: "calm", name: "Calm", category: "mood", icon: "😌" },
+    { id: "mood-swings", name: "Mood swings", category: "mood", icon: "🔄" },
+    { id: "happy", name: "Happy", category: "mood", icon: "😊" },
+    { id: "energetic", name: "Energetic", category: "mood", icon: "⚡" },
+    { id: "irritated", name: "Irritated", category: "mood", icon: "🥴" },
+    { id: "depressed", name: "Depressed", category: "mood", icon: "😓" },
+    { id: "low-energy", name: "Low energy", category: "mood", icon: "🥱" },
+    { id: "anxious", name: "Anxious", category: "mood", icon: "😰" },
+    
+    // Sleep
+    { id: "insomnia", name: "Insomnia", category: "sleep", icon: "😳" },
+    { id: "good-sleep", name: "Good sleep", category: "sleep", icon: "😴" },
+    { id: "restless", name: "Restless", category: "sleep", icon: "🔄" },
+    { id: "tired", name: "Tired", category: "sleep", icon: "🥱" },
+    
+    // Digestive
+    { id: "bloating", name: "Bloating", category: "digestive", icon: "🎈" },
+    { id: "nausea", name: "Nausea", category: "digestive", icon: "🤢" },
+    { id: "constipation", name: "Constipation", category: "digestive", icon: "⏸️" },
+    { id: "diarrhea", name: "Diarrhea", category: "digestive", icon: "⏩" },
+    
+    // Appetite
+    { id: "low", name: "Low", category: "appetite", icon: "🫢" },
+    { id: "normal", name: "Normal", category: "appetite", icon: "🍽️" },
+    { id: "high", name: "High", category: "appetite", icon: "🍔" },
+    
+    // Physical Activity
+    { id: "no-activity", name: "Didn't exercise", category: "activity", icon: "⭕️" },
+    { id: "yoga", name: "Yoga", category: "activity", icon: "🧘‍♀️" },
+    { id: "gym", name: "Gym", category: "activity", icon: "🏋️" },
+    { id: "swimming", name: "Swimming", category: "activity", icon: "🏊‍♀️" },
+    { id: "running", name: "Running", category: "activity", icon: "🏃" },
+    { id: "cycling", name: "Cycling", category: "activity", icon: "🚴‍♀️" },
+    { id: "team-sports", name: "Team Sports", category: "activity", icon: "⛹️‍♀️" },
+    { id: "dancing", name: "Aerobics/Dancing", category: "activity", icon: "💃" },
   ])
   const [symptomLogs, setSymptomLogs] = useState<SymptomLog[]>([])
 
@@ -315,19 +354,42 @@ const checkInteractions = async (supplementId: string): Promise<string[]> => {
       }
       
       // Update both the global state and the cache
-      setIntakeLogs(prev => [...prev, newLog])
+      setIntakeLogs(prev => {
+        // Remove any existing log for the same supplement and date to avoid duplicates
+        const filteredLogs = prev.filter(log => 
+          !(log.tracked_supplement_id === tracked_supplement_id && log.intake_date === intake_date)
+        );
+        return [...filteredLogs, newLog];
+      });
       
       // Also update the cache for this date
       const dateStr = intake_date
       setIntakeLogsCache(prevCache => {
         const updatedCache = { ...prevCache }
+        
         if (updatedCache[dateStr]) {
-          updatedCache[dateStr] = [...updatedCache[dateStr], newLog]
+          // Remove any existing log for the same supplement to avoid duplicates
+          const filteredLogs = updatedCache[dateStr].filter(log => 
+            !(log.tracked_supplement_id === tracked_supplement_id)
+          );
+          updatedCache[dateStr] = [...filteredLogs, newLog]
         } else {
           updatedCache[dateStr] = [newLog]
         }
+        
         return updatedCache
       })
+      
+      // Invalid cache for today if it's not the same as the intake date
+      const today = new Date().toISOString().split('T')[0]
+      if (today !== intake_date && intakeLogsCache[today]) {
+        // Force refresh of today's data next time it's requested
+        setIntakeLogsCache(prev => {
+          const updated = {...prev}
+          delete updated[today];
+          return updated;
+        });
+      }
       
       return true
     } catch (error) {
@@ -570,6 +632,27 @@ const checkInteractions = async (supplementId: string): Promise<string[]> => {
         throw new Error("User not authenticated")
       }
 
+      // Find the log to get its date before deleting
+      let logDate: string | null = null;
+      let logSupplementId: string | null = null;
+      
+      // Look in the global state
+      const logToDelete = intakeLogs.find(log => log.id === id);
+      if (logToDelete) {
+        logDate = logToDelete.intake_date;
+        logSupplementId = logToDelete.tracked_supplement_id;
+      } else {
+        // Look in the cache
+        for (const date in intakeLogsCache) {
+          const log = intakeLogsCache[date].find(log => log.id === id);
+          if (log) {
+            logDate = log.intake_date;
+            logSupplementId = log.tracked_supplement_id;
+            break;
+          }
+        }
+      }
+
       const response = await fetch(
         `http://localhost:5001/api/intake_logs/${id}`,
         {
@@ -595,6 +678,19 @@ const checkInteractions = async (supplementId: string): Promise<string[]> => {
         }
         return newCache
       })
+      
+      // If logDate is different from today, invalidate today's cache
+      if (logDate) {
+        const today = new Date().toISOString().split('T')[0];
+        if (today !== logDate && intakeLogsCache[today]) {
+          // Force refresh of today's data next time it's requested
+          setIntakeLogsCache(prev => {
+            const updated = {...prev};
+            delete updated[today];
+            return updated;
+          });
+        }
+      }
       
       return true
     } catch (error) {
@@ -682,7 +778,7 @@ const checkInteractions = async (supplementId: string): Promise<string[]> => {
     }
   }
 
-  // Mock function to log symptoms
+  // Modified function to log symptoms with localStorage persistence
   const logSymptom = (
     symptomId: string,
     date: string,
@@ -700,16 +796,17 @@ const checkInteractions = async (supplementId: string): Promise<string[]> => {
       (log) => log.symptomId === symptomId && log.date === date && log.userId === user._id,
     )
 
+    let updatedLogs: SymptomLog[] = [];
+
     if (existingLogIndex >= 0) {
       // Update existing log
-      const updatedLogs = [...symptomLogs]
+      updatedLogs = [...symptomLogs]
       updatedLogs[existingLogIndex] = {
         ...updatedLogs[existingLogIndex],
         severity,
         notes,
         created_at: new Date().toISOString(),
       }
-      setSymptomLogs(updatedLogs)
     } else {
       // Create new log
       const newLog: SymptomLog = {
@@ -722,7 +819,17 @@ const checkInteractions = async (supplementId: string): Promise<string[]> => {
         notes,
         created_at: new Date().toISOString(),
       }
-      setSymptomLogs((prev) => [...prev, newLog])
+      updatedLogs = [...symptomLogs, newLog]
+    }
+    
+    // Update state
+    setSymptomLogs(updatedLogs)
+    
+    // Persist to localStorage
+    try {
+      localStorage.setItem(`${user._id}-symptom-logs`, JSON.stringify(updatedLogs))
+    } catch (error) {
+      console.error("Failed to save symptom logs to localStorage:", error)
     }
   }
 
@@ -795,6 +902,16 @@ const checkInteractions = async (supplementId: string): Promise<string[]> => {
   
         // Fetch today's intake logs
         await getTodayIntakeLogs()
+        
+        // Load symptom logs from localStorage
+        try {
+          const savedSymptomLogs = localStorage.getItem(`${user._id}-symptom-logs`)
+          if (savedSymptomLogs) {
+            setSymptomLogs(JSON.parse(savedSymptomLogs))
+          }
+        } catch (error) {
+          console.error("Failed to load symptom logs from localStorage:", error)
+        }
       } catch (error) {
         console.error("Failed to fetch tracker data:", error)
       }

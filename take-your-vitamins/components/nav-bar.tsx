@@ -3,9 +3,10 @@
 import { useState, useRef, useEffect } from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { Pill, ChevronDown, Settings, LogOut } from "lucide-react"
+import { Pill, ChevronDown, Settings, LogOut, LogIn, UserPlus } from "lucide-react"
 import { useAuth } from "@/contexts/auth-context"
 import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
 
 export function NavBar() {
   const { user, signOut } = useAuth()
@@ -32,10 +33,18 @@ export function NavBar() {
     setDropdownOpen(false)
   }
 
-  const navItems = [
+  // Define navigation items - different sets for authenticated and non-authenticated users
+  const authNavItems = [
     { name: "Search", href: "/" },
     { name: "Tracker", href: "/dashboard" },
   ]
+
+  const nonAuthNavItems = [
+    { name: "Search", href: "/" },
+  ]
+
+  // Select the appropriate nav items based on authentication status
+  const navItems = user ? authNavItems : nonAuthNavItems
 
   return (
     <header className="top-0 z-50 w-full border-b relative">
@@ -49,22 +58,20 @@ export function NavBar() {
             </div>
           </Link>
 
-          {(
-            <nav className="hidden md:flex items-center gap-6">
-              {navItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={cn(
-                    "text-base font-medium transition-colors hover:text-primary",
-                    pathname === item.href || pathname.startsWith(`${item.href}/`) ? "text-primary" : "text-gray-700",
-                  )}
-                >
-                  {item.name}
-                </Link>
-              ))}
-            </nav>
-          )}
+          <nav className="hidden md:flex items-center gap-6">
+            {navItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={cn(
+                  "text-base font-medium transition-colors hover:text-primary",
+                  pathname === item.href || pathname.startsWith(`${item.href}/`) ? "text-primary" : "text-gray-700",
+                )}
+              >
+                {item.name}
+              </Link>
+            ))}
+          </nav>
         </div>
 
         {/* Center: App title */}
@@ -72,7 +79,7 @@ export function NavBar() {
           <h1 className="text-xl font-bold">Take Your Vitamins</h1>
         </div>
 
-        {/* Right section: Profile dropdown */}
+        {/* Right section: Profile dropdown for logged in users, or login/signup buttons */}
         {user ? (
           <div className="relative mr-8" ref={dropdownRef}>
             <button
@@ -95,11 +102,11 @@ export function NavBar() {
                     className="block flex w-full text-left py-1 text-black hover:text-primary"
                     onClick={() => setDropdownOpen(false)}
                   >
-                    <Settings />
+                    <Settings className="mr-2 h-5 w-5" />
                     Settings
                   </Link>
                   <button onClick={handleSignOut} className="block flex w-full text-left py-1 text-black hover:text-primary">
-                    <LogOut />
+                    <LogOut className="mr-2 h-5 w-5" />
                     Log out
                   </button>
                 </div>
@@ -107,10 +114,19 @@ export function NavBar() {
             )}
           </div>
         ) : (
-          <div className="flex items-center gap-4 mr-8">
-            <Link href="/login" className="text-base font-medium text-white hover:text-primary">
-              Login/Sign Up
-            </Link>
+          <div className="flex items-center gap-3 mr-8">
+            <Button variant="ghost" size="sm" asChild>
+              <Link href="/login" className="flex items-center">
+                <LogIn className="mr-1 h-4 w-4" />
+                Log In
+              </Link>
+            </Button>
+            <Button size="sm" asChild>
+              <Link href="/signup" className="flex items-center">
+                <UserPlus className="mr-1 h-4 w-4" />
+                Sign Up
+              </Link>
+            </Button>
           </div>
         )}
       </div>

@@ -17,6 +17,8 @@ export default function DailyLogPage() {
   const [dateIntakeLogs, setDateIntakeLogs] = useState<IntakeLog[]>([])
   const [dosageInputs, setDosageInputs] = useState<Record<string, number>>({})
   const [notes, setNotes] = useState<Record<string, string>>({})
+  // Add states to track button action feedback
+  const [activeButtons, setActiveButtons] = useState<Record<string, {action: string, timestamp: number}>>({})
 
   const {
     trackedSupplements,
@@ -67,6 +69,42 @@ export default function DailyLogPage() {
     fetchLogs()
   }, [fetchLogs]) // Only depend on the memoized function
 
+  // Add effect to clear active buttons after a delay
+  useEffect(() => {
+    const now = Date.now()
+    const buttonsToRemove = Object.entries(activeButtons)
+      .filter(([_, data]) => now - data.timestamp > 2000) // Clear after 2 seconds
+      .map(([id]) => id)
+    
+    if (buttonsToRemove.length > 0) {
+      setActiveButtons(prev => {
+        const newState = {...prev}
+        buttonsToRemove.forEach(id => delete newState[id])
+        return newState
+      })
+    }
+    
+    // Setup interval to check every second
+    const interval = setInterval(() => {
+      const now = Date.now()
+      setActiveButtons(prev => {
+        const newState = {...prev}
+        let changed = false
+        
+        Object.entries(prev).forEach(([id, data]) => {
+          if (now - data.timestamp > 2000) {
+            delete newState[id]
+            changed = true
+          }
+        })
+        
+        return changed ? newState : prev
+      })
+    }, 1000)
+    
+    return () => clearInterval(interval)
+  }, [activeButtons])
+
   // Create a map of tracked supplement IDs to their intake logs
   const supplementLogMap = new Map<string, IntakeLog>()
   dateIntakeLogs.forEach(log => {
@@ -100,6 +138,17 @@ export default function DailyLogPage() {
       alert("You cannot log for a date before your tracking start date.")
       return
     }
+    
+    // Set active button state for visual feedback
+    const hasExistingLog = supplementLogMap.has(supplementId)
+    setActiveButtons(prev => ({
+      ...prev,
+      [supplementId]: {
+        action: hasExistingLog ? 'update' : 'log',
+        timestamp: Date.now()
+      }
+    }))
+    
     try {
       setIsLoading(true)
       const supplement = trackedSupplements.find(s => s.id === supplementId)
@@ -125,6 +174,7 @@ export default function DailyLogPage() {
         )
       }
 
+      // Refresh logs to update UI
       await fetchLogs()
     } finally {
       setIsLoading(false)
@@ -132,18 +182,43 @@ export default function DailyLogPage() {
   }
 
   const handleDeleteLog = async (supplementId: string) => {
+    // Set active button for delete action
+    setActiveButtons(prev => ({
+      ...prev,
+      [supplementId]: {
+        action: 'delete',
+        timestamp: Date.now()
+      }
+    }))
+    
     try {
       setIsLoading(true)
       const existingLog = supplementLogMap.get(supplementId)
 
       if (existingLog) {
-        await deleteIntakeLog(existingLog.id)
-        // Refresh logs using our memoized function
+        const success = await deleteIntakeLog(existingLog.id)
+        if (success) {
+          // Refresh logs to update UI
         await fetchLogs()
+        }
       }
     } finally {
       setIsLoading(false)
     }
+  }
+
+  // Function to get button styles based on active state
+  const getButtonStyle = (supplementId: string, action: 'log' | 'update' | 'delete') => {
+    const activeButton = activeButtons[supplementId]
+    if (activeButton) {
+      if (action === 'delete' && activeButton.action === 'delete') {
+        return "bg-red-600 hover:bg-red-700 text-white border-red-700"
+      } else if ((action === 'log' && activeButton.action === 'log') || 
+                 (action === 'update' && activeButton.action === 'update')) {
+        return "bg-green-600 hover:bg-green-700 text-white border-green-700"
+      }
+    }
+    return ""
   }
 
   return (
@@ -230,6 +305,7 @@ export default function DailyLogPage() {
                               size="sm"
                               onClick={() => handleDeleteLog(supplement.id)}
                               disabled={isLoading}
+                              className={getButtonStyle(supplement.id, 'delete')}
                             >
                               <X className="h-4 w-4 mr-1" />
                               Remove Log
@@ -239,6 +315,7 @@ export default function DailyLogPage() {
                             size="sm"
                             onClick={() => handleLogIntake(supplement.id)}
                             disabled={isLoading}
+                            className={getButtonStyle(supplement.id, hasLoggedToday ? 'update' : 'log')}
                           >
                             <Check className="h-4 w-4 mr-1" />
                             {hasLoggedToday ? 'Update Log' : 'Log Intake'}

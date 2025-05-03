@@ -2,14 +2,16 @@
 
 import { SearchBar } from "@/components/search-bar"
 import { SupplementHero } from "@/components/supplement-hero"
+import { FeatureSection } from "@/components/feature-section"
 
 export default function Home() {
   return (
-    <main className="container mx-auto px-4 py-8">
+    <main className="w-full">
       <SupplementHero />
-      <div className="mt-8">
+      <div className="container mx-auto px-4 py-8">
         <SearchBar />
       </div>
+      <FeatureSection />
     </main>
   )
 }
