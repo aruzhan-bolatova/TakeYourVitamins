@@ -58,20 +58,20 @@ export function NavBar() {
             </div>
           </Link>
 
-          <nav className="hidden md:flex items-center gap-6">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={cn(
-                  "text-base font-medium transition-colors hover:text-primary",
-                  pathname === item.href || pathname.startsWith(`${item.href}/`) ? "text-primary" : "text-gray-700",
-                )}
-              >
-                {item.name}
-              </Link>
-            ))}
-          </nav>
+            <nav className="hidden md:flex items-center gap-6">
+              {navItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={cn(
+                    "text-base font-medium transition-colors hover:text-primary",
+                    pathname === item.href || pathname.startsWith(`${item.href}/`) ? "text-primary" : "text-gray-700",
+                  )}
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </nav>
         </div>
 
         {/* Center: App title */}
@@ -125,7 +125,7 @@ export function NavBar() {
               <Link href="/signup" className="flex items-center">
                 <UserPlus className="mr-1 h-4 w-4" />
                 Sign Up
-              </Link>
+            </Link>
             </Button>
           </div>
         )}

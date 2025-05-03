@@ -146,26 +146,36 @@ export function CategorySymptomLogger({ date, onComplete }: CategorySymptomLogge
       setLoading(true)
       console.log("Submitting symptom form with selected symptoms:", selectedSymptoms)
 
-      // Update all selected symptom logs with the notes
-      const updatePromises = Object.entries(selectedSymptoms).map(([symptomId, isSelected]) => {
+      // Get all symptoms to ensure we update everything appropriately
+      const allSymptomIds = symptomCategories.flatMap(category => 
+        category.symptoms.map(symptom => symptom.id)
+      );
+
+      // Create a promise for each symptom update
+      const updatePromises = allSymptomIds.map(symptomId => {
+        const isSelected = selectedSymptoms[symptomId] || false;
         // For selected symptoms, update with notes
         // For unselected symptoms, ensure they're marked as "none"
-        return logSymptom(symptomId, date, isSelected ? "average" : "none", isSelected ? notes : "")
-      })
+        return logSymptom(
+          symptomId, 
+          date, 
+          isSelected ? "average" : "none", 
+          isSelected ? notes : ""
+        );
+      });
 
-      await Promise.all(updatePromises)
-      console.log("All symptom logs updated successfully")
+      // Wait for all updates to complete
+      await Promise.all(updatePromises);
+      console.log("All symptom logs updated successfully");
 
-      // Refresh logs for this date to ensure state is up to date
-      const updatedLogs = await getSymptomLogsForDate(date)
-      console.log("Updated logs after submission:", updatedLogs)
+      // Ensure we get the latest logs after updates - force refresh from server
+      const updatedLogs = await getSymptomLogsForDate(date, true);
+      console.log("Updated logs after submission:", updatedLogs);
 
       // Call the onComplete callback to close the dialog and refresh the parent component
       if (onComplete) {
-        setTimeout(() => {
-          onComplete()
-        }, 100) // Small delay to ensure state updates have propagated
-    }
+        onComplete();
+      }
     } catch (err) {
       console.error("Error updating symptoms:", err)
       setError("Failed to update symptoms. Please try again.")

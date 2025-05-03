@@ -3,6 +3,7 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
 import { useAuth } from "./auth-context"
 import { warn } from "console"
+import { getTodayLocalDate, formatLocalDate, localToUTC } from "@/lib/date-utils"
 
 export type TrackedSupplement = {
   id: string
@@ -111,7 +112,7 @@ type TrackerContextType = {
     severity: "none" | "mild" | "average" | "severe",
     notes?: string,
   ) => Promise<boolean>
-  getSymptomLogsForDate: (date: string) => Promise<SymptomLog[]>
+  getSymptomLogsForDate: (date: string, forceRefresh?: boolean) => Promise<SymptomLog[]>
   getSymptomsForCategory: (category_id: string) => Promise<Symptom[]>
   addSymptom: (name: string, category_id: string, icon?: string) => Promise<boolean>
   fetchSymptoms: () => Promise<Symptom[]>
@@ -119,6 +120,10 @@ type TrackerContextType = {
   getSymptomSummaryForDate: (date: string) => Promise<SymptomSummary | null>
   deleteSymptomLog: (log_id: string) => Promise<boolean>
   getDatesWithSymptoms: () => Promise<string[]>
+
+  // Additional utility functions
+  formatLocalDate: (date: string) => string
+  getTodayLocalDate: () => string
 }
 
 const TrackerContext = createContext<TrackerContextType | undefined>(undefined)
@@ -407,7 +412,7 @@ export function TrackerProvider({ children }: { children: ReactNode }) {
         return []
       }
 
-      const today = new Date().toISOString().split("T")[0] // Format as YYYY-MM-DD
+      const today = getTodayLocalDate() // Use local today's date instead of UTC
 
       // Check if today's logs are already in cache
       if (intakeLogsCache[today]) {
@@ -803,16 +808,17 @@ export function TrackerProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  // Get symptom logs for a specific date
-  const getSymptomLogsForDate = async (date: string): Promise<SymptomLog[]> => {
+  // Get symptom logs for a given date
+  const getSymptomLogsForDate = async (date: string, forceRefresh = false): Promise<SymptomLog[]> => {
+    if (!user) return []
+
+    // Return cached logs if available and not forcing refresh
+    if (symptomLogsCache[date] && !forceRefresh) {
+      console.log("Returning cached logs for date:", date, symptomLogsCache[date])
+      return symptomLogsCache[date]
+    }
+
     try {
-      if (!user) return []
-
-      // Check if we already have cached data for this date
-      if (symptomLogsCache[date]) {
-        return symptomLogsCache[date]
-      }
-
       const response = await fetch(`http://localhost:5001/api/symptom-logs/date/${date}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -824,27 +830,22 @@ export function TrackerProvider({ children }: { children: ReactNode }) {
       }
 
       const data = await response.json()
-      const logsData = data.logs || []
+      const logs = data.logs || []
+      console.log("API returned symptom logs for date:", date, logs)
 
-      // Map the backend response to our SymptomLog type
-      const logs: SymptomLog[] = logsData.map((log: any) => ({
-        id: log.log_id,
-        user_id: user._id, // User ID is not returned in the response
-        symptom_id: log.symptom_id,
-        date: log.date,
-        severity: log.severity as "none" | "mild" | "average" | "severe",
-        notes: log.notes,
-        created_at: new Date().toISOString(), // Not returned in the response
-      }))
-
-      // Update state with the fetched logs
-      setSymptomLogs((prev) => [...prev.filter((l) => l.date !== date), ...logs])
-
-      // Store in cache
+      // Update the cache with the fetched logs
       setSymptomLogsCache((prevCache) => ({
         ...prevCache,
         [date]: logs,
       }))
+
+      // Update the symptomLogs state as well
+      setSymptomLogs((prevLogs) => {
+        // Remove existing logs for this date
+        const filteredLogs = prevLogs.filter((log) => log.date !== date)
+        // Add new logs for this date
+        return [...filteredLogs, ...logs]
+      })
 
       return logs
     } catch (error) {
@@ -991,6 +992,36 @@ export function TrackerProvider({ children }: { children: ReactNode }) {
     }
   }
 
+  // Get tracked supplements that should be taken today
+  const getTodayTrackedSupplements = async (): Promise<TrackedSupplement[]> => {
+    try {
+      if (!user) {
+        console.warn("User not authenticated, cannot fetch tracked supplements")
+        return []
+      }
+
+      // Use local date for today instead of UTC
+      const today = getTodayLocalDate()
+      
+      // Get all tracked supplements
+      const allSupplements = await getTrackedSupplements()
+      
+      // Filter supplements that are active today (started before or on today, and either not ended or ended after today)
+      return allSupplements.filter(supp => {
+        const startDate = supp.startDate.split('T')[0] // Extract just the date part
+        const endDate = supp.endDate ? supp.endDate.split('T')[0] : undefined
+        
+        const hasStarted = startDate <= today
+        const hasNotEnded = !endDate || endDate >= today
+        
+        return hasStarted && hasNotEnded
+      })
+    } catch (error) {
+      console.error("Error fetching today's tracked supplements:", error)
+      return []
+    }
+  }
+
   useEffect(() => {
     const fetchUserTrackerData = async () => {
       try {
@@ -1082,6 +1113,10 @@ export function TrackerProvider({ children }: { children: ReactNode }) {
         getSymptomSummaryForDate,
         deleteSymptomLog,
         getDatesWithSymptoms,
+
+        // Additional utility functions
+        formatLocalDate,
+        getTodayLocalDate,
       }}
     >
       {children}

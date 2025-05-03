@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { Pill, Search, TrendingUp, Activity, FileDown, Award } from "lucide-react"
-import { format, startOfWeek, addDays, subDays, isAfter } from "date-fns"
+import { format, startOfWeek, addDays, subDays, isAfter, parseISO } from "date-fns"
 import { Calendar } from "@/components/ui/calendar"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { CategorySymptomLogger } from "@/components/category-symptom-logger"
@@ -25,6 +25,8 @@ export default function DashboardPage() {
         logIntake,
         getIntakeLogsForDate,
         symptomLogs,
+        formatLocalDate,
+        getTodayLocalDate
     } = useTracker()
 
     const [selectedDate, setSelectedDate] = useState(new Date());
@@ -140,7 +142,7 @@ export default function DashboardPage() {
                 : 0;
                 
             chartData.push({
-                date: format(new Date(dateStr), 'MMM dd'),
+                date: formatLocalDate(dateStr),
                 consistency: consistency,
                 taken: takenSupplements,
                 total: totalSupplements
@@ -280,7 +282,7 @@ export default function DashboardPage() {
                 streak,
                 improvement,
                 progressData,
-                generatedDate: format(new Date(), "MMMM d, yyyy")
+                generatedDate: new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })
             };
             
             // Show loading toast
@@ -308,6 +310,12 @@ export default function DashboardPage() {
         }
     };
 
+    // Function to validate if a date is in the future
+    const isFutureDate = (date: Date): boolean => {
+        const today = new Date(getTodayLocalDate())
+        return date > today
+    }
+
     return (
         <div className="space-y-6 px-4 sm:px-6 py-4">
             <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-golden">Dashboard</h1>
@@ -334,7 +342,7 @@ export default function DashboardPage() {
                                         <div className="flex justify-between">
                                         {weekdays.map((day, index) => {
                                                 const logDate = addDays(weekStartDate, index)
-                                                const isFutureDate = isAfter(logDate, new Date()) // Compare to today
+                                                const isFutureDate = isAfter(logDate, parseISO(getTodayLocalDate())) // Compare to local today
 
                                                 return (
                                                     <div key={index} className="flex flex-col items-center">
@@ -430,7 +438,7 @@ export default function DashboardPage() {
                                 <Dialog open={symptomsDialogOpen} onOpenChange={setSymptomsDialogOpen}>
                                     <DialogTrigger asChild>
                                         <Button className="flex items-center gap-2 btn-yellow"
-                                        disabled={new Date(dateString) > new Date()}
+                                        disabled={dateString > getTodayLocalDate()}
                                         >
                                             <Activity className="h-4 w-4" />
                                             Log Symptoms

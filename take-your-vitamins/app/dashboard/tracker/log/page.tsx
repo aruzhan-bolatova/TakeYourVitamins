@@ -21,17 +21,18 @@ export default function DailyLogPage() {
   // Add states to track button action feedback
   const [activeButtons, setActiveButtons] = useState<Record<string, {action: string, timestamp: number}>>({})
 
-
   const {
     trackedSupplements,
     logIntake,
     getIntakeLogsForDate,
     updateIntakeLog,
-    deleteIntakeLog
+    deleteIntakeLog,
+    formatLocalDate,
+    getTodayLocalDate
   } = useTracker()
 
   // Format date for display and API
-  const formattedDate = format(selectedDate, "EEEE, MMMM d, yyyy")
+  const formattedDate = formatLocalDate(format(selectedDate, "yyyy-MM-dd"))
   const dateString = format(selectedDate, "yyyy-MM-dd")
 
   // Memoize the fetch logs function to avoid recreation on every render
@@ -127,12 +128,11 @@ export default function DailyLogPage() {
 
   const handleLogIntake = async (tracked_supplement: TrackedSupplement) => {
     // Check if selected date is in the future
-    const today = new Date()
-    const isFutureDate = selectedDate > today
+    const today = getTodayLocalDate()
+    const isFutureDate = dateString > today
     // Define trackerStartDate or remove this line if unnecessary
     const trackerStartDate = tracked_supplement.startDate; // Example: Replace with the actual start date
-    const isBeforeStartDate = selectedDate < new Date(trackerStartDate)
-
+    const isBeforeStartDate = dateString < new Date(trackerStartDate).toISOString().split('T')[0]
 
     if (isFutureDate) {
       alert("You cannot log for a future date.")

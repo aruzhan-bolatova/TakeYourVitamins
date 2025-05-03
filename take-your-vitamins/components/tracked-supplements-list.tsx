@@ -24,7 +24,7 @@ interface TrackedSupplementsListProps {
 }
 
 export function TrackedSupplementsList({ supplements }: TrackedSupplementsListProps) {
-  const { removeTrackedSupplement, logIntake } = useTracker()
+  const { removeTrackedSupplement, logIntake, formatLocalDate } = useTracker()
   const [isLogging, setIsLogging] = useState<Record<string, boolean>>({})
   const [isDeleting, setIsDeleting] = useState<Record<string, boolean>>({})
 
@@ -63,17 +63,12 @@ export function TrackedSupplementsList({ supplements }: TrackedSupplementsListPr
   return (
     <div className="space-y-4">
       {supplements.map((item) => (
-        <Card key={item.id}>
-          <CardHeader>
-            <div className="flex items-center justify-between flex-wrap gap-2">
-              <div className="flex items-center">
-                <Pill className="mr-2 h-5 w-5 text-primary" />
-                <CardTitle>{item.supplementName}</CardTitle>
-              </div>
-            </div>
+        <Card key={item.id} className="overflow-hidden">
+          <CardHeader className="pb-2">
+            <CardTitle>{item.supplementName}</CardTitle>
             <CardDescription>
-              Started on {format(new Date(item.startDate), "PPP")}
-              {item.endDate && ` • Ends on ${format(new Date(item.endDate), "PPP")}`}
+              Started on {formatLocalDate(item.startDate)}
+              {item.endDate && ` • Ends on ${formatLocalDate(item.endDate)}`}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">

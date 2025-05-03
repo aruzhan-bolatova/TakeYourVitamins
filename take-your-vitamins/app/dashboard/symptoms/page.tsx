@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect, useCallback, useMemo } from "react"
 import { format } from "date-fns"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -12,7 +12,7 @@ import { CategorySymptomLogger } from "@/components/category-symptom-logger"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
 export default function SymptomsPage() {
-  const { symptomLogs, getSymptomLogsForDate, getDatesWithSymptoms } = useTracker()
+  const { symptomLogs, getSymptomLogsForDate, getDatesWithSymptoms, formatLocalDate, getTodayLocalDate } = useTracker()
   const [selectedDate, setSelectedDate] = useState<Date>(new Date())
   const [datesWithSymptoms, setDatesWithSymptoms] = useState<Date[]>([])
   const [logsForSelectedDate, setLogsForSelectedDate] = useState<SymptomLog[]>([])
@@ -22,19 +22,38 @@ export default function SymptomsPage() {
   // Dialog open states
   const [symptomsDialogOpen, setSymptomsDialogOpen] = useState(false)
 
-  // Format date for display
-  const formattedDate = format(selectedDate, "EEEE, MMMM d, yyyy")
-
   // Get date string for the selected date
   const dateString = format(selectedDate, "yyyy-MM-dd")
 
+  // Format the date for display with better error handling
+  const formattedDate = useMemo(() => {
+    try {
+      return formatLocalDate(dateString);
+    } catch (error) {
+      console.error("Error formatting date:", error);
+      return format(selectedDate, "EEEE, MMMM d, yyyy");
+    }
+  }, [dateString, formatLocalDate]);
+
+  // Check if selected date is in the future
+  const isDisabled = useMemo(() => {
+    try {
+      const today = getTodayLocalDate();
+      return dateString > today;
+    } catch (error) {
+      console.error("Error checking date:", error);
+      // Fallback to simple JS comparison if our utility fails
+      return new Date(dateString) > new Date();
+    }
+  }, [dateString, getTodayLocalDate]);
+
   // Memoized function to fetch logs for the selected date
   const fetchLogsForDate = useCallback(
-    async (date: string) => {
+    async (date: string, forceRefresh = false) => {
       setLoading(true)
       try {
-        console.log("Fetching logs for date:", date)
-        const logs = await getSymptomLogsForDate(date)
+        console.log("Fetching logs for date:", date, "Force refresh:", forceRefresh)
+        const logs = await getSymptomLogsForDate(date, forceRefresh)
         console.log("Fetched logs for date:", date, logs)
         setLogsForSelectedDate(logs)
         return logs
@@ -75,27 +94,47 @@ export default function SymptomsPage() {
 
   // Handle completion of symptom logging
   const handleSymptomLogComplete = async () => {
-    // Close the dialog
-    setSymptomsDialogOpen(false)
-
-    // Force a refresh by incrementing the refresh key
-    setRefreshKey((prev) => prev + 1)
-
-    // Refresh the logs for the current date
-    const updatedLogs = await fetchLogsForDate(dateString)
-    console.log("Updated logs after logging:", updatedLogs)
-
-    // Refresh the dates with symptoms
-    await fetchDatesWithSymptoms()
+    try {
+      // First fetch the updated logs - force refresh to bypass cache
+      setLoading(true)
+      const updatedLogs = await fetchLogsForDate(dateString, true)
+      console.log("Updated logs after logging:", updatedLogs)
+      
+      // Explicitly update the logs for the selected date
+      setLogsForSelectedDate(updatedLogs)
+      
+      // Refresh the dates with symptoms
+      await fetchDatesWithSymptoms()
+      
+      // Force a refresh with the new data
+      setRefreshKey((prev) => prev + 1)
+    } catch (error) {
+      console.error("Error refreshing logs after symptom logging:", error)
+    } finally {
+      // Close the dialog after data is updated
+      setSymptomsDialogOpen(false)
+      setLoading(false)
+    }
   }
 
   // Manual refresh function
   const handleManualRefresh = async () => {
     setLoading(true)
-    setRefreshKey((prev) => prev + 1)
-    await fetchLogsForDate(dateString)
-    await fetchDatesWithSymptoms()
-    setLoading(false)
+    try {
+      // Fetch and update logs for the current date - force refresh
+      const updatedLogs = await fetchLogsForDate(dateString, true)
+      setLogsForSelectedDate(updatedLogs)
+      
+      // Refresh the dates with symptoms
+      await fetchDatesWithSymptoms()
+      
+      // Force a re-render
+      setRefreshKey((prev) => prev + 1)
+    } catch (error) {
+      console.error("Error during manual refresh:", error)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -140,7 +179,7 @@ export default function SymptomsPage() {
               <Dialog open={symptomsDialogOpen} onOpenChange={setSymptomsDialogOpen}>
                 <DialogTrigger asChild>
                   <Button className="flex items-center gap-2"
-                  disabled={new Date(dateString) > new Date()}>
+                  disabled={isDisabled}>
                     <Activity className="h-4 w-4" />
                     Log Symptoms
                   </Button>
@@ -179,7 +218,7 @@ export default function SymptomsPage() {
               <SymptomSummary
                 date={dateString}
                 logs={logsForSelectedDate}
-                key={`summary-${dateString}-${logsForSelectedDate.length}-${refreshKey}`}
+                key={`summary-${dateString}-${JSON.stringify(logsForSelectedDate)}-${refreshKey}`}
               />
             )}
           </CardContent>

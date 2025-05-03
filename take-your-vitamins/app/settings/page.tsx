@@ -89,8 +89,8 @@ export default function SettingsPage() {
             <div className="pt-4">
               <Button variant="destructive" className="w-full flex items-center justify-center">
                 <AlertOctagon className="mr-2 h-4 w-4" />
-                Delete Account
-              </Button>
+              Delete Account
+            </Button>
             </div>
           </CardContent>
         </Card>

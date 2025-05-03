@@ -80,51 +80,51 @@ export function SearchBar() {
       </div>
       
       <form onSubmit={handleSearch} className="w-full">
-        <div className="flex w-full items-center space-x-2 relative">
-          <div className="relative flex-1">
+      <div className="flex w-full items-center space-x-2 relative">
+        <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-primary" />
-            <Input
-              type="text"
-              placeholder="Search for a supplement (e.g., Vitamin D, Magnesium, Omega-3)"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              onKeyDown={handleKeyDown}
-              onFocus={() => {
-                if (query.trim() && suggestions.length > 0) {
-                  setShowSuggestions(true)
-                }
-              }}
+          <Input
+            type="text"
+            placeholder="Search for a supplement (e.g., Vitamin D, Magnesium, Omega-3)"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={handleKeyDown}
+            onFocus={() => {
+              if (query.trim() && suggestions.length > 0) {
+                setShowSuggestions(true)
+              }
+            }}
               className="pl-10 py-6 text-base border-primary/20 focus:border-primary"
-            />
+          />
 
-            {showSuggestions && (
-              <div
-                ref={suggestionRef}
-                className="absolute z-10 w-full mt-1 bg-background border rounded-md shadow-lg max-h-60 overflow-auto"
-              >
-                <ul className="py-1">
-                  {suggestions.map((suggestion, index) => (
-                    <li
-                      key={suggestion.id}
+          {showSuggestions && (
+            <div
+              ref={suggestionRef}
+              className="absolute z-10 w-full mt-1 bg-background border rounded-md shadow-lg max-h-60 overflow-auto"
+            >
+              <ul className="py-1">
+                {suggestions.map((suggestion, index) => (
+                  <li
+                    key={suggestion.id}
                       className={`px-4 py-3 cursor-pointer hover:bg-primary/5 font-medium ${
                         index === activeSuggestion ? "bg-primary/5 text-primary" : ""
-                      }`}
-                      onClick={() => handleSuggestionClick(suggestion)}
-                      onMouseEnter={() => setActiveSuggestion(index)}
-                    >
-                      {suggestion.name}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
+                    }`}
+                    onClick={() => handleSuggestionClick(suggestion)}
+                    onMouseEnter={() => setActiveSuggestion(index)}
+                  >
+                    {suggestion.name}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
           <Button type="submit" size="lg" className="py-6 px-8">
             <Search className="h-5 w-5 mr-2" />
             Search
           </Button>
-        </div>
-      </form>
+      </div>
+    </form>
     </div>
   )
 }
