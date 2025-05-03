@@ -10,9 +10,9 @@ export default function TrackerPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <h1 className="text-3xl font-bold tracking-tight">Supplement Tracker</h1>
-        <Button asChild>
+        <Button asChild className="w-full sm:w-auto">
           <Link href="/dashboard/tracker/add">
             <Plus className="mr-2 h-4 w-4" /> Add Supplement
           </Link>

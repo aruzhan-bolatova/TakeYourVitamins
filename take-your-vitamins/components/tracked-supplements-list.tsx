@@ -65,12 +65,14 @@ export function TrackedSupplementsList({ supplements }: TrackedSupplementsListPr
       {supplements.map((item) => (
         <Card key={item.id}>
           <CardHeader>
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between flex-wrap gap-2">
               <div className="flex items-center">
                 <Pill className="mr-2 h-5 w-5 text-primary" />
                 <CardTitle>{item.supplementName}</CardTitle>
               </div>
-              <Badge variant="outline">{item.supplementId}</Badge>
+              <Badge variant="outline" className="max-w-[150px] overflow-hidden text-ellipsis whitespace-nowrap">
+                {item.supplementId}
+              </Badge>
             </div>
             <CardDescription>
               Started on {format(new Date(item.startDate), "PPP")}
@@ -92,12 +94,13 @@ export function TrackedSupplementsList({ supplements }: TrackedSupplementsListPr
               </div>
             )}
           </CardContent>
-          <CardFooter className="flex justify-between">
+          <CardFooter className="flex flex-wrap gap-3 sm:justify-between">
             <Button 
               variant="outline" 
               size="sm" 
               onClick={() => handleLogIntake(item.id)}
               disabled={isLogging[item.id]}
+              className="flex-1 sm:flex-initial"
             >
               <Check className="mr-2 h-4 w-4" />
               {isLogging[item.id] ? "Logging..." : "Log Intake"}
@@ -105,7 +108,7 @@ export function TrackedSupplementsList({ supplements }: TrackedSupplementsListPr
             
             <AlertDialog>
               <AlertDialogTrigger asChild>
-                <Button variant="destructive" size="sm">
+                <Button variant="destructive" size="sm" className="flex-1 sm:flex-initial">
                   <Trash2 className="mr-2 h-4 w-4" />
                   Remove
                 </Button>

@@ -24,6 +24,10 @@ export function SiteFooter() {
           <Link href="/privacy" className="hover:underline">
             Privacy Policy
           </Link>
+          <div className="flex items-center">
+            <span className="text-amber-600 mr-2">⚕️</span>
+            <span className="text-xs italic">Consult your doctor</span>
+          </div>
           <span>© {new Date().getFullYear()} TYV Inc.</span>
         </div>
       </div>

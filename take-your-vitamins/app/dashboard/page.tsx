@@ -445,7 +445,7 @@ export default function DashboardPage() {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div className="md:col-span-2">
                             <h3 className="text-base md:text-lg font-semibold mb-4 text-yellow-800">Consistency Over Time</h3>
-                            <div className="h-56 md:h-64 w-full">
+                            <div className="h-[250px] md:h-64 w-full">
                                 <ResponsiveContainer width="100%" height="100%">
                                     <LineChart
                                         data={progressData}
@@ -455,15 +455,19 @@ export default function DashboardPage() {
                                         <XAxis 
                                             dataKey="date" 
                                             className="chart-axis"
+                                            tick={{ fontSize: 10 }}
+                                            interval="preserveStartEnd"
                                         />
                                         <YAxis 
                                             className="chart-axis"
                                             domain={[0, 100]}
+                                            tick={{ fontSize: 10 }}
+                                            width={30}
                                             label={{ 
                                                 value: 'Consistency %', 
                                                 angle: -90, 
                                                 position: 'insideLeft',
-                                                style: { fill: '#000000', fontWeight: 'bold' }
+                                                style: { fill: '#000000', fontWeight: 'bold', fontSize: '0.8rem' }
                                             }}
                                         />
                                         <Tooltip 
@@ -490,16 +494,16 @@ export default function DashboardPage() {
                         </div>
                         
                         <div className="space-y-4">
-                            <div className="bg-yellow-50 p-3 md:p-4 rounded-lg border border-yellow-200">
+                            <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
                                 <div className="flex items-center gap-2 mb-2">
                                     <Award className="h-4 w-4 md:h-5 md:w-5 text-yellow-600" />
-                                    <h3 className="text-sm md:text-base font-semibold text-yellow-800">Weekly Improvement</h3>
+                                    <h3 className="text-sm md:text-base font-semibold text-yellow-800 truncate">Weekly Improvement</h3>
                                 </div>
                                 <p className="text-base md:text-lg font-bold text-yellow-600">+{improvement}%</p>
                                 <p className="text-xs md:text-sm text-yellow-700">from last week</p>
                             </div>
                             
-                            <div className="bg-yellow-50 p-3 md:p-4 rounded-lg border border-yellow-200">
+                            <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
                                 <div className="flex items-center gap-2 mb-2">
                                     <TrendingUp className="h-4 w-4 md:h-5 md:w-5 text-yellow-600" />
                                     <h3 className="text-sm md:text-base font-semibold text-yellow-800">Current Streak</h3>
