@@ -1406,5 +1406,102 @@
           "https://medlineplus.gov/druginfo/natural/953.html"
         ],
         "updatedAt": ""
-      }
+      },
+      {
+        "interactionId": "INT1901",
+        "interactionType": "Supplement-Supplement",
+        "supplements": [
+        {
+            "supplementId": "",
+            "name": "Calcium"
+        },
+        {
+            "supplementId": "",
+            "name": "Iron"
+        }
+        ],
+        "foodItem": "",
+        "effect": "negative",
+        "description": "Calcium might interfere with iron absorption", 
+        "recommendation": "Avoid taking calcium and iron together, or take them at different times of the day.",
+        "sources": [
+        ],
+        "updatedAt": null
+    },
+
+    {
+        "interactionId": "INT1902",
+        "interactionType": "Supplement-Food",
+        "supplements": [
+        {
+            "supplementId": "",
+            "name": "Iron"
+        }
+        ],
+        "foodItem": "Antibiotics",
+        "effect": "negative",
+        "description": "Taking iron supplements with certain antibiotics such as quinolone and tetracycline may result in serious side effects", 
+        "recommendation": "Avoid taking iron supplements with these antibiotics. ",
+        "sources": [
+        ],
+        "updatedAt": null
+    },
+
+    {
+        "interactionId": "INT1903",
+        "interactionType": "Supplement-Food",
+        "supplements": [
+        {
+            "supplementId": "",
+            "name": "Iron"
+        }
+        ],
+        "foodItem": "Levodopa",
+        "effect": "negative",
+        "description": "Taking iron supplements with levodopa may result in serious side effects", 
+        "recommendation": "Avoid taking iron supplements with levodopa",
+        "sources": [
+        ],
+        "updatedAt": null
+    },
+
+    {
+        "interactionId": "INT1904",
+        "interactionType": "Supplement-Food",
+        "supplements": [
+        {
+            "supplementId": "",
+            "name": "Iron"
+        }
+        ],
+        "foodItem": "Penicillamine",
+        "effect": "negative",
+        "description": "Taking iron supplements with penicillamine may result in serious side effects", 
+        "recommendation": "Avoid taking iron supplements with penicillamine",
+        "sources": [
+        ],
+        "updatedAt": null
+    },
+
+    {
+        "interactionId": "INT1905",
+        "interactionType": "Supplement-Supplement",
+        "supplements": [
+        {
+            "supplementId": "",
+            "name": "Chromium"
+        },
+        {
+            "supplementId": "",
+            "name": "Zinc"
+        }
+        ],
+        "foodItem": "",
+        "effect": "negative",
+        "description": "Zinc may decrease chromium absorption.", 
+        "recommendation": "Avoid taking zinc supplements with chromium supplements.",
+        "sources": [
+        ],
+        "updatedAt": null
+    }
     ]

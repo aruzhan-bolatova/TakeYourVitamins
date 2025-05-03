@@ -2568,5 +2568,130 @@
     },
     "category": "",
     "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP1901",
+    "name": "Iron",
+    "aliases": [""],
+    "description": "Iron is one of the most plentiful trace metals on earth. It is essential for the formation of red blood cells and hemoglobin and is a constituent of myoglobin, which carries oxygen in muscle. A deficiency in iron decreases oxygen delivery to cells and can result in an iron deficiency that can lead to anemia. ",
+    "intakePractices": {
+      "dosage": "8mg/day for adult men, 18mg/day for adult women",
+      "timing": "",
+      "specialInstructions": "Children and adolescents should not take iron supplements unless prescribed by a healthcare provider. Iron supplements should be taken with food to reduce gastrointestinal side effects. Avoid taking iron with calcium, dairy products, or antacids, as these can interfere with absorption."
+    },
+    "scientificDetails": {
+      "benefits": ["Treats and prevents iron-deficiency anemia","Treats anemia of chronic disease","Improves cognitive function in iron-deficient children and adolescents"],
+      "sideEffects": [""],
+      "studies": [
+        
+      ]
+    },
+    "category": "Minerals",
+    "updatedAt": null
+  },
+
+  {
+    "supplementId": "SUPP1902",
+    "name": "Chromium",
+    "aliases": [""],
+    "description": "Chromium is an essential trace mineral that, in the form of a low molecular weight chromium binding substance, potentiates insulin, which influences carbohydrate, lipid, and protein metabolism.",
+    "intakePractices": {
+      "dosage": "120μg/day",
+      "timing": "",
+      "specialInstructions": ""
+    },
+    "scientificDetails": {
+      "benefits": ["Correct chromium deficiency","Improve activity of insulin and reduce blood sugar","Reduce body fat and increase lean body mass"],
+      "sideEffects": ["May experience headaches, sleep disturbances, and mood swings after intake; may acculumate in body after long-term use and cause undersired side effects"],
+      "studies": [
+        
+      ]
+    },
+    "category": "Minerals",
+    "updatedAt": null
+  },
+
+  {
+    "supplementId": "SUPP1903",
+    "name": "Iodine",
+    "aliases": [""],
+    "description": "Iodine is a mineral found in some foods. The body needs iodine to make thyroid hormones. These hormones control the body’s metabolism and many other important functions. The body also needs thyroid hormones for proper bone and brain development during pregnancy and infancy.",
+    "intakePractices": {
+      "dosage": "150mcg/day for adults",
+      "timing": "",
+      "specialInstructions": ""
+    },
+    "scientificDetails": {
+      "benefits": ["Correct iodine deficiency","Improve thyroid function"],
+      "sideEffects": [""],
+      "studies": [
+        
+      ]
+    },
+    "category": "Minerals",
+    "updatedAt": null
+  },
+
+  {
+    "supplementId": "SUPP1904",
+    "name": "Senna",
+    "aliases": [""],
+    "description": "Senna is the fruit (pod) or leaf of the plant Senna alexandrina. It is approved in the US as a laxative for short-term treatment of constipation. Senna contains many chemicals called sennosides. Sennosides irritate the lining of the bowel, which causes a laxative effect.",
+    "intakePractices": {
+      "dosage": "1-2g/day in dried form",
+      "timing": "In the morning or at bedtime.",
+      "specialInstructions": "Should not be taken for more than 10 days consecutively."
+    },
+    "scientificDetails": {
+      "benefits": ["Relieves constipation"],
+      "sideEffects": ["Prolonged use can lead to chronic diarrhea, weight loss, electrolyte imbalance, hypokalemia, changes in heart rhythm, and clubbing of the fingers and toes."],
+      "studies": [
+        
+      ]
+    },
+    "category": "Herbs",
+    "updatedAt": null
+  },
+
+  {
+    "supplementId": "SUPP1905",
+    "name": "Turmeric",
+    "aliases": ["Curcuma longa"],
+    "description": "Turmeric, a plant in the ginger family, is native to Southeast Asia. Today, turmeric is promoted as a dietary supplement for a variety of conditions, including arthritis, digestive disorders, respiratory infections, allergies, liver disease, depression, and many others.",
+    "intakePractices": {
+      "dosage": "375-500mg, 3-4 times a day",
+      "timing": "",
+      "specialInstructions": ""
+    },
+    "scientificDetails": {
+      "benefits": ["Treats dyspepsia","Anti-inflammatory","Protection against cancer"],
+      "sideEffects": [""],
+      "studies": [
+        
+      ]
+    },
+    "category": "Herbs",
+    "updatedAt": null
+  },
+
+  {
+    "supplementId": "SUPP1906",
+    "name": "Ashwagandha",
+    "aliases": ["Winter cherry"],
+    "description": "Ashwagandha is an evergreen shrub that grows in Asia and Africa. It is commonly used for stress. Ashwagandha contains chemicals that might help calm the brain, reduce swelling, lower blood pressure, and alter the immune system.",
+    "intakePractices": {
+      "dosage": "<1000mg/day",
+      "timing": "",
+      "specialInstructions": "Taking it for periods longer than 3 months may cause undesired effects."
+    },
+    "scientificDetails": {
+      "benefits": ["Calming effect","Mitigate anxiety, insomnia, and stress","Improve cognitive function"],
+      "sideEffects": [""],
+      "studies": [
+        
+      ]
+    },
+    "category": "Herbs",
+    "updatedAt": null
   }
 ]
