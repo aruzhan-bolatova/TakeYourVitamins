@@ -1,13 +1,26 @@
 import Link from "next/link"
+import Image from "next/image"
 import { useAuth } from "@/contexts/auth-context"
 import { Button } from "@/components/ui/button"
-import { Pill, Home, Settings, LogOut, Menu, X, User, Search } from "lucide-react"
-import { useState } from "react"
+import { Home, Settings, LogOut, Menu, X, User, Search } from "lucide-react"
+import { useState, useEffect } from "react"
 import { cn } from "@/lib/utils"
 
 export function SiteHeader() {
   const { user, signOut } = useAuth()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  
+  // Close mobile menu when screen size changes to medium or larger
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setMobileMenuOpen(false)
+      }
+    }
+    
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -17,11 +30,19 @@ export function SiteHeader() {
           <div className="flex items-center gap-2">
             <Link 
               href="/" 
-              className="flex items-center font-bold text-gold-500"
+              className="flex items-center font-bold"
               onClick={() => setMobileMenuOpen(false)}
             >
-              <Pill className="h-5 w-5 text-primary mr-2" />
-              <span className="text-primary font-bold">TYV</span>
+              <div className="relative w-8 h-8 md:w-10 md:h-10">
+                <Image
+                  src="/images/logo-64.png"
+                  alt="Take Your Vitamins"
+                  className="object-contain"
+                  fill
+                  sizes="(max-width: 768px) 32px, 40px"
+                  priority
+                />
+              </div>
             </Link>
             
             {/* Desktop navigation */}
@@ -100,7 +121,11 @@ export function SiteHeader() {
               variant="ghost"
               size="icon"
               className="md:hidden"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              onClick={() => {
+                setMobileMenuOpen(!mobileMenuOpen)
+              }}
+              aria-expanded={mobileMenuOpen}
+              aria-controls="mobile-menu"
             >
               {mobileMenuOpen ? (
                 <X className="h-5 w-5" />
@@ -115,10 +140,10 @@ export function SiteHeader() {
       
       {/* Mobile menu */}
       <div
+        id="mobile-menu"
         className={cn(
-          "fixed inset-x-0 top-14 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b",
-          "transform transition-transform duration-200 ease-in-out md:hidden",
-          mobileMenuOpen ? "translate-y-0" : "-translate-y-full"
+          "fixed inset-x-0 top-14 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b md:hidden",
+          mobileMenuOpen ? "block" : "hidden"
         )}
       >
         <div className="container py-4">
@@ -136,7 +161,14 @@ export function SiteHeader() {
               className="flex items-center py-2 text-sm font-medium"
               onClick={() => setMobileMenuOpen(false)}
             >
-              <Pill className="mr-2 h-4 w-4" />
+              <div className="relative w-4 h-4 mr-2">
+                <Image
+                  src="/images/logo-32.png"
+                  alt="Dashboard"
+                  fill
+                  className="object-contain"
+                />
+              </div>
               Dashboard
             </Link>
             <Link
@@ -144,7 +176,14 @@ export function SiteHeader() {
               className="flex items-center py-2 text-sm font-medium"
               onClick={() => setMobileMenuOpen(false)}
             >
-              <Pill className="mr-2 h-4 w-4" />
+              <div className="relative w-4 h-4 mr-2">
+                <Image
+                  src="/images/logo-32.png"
+                  alt="My Supplements"
+                  fill
+                  className="object-contain"
+                />
+              </div>
               My Supplements
             </Link>
             <Link
@@ -176,7 +215,7 @@ export function SiteHeader() {
                 </Link>
                 <Button
                   variant="ghost"
-                  className="flex justify-start px-2"
+                  className="flex items-center justify-start px-2 text-sm font-medium w-full"
                   onClick={() => {
                     signOut();
                     setMobileMenuOpen(false);

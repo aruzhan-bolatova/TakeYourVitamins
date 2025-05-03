@@ -1,12 +1,19 @@
 import Link from "next/link"
-import { Pill } from "lucide-react"
+import Image from "next/image"
 
 export function SiteFooter() {
   return (
     <footer className="w-full border-t bg-background">
       <div className="container flex flex-col sm:flex-row items-center justify-between py-4 md:py-6">
         <div className="flex items-center gap-2">
-          <Pill className="h-4 w-4 text-primary" />
+          <div className="relative w-5 h-5">
+            <Image
+              src="/images/logo-32.png"
+              alt="Take Your Vitamins"
+              fill
+              className="object-contain"
+            />
+          </div>
           <span className="text-primary font-bold text-sm">Take Your Vitamins</span>
         </div>
         

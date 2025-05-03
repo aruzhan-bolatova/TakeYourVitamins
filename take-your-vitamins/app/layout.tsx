@@ -19,6 +19,15 @@ const montserrat = Montserrat({
 export const metadata = {
   title: "Take Your Vitamins",
   description: "Find information about supplements, their interactions, and best practices",
+  icons: {
+    icon: [
+      { url: '/images/logo-32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/images/logo-64.png', sizes: '64x64', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/images/logo-256.png', sizes: '256x256', type: 'image/png' },
+    ],
+  },
 }
 
 export default function RootLayout({
