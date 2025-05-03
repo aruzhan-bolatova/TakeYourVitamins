@@ -22,7 +22,7 @@ interface SymptomCategory {
   symptoms: Symptom[]
 }
 
-export function CategorySymptomLogger({ date, onComplete }: CategorySymptomLoggerProps) {
+export function CategorySymptomLogger({ date, onComplete }: CategorySymptomLoggerProps): React.ReactElement {
   const { logSymptom, getSymptomLogsForDate, symptoms, fetchSymptoms } = useTracker()
   const [notes, setNotes] = useState("")
   const [selectedSymptoms, setSelectedSymptoms] = useState<Record<string, boolean>>({})
@@ -118,7 +118,7 @@ export function CategorySymptomLogger({ date, onComplete }: CategorySymptomLogge
       await logSymptom(
         symptomId,
         date,
-        newState ? "average" : "none", // Use "average" as default severity when selected
+        newState ? "average" : "none", // Use "average" as default severity when selected, "none" to remove
         notes,
       )
     } catch (err) {
@@ -143,22 +143,34 @@ export function CategorySymptomLogger({ date, onComplete }: CategorySymptomLogge
   // Handle form submission
   const handleSubmit = async () => {
     try {
+      setLoading(true)
+      console.log("Submitting symptom form with selected symptoms:", selectedSymptoms)
+
       // Update all selected symptom logs with the notes
       const updatePromises = Object.entries(selectedSymptoms).map(([symptomId, isSelected]) => {
-        if (isSelected) {
-          return logSymptom(symptomId, date, "average", notes)
-        }
-        return Promise.resolve(true)
+        // For selected symptoms, update with notes
+        // For unselected symptoms, ensure they're marked as "none"
+        return logSymptom(symptomId, date, isSelected ? "average" : "none", isSelected ? notes : "")
       })
 
       await Promise.all(updatePromises)
+      console.log("All symptom logs updated successfully")
 
-      // Call the onComplete callback to close the dialog
+      // Refresh logs for this date to ensure state is up to date
+      const updatedLogs = await getSymptomLogsForDate(date)
+      console.log("Updated logs after submission:", updatedLogs)
+
+      // Call the onComplete callback to close the dialog and refresh the parent component
       if (onComplete) {
-        onComplete()
-      }
+        setTimeout(() => {
+          onComplete()
+        }, 100) // Small delay to ensure state updates have propagated
+    }
     } catch (err) {
       console.error("Error updating symptoms:", err)
+      setError("Failed to update symptoms. Please try again.")
+    } finally {
+      setLoading(false)
     }
   }
 

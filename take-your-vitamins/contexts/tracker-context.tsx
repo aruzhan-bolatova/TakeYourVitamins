@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
 import { useAuth } from "./auth-context"
+import { warn } from "console"
 
 export type TrackedSupplement = {
   id: string
@@ -190,10 +191,11 @@ export function TrackerProvider({ children }: { children: ReactNode }) {
         data.supplementFoodInteractions.forEach((interaction: any) => {
           const description = interaction.description || "No description provided."
           const recommendation = interaction.recommendation || "No recommendation provided."
-          warnings.push(`Food Interaction: ${description} Recommendation: ${recommendation}`)
+          warnings.push(`Food Interaction: ${description}`)
+          warnings.push("Recommendation: " + recommendation)
         })
       }
-
+      console.log("Warnings:", warnings)
       return warnings
     } catch (error) {
       console.error("Error while fetching interactions for supplement ID:", error)

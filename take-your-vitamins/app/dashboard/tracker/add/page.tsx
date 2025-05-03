@@ -119,12 +119,12 @@ export default function AddSupplementPage() {
     const checkForInteractions = async () => {
       try {
         const warnings = await checkInteractions(selectedSupplement)
+        
         setInteractionWarnings(warnings)
       } catch (error) {
         console.error("Failed to check interactions:", error)
       }
     }
-
     checkForInteractions()
   }, [selectedSupplement, checkInteractions])
 
@@ -264,7 +264,7 @@ export default function AddSupplementPage() {
                 required
               />
               {autocompleteOptions.length > 0 && (
-                <div className="absolute z-10 bg-popover text-popover-foreground border rounded w-full max-h-48 overflow-y-auto mt-1">
+                <div className="absolute w-full z-10 bg-background border rounded-md shadow-lg max-h-60 overflow-auto mt-1">
                   {autocompleteOptions.map((option) => (
                     <div
                       key={option.id}

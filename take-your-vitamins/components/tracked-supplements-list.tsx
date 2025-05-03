@@ -70,9 +70,6 @@ export function TrackedSupplementsList({ supplements }: TrackedSupplementsListPr
                 <Pill className="mr-2 h-5 w-5 text-primary" />
                 <CardTitle>{item.supplementName}</CardTitle>
               </div>
-              <Badge variant="outline" className="max-w-[150px] overflow-hidden text-ellipsis whitespace-nowrap">
-                {item.supplementId}
-              </Badge>
             </div>
             <CardDescription>
               Started on {format(new Date(item.startDate), "PPP")}

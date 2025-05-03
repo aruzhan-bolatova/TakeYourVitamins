@@ -315,7 +315,7 @@ export default function DashboardPage() {
             <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-3">
                 {/* Daily Supplement Log */}
                 <Card className="border-golden">
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 bg-golden-light rounded-t-lg">
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 pt-2 bg-golden-light rounded-t-lg">
                         <CardTitle className="text-sm sm:text-base md:text-lg text-golden">Daily Supplement Log</CardTitle>
                         <Button variant="outline" size="sm" asChild className="btn-full-tracker">
                             <Link href="/dashboard/tracker/log" className="text-xs flex items-center">
@@ -384,7 +384,7 @@ export default function DashboardPage() {
 
                 {/* Daily Symptom Log Card */}
                 <Card className="border-golden">
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 bg-golden-light rounded-t-lg">
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 pt-2 bg-golden-light rounded-t-lg">
                         <CardTitle className="text-sm sm:text-base md:text-lg text-golden">Daily Symptom Log</CardTitle>
                         <Button variant="outline" size="sm" asChild className="btn-full-tracker">
                             <Link href="/dashboard/symptoms" className="text-xs flex items-center">
@@ -450,7 +450,7 @@ export default function DashboardPage() {
 
                 {/* Quick Actions */}
                 <Card className="border-golden">
-                    <CardHeader className="bg-golden-light rounded-t-lg">
+                    <CardHeader className="bg-golden-light pt-2 pb-2 rounded-t-lg">
                         <CardTitle className="text-sm sm:text-base md:text-lg text-golden">Quick Actions</CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-3 pt-4">
