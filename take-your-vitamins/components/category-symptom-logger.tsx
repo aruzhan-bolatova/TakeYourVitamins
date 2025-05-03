@@ -1,222 +1,256 @@
 "use client"
 
 import type React from "react"
-
-import { useState, useEffect } from "react"
-import { useTracker } from "@/contexts/tracker-context"
+import { useState, useEffect, useCallback } from "react"
+import { useTracker, type Symptom } from "@/contexts/tracker-context"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
-import { Check } from "lucide-react"
+import { Check, Loader2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 interface CategorySymptomLoggerProps {
-    date: string
-    onComplete?: () => void
+  date: string
+  onComplete?: () => void
 }
 
-
-// Define symptom categories with their symptoms
-const symptomCategories = [
-    {
-        name: "General",
-        symptoms: [
-            { id: "fine", name: "Everything is fine", icon: "👍" },
-            { id: "acne", name: "Skin issues", icon: "🤡" },
-            { id: "fatigue", name: "Fatigue", icon: "🫠" },
-            { id: "headache", name: "Headache", icon: "🤕" },
-            { id: "abdominal-pain", name: "Abdominal Pain", icon: "😣" },
-            { id: "dizziness", name: "Dizziness", icon: "😵‍💫" },
-        ],
-    },
-    {
-        name: "Mood",
-        symptoms: [
-            { id: "calm", name: "Calm", icon: "😌" },
-            { id: "mood-swings", name: "Mood swings", icon: "🔄" },
-            { id: "happy", name: "Happy", icon: "😊" },
-            { id: "energetic", name: "Energetic", icon: "⚡" },
-            { id: "irritated", name: "Irritated", icon: "🥴" },
-            { id: "depressed", name: "Depressed", icon: "😓" },
-            { id: "low-energy", name: "Low energy", icon: "🥱" },
-            { id: "anxious", name: "Anxious", icon: "😰" },
-        ],
-    },
-    {
-        name: "Sleep",
-        symptoms: [
-            { id: "insomnia", name: "Insomnia", icon: "😳" },
-            { id: "good-sleep", name: "Good sleep", icon: "😴" },
-            { id: "restless", name: "Restless", icon: "🔄" },
-            { id: "tired", name: "Tired", icon: "🥱" },
-        ],
-    },
-    {
-        name: "Digestive",
-        symptoms: [
-            { id: "bloating", name: "Bloating", icon: "🎈" },
-            { id: "nausea", name: "Nausea", icon: "🤢" },
-            { id: "constipation", name: "Constipation", icon: "⏸️" },
-            { id: "diarrhea", name: "Diarrhea", icon: "⏩" },
-        ],
-    },
-    {
-        name: "Appetite",
-        symptoms: [
-            { id: "low", name: "Low", icon: "🫢" },
-            { id: "normal", name: "Normal", icon: "🍽️" },
-            { id: "high", name: "High", icon: "🍔" },
-
-        ]
-    },
-    {
-        name: "Physical Activity",
-        symptoms: [
-            { id: "no-activity", name: "Didn't exercise", icon: "⭕️" },
-            { id: "yoga", name: "Yoga", icon: "🧘‍♀️" },
-            { id: "gym", name: "Gym", icon: "🏋️" },
-            { id: "swimming", name: "Swimming", icon: "🏊‍♀️" },
-            { id: "running", name: "Running", icon: "🏃" },
-            { id: "cycling", name: "Cycling", icon: "🚴‍♀️" },
-            { id: "team-sports", name: "Team Sports", icon: "⛹️‍♀️" },
-            { id: "dancing", name: "Aerobics/Dancing", icon: "💃" },
-        ]
-    }
-]
+// Interface for grouped symptoms by category
+interface SymptomCategory {
+  id: string
+  name: string
+  icon: string
+  symptoms: Symptom[]
+}
 
 export function CategorySymptomLogger({ date, onComplete }: CategorySymptomLoggerProps) {
-    const { symptomLogs, logSymptom, getSymptomLogsForDate } = useTracker()
-    const [notes, setNotes] = useState("")
-    const [selectedSymptoms, setSelectedSymptoms] = useState<Record<string, boolean>>({})
+  const { logSymptom, getSymptomLogsForDate, symptoms, fetchSymptoms } = useTracker()
+  const [notes, setNotes] = useState("")
+  const [selectedSymptoms, setSelectedSymptoms] = useState<Record<string, boolean>>({})
+  const [logsForDate, setLogsForDate] = useState<any[]>([])
+  const [symptomCategories, setSymptomCategories] = useState<SymptomCategory[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
-    // Get existing logs for this date
-    const logsForDate = getSymptomLogsForDate(date)
+  // Memoize the fetch function to prevent it from being recreated on each render
+  const fetchData = useCallback(async () => {
+    setLoading(true)
+    setError(null)
 
-    // Find notes for this date
-    const existingNotes = logsForDate.find((log) => log.notes)?.notes || ""
+    try {
+      console.log("Fetching data for CategorySymptomLogger...")
 
-    // Set initial state from existing logs
-    useEffect(() => {
-        const initialSelected: Record<string, boolean> = {}
+      // Use the symptoms from context if available, otherwise fetch them
+      let allSymptoms = symptoms
+      if (allSymptoms.length === 0) {
+        allSymptoms = await fetchSymptoms()
+      }
 
-        // Initialize all symptoms as unselected
-        symptomCategories.forEach((category) => {
-            category.symptoms.forEach((symptom) => {
-                initialSelected[symptom.id] = false
-            })
-        })
+      console.log("Symptoms fetched:", allSymptoms)
 
-        // Mark symptoms as selected if they exist in logs with severity not "none"
-        logsForDate.forEach((log) => {
-            if (log.severity !== "none") {
-                initialSelected[log.symptomId] = true
+      // Group symptoms by category
+      const categoriesMap: Record<string, SymptomCategory> = {}
+
+      allSymptoms.forEach((symptom) => {
+        if (symptom.categoryId && symptom.categoryName) {
+          if (!categoriesMap[symptom.categoryId]) {
+            categoriesMap[symptom.categoryId] = {
+              id: symptom.categoryId,
+              name: symptom.categoryName,
+              icon: symptom.categoryIcon || "❓",
+              symptoms: [],
             }
-        })
+          }
 
-        setSelectedSymptoms(initialSelected)
-        setNotes(existingNotes)
-
-        // Only run this effect when the date or logsForDate changes
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [date, logsForDate.length, existingNotes])
-
-    // Update the toggleSymptom function to avoid calling logSymptom during render
-    const toggleSymptom = (symptomId: string) => {
-        const newState = !selectedSymptoms[symptomId]
-
-        // Update local state
-        setSelectedSymptoms((prev) => ({
-            ...prev,
-            [symptomId]: newState,
-        }))
-
-        // Log the symptom with appropriate severity
-        logSymptom(
-            symptomId,
-            date,
-            newState ? "average" : "none", // Use "average" as default severity when selected
-            notes,
-        )
-    }
-
-    // Handle notes change
-    const handleNotesChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        const newNotes = e.target.value
-        setNotes(newNotes)
-
-        // Update all selected symptom logs with the new notes
-        Object.entries(selectedSymptoms).forEach(([symptomId, isSelected]) => {
-            if (isSelected) {
-                logSymptom(symptomId, date, "average", newNotes)
-            }
-        })
-    }
-
-    // Handle form submission
-    const handleSubmit = () => {
-        // Call the onComplete callback to close the dialog
-        if (onComplete) {
-            onComplete()
+          categoriesMap[symptom.categoryId].symptoms.push(symptom)
         }
+      })
+
+      // Convert to array and sort categories
+      const categoriesArray = Object.values(categoriesMap)
+      console.log("Categories created:", categoriesArray)
+      setSymptomCategories(categoriesArray)
+
+      // Fetch logs for this date
+      const logs = await getSymptomLogsForDate(date)
+      console.log("Logs for date:", logs)
+      setLogsForDate(logs)
+
+      // Find notes for this date
+      const existingNotes = logs.find((log) => log.notes)?.notes || ""
+      setNotes(existingNotes)
+
+      // Initialize selected symptoms
+      const initialSelected: Record<string, boolean> = {}
+
+      // Mark symptoms as selected if they exist in logs with severity not "none"
+      logs.forEach((log) => {
+        if (log.severity !== "none") {
+          initialSelected[log.symptom_id] = true
+        }
+      })
+
+      setSelectedSymptoms(initialSelected)
+    } catch (err) {
+      console.error("Error fetching data:", err)
+      setError("Failed to load symptoms. Please try again.")
+    } finally {
+      setLoading(false)
     }
+  }, [date, fetchSymptoms, getSymptomLogsForDate, symptoms])
 
+  // Fetch symptoms and logs only once when the component mounts or date changes
+  useEffect(() => {
+    fetchData()
+  }, [fetchData])
+
+  // Toggle symptom selection
+  const toggleSymptom = async (symptomId: string) => {
+    const newState = !selectedSymptoms[symptomId]
+
+    // Update local state
+    setSelectedSymptoms((prev) => ({
+      ...prev,
+      [symptomId]: newState,
+    }))
+
+    try {
+      // Log the symptom with appropriate severity
+      await logSymptom(
+        symptomId,
+        date,
+        newState ? "average" : "none", // Use "average" as default severity when selected
+        notes,
+      )
+    } catch (err) {
+      console.error("Error logging symptom:", err)
+      // Revert the state change if the API call fails
+      setSelectedSymptoms((prev) => ({
+        ...prev,
+        [symptomId]: !newState,
+      }))
+    }
+  }
+
+  // Handle notes change
+  const handleNotesChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const newNotes = e.target.value
+    setNotes(newNotes)
+
+    // Update all selected symptom logs with the new notes
+    // We'll do this when the user submits instead of on every change
+  }
+
+  // Handle form submission
+  const handleSubmit = async () => {
+    try {
+      // Update all selected symptom logs with the notes
+      const updatePromises = Object.entries(selectedSymptoms).map(([symptomId, isSelected]) => {
+        if (isSelected) {
+          return logSymptom(symptomId, date, "average", notes)
+        }
+        return Promise.resolve(true)
+      })
+
+      await Promise.all(updatePromises)
+
+      // Call the onComplete callback to close the dialog
+      if (onComplete) {
+        onComplete()
+      }
+    } catch (err) {
+      console.error("Error updating symptoms:", err)
+    }
+  }
+
+  // If there's an error, show error message with retry button
+  if (error) {
     return (
-        <div className="space-y-6 max-h-[60vh] overflow-y-auto pr-2">
-            {symptomCategories.map((category) => (
-                <div key={category.name} className="space-y-3">
-                    <h3 className="text-lg font-semibold">{category.name}</h3>
-                    <div className="grid grid-cols-4 gap-3">
-                        {category.symptoms.map((symptom) => (
-                            <button
-                                key={symptom.id}
-                                type="button"
-                                onClick={() => toggleSymptom(symptom.id)}
-                                className="flex flex-col items-center"
-                            >
-                                <div
-                                    className={cn(
-                                        "relative w-16 h-16 rounded-full flex items-center justify-center text-2xl",
-                                        category.name === "General"
-                                            ? "bg-purple-500"
-                                            : category.name === "Mood"
-                                                ? "bg-orange-300"
-                                                : category.name === "Sleep"
-                                                    ? "bg-blue-400"
-                                                    : category.name === "Physical Activity"
-                                                    ? "bg-green-400"
-                                                        : "bg-yellow-300",
-                                        "hover:opacity-90 transition-opacity",
-                                    )}
-                                >
-                                    {symptom.icon}
-                                    {selectedSymptoms[symptom.id] && (
-                                        <div className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center">
-                                            <Check className="w-3 h-3" />
-                                        </div>
-                                    )}
-                                </div>
-                                <span className="text-xs mt-1 text-center">{symptom.name}</span>
-                            </button>
-                        ))}
-                    </div>
-                </div>
-            ))}
-
-            <div className="space-y-2">
-                <Label htmlFor="symptom-notes">Notes</Label>
-                <Textarea
-                    id="symptom-notes"
-                    placeholder="How are you feeling today?"
-                    value={notes}
-                    onChange={handleNotesChange}
-                    className="min-h-[80px]"
-                />
-            </div>
-
-            <Button className="w-full bg-pink-500 hover:bg-pink-600 text-white py-3" onClick={handleSubmit}>
-                Apply
-            </Button>
-        </div>
+      <div className="flex flex-col items-center justify-center h-40 space-y-4">
+        <p className="text-red-500">{error}</p>
+        <Button onClick={fetchData}>Retry</Button>
+      </div>
     )
-}
+  }
 
+  // If loading, show loading spinner
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-40">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        <span className="ml-2">Loading symptoms...</span>
+      </div>
+    )
+  }
+
+  // If no symptoms are available, show a message
+  if (symptomCategories.length === 0) {
+    return (
+      <div className="text-center py-8">
+        <p>No symptoms available. Please add symptoms to your account.</p>
+      </div>
+    )
+  }
+
+  return (
+    <div className="space-y-6 max-h-[60vh] overflow-y-auto pr-2">
+      {symptomCategories.map((category) => (
+        <div key={category.id} className="space-y-3">
+          <h3 className="text-lg font-semibold flex items-center">
+            {category.icon && <span className="mr-2">{category.icon}</span>}
+            {category.name}
+          </h3>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+            {category.symptoms.map((symptom) => (
+              <button
+                key={symptom.id}
+                type="button"
+                onClick={() => toggleSymptom(symptom.id)}
+                className="flex flex-col items-center"
+              >
+                <div
+                  className={cn(
+                    "relative w-14 h-14 rounded-full flex items-center justify-center text-xl",
+                    category.name.toLowerCase().includes("general")
+                      ? "bg-purple-500"
+                      : category.name.toLowerCase().includes("mood")
+                        ? "bg-orange-300"
+                        : category.name.toLowerCase().includes("sleep")
+                          ? "bg-blue-400"
+                          : category.name.toLowerCase().includes("physical") ||
+                              category.name.toLowerCase().includes("activity")
+                            ? "bg-green-400"
+                            : "bg-yellow-300",
+                    "hover:opacity-90 transition-opacity",
+                  )}
+                >
+                  {symptom.icon}
+                  {selectedSymptoms[symptom.id] && (
+                    <div className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center">
+                      <Check className="w-3 h-3" />
+                    </div>
+                  )}
+                </div>
+                <span className="text-xs mt-1 text-center">{symptom.name}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      ))}
+
+      <div className="space-y-2">
+        <Label htmlFor="symptom-notes">Notes</Label>
+        <Textarea
+          id="symptom-notes"
+          placeholder="How are you feeling today?"
+          value={notes}
+          onChange={handleNotesChange}
+          className="min-h-[80px]"
+        />
+      </div>
+
+      <Button className="w-full bg-pink-500 hover:bg-pink-600 text-white py-3" onClick={handleSubmit}>
+        Apply
+      </Button>
+    </div>
+  )
+}

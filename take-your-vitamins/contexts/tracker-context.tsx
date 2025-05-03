@@ -2,8 +2,6 @@
 
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
 import { useAuth } from "./auth-context"
-import type { Supplement } from "@/lib/types"
-import { getSupplementById } from "@/lib/supplements"
 
 export type TrackedSupplement = {
   id: string
@@ -31,23 +29,43 @@ export type IntakeLog = {
   updated_at: string
 }
 
-// Mock symptom tracking types
+// Symptom tracking types based on backend implementation
 export type Symptom = {
   id: string
   name: string
   icon?: string
-  category?: string
+  categoryId?: string
+  categoryName?: string
+  categoryIcon?: string
 }
 
 export type SymptomLog = {
   id: string
-  userId: string
+  user_id: string
+  symptom_id: string
   date: string
-  symptomId: string
-  symptomName: string
   severity: "none" | "mild" | "average" | "severe"
   notes?: string
   created_at: string
+  updated_at?: string
+}
+
+export type SymptomCategory = {
+  id: string
+  name: string
+  icon: string
+  symptoms: Array<{
+    id: string
+    name: string
+    icon: string
+    severity: string
+  }>
+}
+
+export type SymptomSummary = {
+  categories: SymptomCategory[]
+  notes: string
+  date: string
 }
 
 // Define interaction type for clarity
@@ -63,43 +81,43 @@ type TrackerContextType = {
   intakeLogs: IntakeLog[]
   symptoms: Symptom[]
   symptomLogs: SymptomLog[]
-  
-  addTrackedSupplement: (
-    data: Omit<TrackedSupplement, "id">,
-  ) => Promise<{ success: boolean; warnings: string[] }>
+
+  addTrackedSupplement: (data: Omit<TrackedSupplement, "id">) => Promise<{ success: boolean; warnings: string[] }>
   removeTrackedSupplement: (id: string) => Promise<boolean>
-  updateTrackedSupplement: (
-    id: string, 
-    data: Partial<Omit<TrackedSupplement, "id">>
-  ) => Promise<boolean>
-  
-  // Intake log functions to interact with the backend
+  updateTrackedSupplement: (id: string, data: Partial<Omit<TrackedSupplement, "id">>) => Promise<boolean>
+
+  // Intake log functions
   logIntake: (
     tracked_supplement_id: string,
     intake_date: string,
     dosage_taken: number,
     unit: string,
-    notes?: string
+    notes?: string,
   ) => Promise<boolean>
   getIntakeLogsForDate: (date: string) => Promise<IntakeLog[]>
   getTodayIntakeLogs: () => Promise<IntakeLog[]>
   getIntakeLogById: (id: string) => Promise<IntakeLog | null>
   updateIntakeLog: (id: string, data: Partial<Omit<IntakeLog, "id">>) => Promise<boolean>
   deleteIntakeLog: (id: string) => Promise<boolean>
-  
+
   // Check for interactions
   checkInteractions: (supplementId: string) => Promise<string[]>
 
-  // Mock symptom tracking functions
+  // Updated symptom tracking functions based on backend implementation
   logSymptom: (
-    symptomId: string,
+    symptom_id: string,
     date: string,
     severity: "none" | "mild" | "average" | "severe",
     notes?: string,
-  ) => void
-  getSymptomLogsForDate: (date: string) => SymptomLog[]
-  getSymptomsForCategory: (category: string) => Symptom[]
-  addSymptom: (name: string, category?: string, icon?: string) => void
+  ) => Promise<boolean>
+  getSymptomLogsForDate: (date: string) => Promise<SymptomLog[]>
+  getSymptomsForCategory: (category_id: string) => Promise<Symptom[]>
+  addSymptom: (name: string, category_id: string, icon?: string) => Promise<boolean>
+  fetchSymptoms: () => Promise<Symptom[]>
+  fetchSymptomCategories: () => Promise<Record<string, SymptomCategory>>
+  getSymptomSummaryForDate: (date: string) => Promise<SymptomSummary | null>
+  deleteSymptomLog: (log_id: string) => Promise<boolean>
+  getDatesWithSymptoms: () => Promise<string[]>
 }
 
 const TrackerContext = createContext<TrackerContextType | undefined>(undefined)
@@ -108,141 +126,93 @@ export function TrackerProvider({ children }: { children: ReactNode }) {
   const { user } = useAuth()
   const [trackedSupplements, setTrackedSupplements] = useState<TrackedSupplement[]>([])
   const [intakeLogs, setIntakeLogs] = useState<IntakeLog[]>([])
-  
+
   // Add a cache for intake logs by date
   const [intakeLogsCache, setIntakeLogsCache] = useState<Record<string, IntakeLog[]>>({})
-  
-  // Mock symptom tracking states
-  const [symptoms, setSymptoms] = useState<Symptom[]>([
-    // General
-    { id: "fine", name: "Everything is fine", category: "general", icon: "👍" },
-    { id: "acne", name: "Skin issues", category: "general", icon: "🤡" },
-    { id: "fatigue", name: "Fatigue", category: "general", icon: "🫠" },
-    { id: "headache", name: "Headache", category: "general", icon: "🤕" },
-    { id: "abdominal-pain", name: "Abdominal Pain", category: "general", icon: "😣" },
-    { id: "dizziness", name: "Dizziness", category: "general", icon: "😵‍💫" },
-    
-    // Mood
-    { id: "calm", name: "Calm", category: "mood", icon: "😌" },
-    { id: "mood-swings", name: "Mood swings", category: "mood", icon: "🔄" },
-    { id: "happy", name: "Happy", category: "mood", icon: "😊" },
-    { id: "energetic", name: "Energetic", category: "mood", icon: "⚡" },
-    { id: "irritated", name: "Irritated", category: "mood", icon: "🥴" },
-    { id: "depressed", name: "Depressed", category: "mood", icon: "😓" },
-    { id: "low-energy", name: "Low energy", category: "mood", icon: "🥱" },
-    { id: "anxious", name: "Anxious", category: "mood", icon: "😰" },
-    
-    // Sleep
-    { id: "insomnia", name: "Insomnia", category: "sleep", icon: "😳" },
-    { id: "good-sleep", name: "Good sleep", category: "sleep", icon: "😴" },
-    { id: "restless", name: "Restless", category: "sleep", icon: "🔄" },
-    { id: "tired", name: "Tired", category: "sleep", icon: "🥱" },
-    
-    // Digestive
-    { id: "bloating", name: "Bloating", category: "digestive", icon: "🎈" },
-    { id: "nausea", name: "Nausea", category: "digestive", icon: "🤢" },
-    { id: "constipation", name: "Constipation", category: "digestive", icon: "⏸️" },
-    { id: "diarrhea", name: "Diarrhea", category: "digestive", icon: "⏩" },
-    
-    // Appetite
-    { id: "low", name: "Low", category: "appetite", icon: "🫢" },
-    { id: "normal", name: "Normal", category: "appetite", icon: "🍽️" },
-    { id: "high", name: "High", category: "appetite", icon: "🍔" },
-    
-    // Physical Activity
-    { id: "no-activity", name: "Didn't exercise", category: "activity", icon: "⭕️" },
-    { id: "yoga", name: "Yoga", category: "activity", icon: "🧘‍♀️" },
-    { id: "gym", name: "Gym", category: "activity", icon: "🏋️" },
-    { id: "swimming", name: "Swimming", category: "activity", icon: "🏊‍♀️" },
-    { id: "running", name: "Running", category: "activity", icon: "🏃" },
-    { id: "cycling", name: "Cycling", category: "activity", icon: "🚴‍♀️" },
-    { id: "team-sports", name: "Team Sports", category: "activity", icon: "⛹️‍♀️" },
-    { id: "dancing", name: "Aerobics/Dancing", category: "activity", icon: "💃" },
-  ])
+
+  // Symptom tracking states
+  const [symptoms, setSymptoms] = useState<Symptom[]>([])
+  const [symptomCategories, setSymptomCategories] = useState<Record<string, SymptomCategory>>({})
   const [symptomLogs, setSymptomLogs] = useState<SymptomLog[]>([])
+  const [symptomLogsCache, setSymptomLogsCache] = useState<Record<string, SymptomLog[]>>({})
 
-// Check interactions for a given supplement
-const checkInteractions = async (supplementId: string): Promise<string[]> => {
-  if (!supplementId.trim()) return []
+  // Check interactions for a given supplement
+  const checkInteractions = async (supplementId: string): Promise<string[]> => {
+    if (!supplementId.trim()) return []
 
-  try {
-    // Fetch interactions for the supplement from the backend
-    const response = await fetch(
-      `http://localhost:5001/api/supplements/by-supplement/${supplementId}`
-    )
+    try {
+      // Fetch interactions for the supplement from the backend
+      const response = await fetch(`http://localhost:5001/api/supplements/by-supplement/${supplementId}`)
 
-    if (!response.ok) {
-      console.error("Failed to fetch interactions by supplement ID")
+      if (!response.ok) {
+        console.error("Failed to fetch interactions by supplement ID")
+        return []
+      }
+
+      const data = await response.json()
+      console.log("Fetched interactions:", data)
+
+      // Extract and format interaction warnings
+      const warnings: string[] = []
+
+      // Get IDs of tracked supplements
+      const trackedSupplementIds = trackedSupplements.map((s) => s.supplementId)
+      console.log("Tracked supplement IDs:", trackedSupplementIds)
+
+      // Process supplement-supplement interactions
+      if (data.supplementSupplementInteractions) {
+        data.supplementSupplementInteractions.forEach((interaction: any) => {
+          // Check if the interacting supplement is already being tracked
+          const interactingSupplements = interaction.supplements || []
+
+          interactingSupplements.forEach((interactingSupplement: any) => {
+            if (
+              trackedSupplementIds.includes(interactingSupplement.supplementId) &&
+              interactingSupplement.supplementId !== supplementId
+            ) {
+              const interactingSupplementName =
+                interactingSupplement.name ||
+                trackedSupplements.find((s) => s.supplementId === interactingSupplement.supplementId)?.supplementName ||
+                "Unknown supplement"
+
+              const description = interaction.description || "No description provided."
+              const recommendation = interaction.recommendation || "No recommendation provided."
+
+              warnings.push(`Interaction with ${interactingSupplementName}: ${description}`)
+              warnings.push("Recommendation: " + recommendation)
+            }
+          })
+        })
+      }
+
+      // Process supplement-food interactions (if applicable)
+      if (data.supplementFoodInteractions) {
+        data.supplementFoodInteractions.forEach((interaction: any) => {
+          const description = interaction.description || "No description provided."
+          const recommendation = interaction.recommendation || "No recommendation provided."
+          warnings.push(`Food Interaction: ${description} Recommendation: ${recommendation}`)
+        })
+      }
+
+      return warnings
+    } catch (error) {
+      console.error("Error while fetching interactions for supplement ID:", error)
       return []
     }
-
-    const data = await response.json()
-    console.log("Fetched interactions:", data)
-
-    // Extract and format interaction warnings
-    const warnings: string[] = []
-
-    // Get IDs of tracked supplements
-    const trackedSupplementIds = trackedSupplements.map((s) => s.supplementId)
-    console.log("Tracked supplement IDs:", trackedSupplementIds)
-
-    // Process supplement-supplement interactions
-    if (data.supplementSupplementInteractions) {
-      data.supplementSupplementInteractions.forEach((interaction: any) => {
-        // Check if the interacting supplement is already being tracked
-        const interactingSupplements = interaction.supplements || []
-
-        interactingSupplements.forEach((interactingSupplement: any) => {
-          if (trackedSupplementIds.includes(interactingSupplement.supplementId) && interactingSupplement.supplementId !== supplementId) {
-            const interactingSupplementName =
-              interactingSupplement.name ||
-              trackedSupplements.find((s) => s.supplementId === interactingSupplement.supplementId)
-                ?.supplementName ||
-              "Unknown supplement"
-
-            const description = interaction.description || "No description provided."
-            const recommendation = interaction.recommendation || "No recommendation provided."
-
-            warnings.push(
-              `Interaction with ${interactingSupplementName}: ${description}`
-            )
-            warnings.push('Recommendation: ' + recommendation)
-          }
-        })
-      })
-    }
-
-    // Process supplement-food interactions (if applicable)
-    if (data.supplementFoodInteractions) {
-      data.supplementFoodInteractions.forEach((interaction: any) => {
-        const description = interaction.description || "No description provided."
-        const recommendation = interaction.recommendation || "No recommendation provided."
-        warnings.push(
-          `Food Interaction: ${description} Recommendation: ${recommendation}`
-        )
-      })
-    }
-
-    return warnings
-  } catch (error) {
-    console.error("Error while fetching interactions for supplement ID:", error)
-    return []
   }
-}
 
   // Add a tracked supplement
   const addTrackedSupplement = async (
-    data: Omit<TrackedSupplement, "id">
+    data: Omit<TrackedSupplement, "id">,
   ): Promise<{ success: boolean; warnings: string[] }> => {
     try {
-
       console.log("Adding tracked supplement:", data)
       // Check for interactions with existing supplements
       const warnings = await checkInteractions(data.supplementId)
       if (warnings.length > 0) {
         console.warn("Interactions found:", warnings)
       }
-      
+
       console.log("User ID:", user?._id)
       if (!user) {
         throw new Error("User not authenticated")
@@ -271,16 +241,14 @@ const checkInteractions = async (supplementId: string): Promise<string[]> => {
       }
 
       const result = await response.json()
-      
+
       // Find the newly added supplement in the response
-      const newSupplement = result.tracked_supplements?.find(
-        (s: any) => s.supplementId === data.supplementId
-      )
-      
+      const newSupplement = result.tracked_supplements?.find((s: any) => s.supplementId === data.supplementId)
+
       if (newSupplement) {
-        setTrackedSupplements(prev => [
-          ...prev, 
-          { 
+        setTrackedSupplements((prev) => [
+          ...prev,
+          {
             id: newSupplement._id,
             supplementId: newSupplement.supplementId,
             supplementName: newSupplement.supplementName,
@@ -289,11 +257,11 @@ const checkInteractions = async (supplementId: string): Promise<string[]> => {
             frequency: newSupplement.frequency,
             startDate: newSupplement.startDate,
             endDate: newSupplement.endDate,
-            notes: newSupplement.notes
-          }
+            notes: newSupplement.notes,
+          },
         ])
       }
-      
+
       return { success: true, warnings: warnings }
     } catch (error) {
       console.error("Error adding tracked supplement:", error)
@@ -307,7 +275,7 @@ const checkInteractions = async (supplementId: string): Promise<string[]> => {
     intake_date: string,
     dosage_taken: number,
     unit: string,
-    notes?: string
+    notes?: string,
   ): Promise<boolean> => {
     try {
       console.log("User in logIntake:", user)
@@ -322,12 +290,12 @@ const checkInteractions = async (supplementId: string): Promise<string[]> => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        body: JSON.stringify({ 
-          tracked_supplement_id, 
-          intake_date, 
-          dosage_taken, 
-          unit, 
-          notes 
+        body: JSON.stringify({
+          tracked_supplement_id,
+          intake_date,
+          dosage_taken,
+          unit,
+          notes,
         }),
       })
 
@@ -338,7 +306,7 @@ const checkInteractions = async (supplementId: string): Promise<string[]> => {
       }
 
       const result = await response.json()
-      
+
       // Add the new intake log to state
       const newLog: IntakeLog = {
         id: result._id,
@@ -350,47 +318,24 @@ const checkInteractions = async (supplementId: string): Promise<string[]> => {
         unit: result.unit,
         notes: result.notes,
         created_at: result.created_at,
-        updated_at: result.updated_at
+        updated_at: result.updated_at,
       }
-      
+
       // Update both the global state and the cache
-      setIntakeLogs(prev => {
-        // Remove any existing log for the same supplement and date to avoid duplicates
-        const filteredLogs = prev.filter(log => 
-          !(log.tracked_supplement_id === tracked_supplement_id && log.intake_date === intake_date)
-        );
-        return [...filteredLogs, newLog];
-      });
-      
+      setIntakeLogs((prev) => [...prev, newLog])
+
       // Also update the cache for this date
       const dateStr = intake_date
-      setIntakeLogsCache(prevCache => {
+      setIntakeLogsCache((prevCache) => {
         const updatedCache = { ...prevCache }
-        
         if (updatedCache[dateStr]) {
-          // Remove any existing log for the same supplement to avoid duplicates
-          const filteredLogs = updatedCache[dateStr].filter(log => 
-            !(log.tracked_supplement_id === tracked_supplement_id)
-          );
-          updatedCache[dateStr] = [...filteredLogs, newLog]
+          updatedCache[dateStr] = [...updatedCache[dateStr], newLog]
         } else {
           updatedCache[dateStr] = [newLog]
         }
-        
         return updatedCache
       })
-      
-      // Invalid cache for today if it's not the same as the intake date
-      const today = new Date().toISOString().split('T')[0]
-      if (today !== intake_date && intakeLogsCache[today]) {
-        // Force refresh of today's data next time it's requested
-        setIntakeLogsCache(prev => {
-          const updated = {...prev}
-          delete updated[today];
-          return updated;
-        });
-      }
-      
+
       return true
     } catch (error) {
       console.error("Error logging intake:", error)
@@ -411,21 +356,18 @@ const checkInteractions = async (supplementId: string): Promise<string[]> => {
       }
 
       // If not in cache, fetch from API
-      const response = await fetch(
-        `http://localhost:5001/api/intake_logs/?start_date=${date}&end_date=${date}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      )
+      const response = await fetch(`http://localhost:5001/api/intake_logs/?start_date=${date}&end_date=${date}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
 
       if (!response.ok) {
         throw new Error("Failed to fetch intake logs.")
       }
 
       const logsData = await response.json()
-      
+
       // Map the backend response to our IntakeLog type
       const logs: IntakeLog[] = logsData.map((log: any) => ({
         id: log._id,
@@ -437,25 +379,25 @@ const checkInteractions = async (supplementId: string): Promise<string[]> => {
         unit: log.unit,
         notes: log.notes,
         created_at: log.created_at,
-        updated_at: log.updated_at
+        updated_at: log.updated_at,
       }))
-      
+
       // Update state with the fetched logs
       setIntakeLogs(logs)
-      
+
       // Store in cache
-      setIntakeLogsCache(prevCache => ({
+      setIntakeLogsCache((prevCache) => ({
         ...prevCache,
-        [date]: logs
+        [date]: logs,
       }))
-      
+
       return logs
     } catch (error) {
       console.error("Error fetching intake logs:", error)
       return []
     }
   }
-  
+
   // Get today's intake logs using the dedicated endpoint
   const getTodayIntakeLogs = async (): Promise<IntakeLog[]> => {
     try {
@@ -463,28 +405,25 @@ const checkInteractions = async (supplementId: string): Promise<string[]> => {
         return []
       }
 
-      const today = new Date().toISOString().split('T')[0] // Format as YYYY-MM-DD
-      
+      const today = new Date().toISOString().split("T")[0] // Format as YYYY-MM-DD
+
       // Check if today's logs are already in cache
       if (intakeLogsCache[today]) {
         return intakeLogsCache[today]
       }
 
-      const response = await fetch(
-        "http://localhost:5001/api/intake_logs/today",
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      )
+      const response = await fetch("http://localhost:5001/api/intake_logs/today", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
 
       if (!response.ok) {
         throw new Error("Failed to fetch today's intake logs.")
       }
 
       const logsData = await response.json()
-      
+
       // Map the backend response to our IntakeLog type
       const logs: IntakeLog[] = logsData.map((log: any) => ({
         id: log._id,
@@ -496,25 +435,25 @@ const checkInteractions = async (supplementId: string): Promise<string[]> => {
         unit: log.unit,
         notes: log.notes,
         created_at: log.created_at,
-        updated_at: log.updated_at
+        updated_at: log.updated_at,
       }))
-      
+
       // Update state with today's logs
       setIntakeLogs(logs)
-      
+
       // Store in cache
-      setIntakeLogsCache(prevCache => ({
+      setIntakeLogsCache((prevCache) => ({
         ...prevCache,
-        [today]: logs
+        [today]: logs,
       }))
-      
+
       return logs
     } catch (error) {
       console.error("Error fetching today's intake logs:", error)
       return []
     }
   }
-  
+
   // Get a specific intake log by ID
   const getIntakeLogById = async (id: string): Promise<IntakeLog | null> => {
     try {
@@ -524,28 +463,25 @@ const checkInteractions = async (supplementId: string): Promise<string[]> => {
 
       // Check if we can find the log in our cache first
       for (const date in intakeLogsCache) {
-        const log = intakeLogsCache[date].find(log => log.id === id)
+        const log = intakeLogsCache[date].find((log) => log.id === id)
         if (log) {
           return log
         }
       }
 
       // If not found in cache, fetch from API
-      const response = await fetch(
-        `http://localhost:5001/api/intake_logs/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      )
+      const response = await fetch(`http://localhost:5001/api/intake_logs/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
 
       if (!response.ok) {
         throw new Error("Failed to fetch intake log.")
       }
 
       const log = await response.json()
-      
+
       return {
         id: log._id,
         tracked_supplement_id: log.tracked_supplement_id,
@@ -556,75 +492,73 @@ const checkInteractions = async (supplementId: string): Promise<string[]> => {
         unit: log.unit,
         notes: log.notes,
         created_at: log.created_at,
-        updated_at: log.updated_at
+        updated_at: log.updated_at,
       }
     } catch (error) {
       console.error("Error fetching intake log:", error)
       return null
     }
   }
-  
+
   // Update an intake log
-  const updateIntakeLog = async (
-    id: string, 
-    data: Partial<Omit<IntakeLog, "id">>
-  ): Promise<boolean> => {
+  const updateIntakeLog = async (id: string, data: Partial<Omit<IntakeLog, "id">>): Promise<boolean> => {
     try {
       if (!user) {
         throw new Error("User not authenticated")
       }
 
-      const response = await fetch(
-        `http://localhost:5001/api/intake_logs/${id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-          body: JSON.stringify(data),
-        }
-      )
+      const response = await fetch(`http://localhost:5001/api/intake_logs/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify(data),
+      })
 
       if (!response.ok) {
         throw new Error("Failed to update intake log.")
       }
 
       const updatedLog = await response.json()
-      
+
       // Update the log in state
-      setIntakeLogs(prev => 
-        prev.map(log => 
-          log.id === id ? {
-            ...log,
-            ...data,
-            updated_at: updatedLog.updated_at
-          } : log
-        )
-      )
-      
-      // Also update in cache if it exists there
-      setIntakeLogsCache(prevCache => {
-        const newCache = { ...prevCache }
-        for (const date in newCache) {
-          newCache[date] = newCache[date].map(log => 
-            log.id === id ? {
+      setIntakeLogs((prev) =>
+        prev.map((log) =>
+          log.id === id
+            ? {
               ...log,
               ...data,
-              updated_at: updatedLog.updated_at
-            } : log
+              updated_at: updatedLog.updated_at,
+            }
+            : log,
+        ),
+      )
+
+      // Also update in cache if it exists there
+      setIntakeLogsCache((prevCache) => {
+        const newCache = { ...prevCache }
+        for (const date in newCache) {
+          newCache[date] = newCache[date].map((log) =>
+            log.id === id
+              ? {
+                ...log,
+                ...data,
+                updated_at: updatedLog.updated_at,
+              }
+              : log,
           )
         }
         return newCache
       })
-      
+
       return true
     } catch (error) {
       console.error("Error updating intake log:", error)
       return false
     }
   }
-  
+
   // Delete an intake log
   const deleteIntakeLog = async (id: string): Promise<boolean> => {
     try {
@@ -632,66 +566,29 @@ const checkInteractions = async (supplementId: string): Promise<string[]> => {
         throw new Error("User not authenticated")
       }
 
-      // Find the log to get its date before deleting
-      let logDate: string | null = null;
-      let logSupplementId: string | null = null;
-      
-      // Look in the global state
-      const logToDelete = intakeLogs.find(log => log.id === id);
-      if (logToDelete) {
-        logDate = logToDelete.intake_date;
-        logSupplementId = logToDelete.tracked_supplement_id;
-      } else {
-        // Look in the cache
-        for (const date in intakeLogsCache) {
-          const log = intakeLogsCache[date].find(log => log.id === id);
-          if (log) {
-            logDate = log.intake_date;
-            logSupplementId = log.tracked_supplement_id;
-            break;
-          }
-        }
-      }
-
-      const response = await fetch(
-        `http://localhost:5001/api/intake_logs/${id}`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      )
+      const response = await fetch(`http://localhost:5001/api/intake_logs/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
 
       if (!response.ok) {
         throw new Error("Failed to delete intake log.")
       }
 
       // Remove the log from state
-      setIntakeLogs(prev => prev.filter(log => log.id !== id))
-      
+      setIntakeLogs((prev) => prev.filter((log) => log.id !== id))
+
       // Also remove from cache
-      setIntakeLogsCache(prevCache => {
+      setIntakeLogsCache((prevCache) => {
         const newCache = { ...prevCache }
         for (const date in newCache) {
-          newCache[date] = newCache[date].filter(log => log.id !== id)
+          newCache[date] = newCache[date].filter((log) => log.id !== id)
         }
         return newCache
       })
-      
-      // If logDate is different from today, invalidate today's cache
-      if (logDate) {
-        const today = new Date().toISOString().split('T')[0];
-        if (today !== logDate && intakeLogsCache[today]) {
-          // Force refresh of today's data next time it's requested
-          setIntakeLogsCache(prev => {
-            const updated = {...prev};
-            delete updated[today];
-            return updated;
-          });
-        }
-      }
-      
+
       return true
     } catch (error) {
       console.error("Error deleting intake log:", error)
@@ -705,6 +602,9 @@ const checkInteractions = async (supplementId: string): Promise<string[]> => {
       if (!user) {
         throw new Error("User not authenticated")
       }
+
+      console.log("User ID:", user._id)
+      console.log("Removing tracked supplement:", id)
 
       const response = await fetch(`http://localhost:5001/api/tracker_supplements_list/${user._id}`, {
         method: "DELETE",
@@ -730,14 +630,14 @@ const checkInteractions = async (supplementId: string): Promise<string[]> => {
   // Update a tracked supplement
   const updateTrackedSupplement = async (
     id: string,
-    data: Partial<Omit<TrackedSupplement, "id">>
+    data: Partial<Omit<TrackedSupplement, "id">>,
   ): Promise<boolean> => {
     try {
       if (!user) {
         throw new Error("User not authenticated")
       }
 
-      const supplement = trackedSupplements.find(s => s.id === id)
+      const supplement = trackedSupplements.find((s) => s.id === id)
       if (!supplement) {
         throw new Error("Supplement not found")
       }
@@ -767,10 +667,8 @@ const checkInteractions = async (supplementId: string): Promise<string[]> => {
         throw new Error("Failed to update supplement.")
       }
 
-      setTrackedSupplements(prev => 
-        prev.map(item => item.id === id ? { ...item, ...data } : item)
-      )
-      
+      setTrackedSupplements((prev) => prev.map((item) => (item.id === id ? { ...item, ...data } : item)))
+
       return true
     } catch (error) {
       console.error("Error updating tracked supplement:", error)
@@ -778,81 +676,317 @@ const checkInteractions = async (supplementId: string): Promise<string[]> => {
     }
   }
 
-  // Modified function to log symptoms with localStorage persistence
-  const logSymptom = (
-    symptomId: string,
+  // Fetch all available symptoms
+  const fetchSymptoms = async (): Promise<Symptom[]> => {
+    try {
+      if (!user) return []
+
+      console.log("Fetching symptoms from API...")
+      const response = await fetch("http://localhost:5001/api/symptom-logs/symptoms", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch symptoms: ${response.status} ${response.statusText}`)
+      }
+
+      const data = await response.json()
+      console.log("Raw symptoms data:", data)
+
+      // Access the symptoms array from the response
+      const symptomsArray = data.symptoms || []
+
+      // Map the response to our Symptom type
+      const mappedSymptoms: Symptom[] = Array.isArray(symptomsArray)
+        ? symptomsArray.map((symptom: any) => ({
+          id: symptom._id,
+          name: symptom.name,
+          icon: symptom.icon,
+          categoryId: symptom.categoryId,
+          categoryName: symptom.categoryName,
+          categoryIcon: symptom.categoryIcon,
+        }))
+        : []
+
+      console.log("Mapped symptoms:", mappedSymptoms)
+      setSymptoms(mappedSymptoms)
+      return mappedSymptoms
+    } catch (error) {
+      console.error("Error fetching symptoms:", error)
+      return []
+    }
+  }
+
+  // Fetch symptom categories
+  const fetchSymptomCategories = async (): Promise<Record<string, SymptomCategory>> => {
+    try {
+      if (!user) return {}
+
+      // Since there's no direct endpoint for categories, we'll extract them from symptoms
+      const symptomsData = await fetchSymptoms()
+
+      // Group symptoms by category
+      const categoriesMap: Record<string, SymptomCategory> = {}
+
+      symptomsData.forEach((symptom) => {
+        if (symptom.categoryId && symptom.categoryName) {
+          if (!categoriesMap[symptom.categoryId]) {
+            categoriesMap[symptom.categoryId] = {
+              id: symptom.categoryId,
+              name: symptom.categoryName,
+              icon: symptom.categoryIcon || "❓",
+              symptoms: [],
+            }
+          }
+
+          // Add symptom to category
+          categoriesMap[symptom.categoryId].symptoms.push({
+            id: symptom.id,
+            name: symptom.name,
+            icon: symptom.icon || "❓",
+            severity: "none", // Default severity
+          })
+        }
+      })
+
+      setSymptomCategories(categoriesMap)
+      return categoriesMap
+    } catch (error) {
+      console.error("Error creating symptom categories:", error)
+      return {}
+    }
+  }
+
+  // Log a symptom
+  const logSymptom = async (
+    symptom_id: string,
     date: string,
     severity: "none" | "mild" | "average" | "severe",
     notes?: string,
-  ) => {
-    if (!user) return
-
-    // Find the symptom to get its name
-    const symptom = symptoms.find(s => s.id === symptomId)
-    if (!symptom) return
-
-    // Check if a log already exists for this symptom and date
-    const existingLogIndex = symptomLogs.findIndex(
-      (log) => log.symptomId === symptomId && log.date === date && log.userId === user._id,
-    )
-
-    let updatedLogs: SymptomLog[] = [];
-
-    if (existingLogIndex >= 0) {
-      // Update existing log
-      updatedLogs = [...symptomLogs]
-      updatedLogs[existingLogIndex] = {
-        ...updatedLogs[existingLogIndex],
-        severity,
-        notes,
-        created_at: new Date().toISOString(),
-      }
-    } else {
-      // Create new log
-      const newLog: SymptomLog = {
-        id: `symptom-log-${Date.now()}`,
-        userId: user._id,
-        date,
-        symptomId,
-        symptomName: symptom.name,
-        severity,
-        notes,
-        created_at: new Date().toISOString(),
-      }
-      updatedLogs = [...symptomLogs, newLog]
-    }
-    
-    // Update state
-    setSymptomLogs(updatedLogs)
-    
-    // Persist to localStorage
+  ): Promise<boolean> => {
     try {
-      localStorage.setItem(`${user._id}-symptom-logs`, JSON.stringify(updatedLogs))
+      if (!user) {
+        throw new Error("User not authenticated")
+      }
+
+      const response = await fetch("http://localhost:5001/api/symptom-logs/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({
+          symptom_id,
+          date,
+          severity,
+          notes: notes || "",
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error("Failed to log symptom")
+      }
+
+      const result = await response.json()
+
+      // Update the symptom logs cache for this date
+      await getSymptomLogsForDate(date)
+
+      return true
     } catch (error) {
-      console.error("Failed to save symptom logs to localStorage:", error)
+      console.error("Error logging symptom:", error)
+      return false
     }
   }
 
-  // Mock function to get symptom logs for a specific date
-  const getSymptomLogsForDate = (date: string) => {
-    return symptomLogs.filter((log) => log.date === date && log.userId === user?._id)
-  }
-  
-  // Mock function to get symptoms by category
-  const getSymptomsForCategory = (category: string) => {
-    return symptoms.filter(symptom => symptom.category === category)
-  }
-  
-  // Mock function to add a new symptom
-  const addSymptom = (name: string, category?: string, icon?: string) => {
-    const newSymptom: Symptom = {
-      id: `symptom-${Date.now()}`,
-      name,
-      category,
-      icon
+  // Get symptom logs for a specific date
+  const getSymptomLogsForDate = async (date: string): Promise<SymptomLog[]> => {
+    try {
+      if (!user) return []
+
+      // Check if we already have cached data for this date
+      if (symptomLogsCache[date]) {
+        return symptomLogsCache[date]
+      }
+
+      const response = await fetch(`http://localhost:5001/api/symptom-logs/date/${date}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch symptom logs")
+      }
+
+      const data = await response.json()
+      const logsData = data.logs || []
+
+      // Map the backend response to our SymptomLog type
+      const logs: SymptomLog[] = logsData.map((log: any) => ({
+        id: log.log_id,
+        user_id: user._id, // User ID is not returned in the response
+        symptom_id: log.symptom_id,
+        date: log.date,
+        severity: log.severity as "none" | "mild" | "average" | "severe",
+        notes: log.notes,
+        created_at: new Date().toISOString(), // Not returned in the response
+      }))
+
+      // Update state with the fetched logs
+      setSymptomLogs((prev) => [...prev.filter((l) => l.date !== date), ...logs])
+
+      // Store in cache
+      setSymptomLogsCache((prevCache) => ({
+        ...prevCache,
+        [date]: logs,
+      }))
+
+      return logs
+    } catch (error) {
+      console.error("Error fetching symptom logs:", error)
+      return []
     }
-    
-    setSymptoms(prev => [...prev, newSymptom])
+  }
+
+  // Get symptoms for a specific category
+  const getSymptomsForCategory = async (category_id: string): Promise<Symptom[]> => {
+    try {
+      if (!user) return []
+
+      // Since there's no direct endpoint for this, we'll filter from all symptoms
+      const allSymptoms = await fetchSymptoms()
+      return allSymptoms.filter((symptom) => symptom.categoryId === category_id)
+    } catch (error) {
+      console.error("Error fetching symptoms by category:", error)
+      return []
+    }
+  }
+
+  // Get symptom summary for a date
+  const getSymptomSummaryForDate = async (date: string): Promise<SymptomSummary | null> => {
+    try {
+      if (!user) return null
+
+      const response = await fetch(`http://localhost:5001/api/symptom-logs/summary/${date}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch symptom summary")
+      }
+
+      const data = await response.json()
+      return data
+    } catch (error) {
+      console.error("Error fetching symptom summary:", error)
+      return null
+    }
+  }
+
+  // Add a new custom symptom
+  const addSymptom = async (name: string, category_id: string, icon?: string): Promise<boolean> => {
+    try {
+      if (!user) {
+        throw new Error("User not authenticated")
+      }
+
+      // Note: This endpoint doesn't exist in the provided backend code
+      // You would need to implement it on the backend
+      console.error("Add symptom endpoint not implemented in backend")
+      return false
+
+      /* Implementation if endpoint existed:
+      const response = await fetch("http://localhost:5001/api/symptoms/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({
+          name,
+          categoryId: category_id,
+          icon: icon || "❓",
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error("Failed to add symptom")
+      }
+
+      // Update the symptoms list
+      await fetchSymptoms()
+
+      return true
+      */
+    } catch (error) {
+      console.error("Error adding symptom:", error)
+      return false
+    }
+  }
+
+  // Delete a symptom log
+  const deleteSymptomLog = async (log_id: string): Promise<boolean> => {
+    try {
+      if (!user) {
+        throw new Error("User not authenticated")
+      }
+
+      const response = await fetch(`http://localhost:5001/api/symptom-logs/${log_id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+
+      if (!response.ok) {
+        throw new Error("Failed to delete symptom log")
+      }
+
+      // Update the symptom logs state
+      setSymptomLogs((prev) => prev.filter((log) => log.id !== log_id))
+
+      // Also update the cache
+      setSymptomLogsCache((prevCache) => {
+        const newCache = { ...prevCache }
+        for (const date in newCache) {
+          newCache[date] = newCache[date].filter((log) => log.id !== log_id)
+        }
+        return newCache
+      })
+
+      return true
+    } catch (error) {
+      console.error("Error deleting symptom log:", error)
+      return false
+    }
+  }
+
+  // Get dates with symptoms
+  const getDatesWithSymptoms = async (): Promise<string[]> => {
+    try {
+      if (!user) return []
+
+      const response = await fetch("http://localhost:5001/api/symptom-logs/dates-with-symptoms", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch dates with symptoms")
+      }
+
+      const data = await response.json()
+      return data.dates || []
+    } catch (error) {
+      console.error("Error fetching dates with symptoms:", error)
+      return []
+    }
   }
 
   useEffect(() => {
@@ -860,29 +994,29 @@ const checkInteractions = async (supplementId: string): Promise<string[]> => {
       try {
         console.log(localStorage.getItem("token"))
         console.log("User in TrackerContext:", user)
-        
+
         if (!user) {
           setTrackedSupplements([])
           setIntakeLogs([])
           setSymptomLogs([])
           return
         }
-  
+
         // Fetch tracked supplements from backend
         const response = await fetch("http://localhost:5001/api/tracker_supplements_list/", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-          method: "GET"
+          method: "GET",
         })
-        
+
         if (!response.ok) {
           throw new Error("Failed to fetch tracker data")
         }
-        
+
         const data = await response.json()
         console.log("Raw tracker data:", data)
-        
+
         if (data && data.tracked_supplements) {
           const supplements = data.tracked_supplements.map((s: any) => ({
             id: s._id,
@@ -893,30 +1027,28 @@ const checkInteractions = async (supplementId: string): Promise<string[]> => {
             frequency: s.frequency,
             startDate: s.startDate,
             endDate: s.endDate,
-            notes: s.notes
+            notes: s.notes,
           }))
-          
+
           setTrackedSupplements(supplements)
           console.log("Fetched tracked supplements:", supplements)
         }
-  
+
         // Fetch today's intake logs
         await getTodayIntakeLogs()
-        
-        // Load symptom logs from localStorage
-        try {
-          const savedSymptomLogs = localStorage.getItem(`${user._id}-symptom-logs`)
-          if (savedSymptomLogs) {
-            setSymptomLogs(JSON.parse(savedSymptomLogs))
-          }
-        } catch (error) {
-          console.error("Failed to load symptom logs from localStorage:", error)
-        }
+
+        // Fetch symptoms and categories
+        await fetchSymptoms()
+        await fetchSymptomCategories()
+
+        // Fetch today's symptom logs
+        const today = new Date().toISOString().split("T")[0]
+        await getSymptomLogsForDate(today)
       } catch (error) {
         console.error("Failed to fetch tracker data:", error)
       }
     }
-  
+
     fetchUserTrackerData()
   }, [user])
 
@@ -935,12 +1067,19 @@ const checkInteractions = async (supplementId: string): Promise<string[]> => {
         updateIntakeLog,
         deleteIntakeLog,
         checkInteractions,
+
+        // Updated symptom tracking functions
         symptoms,
         symptomLogs,
         logSymptom,
         getSymptomLogsForDate,
         getSymptomsForCategory,
         addSymptom,
+        fetchSymptoms,
+        fetchSymptomCategories,
+        getSymptomSummaryForDate,
+        deleteSymptomLog,
+        getDatesWithSymptoms,
       }}
     >
       {children}
@@ -955,3 +1094,5 @@ export function useTracker() {
   }
   return context
 }
+
+export type UseTracker = ReturnType<typeof useTracker>

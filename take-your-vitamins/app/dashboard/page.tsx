@@ -7,13 +7,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { Pill, Search, TrendingUp, Activity, FileDown, Award } from "lucide-react"
-import { format, startOfWeek, addDays, subDays } from "date-fns"
+import { format, startOfWeek, addDays, subDays, isAfter } from "date-fns"
 import { Calendar } from "@/components/ui/calendar"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { CategorySymptomLogger } from "@/components/category-symptom-logger"
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts'
 import { generateProgressReport } from "@/lib/pdf-generator"
 import { toast } from "@/components/ui/use-toast"
+import { useMemo, useCallback } from "react"
 
 export default function DashboardPage() {
     const { user } = useAuth()
@@ -26,19 +27,26 @@ export default function DashboardPage() {
         symptomLogs,
     } = useTracker()
 
-    const today = new Date()
-    const [selectedDate, setSelectedDate] = useState(today)
-    const [weekStartDate] = useState(startOfWeek(today, { weekStartsOn: 1 }))
-    const [datesWithSymptoms, setDatesWithSymptoms] = useState<Date[]>([])
+    const [selectedDate, setSelectedDate] = useState(new Date());
+    const [weekStartDate, setWeekStartDate] = useState(
+        startOfWeek(new Date(), { weekStartsOn: 1 })
+    );
+    const [datesWithSymptoms, setDatesWithSymptoms] = useState<Date[]>([]);
+    const [symptomsDialogOpen, setSymptomsDialogOpen] = useState(false);
+    const [supplementsTaken, setSupplementsTaken] = useState<
+        Record<string, Record<number, boolean>>
+    >({});
 
-    // Dialog open states
-    const [symptomsDialogOpen, setSymptomsDialogOpen] = useState(false)
+    const formattedDate = useMemo(
+        () => format(selectedDate, 'EEEE, MMMM d, yyyy'),
+        [selectedDate]
+    );
+    const dateString = useMemo(
+        () => format(selectedDate, 'yyyy-MM-dd'),
+        [selectedDate]
+    );
 
-    // Format date for display
-    const formattedDate = format(selectedDate, "EEEE, MMMM d, yyyy")
-
-    // Get date string for the selected date
-    const dateString = format(selectedDate, "yyyy-MM-dd")
+    const weekdays = useMemo(() => ['M', 'T', 'W', 'T', 'F', 'S', 'S'], []);
 
     // Calculate streak and progress
     const [streak, setStreak] = useState(0)
@@ -142,9 +150,6 @@ export default function DashboardPage() {
         setProgressData(chartData);
     };
 
-    // Generate weekdays for the header
-    const weekdays = ["M", "T", "W", "T", "F", "S", "S"]
-
     // Handle supplement intake logging
     const handleLogIntake = async (supplement: TrackedSupplement, dayIndex: number) => {
         const date = addDays(weekStartDate, dayIndex)
@@ -172,9 +177,6 @@ export default function DashboardPage() {
             console.error("Error logging intake:", error)
         }
     }
-    
-    // State to track which supplements have been taken
-    const [supplementsTaken, setSupplementsTaken] = useState<Record<string, Record<number, boolean>>>({})
 
     // Load supplement status
     const loadSupplementStatus = async () => {
@@ -212,13 +214,49 @@ export default function DashboardPage() {
         }
     }, [trackedSupplements, weekStartDate]);
 
-    // Update the supplement taken status when logging
-    const handleLogIntakeWithState = async (supplement: TrackedSupplement, dayIndex: number) => {
-        await handleLogIntake(supplement, dayIndex)
+    // // Update the supplement taken status when logging
+    // const handleLogIntakeWithState = async (supplement: TrackedSupplement, dayIndex: number) => {
+    //     await handleLogIntake(supplement, dayIndex)
         
-        // Do not manually update state here as we'll reload the full status
-        // Let loadSupplementStatus handle updating the UI accurately
-    }
+    //     // Do not manually update state here as we'll reload the full status
+    //     // Let loadSupplementStatus handle updating the UI accurately
+    // }
+
+
+    // Handle logging intake with state update
+    const handleLogIntakeWithState = useCallback(
+        async (supplement: TrackedSupplement, dayIndex: number) => {
+            const date = addDays(weekStartDate, dayIndex);
+            const dateStr = format(date, 'yyyy-MM-dd');
+
+            const logs = await getIntakeLogsForDate(dateStr);
+            const existingLog = logs.find(
+                (log) => log.tracked_supplement_id === supplement.id
+            );
+
+            if (existingLog) {
+                await deleteIntakeLog(existingLog.id);
+            } else {
+                const dosage = parseFloat(supplement.dosage) || 1;
+                await logIntake(
+                    supplement.id,
+                    dateStr,
+                    dosage,
+                    supplement.unit || 'pill',
+                    ''
+                );
+            }
+
+            setSupplementsTaken((prev) => ({
+                ...prev,
+                [supplement.id]: {
+                    ...prev[supplement.id],
+                    [dayIndex]: !prev[supplement.id]?.[dayIndex],
+                },
+            }));
+        },
+        [weekStartDate, getIntakeLogsForDate, deleteIntakeLog, logIntake]
+    );
 
     // Add a function to handle exporting progress as PDF
     const handleExportProgress = async () => {
@@ -294,21 +332,41 @@ export default function DashboardPage() {
                                     <div key={supplement.id} className="space-y-2">
                                         <h3 className="font-medium">{supplement.supplementName}</h3>
                                         <div className="flex justify-between">
-                                            {weekdays.map((day, index) => (
-                                                <div key={index} className="flex flex-col items-center">
-                                                    <button
-                                                        onClick={() => handleLogIntakeWithState(supplement, index)}
-                                                        className={`w-8 h-8 rounded-full border-2 flex items-center justify-center transition-colors ${supplementsTaken[supplement.id]?.[index]
-                                                            ? "bg-yellow-500 border-yellow-600 text-yellow-950"
-                                                            : "bg-background border-gray-300 hover:border-gray-400"
-                                                            }`}
-                                                        aria-label={`${supplementsTaken[supplement.id]?.[index] ? "Taken" : "Not taken"} on ${format(addDays(weekStartDate, index), "EEEE")}`}
-                                                    >
-                                                        {supplementsTaken[supplement.id]?.[index] ? "✓" : ""}
-                                                    </button>
-                                                    <span className="text-xs mt-1">{day}</span>
-                                                </div>
-                                            ))}
+                                        {weekdays.map((day, index) => {
+                                                const logDate = addDays(weekStartDate, index)
+                                                const isFutureDate = isAfter(logDate, new Date()) // Compare to today
+
+                                                return (
+                                                    <div key={index} className="flex flex-col items-center">
+                                                        <button
+                                                            onClick={() => {
+                                                                if (!isFutureDate) {
+                                                                    handleLogIntakeWithState(supplement, index)
+                                                                }
+                                                            }}
+                                                            disabled={isFutureDate}
+                                                            className={`w-8 h-8 rounded-full border-2 flex items-center justify-center transition-colors 
+                    ${isFutureDate
+                                                                    ? 'bg-white-600 border-gray-300 text-gray-400 cursor-not-allowed'
+                                                                    : supplementsTaken[supplement.id]?.[index]
+                                                                        ? 'bg-yellow-500 border-yellow-600 text-white'
+                                                                        : 'bg-background border-gray-300 hover:border-gray-400'
+                                                                }`}
+                                                            aria-label={
+                                                                isFutureDate
+                                                                    ? `Cannot log for ${format(logDate, 'EEEE')} (future date)`
+                                                                    : `${supplementsTaken[supplement.id]?.[index]
+                                                                        ? 'Taken'
+                                                                        : 'Not taken'
+                                                                    } on ${format(logDate, 'EEEE')}`
+                                                            }
+                                                        >
+                                                            {supplementsTaken[supplement.id]?.[index] && !isFutureDate ? '✓' : ''}
+                                                        </button>
+                                                        <span className="text-xs mt-1">{day}</span>
+                                                    </div>
+                                                )
+                                            })}
                                         </div>
                                     </div>
                                 ))}
@@ -371,7 +429,9 @@ export default function DashboardPage() {
                             <div className="flex items-center justify-center gap-4">
                                 <Dialog open={symptomsDialogOpen} onOpenChange={setSymptomsDialogOpen}>
                                     <DialogTrigger asChild>
-                                        <Button className="flex items-center gap-2 btn-yellow">
+                                        <Button className="flex items-center gap-2 btn-yellow"
+                                        disabled={new Date(dateString) > new Date()}
+                                        >
                                             <Activity className="h-4 w-4" />
                                             Log Symptoms
                                         </Button>

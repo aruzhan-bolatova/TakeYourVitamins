@@ -40,7 +40,7 @@ export default function RootLayout({
       <body
         className={cn(
           montserrat.variable,
-          "relative h-full min-h-screen font-sans",
+          "ml-10 relative h-full min-h-screen font-sans",
         )}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>

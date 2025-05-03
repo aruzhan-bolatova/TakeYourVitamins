@@ -65,7 +65,7 @@ export function SupplementDetail({ supplement }: { supplement: Supplement }) {
                 }
             />
 
-            <Card className="border-primary/20 shadow-md mb-8">
+            <Card className="border-primary/20 shadow-md mb-2">
                 <CardHeader className="bg-primary/5 rounded-t-lg">
                     <CardTitle className="flex items-center gap-2">
                         <Info className="h-5 w-5 text-primary" />
@@ -73,9 +73,21 @@ export function SupplementDetail({ supplement }: { supplement: Supplement }) {
                     </CardTitle>
                     <CardDescription>General information about {supplement.name}</CardDescription>
                 </CardHeader>
-                <CardContent className="pt-6">
+                <CardContent>
                     <div className="prose max-w-none">
                         <p>{supplement.description}</p>
+                        <h3 className="font-medium mb-2 text-green-500">Health Benefits</h3>
+                    <ul className="list-disc list-inside mb-4">
+                        {supplement.scientificDetails.benefits?.map((benefit, index) => (
+                            <li key={index}>{benefit}</li>
+                        ))}
+                    </ul>
+                    <h3 className="font-medium mb-2 text-red-500">Side Effects</h3>
+                    <ul className="list-disc list-inside">
+                        {supplement.scientificDetails.sideEffects?.map((effect, index) => (
+                            <li key={index}>{effect}</li>
+                        ))}
+                    </ul>
                     </div>
                 </CardContent>
             </Card>
