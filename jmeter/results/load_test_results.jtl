@@ -1,0 +1,801 @@
+timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,URL,Latency,IdleTime,Connect
+1746342904867,406,Register New User,201,CREATED,TYV API Users 1-1,text,true,,608,343,1,1,http://localhost:5001/api/auth/register,400,0,28
+1746342905316,18,Get User Profile,200,OK,TYV API Users 1-1,text,true,,573,527,1,1,http://localhost:5001/api/users/681713f98ef92345aa0014c5,18,0,1
+1746342905336,8,Login User,401,UNAUTHORIZED,TYV API Users 1-1,text,false,,251,276,1,1,http://localhost:5001/api/auth/login,7,0,0
+1746342905348,59,Logout User,200,OK,TYV API Users 1-1,text,true,,241,528,1,1,http://localhost:5001/api/auth/logout,59,0,1
+1746342905408,252,Register New User,201,CREATED,TYV API Users 1-1,text,true,,608,343,1,1,http://localhost:5001/api/auth/register,252,0,1
+1746342905661,10,Get User Profile,200,OK,TYV API Users 1-1,text,true,,573,527,1,1,http://localhost:5001/api/users/681713f98ef92345aa0014cb,10,0,1
+1746342905673,6,Login User,401,UNAUTHORIZED,TYV API Users 1-1,text,false,,251,276,1,1,http://localhost:5001/api/auth/login,6,0,1
+1746342905680,4,Logout User,200,OK,TYV API Users 1-1,text,true,,241,528,1,1,http://localhost:5001/api/auth/logout,4,0,1
+1746342905685,252,Register New User,201,CREATED,TYV API Users 1-1,text,true,,608,343,1,1,http://localhost:5001/api/auth/register,252,0,1
+1746342905941,8,Get User Profile,200,OK,TYV API Users 1-1,text,true,,573,527,1,1,http://localhost:5001/api/users/681713f98ef92345aa0014d1,8,0,1
+1746342905950,10,Login User,401,UNAUTHORIZED,TYV API Users 1-1,text,false,,251,276,1,1,http://localhost:5001/api/auth/login,10,0,1
+1746342905961,5,Logout User,200,OK,TYV API Users 1-1,text,true,,241,528,1,1,http://localhost:5001/api/auth/logout,5,0,1
+1746342905967,250,Register New User,201,CREATED,TYV API Users 1-1,text,true,,608,343,1,1,http://localhost:5001/api/auth/register,250,0,1
+1746342906218,8,Get User Profile,200,OK,TYV API Users 1-1,text,true,,573,527,1,1,http://localhost:5001/api/users/681713fa8ef92345aa0014d7,8,0,1
+1746342906227,4,Login User,401,UNAUTHORIZED,TYV API Users 1-1,text,false,,251,276,1,1,http://localhost:5001/api/auth/login,4,0,1
+1746342906233,5,Logout User,200,OK,TYV API Users 1-1,text,true,,241,528,1,1,http://localhost:5001/api/auth/logout,5,0,1
+1746342906240,245,Register New User,201,CREATED,TYV API Users 1-1,text,true,,608,343,1,1,http://localhost:5001/api/auth/register,245,0,1
+1746342906486,7,Get User Profile,200,OK,TYV API Users 1-1,text,true,,573,527,1,1,http://localhost:5001/api/users/681713fa8ef92345aa0014dd,7,0,1
+1746342906494,5,Login User,401,UNAUTHORIZED,TYV API Users 1-1,text,false,,251,276,1,1,http://localhost:5001/api/auth/login,5,0,0
+1746342906500,8,Logout User,200,OK,TYV API Users 1-1,text,true,,241,528,1,1,http://localhost:5001/api/auth/logout,8,0,0
+1746342906508,250,Register New User,201,CREATED,TYV API Users 1-1,text,true,,608,343,1,1,http://localhost:5001/api/auth/register,250,0,1
+1746342906759,6,Get User Profile,200,OK,TYV API Users 1-1,text,true,,573,527,1,1,http://localhost:5001/api/users/681713fa8ef92345aa0014e3,6,0,1
+1746342906769,5,Login User,401,UNAUTHORIZED,TYV API Users 1-1,text,false,,251,276,1,1,http://localhost:5001/api/auth/login,5,0,0
+1746342906776,5,Logout User,200,OK,TYV API Users 1-1,text,true,,241,528,1,1,http://localhost:5001/api/auth/logout,5,0,0
+1746342906783,252,Register New User,201,CREATED,TYV API Users 1-1,text,true,,608,343,1,1,http://localhost:5001/api/auth/register,251,0,1
+1746342907037,6,Get User Profile,200,OK,TYV API Users 1-1,text,true,,573,527,1,1,http://localhost:5001/api/users/681713fb8ef92345aa0014e9,6,0,1
+1746342907044,4,Login User,401,UNAUTHORIZED,TYV API Users 1-1,text,false,,251,276,1,1,http://localhost:5001/api/auth/login,4,0,0
+1746342907049,5,Logout User,200,OK,TYV API Users 1-1,text,true,,241,528,1,1,http://localhost:5001/api/auth/logout,4,0,1
+1746342907054,244,Register New User,201,CREATED,TYV API Users 1-1,text,true,,608,343,1,1,http://localhost:5001/api/auth/register,244,0,0
+1746342907299,6,Get User Profile,200,OK,TYV API Users 1-1,text,true,,573,527,1,1,http://localhost:5001/api/users/681713fb8ef92345aa0014ef,6,0,0
+1746342907306,5,Login User,401,UNAUTHORIZED,TYV API Users 1-1,text,false,,251,276,1,1,http://localhost:5001/api/auth/login,5,0,0
+1746342907313,5,Logout User,200,OK,TYV API Users 1-1,text,true,,241,528,1,1,http://localhost:5001/api/auth/logout,5,0,0
+1746342907319,246,Register New User,201,CREATED,TYV API Users 1-1,text,true,,608,343,1,1,http://localhost:5001/api/auth/register,246,0,1
+1746342907565,6,Get User Profile,200,OK,TYV API Users 1-1,text,true,,573,527,1,1,http://localhost:5001/api/users/681713fb8ef92345aa0014f5,6,0,1
+1746342907572,2,Login User,401,UNAUTHORIZED,TYV API Users 1-1,text,false,,251,276,1,1,http://localhost:5001/api/auth/login,2,0,0
+1746342907575,4,Logout User,200,OK,TYV API Users 1-1,text,true,,241,528,1,1,http://localhost:5001/api/auth/logout,4,0,0
+1746342907579,246,Register New User,201,CREATED,TYV API Users 1-1,text,true,,608,343,2,2,http://localhost:5001/api/auth/register,246,0,0
+1746342907585,244,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-2,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,244,0,1
+1746342907827,6,Get User Profile,200,OK,TYV API Users 1-1,text,true,,573,527,2,2,http://localhost:5001/api/users/681713fb8ef92345aa0014fb,6,0,0
+1746342907831,3,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-2,text,false,,296,208,2,2,http://localhost:5001/api/users/,2,0,1
+1746342907836,18,Login User,401,UNAUTHORIZED,TYV API Users 1-2,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,18,0,0
+1746342907836,18,Login User,401,UNAUTHORIZED,TYV API Users 1-1,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,18,0,1
+1746342907854,6,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-2,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,6,0,4
+1746342907854,9,Logout User,200,OK,TYV API Users 1-1,text,true,,241,528,2,2,http://localhost:5001/api/auth/logout,9,0,4
+1746342907861,2,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-2,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,2,0,1
+1746342907865,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-2,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342907866,1,Login User,500,INTERNAL SERVER ERROR,TYV API Users 1-2,text,false,,303,276,2,2,http://localhost:5001/api/auth/login,1,0,1
+1746342907864,3,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-1,text,false,,319,343,2,2,http://localhost:5001/api/auth/register,3,0,1
+1746342907868,0,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-2,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,0,0,0
+1746342907868,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-1,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,1
+1746342907871,1,Login User,500,INTERNAL SERVER ERROR,TYV API Users 1-1,text,false,,303,276,2,2,http://localhost:5001/api/auth/login,1,0,0
+1746342907869,3,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-2,text,false,,319,343,2,2,http://localhost:5001/api/auth/register,3,0,0
+1746342907872,3,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-1,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,3,0,2
+1746342907873,2,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-2,text,false,,296,208,2,2,http://localhost:5001/api/users/,2,0,1
+1746342907875,6,Login User,401,UNAUTHORIZED,TYV API Users 1-2,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,6,0,1
+1746342907884,2,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-2,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,2,0,1
+1746342907875,247,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-1,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,247,0,1
+1746342908124,2,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-1,text,false,,296,208,2,2,http://localhost:5001/api/users/,2,0,1
+1746342908127,4,Login User,401,UNAUTHORIZED,TYV API Users 1-1,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342907887,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-2,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,1
+1746342908132,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-1,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,1
+1746342908133,4,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-2,text,false,,296,208,2,2,http://localhost:5001/api/users/,4,0,2
+1746342908138,1,Login User,500,INTERNAL SERVER ERROR,TYV API Users 1-2,text,false,,303,276,2,2,http://localhost:5001/api/auth/login,1,0,1
+1746342908133,7,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-1,text,false,,319,343,2,2,http://localhost:5001/api/auth/register,7,0,3
+1746342908140,6,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-2,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,6,0,1
+1746342908140,6,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-1,text,false,,296,208,2,2,http://localhost:5001/api/users/,6,0,1
+1746342908147,6,Login User,401,UNAUTHORIZED,TYV API Users 1-1,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,6,0,1
+1746342908155,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-1,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,0
+1746342908147,247,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-2,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,247,0,1
+1746342908397,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-2,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342908398,5,Login User,401,UNAUTHORIZED,TYV API Users 1-2,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,5,0,0
+1746342908403,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-2,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,1
+1746342908158,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-1,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,1
+1746342908405,2,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-1,text,false,,296,208,2,2,http://localhost:5001/api/users/,2,0,1
+1746342908408,1,Login User,500,INTERNAL SERVER ERROR,TYV API Users 1-1,text,false,,303,276,2,2,http://localhost:5001/api/auth/login,1,0,0
+1746342908404,5,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-2,text,false,,319,343,2,2,http://localhost:5001/api/auth/register,5,0,2
+1746342908409,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-1,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,0
+1746342908409,2,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-2,text,false,,296,208,2,2,http://localhost:5001/api/users/,2,0,1
+1746342908411,2,Login User,500,INTERNAL SERVER ERROR,TYV API Users 1-2,text,false,,303,276,2,2,http://localhost:5001/api/auth/login,2,0,0
+1746342908413,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-2,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,0
+1746342908415,253,Register New User,201,CREATED,TYV API Users 1-2,text,true,,608,343,2,2,http://localhost:5001/api/auth/register,253,0,1
+1746342908669,7,Get User Profile,200,OK,TYV API Users 1-2,text,true,,573,527,2,2,http://localhost:5001/api/users/681713fc8ef92345aa001514,7,0,1
+1746342908676,4,Login User,401,UNAUTHORIZED,TYV API Users 1-2,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,1
+1746342908682,4,Logout User,200,OK,TYV API Users 1-2,text,true,,241,528,2,2,http://localhost:5001/api/auth/logout,4,0,0
+1746342908410,503,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-1,text,false,,319,343,2,2,http://localhost:5001/api/auth/register,503,0,1
+1746342908915,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-1,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,1
+1746342908917,5,Login User,401,UNAUTHORIZED,TYV API Users 1-1,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,5,0,0
+1746342908924,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-1,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,0
+1746342908686,247,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-2,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,247,0,3
+1746342908934,0,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-2,text,false,,296,208,2,2,http://localhost:5001/api/users/,0,0,0
+1746342908935,3,Login User,401,UNAUTHORIZED,TYV API Users 1-2,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,3,0,0
+1746342908939,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-2,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,0
+1746342908928,245,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-1,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,245,0,0
+1746342909174,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-1,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342909175,5,Login User,401,UNAUTHORIZED,TYV API Users 1-1,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,5,0,1
+1746342909180,3,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-1,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,2,0,2
+1746342908940,245,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-2,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,245,0,0
+1746342909185,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-2,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342909186,5,Login User,401,UNAUTHORIZED,TYV API Users 1-2,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,5,0,1
+1746342909191,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-2,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,1
+1746342909193,243,Register New User,201,CREATED,TYV API Users 1-2,text,true,,608,343,2,2,http://localhost:5001/api/auth/register,243,0,1
+1746342909437,5,Get User Profile,200,OK,TYV API Users 1-2,text,true,,573,527,2,2,http://localhost:5001/api/users/681713fd8ef92345aa001525,5,0,0
+1746342909443,4,Login User,401,UNAUTHORIZED,TYV API Users 1-2,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342909448,4,Logout User,200,OK,TYV API Users 1-2,text,true,,241,528,2,2,http://localhost:5001/api/auth/logout,4,0,0
+1746342909183,505,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-1,text,false,,319,343,2,2,http://localhost:5001/api/auth/register,505,0,1
+1746342909691,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-1,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342909453,243,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-2,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,242,0,0
+1746342909692,4,Login User,500,INTERNAL SERVER ERROR,TYV API Users 1-1,text,false,,303,276,2,2,http://localhost:5001/api/auth/login,4,0,1
+1746342909696,2,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-1,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,2,0,1
+1746342909696,2,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-2,text,false,,296,208,2,2,http://localhost:5001/api/users/,2,0,1
+1746342909698,6,Login User,401,UNAUTHORIZED,TYV API Users 1-2,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,6,0,0
+1746342909705,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-2,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,0
+1746342909698,247,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-1,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,1
+1746342909947,2,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-1,text,false,,296,208,2,2,http://localhost:5001/api/users/,2,0,0
+1746342909706,245,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-2,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,245,0,1
+1746342909951,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-2,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342909949,4,Login User,500,INTERNAL SERVER ERROR,TYV API Users 1-1,text,false,,303,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342909953,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-1,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,1
+1746342909952,4,Login User,500,INTERNAL SERVER ERROR,TYV API Users 1-2,text,false,,303,276,2,2,http://localhost:5001/api/auth/login,4,0,1
+1746342909955,1,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-1,text,false,,319,343,2,2,http://localhost:5001/api/auth/register,1,0,0
+1746342909957,2,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-1,text,false,,296,208,2,2,http://localhost:5001/api/users/,2,0,0
+1746342909957,2,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-2,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,2,0,0
+1746342909960,8,Login User,401,UNAUTHORIZED,TYV API Users 1-1,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,8,0,0
+1746342909971,2,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-1,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,2,0,0
+1746342909960,247,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-2,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,247,0,0
+1746342910209,2,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-2,text,false,,296,208,2,2,http://localhost:5001/api/users/,2,0,1
+1746342910213,6,Login User,401,UNAUTHORIZED,TYV API Users 1-2,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,6,0,1
+1746342909973,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-1,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,1
+1746342910223,6,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-2,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,6,0,3
+1746342910224,5,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-1,text,false,,296,208,2,2,http://localhost:5001/api/users/,5,0,2
+1746342910235,9,Login User,401,UNAUTHORIZED,TYV API Users 1-1,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,9,0,3
+1746342910235,9,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-2,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,9,0,3
+1746342910249,3,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-2,text,false,,296,208,2,2,http://localhost:5001/api/users/,3,0,2
+1746342910249,3,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-1,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,3,0,2
+1746342910252,23,Login User,401,UNAUTHORIZED,TYV API Users 1-2,text,false,,251,276,1,1,http://localhost:5001/api/auth/login,23,0,1
+1746342910275,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-2,text,false,,296,233,1,1,http://localhost:5001/api/auth/logout,1,0,1
+1746342910277,247,Register New User,201,CREATED,TYV API Users 1-2,text,true,,608,343,1,1,http://localhost:5001/api/auth/register,247,0,0
+1746342910526,7,Get User Profile,200,OK,TYV API Users 1-2,text,true,,573,527,1,1,http://localhost:5001/api/users/681713fe8ef92345aa00153e,7,0,2
+1746342910534,3,Login User,401,UNAUTHORIZED,TYV API Users 1-2,text,false,,251,276,1,1,http://localhost:5001/api/auth/login,3,0,0
+1746342910539,6,Logout User,200,OK,TYV API Users 1-2,text,true,,241,528,1,1,http://localhost:5001/api/auth/logout,6,0,0
+1746342910546,247,Register New User,201,CREATED,TYV API Users 1-2,text,true,,608,343,2,2,http://localhost:5001/api/auth/register,247,0,0
+1746342910794,6,Get User Profile,200,OK,TYV API Users 1-2,text,true,,572,527,2,2,http://localhost:5001/api/users/681713fe8ef92345aa001544,6,0,1
+1746342910801,7,Login User,401,UNAUTHORIZED,TYV API Users 1-2,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,7,0,3
+1746342910808,4,Logout User,200,OK,TYV API Users 1-2,text,true,,241,528,2,2,http://localhost:5001/api/auth/logout,4,0,1
+1746342910581,245,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-3,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,245,0,1
+1746342910827,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-3,text,false,,296,208,2,2,http://localhost:5001/api/users/,0,0,0
+1746342910828,4,Login User,401,UNAUTHORIZED,TYV API Users 1-3,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342910832,0,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-3,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,0,0,0
+1746342910812,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-2,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,1
+1746342911060,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-2,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342911062,4,Login User,401,UNAUTHORIZED,TYV API Users 1-2,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342911067,0,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-2,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,0,0,0
+1746342910833,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-3,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,0
+1746342911081,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-3,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,1
+1746342911082,4,Login User,401,UNAUTHORIZED,TYV API Users 1-3,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,1
+1746342911086,0,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-3,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,0,0,0
+1746342911068,302,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-2,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,302,0,0
+1746342911371,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-2,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342911372,4,Login User,401,UNAUTHORIZED,TYV API Users 1-2,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342911380,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-2,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,0,0,0
+1746342911087,301,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-3,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,301,0,0
+1746342911389,0,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-3,text,false,,296,208,2,2,http://localhost:5001/api/users/,0,0,0
+1746342911390,4,Login User,401,UNAUTHORIZED,TYV API Users 1-3,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,3,0,0
+1746342911394,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-3,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,1
+1746342911381,245,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-2,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,245,0,0
+1746342911628,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-2,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342911629,4,Login User,401,UNAUTHORIZED,TYV API Users 1-2,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342911633,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-2,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,0
+1746342911395,245,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-3,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,245,0,0
+1746342911641,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-3,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342911642,5,Login User,401,UNAUTHORIZED,TYV API Users 1-3,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,5,0,2
+1746342911647,2,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-3,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,2,0,1
+1746342911634,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-2,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,0
+1746342911880,2,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-2,text,false,,296,208,2,2,http://localhost:5001/api/users/,2,0,1
+1746342911882,4,Login User,401,UNAUTHORIZED,TYV API Users 1-2,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342911886,2,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-2,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,2,0,1
+1746342911649,245,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-3,text,false,,310,343,1,1,http://localhost:5001/api/auth/register,245,0,0
+1746342911894,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-3,text,false,,296,208,1,1,http://localhost:5001/api/users/,1,0,1
+1746342911896,5,Login User,401,UNAUTHORIZED,TYV API Users 1-3,text,false,,251,276,1,1,http://localhost:5001/api/auth/login,5,0,1
+1746342911901,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-3,text,false,,296,233,1,1,http://localhost:5001/api/auth/logout,1,0,0
+1746342911902,247,Register New User,201,CREATED,TYV API Users 1-3,text,true,,608,343,1,1,http://localhost:5001/api/auth/register,246,0,0
+1746342912150,6,Get User Profile,200,OK,TYV API Users 1-3,text,true,,573,527,1,1,http://localhost:5001/api/users/681714008ef92345aa001564,6,0,0
+1746342912156,6,Login User,401,UNAUTHORIZED,TYV API Users 1-3,text,false,,251,276,1,1,http://localhost:5001/api/auth/login,6,0,0
+1746342912163,4,Logout User,200,OK,TYV API Users 1-3,text,true,,241,528,1,1,http://localhost:5001/api/auth/logout,4,0,1
+1746342912167,245,Register New User,201,CREATED,TYV API Users 1-3,text,true,,608,343,1,1,http://localhost:5001/api/auth/register,245,0,1
+1746342912413,6,Get User Profile,200,OK,TYV API Users 1-3,text,true,,573,527,1,1,http://localhost:5001/api/users/681714008ef92345aa00156a,6,0,0
+1746342912420,5,Login User,401,UNAUTHORIZED,TYV API Users 1-3,text,false,,251,276,1,1,http://localhost:5001/api/auth/login,5,0,1
+1746342912427,5,Logout User,200,OK,TYV API Users 1-3,text,true,,241,528,1,1,http://localhost:5001/api/auth/logout,5,0,1
+1746342912432,252,Register New User,201,CREATED,TYV API Users 1-3,text,true,,608,343,1,1,http://localhost:5001/api/auth/register,252,0,1
+1746342912685,6,Get User Profile,200,OK,TYV API Users 1-3,text,true,,573,527,1,1,http://localhost:5001/api/users/681714008ef92345aa001570,6,0,1
+1746342912691,4,Login User,401,UNAUTHORIZED,TYV API Users 1-3,text,false,,251,276,1,1,http://localhost:5001/api/auth/login,4,0,1
+1746342912696,6,Logout User,200,OK,TYV API Users 1-3,text,true,,241,528,1,1,http://localhost:5001/api/auth/logout,5,0,2
+1746342912703,251,Register New User,201,CREATED,TYV API Users 1-3,text,true,,608,343,1,1,http://localhost:5001/api/auth/register,251,0,4
+1746342912955,6,Get User Profile,200,OK,TYV API Users 1-3,text,true,,573,527,1,1,http://localhost:5001/api/users/681714008ef92345aa001576,6,0,1
+1746342912962,3,Login User,401,UNAUTHORIZED,TYV API Users 1-3,text,false,,251,276,1,1,http://localhost:5001/api/auth/login,3,0,0
+1746342912966,4,Logout User,200,OK,TYV API Users 1-3,text,true,,241,528,1,1,http://localhost:5001/api/auth/logout,4,0,0
+1746342912970,249,Register New User,201,CREATED,TYV API Users 1-3,text,true,,608,343,1,1,http://localhost:5001/api/auth/register,249,0,0
+1746342913222,6,Get User Profile,200,OK,TYV API Users 1-3,text,true,,573,527,1,1,http://localhost:5001/api/users/681714018ef92345aa00157c,6,0,1
+1746342913229,4,Login User,401,UNAUTHORIZED,TYV API Users 1-3,text,false,,251,276,1,1,http://localhost:5001/api/auth/login,3,0,0
+1746342913233,6,Logout User,200,OK,TYV API Users 1-3,text,true,,241,528,1,1,http://localhost:5001/api/auth/logout,6,0,0
+1746342913239,249,Register New User,201,CREATED,TYV API Users 1-3,text,true,,608,343,1,1,http://localhost:5001/api/auth/register,249,0,1
+1746342913489,7,Get User Profile,200,OK,TYV API Users 1-3,text,true,,572,527,1,1,http://localhost:5001/api/users/681714018ef92345aa001582,7,0,1
+1746342913496,4,Login User,401,UNAUTHORIZED,TYV API Users 1-3,text,false,,251,276,1,1,http://localhost:5001/api/auth/login,4,0,0
+1746342913501,5,Logout User,200,OK,TYV API Users 1-3,text,true,,241,528,1,1,http://localhost:5001/api/auth/logout,5,0,1
+1746342913507,248,Register New User,201,CREATED,TYV API Users 1-3,text,true,,608,343,2,2,http://localhost:5001/api/auth/register,248,0,1
+1746342913756,7,Get User Profile,200,OK,TYV API Users 1-3,text,true,,573,527,2,2,http://localhost:5001/api/users/681714018ef92345aa001588,7,0,1
+1746342913763,4,Login User,401,UNAUTHORIZED,TYV API Users 1-3,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342913767,4,Logout User,200,OK,TYV API Users 1-3,text,true,,241,528,2,2,http://localhost:5001/api/auth/logout,4,0,0
+1746342913579,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-4,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,2
+1746342913826,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-4,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342913827,6,Login User,401,UNAUTHORIZED,TYV API Users 1-4,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,5,0,1
+1746342913833,2,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-4,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,2,0,0
+1746342913771,247,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-3,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,247,0,1
+1746342914019,2,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-3,text,false,,296,208,2,2,http://localhost:5001/api/users/,2,0,1
+1746342914021,3,Login User,401,UNAUTHORIZED,TYV API Users 1-3,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,3,0,0
+1746342914024,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-3,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,1
+1746342913836,259,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-4,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,259,0,0
+1746342914097,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-4,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342914098,4,Login User,401,UNAUTHORIZED,TYV API Users 1-4,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342914102,2,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-4,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,0
+1746342914026,250,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-3,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,250,0,1
+1746342914280,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-3,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342914281,4,Login User,401,UNAUTHORIZED,TYV API Users 1-3,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,1
+1746342914286,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-3,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,1
+1746342914104,248,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-4,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,248,0,0
+1746342914354,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-4,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342914355,5,Login User,401,UNAUTHORIZED,TYV API Users 1-4,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,5,0,1
+1746342914360,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-4,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,1
+1746342914288,247,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-3,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,247,0,0
+1746342914535,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-3,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,1
+1746342914536,5,Login User,401,UNAUTHORIZED,TYV API Users 1-3,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,5,0,1
+1746342914541,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-3,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,1
+1746342914361,247,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-4,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,247,0,1
+1746342914609,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-4,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342914610,3,Login User,401,UNAUTHORIZED,TYV API Users 1-4,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,3,0,0
+1746342914614,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-4,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,0
+1746342914542,248,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-3,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,248,0,1
+1746342914791,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-3,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342914792,4,Login User,401,UNAUTHORIZED,TYV API Users 1-3,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342914798,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-3,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,0,0,0
+1746342914615,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-4,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,0
+1746342914862,2,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-4,text,false,,296,208,2,2,http://localhost:5001/api/users/,2,0,1
+1746342914864,4,Login User,401,UNAUTHORIZED,TYV API Users 1-4,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342914868,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-4,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,1
+1746342914799,247,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-3,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,247,0,0
+1746342915047,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-3,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,1
+1746342915049,4,Login User,401,UNAUTHORIZED,TYV API Users 1-3,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342915053,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-3,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,1
+1746342914869,249,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-4,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,249,0,1
+1746342915119,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-4,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342915120,4,Login User,401,UNAUTHORIZED,TYV API Users 1-4,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,1
+1746342915125,2,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-4,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,1
+1746342915055,247,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-3,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,0
+1746342915303,2,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-3,text,false,,296,208,2,2,http://localhost:5001/api/users/,2,0,1
+1746342915307,12,Login User,401,UNAUTHORIZED,TYV API Users 1-3,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,12,0,3
+1746342915322,5,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-3,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,4,0,4
+1746342915128,249,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-4,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,248,0,0
+1746342915378,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-4,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342915380,4,Login User,401,UNAUTHORIZED,TYV API Users 1-4,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342915385,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-4,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,0
+1746342915329,248,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-3,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,248,0,1
+1746342915578,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-3,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342915579,3,Login User,401,UNAUTHORIZED,TYV API Users 1-3,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,3,0,0
+1746342915582,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-3,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,1
+1746342915386,247,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-4,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,247,0,1
+1746342915633,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-4,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342915634,4,Login User,401,UNAUTHORIZED,TYV API Users 1-4,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342915638,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-4,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,1
+1746342915583,245,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-3,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,245,0,0
+1746342915829,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-3,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,1
+1746342915830,5,Login User,401,UNAUTHORIZED,TYV API Users 1-3,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,5,0,1
+1746342915836,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-3,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,0
+1746342915640,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-4,text,false,,310,343,1,1,http://localhost:5001/api/auth/register,246,0,0
+1746342915887,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-4,text,false,,296,208,1,1,http://localhost:5001/api/users/,1,0,0
+1746342915888,5,Login User,401,UNAUTHORIZED,TYV API Users 1-4,text,false,,251,276,1,1,http://localhost:5001/api/auth/login,5,0,1
+1746342915893,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-4,text,false,,296,233,1,1,http://localhost:5001/api/auth/logout,1,0,1
+1746342915894,253,Register New User,201,CREATED,TYV API Users 1-4,text,true,,608,343,1,1,http://localhost:5001/api/auth/register,253,0,1
+1746342916148,7,Get User Profile,200,OK,TYV API Users 1-4,text,true,,573,527,1,1,http://localhost:5001/api/users/681714048ef92345aa0015c0,7,0,1
+1746342916155,4,Login User,401,UNAUTHORIZED,TYV API Users 1-4,text,false,,251,276,1,1,http://localhost:5001/api/auth/login,4,0,0
+1746342916160,4,Logout User,200,OK,TYV API Users 1-4,text,true,,241,528,1,1,http://localhost:5001/api/auth/logout,4,0,0
+1746342916165,262,Register New User,201,CREATED,TYV API Users 1-4,text,true,,608,343,1,1,http://localhost:5001/api/auth/register,262,0,0
+1746342916429,7,Get User Profile,200,OK,TYV API Users 1-4,text,true,,573,527,1,1,http://localhost:5001/api/users/681714048ef92345aa0015c6,6,0,1
+1746342916436,4,Login User,401,UNAUTHORIZED,TYV API Users 1-4,text,false,,251,276,1,1,http://localhost:5001/api/auth/login,4,0,0
+1746342916441,4,Logout User,200,OK,TYV API Users 1-4,text,true,,241,528,1,1,http://localhost:5001/api/auth/logout,4,0,0
+1746342916445,244,Register New User,201,CREATED,TYV API Users 1-4,text,true,,608,343,2,2,http://localhost:5001/api/auth/register,244,0,1
+1746342916690,6,Get User Profile,200,OK,TYV API Users 1-4,text,true,,573,527,2,2,http://localhost:5001/api/users/681714048ef92345aa0015cc,6,0,0
+1746342916696,4,Login User,401,UNAUTHORIZED,TYV API Users 1-4,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342916700,4,Logout User,200,OK,TYV API Users 1-4,text,true,,241,528,2,2,http://localhost:5001/api/auth/logout,4,0,0
+1746342916614,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-5,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,245,0,1
+1746342916861,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-5,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342916862,4,Login User,401,UNAUTHORIZED,TYV API Users 1-5,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,1
+1746342916867,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-5,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,0
+1746342916704,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-4,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,1
+1746342916951,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-4,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342916952,4,Login User,401,UNAUTHORIZED,TYV API Users 1-4,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342916956,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-4,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,0
+1746342916868,247,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-5,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,247,0,0
+1746342917116,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-5,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342917117,4,Login User,401,UNAUTHORIZED,TYV API Users 1-5,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342917122,2,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-5,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,2,0,1
+1746342916957,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-4,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,0
+1746342917204,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-4,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,1
+1746342917205,5,Login User,401,UNAUTHORIZED,TYV API Users 1-4,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,5,0,1
+1746342917210,2,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-4,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,2,0,1
+1746342917124,247,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-5,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,1
+1746342917371,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-5,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,1
+1746342917372,4,Login User,401,UNAUTHORIZED,TYV API Users 1-5,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,1
+1746342917377,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-5,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,1
+1746342917212,247,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-4,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,247,0,1
+1746342917461,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-4,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,1
+1746342917463,3,Login User,401,UNAUTHORIZED,TYV API Users 1-4,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,3,0,0
+1746342917467,0,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-4,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,0,0,0
+1746342917379,245,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-5,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,245,0,0
+1746342917625,0,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-5,text,false,,296,208,2,2,http://localhost:5001/api/users/,0,0,0
+1746342917626,4,Login User,401,UNAUTHORIZED,TYV API Users 1-5,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342917630,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-5,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,1
+1746342917468,245,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-4,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,245,0,0
+1746342917713,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-4,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342917714,4,Login User,401,UNAUTHORIZED,TYV API Users 1-4,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342917719,3,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-4,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,3,0,2
+1746342917631,247,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-5,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,247,0,1
+1746342917879,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-5,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,1
+1746342917880,4,Login User,401,UNAUTHORIZED,TYV API Users 1-5,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342917884,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-5,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,0
+1746342917723,248,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-4,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,248,0,1
+1746342917972,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-4,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,1
+1746342917974,3,Login User,401,UNAUTHORIZED,TYV API Users 1-4,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,3,0,0
+1746342917977,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-4,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,1
+1746342917885,248,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-5,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,247,0,0
+1746342918133,2,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-5,text,false,,296,208,2,2,http://localhost:5001/api/users/,2,0,1
+1746342918135,4,Login User,401,UNAUTHORIZED,TYV API Users 1-5,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342918139,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-5,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,1
+1746342917979,257,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-4,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,257,0,0
+1746342918236,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-4,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,1
+1746342918237,5,Login User,401,UNAUTHORIZED,TYV API Users 1-4,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,5,0,1
+1746342918243,0,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-4,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,0,0,0
+1746342918140,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-5,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,1
+1746342918388,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-5,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342918389,4,Login User,401,UNAUTHORIZED,TYV API Users 1-5,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,1
+1746342918394,0,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-5,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,0,0,0
+1746342918243,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-4,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,1
+1746342918489,3,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-4,text,false,,296,208,2,2,http://localhost:5001/api/users/,3,0,2
+1746342918492,9,Login User,401,UNAUTHORIZED,TYV API Users 1-4,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,9,0,5
+1746342918503,2,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-4,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,2,0,1
+1746342918395,245,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-5,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,245,0,0
+1746342918642,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-5,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342918643,4,Login User,401,UNAUTHORIZED,TYV API Users 1-5,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342918647,2,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-5,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,0
+1746342918511,247,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-4,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,1
+1746342918758,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-4,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,1
+1746342918759,3,Login User,401,UNAUTHORIZED,TYV API Users 1-4,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,3,0,0
+1746342918762,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-4,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,1
+1746342918649,244,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-5,text,false,,310,343,1,1,http://localhost:5001/api/auth/register,243,0,0
+1746342918894,2,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-5,text,false,,296,208,1,1,http://localhost:5001/api/users/,2,0,2
+1746342918897,4,Login User,401,UNAUTHORIZED,TYV API Users 1-5,text,false,,251,276,1,1,http://localhost:5001/api/auth/login,4,0,0
+1746342918901,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-5,text,false,,296,233,1,1,http://localhost:5001/api/auth/logout,1,0,1
+1746342918902,244,Register New User,201,CREATED,TYV API Users 1-5,text,true,,608,343,1,1,http://localhost:5001/api/auth/register,244,0,1
+1746342919147,6,Get User Profile,200,OK,TYV API Users 1-5,text,true,,573,527,1,1,http://localhost:5001/api/users/681714078ef92345aa001604,6,0,0
+1746342919153,4,Login User,401,UNAUTHORIZED,TYV API Users 1-5,text,false,,251,276,1,1,http://localhost:5001/api/auth/login,4,0,0
+1746342919157,5,Logout User,200,OK,TYV API Users 1-5,text,true,,241,528,1,1,http://localhost:5001/api/auth/logout,5,0,1
+1746342919162,250,Register New User,201,CREATED,TYV API Users 1-5,text,true,,608,343,1,1,http://localhost:5001/api/auth/register,250,0,2
+1746342919414,7,Get User Profile,200,OK,TYV API Users 1-5,text,true,,573,527,1,1,http://localhost:5001/api/users/681714078ef92345aa00160a,7,0,1
+1746342919421,4,Login User,401,UNAUTHORIZED,TYV API Users 1-5,text,false,,251,276,1,1,http://localhost:5001/api/auth/login,4,0,1
+1746342919425,31,Logout User,200,OK,TYV API Users 1-5,text,true,,241,528,1,1,http://localhost:5001/api/auth/logout,31,0,0
+1746342919458,273,Register New User,201,CREATED,TYV API Users 1-5,text,true,,608,343,2,2,http://localhost:5001/api/auth/register,273,0,3
+1746342919732,6,Get User Profile,200,OK,TYV API Users 1-5,text,true,,573,527,2,2,http://localhost:5001/api/users/681714078ef92345aa001610,6,0,0
+1746342919738,3,Login User,401,UNAUTHORIZED,TYV API Users 1-5,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,3,0,0
+1746342919742,4,Logout User,200,OK,TYV API Users 1-5,text,true,,241,528,2,2,http://localhost:5001/api/auth/logout,4,0,0
+1746342919574,245,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-6,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,245,0,0
+1746342919819,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-6,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,1
+1746342919820,4,Login User,401,UNAUTHORIZED,TYV API Users 1-6,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,1
+1746342919824,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-6,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,1
+1746342919746,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-5,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,0
+1746342919993,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-5,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342919994,4,Login User,401,UNAUTHORIZED,TYV API Users 1-5,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342919998,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-5,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,0
+1746342919826,245,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-6,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,245,0,0
+1746342920072,0,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-6,text,false,,296,208,2,2,http://localhost:5001/api/users/,0,0,0
+1746342920073,3,Login User,401,UNAUTHORIZED,TYV API Users 1-6,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,3,0,0
+1746342920076,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-6,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,0
+1746342919999,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-5,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,0
+1746342920248,2,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-5,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,1
+1746342920251,6,Login User,401,UNAUTHORIZED,TYV API Users 1-5,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,6,0,2
+1746342920261,2,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-5,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,2,0,1
+1746342920077,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-6,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,1
+1746342920324,2,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-6,text,false,,296,208,2,2,http://localhost:5001/api/users/,2,0,1
+1746342920326,5,Login User,401,UNAUTHORIZED,TYV API Users 1-6,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,5,0,2
+1746342920331,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-6,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,1
+1746342920264,247,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-5,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,247,0,1
+1746342920511,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-5,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,1
+1746342920512,4,Login User,401,UNAUTHORIZED,TYV API Users 1-5,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,1
+1746342920516,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-5,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,1
+1746342920332,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-6,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,1
+1746342920579,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-6,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342920580,4,Login User,401,UNAUTHORIZED,TYV API Users 1-6,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342920584,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-6,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,1
+1746342920517,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-5,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,0
+1746342920766,2,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-5,text,false,,296,208,2,2,http://localhost:5001/api/users/,2,0,1
+1746342920768,4,Login User,401,UNAUTHORIZED,TYV API Users 1-5,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342920772,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-5,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,1
+1746342920585,315,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-6,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,315,0,0
+1746342920901,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-6,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342920902,4,Login User,401,UNAUTHORIZED,TYV API Users 1-6,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,1
+1746342920907,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-6,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,0
+1746342920773,315,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-5,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,315,0,0
+1746342921089,2,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-5,text,false,,296,208,2,2,http://localhost:5001/api/users/,2,0,1
+1746342921091,5,Login User,401,UNAUTHORIZED,TYV API Users 1-5,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,5,0,1
+1746342921096,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-5,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,0
+1746342920908,247,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-6,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,247,0,1
+1746342921156,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-6,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342921157,4,Login User,401,UNAUTHORIZED,TYV API Users 1-6,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342921162,0,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-6,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,0,0,0
+1746342921097,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-5,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,0
+1746342921344,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-5,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342921345,4,Login User,401,UNAUTHORIZED,TYV API Users 1-5,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342921349,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-5,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,0
+1746342921163,247,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-6,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,247,0,0
+1746342921410,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-6,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,1
+1746342921412,3,Login User,401,UNAUTHORIZED,TYV API Users 1-6,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,3,0,0
+1746342921417,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-6,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,1
+1746342921350,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-5,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,0
+1746342921597,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-5,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,1
+1746342921598,4,Login User,401,UNAUTHORIZED,TYV API Users 1-5,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,1
+1746342921602,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-5,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,1
+1746342921418,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-6,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,1
+1746342921664,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-6,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,1
+1746342921665,4,Login User,401,UNAUTHORIZED,TYV API Users 1-6,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,1
+1746342921669,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-6,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,1
+1746342921603,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-5,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,0
+1746342921850,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-5,text,false,,296,208,2,2,http://localhost:5001/api/users/,0,0,0
+1746342921851,3,Login User,401,UNAUTHORIZED,TYV API Users 1-5,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,3,0,0
+1746342921855,0,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-5,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,0,0,0
+1746342921670,245,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-6,text,false,,310,343,1,1,http://localhost:5001/api/auth/register,245,0,0
+1746342921916,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-6,text,false,,296,208,1,1,http://localhost:5001/api/users/,1,0,0
+1746342921917,4,Login User,401,UNAUTHORIZED,TYV API Users 1-6,text,false,,251,276,1,1,http://localhost:5001/api/auth/login,4,0,0
+1746342921921,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-6,text,false,,296,233,1,1,http://localhost:5001/api/auth/logout,1,0,1
+1746342921922,246,Register New User,201,CREATED,TYV API Users 1-6,text,true,,608,343,1,1,http://localhost:5001/api/auth/register,246,0,1
+1746342922169,9,Get User Profile,200,OK,TYV API Users 1-6,text,true,,573,527,1,1,http://localhost:5001/api/users/6817140a8ef92345aa001648,9,0,1
+1746342922178,4,Login User,401,UNAUTHORIZED,TYV API Users 1-6,text,false,,251,276,1,1,http://localhost:5001/api/auth/login,4,0,0
+1746342922183,4,Logout User,200,OK,TYV API Users 1-6,text,true,,241,528,1,1,http://localhost:5001/api/auth/logout,4,0,0
+1746342922187,243,Register New User,201,CREATED,TYV API Users 1-6,text,true,,608,343,1,1,http://localhost:5001/api/auth/register,243,0,1
+1746342922431,6,Get User Profile,200,OK,TYV API Users 1-6,text,true,,573,527,1,1,http://localhost:5001/api/users/6817140a8ef92345aa00164e,5,0,0
+1746342922437,4,Login User,401,UNAUTHORIZED,TYV API Users 1-6,text,false,,251,276,1,1,http://localhost:5001/api/auth/login,4,0,0
+1746342922441,4,Logout User,200,OK,TYV API Users 1-6,text,true,,241,528,1,1,http://localhost:5001/api/auth/logout,4,0,0
+1746342922445,246,Register New User,201,CREATED,TYV API Users 1-6,text,true,,608,343,2,2,http://localhost:5001/api/auth/register,246,0,1
+1746342922692,5,Get User Profile,200,OK,TYV API Users 1-6,text,true,,573,527,2,2,http://localhost:5001/api/users/6817140a8ef92345aa001654,5,0,0
+1746342922697,3,Login User,401,UNAUTHORIZED,TYV API Users 1-6,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,3,0,0
+1746342922701,3,Logout User,200,OK,TYV API Users 1-6,text,true,,241,528,2,2,http://localhost:5001/api/auth/logout,3,0,0
+1746342922573,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-7,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,245,0,1
+1746342922820,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-7,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342922821,4,Login User,401,UNAUTHORIZED,TYV API Users 1-7,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,3,0,1
+1746342922825,2,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-7,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,2,0,0
+1746342922704,247,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-6,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,247,0,0
+1746342922955,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-6,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342922956,5,Login User,401,UNAUTHORIZED,TYV API Users 1-6,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,5,0,1
+1746342922961,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-6,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,0
+1746342922827,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-7,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,1
+1746342923074,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-7,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342923075,4,Login User,401,UNAUTHORIZED,TYV API Users 1-7,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342923080,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-7,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,0
+1746342922962,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-6,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,0
+1746342923208,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-6,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342923209,4,Login User,401,UNAUTHORIZED,TYV API Users 1-6,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342923213,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-6,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,0
+1746342923081,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-7,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,0
+1746342923327,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-7,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,1
+1746342923328,3,Login User,401,UNAUTHORIZED,TYV API Users 1-7,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,3,0,0
+1746342923331,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-7,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,0
+1746342923214,248,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-6,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,248,0,0
+1746342923465,2,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-6,text,false,,296,208,2,2,http://localhost:5001/api/users/,2,0,1
+1746342923467,7,Login User,401,UNAUTHORIZED,TYV API Users 1-6,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,7,0,3
+1746342923475,2,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-6,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,2,0,1
+1746342923332,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-7,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,0
+1746342923579,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-7,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342923580,3,Login User,401,UNAUTHORIZED,TYV API Users 1-7,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,3,0,0
+1746342923584,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-7,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,0,0,0
+1746342923478,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-6,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,1
+1746342923726,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-6,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,1
+1746342923728,3,Login User,401,UNAUTHORIZED,TYV API Users 1-6,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,3,0,0
+1746342923731,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-6,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,0
+1746342923585,247,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-7,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,247,0,0
+1746342923834,2,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-7,text,false,,296,208,2,2,http://localhost:5001/api/users/,2,0,1
+1746342923837,3,Login User,401,UNAUTHORIZED,TYV API Users 1-7,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,3,0,0
+1746342923840,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-7,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,0
+1746342923732,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-6,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,0
+1746342923980,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-6,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342923981,4,Login User,401,UNAUTHORIZED,TYV API Users 1-6,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342923985,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-6,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,0
+1746342923841,245,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-7,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,245,0,0
+1746342924087,0,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-7,text,false,,296,208,2,2,http://localhost:5001/api/users/,0,0,0
+1746342924088,4,Login User,401,UNAUTHORIZED,TYV API Users 1-7,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342924092,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-7,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,0,0,0
+1746342923986,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-6,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,0
+1746342924233,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-6,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342924234,8,Login User,401,UNAUTHORIZED,TYV API Users 1-6,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,8,0,0
+1746342924242,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-6,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,1
+1746342924093,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-7,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,0
+1746342924343,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-7,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,1
+1746342924344,4,Login User,401,UNAUTHORIZED,TYV API Users 1-7,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,1
+1746342924349,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-7,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,0
+1746342924244,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-6,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,0
+1746342924491,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-6,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342924492,5,Login User,401,UNAUTHORIZED,TYV API Users 1-6,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,5,0,0
+1746342924497,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-6,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,1
+1746342924350,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-7,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,0
+1746342924597,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-7,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342924598,4,Login User,401,UNAUTHORIZED,TYV API Users 1-7,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342924602,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-7,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,1
+1746342924498,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-6,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,0
+1746342924745,0,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-6,text,false,,296,208,2,2,http://localhost:5001/api/users/,0,0,0
+1746342924746,4,Login User,401,UNAUTHORIZED,TYV API Users 1-6,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,1
+1746342924750,3,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-6,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,3,0,2
+1746342924603,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-7,text,false,,310,343,1,1,http://localhost:5001/api/auth/register,246,0,0
+1746342924856,3,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-7,text,false,,296,208,1,1,http://localhost:5001/api/users/,3,0,1
+1746342924860,5,Login User,401,UNAUTHORIZED,TYV API Users 1-7,text,false,,251,276,1,1,http://localhost:5001/api/auth/login,5,0,1
+1746342924865,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-7,text,false,,296,233,1,1,http://localhost:5001/api/auth/logout,1,0,1
+1746342924867,243,Register New User,201,CREATED,TYV API Users 1-7,text,true,,608,343,1,1,http://localhost:5001/api/auth/register,243,0,0
+1746342925110,6,Get User Profile,200,OK,TYV API Users 1-7,text,true,,572,527,1,1,http://localhost:5001/api/users/6817140d8ef92345aa00168c,6,0,1
+1746342925116,4,Login User,401,UNAUTHORIZED,TYV API Users 1-7,text,false,,251,276,1,1,http://localhost:5001/api/auth/login,4,0,1
+1746342925120,5,Logout User,200,OK,TYV API Users 1-7,text,true,,241,528,1,1,http://localhost:5001/api/auth/logout,5,0,1
+1746342925125,244,Register New User,201,CREATED,TYV API Users 1-7,text,true,,608,343,1,1,http://localhost:5001/api/auth/register,244,0,0
+1746342925369,6,Get User Profile,200,OK,TYV API Users 1-7,text,true,,573,527,1,1,http://localhost:5001/api/users/6817140d8ef92345aa001692,6,0,1
+1746342925375,5,Login User,401,UNAUTHORIZED,TYV API Users 1-7,text,false,,251,276,1,1,http://localhost:5001/api/auth/login,5,0,1
+1746342925380,5,Logout User,200,OK,TYV API Users 1-7,text,true,,241,528,1,1,http://localhost:5001/api/auth/logout,5,0,0
+1746342925386,250,Register New User,201,CREATED,TYV API Users 1-7,text,true,,608,343,2,2,http://localhost:5001/api/auth/register,250,0,1
+1746342925637,6,Get User Profile,200,OK,TYV API Users 1-7,text,true,,573,527,2,2,http://localhost:5001/api/users/6817140d8ef92345aa001698,6,0,1
+1746342925643,4,Login User,401,UNAUTHORIZED,TYV API Users 1-7,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,1
+1746342925647,4,Logout User,200,OK,TYV API Users 1-7,text,true,,241,528,2,2,http://localhost:5001/api/auth/logout,4,0,1
+1746342925579,245,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-8,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,245,0,1
+1746342925825,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-8,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,1
+1746342925827,3,Login User,401,UNAUTHORIZED,TYV API Users 1-8,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,3,0,0
+1746342925830,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-8,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,1
+1746342925651,245,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-7,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,245,0,0
+1746342925896,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-7,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342925897,4,Login User,401,UNAUTHORIZED,TYV API Users 1-7,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342925901,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-7,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,0
+1746342925831,247,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-8,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,247,0,1
+1746342926078,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-8,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,1
+1746342926080,5,Login User,401,UNAUTHORIZED,TYV API Users 1-8,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,5,0,0
+1746342926086,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-8,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,0
+1746342925902,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-7,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,0
+1746342926148,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-7,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342926149,3,Login User,401,UNAUTHORIZED,TYV API Users 1-7,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,3,0,0
+1746342926153,2,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-7,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,2,0,1
+1746342926087,247,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-8,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,247,0,0
+1746342926334,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-8,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,1
+1746342926335,5,Login User,401,UNAUTHORIZED,TYV API Users 1-8,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,5,0,1
+1746342926341,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-8,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,0
+1746342926155,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-7,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,0
+1746342926401,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-7,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,1
+1746342926402,4,Login User,401,UNAUTHORIZED,TYV API Users 1-7,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342926406,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-7,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,1
+1746342926342,248,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-8,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,248,0,1
+1746342926590,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-8,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,1
+1746342926591,4,Login User,401,UNAUTHORIZED,TYV API Users 1-8,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,1
+1746342926596,0,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-8,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,0,0,0
+1746342926407,247,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-7,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,247,0,0
+1746342926654,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-7,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342926655,3,Login User,401,UNAUTHORIZED,TYV API Users 1-7,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,3,0,0
+1746342926658,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-7,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,1
+1746342926596,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-8,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,1
+1746342926843,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-8,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342926844,4,Login User,401,UNAUTHORIZED,TYV API Users 1-8,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342926848,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-8,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,0
+1746342926660,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-7,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,0
+1746342926906,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-7,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342926907,4,Login User,401,UNAUTHORIZED,TYV API Users 1-7,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,1
+1746342926911,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-7,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,0
+1746342926849,247,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-8,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,247,0,0
+1746342927096,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-8,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,1
+1746342927098,3,Login User,401,UNAUTHORIZED,TYV API Users 1-8,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,3,0,0
+1746342927101,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-8,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,1
+1746342926912,245,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-7,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,245,0,0
+1746342927157,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-7,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342927158,4,Login User,401,UNAUTHORIZED,TYV API Users 1-7,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342927162,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-7,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,0
+1746342927102,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-8,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,1
+1746342927350,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-8,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,1
+1746342927351,3,Login User,401,UNAUTHORIZED,TYV API Users 1-8,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,3,0,0
+1746342927355,0,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-8,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,0,0,0
+1746342927163,245,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-7,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,245,0,0
+1746342927409,0,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-7,text,false,,296,208,2,2,http://localhost:5001/api/users/,0,0,0
+1746342927409,4,Login User,401,UNAUTHORIZED,TYV API Users 1-7,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,1
+1746342927413,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-7,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,0
+1746342927355,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-8,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,1
+1746342927602,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-8,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342927603,4,Login User,401,UNAUTHORIZED,TYV API Users 1-8,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342927608,0,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-8,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,0,0,0
+1746342927414,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-7,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,0
+1746342927661,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-7,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342927662,4,Login User,401,UNAUTHORIZED,TYV API Users 1-7,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342927666,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-7,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,1
+1746342927608,244,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-8,text,false,,310,343,1,1,http://localhost:5001/api/auth/register,244,0,1
+1746342927853,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-8,text,false,,296,208,1,1,http://localhost:5001/api/users/,1,0,1
+1746342927855,4,Login User,401,UNAUTHORIZED,TYV API Users 1-8,text,false,,251,276,1,1,http://localhost:5001/api/auth/login,4,0,0
+1746342927862,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-8,text,false,,296,233,1,1,http://localhost:5001/api/auth/logout,1,0,0
+1746342927863,241,Register New User,201,CREATED,TYV API Users 1-8,text,true,,608,343,1,1,http://localhost:5001/api/auth/register,241,0,0
+1746342928108,5,Get User Profile,200,OK,TYV API Users 1-8,text,true,,573,527,1,1,http://localhost:5001/api/users/681714108ef92345aa0016d0,5,0,0
+1746342928114,4,Login User,401,UNAUTHORIZED,TYV API Users 1-8,text,false,,251,276,1,1,http://localhost:5001/api/auth/login,4,0,1
+1746342928119,5,Logout User,200,OK,TYV API Users 1-8,text,true,,241,528,1,1,http://localhost:5001/api/auth/logout,5,0,1
+1746342928124,246,Register New User,201,CREATED,TYV API Users 1-8,text,true,,608,343,1,1,http://localhost:5001/api/auth/register,246,0,1
+1746342928372,5,Get User Profile,200,OK,TYV API Users 1-8,text,true,,573,527,1,1,http://localhost:5001/api/users/681714108ef92345aa0016d6,5,0,0
+1746342928377,5,Login User,401,UNAUTHORIZED,TYV API Users 1-8,text,false,,251,276,1,1,http://localhost:5001/api/auth/login,5,0,1
+1746342928382,5,Logout User,200,OK,TYV API Users 1-8,text,true,,241,528,1,1,http://localhost:5001/api/auth/logout,5,0,1
+1746342928387,243,Register New User,201,CREATED,TYV API Users 1-8,text,true,,608,343,2,2,http://localhost:5001/api/auth/register,243,0,0
+1746342928631,5,Get User Profile,200,OK,TYV API Users 1-8,text,true,,573,527,2,2,http://localhost:5001/api/users/681714108ef92345aa0016dc,5,0,0
+1746342928636,4,Login User,401,UNAUTHORIZED,TYV API Users 1-8,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342928640,4,Logout User,200,OK,TYV API Users 1-8,text,true,,241,528,2,2,http://localhost:5001/api/auth/logout,4,0,0
+1746342928571,245,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-9,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,245,0,1
+1746342928817,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-9,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,1
+1746342928818,4,Login User,401,UNAUTHORIZED,TYV API Users 1-9,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,1
+1746342928822,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-9,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,1
+1746342928644,245,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-8,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,245,0,0
+1746342928890,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-8,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,1
+1746342928892,4,Login User,401,UNAUTHORIZED,TYV API Users 1-8,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342928896,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-8,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,0
+1746342928823,245,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-9,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,245,0,0
+1746342929069,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-9,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342929070,4,Login User,401,UNAUTHORIZED,TYV API Users 1-9,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342929074,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-9,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,0
+1746342928897,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-8,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,0
+1746342929143,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-8,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,1
+1746342929144,4,Login User,401,UNAUTHORIZED,TYV API Users 1-8,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342929148,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-8,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,0
+1746342929075,248,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-9,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,248,0,0
+1746342929323,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-9,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,1
+1746342929324,5,Login User,401,UNAUTHORIZED,TYV API Users 1-9,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,5,0,1
+1746342929329,0,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-9,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,0,0,0
+1746342929149,248,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-8,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,248,0,0
+1746342929397,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-8,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,1
+1746342929399,3,Login User,401,UNAUTHORIZED,TYV API Users 1-8,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,3,0,0
+1746342929402,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-8,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,1
+1746342929330,245,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-9,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,245,0,0
+1746342929575,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-9,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,1
+1746342929576,4,Login User,401,UNAUTHORIZED,TYV API Users 1-9,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342929580,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-9,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,1
+1746342929403,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-8,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,0
+1746342929649,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-8,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,1
+1746342929650,3,Login User,401,UNAUTHORIZED,TYV API Users 1-8,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,3,0,0
+1746342929657,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-8,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,0
+1746342929581,252,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-9,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,252,0,0
+1746342929834,2,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-9,text,false,,296,208,2,2,http://localhost:5001/api/users/,2,0,0
+1746342929837,5,Login User,401,UNAUTHORIZED,TYV API Users 1-9,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,5,0,0
+1746342929842,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-9,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,0
+1746342929660,245,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-8,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,245,0,0
+1746342929905,0,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-8,text,false,,296,208,2,2,http://localhost:5001/api/users/,0,0,0
+1746342929906,4,Login User,401,UNAUTHORIZED,TYV API Users 1-8,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342929910,0,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-8,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,0,0,0
+1746342929843,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-9,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,0
+1746342930093,2,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-9,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342930095,5,Login User,401,UNAUTHORIZED,TYV API Users 1-9,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,5,0,0
+1746342930100,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-9,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,0,0,0
+1746342929910,317,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-8,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,317,0,1
+1746342930228,11,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-8,text,false,,296,208,2,2,http://localhost:5001/api/users/,11,0,2
+1746342930239,6,Login User,401,UNAUTHORIZED,TYV API Users 1-8,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,6,0,1
+1746342930245,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-8,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,0
+1746342930101,323,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-9,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,323,0,0
+1746342930426,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-9,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342930427,4,Login User,401,UNAUTHORIZED,TYV API Users 1-9,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342930431,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-9,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,1
+1746342930246,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-8,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,0
+1746342930492,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-8,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342930493,3,Login User,401,UNAUTHORIZED,TYV API Users 1-8,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,3,0,0
+1746342930496,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-8,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,1
+1746342930432,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-9,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,1
+1746342930679,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-9,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,1
+1746342930682,5,Login User,401,UNAUTHORIZED,TYV API Users 1-9,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,5,0,1
+1746342930687,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-9,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,0
+1746342930497,245,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-8,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,245,0,0
+1746342930742,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-8,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,1
+1746342930743,5,Login User,401,UNAUTHORIZED,TYV API Users 1-8,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,5,0,1
+1746342930748,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-8,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,1
+1746342930688,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-9,text,false,,310,343,1,1,http://localhost:5001/api/auth/register,246,0,0
+1746342930934,2,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-9,text,false,,296,208,1,1,http://localhost:5001/api/users/,2,0,0
+1746342930936,4,Login User,401,UNAUTHORIZED,TYV API Users 1-9,text,false,,251,276,1,1,http://localhost:5001/api/auth/login,4,0,1
+1746342930941,0,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-9,text,false,,296,233,1,1,http://localhost:5001/api/auth/logout,0,0,0
+1746342930941,247,Register New User,201,CREATED,TYV API Users 1-9,text,true,,608,343,1,1,http://localhost:5001/api/auth/register,247,0,1
+1746342931193,8,Get User Profile,200,OK,TYV API Users 1-9,text,true,,573,527,1,1,http://localhost:5001/api/users/681714138ef92345aa001714,8,0,1
+1746342931202,4,Login User,401,UNAUTHORIZED,TYV API Users 1-9,text,false,,251,276,1,1,http://localhost:5001/api/auth/login,4,0,0
+1746342931207,6,Logout User,200,OK,TYV API Users 1-9,text,true,,241,528,1,1,http://localhost:5001/api/auth/logout,6,0,1
+1746342931213,250,Register New User,201,CREATED,TYV API Users 1-9,text,true,,608,343,1,1,http://localhost:5001/api/auth/register,250,0,1
+1746342931464,5,Get User Profile,200,OK,TYV API Users 1-9,text,true,,573,527,1,1,http://localhost:5001/api/users/681714138ef92345aa00171a,5,0,0
+1746342931469,5,Login User,401,UNAUTHORIZED,TYV API Users 1-9,text,false,,251,276,1,1,http://localhost:5001/api/auth/login,5,0,1
+1746342931474,6,Logout User,200,OK,TYV API Users 1-9,text,true,,241,528,1,1,http://localhost:5001/api/auth/logout,6,0,2
+1746342931480,247,Register New User,201,CREATED,TYV API Users 1-9,text,true,,608,343,2,2,http://localhost:5001/api/auth/register,247,0,1
+1746342931728,5,Get User Profile,200,OK,TYV API Users 1-9,text,true,,573,527,2,2,http://localhost:5001/api/users/681714138ef92345aa001720,5,0,0
+1746342931733,4,Login User,401,UNAUTHORIZED,TYV API Users 1-9,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,1
+1746342931737,7,Logout User,200,OK,TYV API Users 1-9,text,true,,241,528,2,2,http://localhost:5001/api/auth/logout,7,0,1
+1746342931579,245,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-10,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,245,0,1
+1746342931825,0,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-10,text,false,,296,208,2,2,http://localhost:5001/api/users/,0,0,0
+1746342931825,4,Login User,401,UNAUTHORIZED,TYV API Users 1-10,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,1
+1746342931830,0,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-10,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,0,0,0
+1746342931744,247,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-9,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,247,0,1
+1746342931992,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-9,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342931993,4,Login User,401,UNAUTHORIZED,TYV API Users 1-9,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342931998,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-9,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,0
+1746342931830,249,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-10,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,248,0,1
+1746342932079,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-10,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342932080,4,Login User,401,UNAUTHORIZED,TYV API Users 1-10,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342932084,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-10,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,0
+1746342931999,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-9,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,0
+1746342932246,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-9,text,false,,296,208,2,2,http://localhost:5001/api/users/,0,0,0
+1746342932247,3,Login User,401,UNAUTHORIZED,TYV API Users 1-9,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,3,0,0
+1746342932250,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-9,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,0
+1746342932085,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-10,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,0
+1746342932332,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-10,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342932333,4,Login User,401,UNAUTHORIZED,TYV API Users 1-10,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,1
+1746342932338,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-10,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,0
+1746342932252,247,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-9,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,247,0,1
+1746342932500,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-9,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,1
+1746342932501,4,Login User,401,UNAUTHORIZED,TYV API Users 1-9,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,1
+1746342932516,14,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-9,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,13,0,7
+1746342932339,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-10,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,0
+1746342932588,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-10,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342932589,4,Login User,401,UNAUTHORIZED,TYV API Users 1-10,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342932593,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-10,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,0
+1746342932534,247,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-9,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,247,0,1
+1746342932782,0,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-9,text,false,,296,208,2,2,http://localhost:5001/api/users/,0,0,0
+1746342932783,3,Login User,401,UNAUTHORIZED,TYV API Users 1-9,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,3,0,0
+1746342932786,0,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-9,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,0,0,0
+1746342932594,244,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-10,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,244,0,0
+1746342932840,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-10,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,1
+1746342932842,4,Login User,401,UNAUTHORIZED,TYV API Users 1-10,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,1
+1746342932847,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-10,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,1
+1746342932787,245,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-9,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,245,0,0
+1746342933033,2,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-9,text,false,,296,208,2,2,http://localhost:5001/api/users/,2,0,2
+1746342933036,5,Login User,401,UNAUTHORIZED,TYV API Users 1-9,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,5,0,1
+1746342933041,0,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-9,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,0,0,0
+1746342932848,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-10,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,1
+1746342933095,0,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-10,text,false,,296,208,2,2,http://localhost:5001/api/users/,0,0,0
+1746342933096,4,Login User,401,UNAUTHORIZED,TYV API Users 1-10,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342933100,0,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-10,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,0,0,0
+1746342933042,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-9,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,0
+1746342933289,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-9,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342933290,4,Login User,401,UNAUTHORIZED,TYV API Users 1-9,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342933294,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-9,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,0
+1746342933100,247,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-10,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,247,0,1
+1746342933348,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-10,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342933349,3,Login User,401,UNAUTHORIZED,TYV API Users 1-10,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,3,0,0
+1746342933352,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-10,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,0
+1746342933295,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-9,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,0
+1746342933542,3,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-9,text,false,,296,208,2,2,http://localhost:5001/api/users/,3,0,2
+1746342933545,4,Login User,401,UNAUTHORIZED,TYV API Users 1-9,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,1
+1746342933549,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-9,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,0
+1746342933353,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-10,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,0
+1746342933600,2,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-10,text,false,,296,208,2,2,http://localhost:5001/api/users/,2,0,1
+1746342933602,4,Login User,401,UNAUTHORIZED,TYV API Users 1-10,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342933606,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-10,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,1,0,1
+1746342933550,246,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-9,text,false,,310,343,2,2,http://localhost:5001/api/auth/register,246,0,0
+1746342933797,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-9,text,false,,296,208,2,2,http://localhost:5001/api/users/,1,0,0
+1746342933798,4,Login User,401,UNAUTHORIZED,TYV API Users 1-9,text,false,,251,276,2,2,http://localhost:5001/api/auth/login,4,0,0
+1746342933803,0,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-9,text,false,,296,233,2,2,http://localhost:5001/api/auth/logout,0,0,0
+1746342933608,244,Register New User,500,INTERNAL SERVER ERROR,TYV API Users 1-10,text,false,,310,343,1,1,http://localhost:5001/api/auth/register,244,0,0
+1746342933853,1,Get User Profile,422,UNPROCESSABLE ENTITY,TYV API Users 1-10,text,false,,296,208,1,1,http://localhost:5001/api/users/,1,0,1
+1746342933854,5,Login User,401,UNAUTHORIZED,TYV API Users 1-10,text,false,,251,276,1,1,http://localhost:5001/api/auth/login,5,0,1
+1746342933859,1,Logout User,422,UNPROCESSABLE ENTITY,TYV API Users 1-10,text,false,,296,233,1,1,http://localhost:5001/api/auth/logout,1,0,0
+1746342933860,247,Register New User,201,CREATED,TYV API Users 1-10,text,true,,608,343,1,1,http://localhost:5001/api/auth/register,247,0,0
+1746342934108,5,Get User Profile,200,OK,TYV API Users 1-10,text,true,,573,527,1,1,http://localhost:5001/api/users/681714168ef92345aa001758,5,0,1
+1746342934114,4,Login User,401,UNAUTHORIZED,TYV API Users 1-10,text,false,,251,276,1,1,http://localhost:5001/api/auth/login,4,0,0
+1746342934118,8,Logout User,200,OK,TYV API Users 1-10,text,true,,241,528,1,1,http://localhost:5001/api/auth/logout,8,0,1
+1746342934126,244,Register New User,201,CREATED,TYV API Users 1-10,text,true,,608,343,1,1,http://localhost:5001/api/auth/register,244,0,0
+1746342934371,4,Get User Profile,200,OK,TYV API Users 1-10,text,true,,573,527,1,1,http://localhost:5001/api/users/681714168ef92345aa00175e,4,0,0
+1746342934376,2,Login User,401,UNAUTHORIZED,TYV API Users 1-10,text,false,,251,276,1,1,http://localhost:5001/api/auth/login,2,0,0
+1746342934379,2,Logout User,200,OK,TYV API Users 1-10,text,true,,241,528,1,1,http://localhost:5001/api/auth/logout,2,0,0
+1746342934382,247,Register New User,201,CREATED,TYV API Users 1-10,text,true,,608,343,1,1,http://localhost:5001/api/auth/register,247,0,0
+1746342934633,7,Get User Profile,200,OK,TYV API Users 1-10,text,true,,573,527,1,1,http://localhost:5001/api/users/681714168ef92345aa001764,7,0,1
+1746342934642,4,Login User,401,UNAUTHORIZED,TYV API Users 1-10,text,false,,251,276,1,1,http://localhost:5001/api/auth/login,4,0,0
+1746342934647,6,Logout User,200,OK,TYV API Users 1-10,text,true,,241,528,1,1,http://localhost:5001/api/auth/logout,6,0,2
+1746342934654,247,Register New User,201,CREATED,TYV API Users 1-10,text,true,,608,343,1,1,http://localhost:5001/api/auth/register,247,0,1
+1746342934910,10,Get User Profile,200,OK,TYV API Users 1-10,text,true,,573,527,1,1,http://localhost:5001/api/users/681714168ef92345aa00176a,9,0,2
+1746342934925,5,Login User,401,UNAUTHORIZED,TYV API Users 1-10,text,false,,251,276,1,1,http://localhost:5001/api/auth/login,5,0,1
+1746342934933,4,Logout User,200,OK,TYV API Users 1-10,text,true,,241,528,1,1,http://localhost:5001/api/auth/logout,4,0,1
+1746342934938,242,Register New User,201,CREATED,TYV API Users 1-10,text,true,,608,343,1,1,http://localhost:5001/api/auth/register,242,0,0
+1746342935181,5,Get User Profile,200,OK,TYV API Users 1-10,text,true,,573,527,1,1,http://localhost:5001/api/users/681714178ef92345aa001770,5,0,0
+1746342935186,4,Login User,401,UNAUTHORIZED,TYV API Users 1-10,text,false,,251,276,1,1,http://localhost:5001/api/auth/login,4,0,1
+1746342935191,5,Logout User,200,OK,TYV API Users 1-10,text,true,,241,528,1,1,http://localhost:5001/api/auth/logout,5,0,0
+1746342935196,244,Register New User,201,CREATED,TYV API Users 1-10,text,true,,608,343,1,1,http://localhost:5001/api/auth/register,244,0,0
+1746342935440,7,Get User Profile,200,OK,TYV API Users 1-10,text,true,,573,527,1,1,http://localhost:5001/api/users/681714178ef92345aa001776,7,0,0
+1746342935447,4,Login User,401,UNAUTHORIZED,TYV API Users 1-10,text,false,,251,276,1,1,http://localhost:5001/api/auth/login,4,0,0
+1746342935451,4,Logout User,200,OK,TYV API Users 1-10,text,true,,241,528,1,1,http://localhost:5001/api/auth/logout,4,0,0
+1746342935456,243,Register New User,201,CREATED,TYV API Users 1-10,text,true,,608,343,1,1,http://localhost:5001/api/auth/register,243,0,0
+1746342935700,6,Get User Profile,200,OK,TYV API Users 1-10,text,true,,573,527,1,1,http://localhost:5001/api/users/681714178ef92345aa00177c,6,0,0
+1746342935706,4,Login User,401,UNAUTHORIZED,TYV API Users 1-10,text,false,,251,276,1,1,http://localhost:5001/api/auth/login,4,0,0
+1746342935710,4,Logout User,200,OK,TYV API Users 1-10,text,true,,241,528,1,1,http://localhost:5001/api/auth/logout,4,0,0
+1746342935714,243,Register New User,201,CREATED,TYV API Users 1-10,text,true,,608,343,1,1,http://localhost:5001/api/auth/register,243,0,0
+1746342935958,5,Get User Profile,200,OK,TYV API Users 1-10,text,true,,573,527,1,1,http://localhost:5001/api/users/681714178ef92345aa001782,5,0,0
+1746342935963,4,Login User,401,UNAUTHORIZED,TYV API Users 1-10,text,false,,251,276,1,1,http://localhost:5001/api/auth/login,4,0,0
+1746342935967,3,Logout User,200,OK,TYV API Users 1-10,text,true,,241,528,1,1,http://localhost:5001/api/auth/logout,3,0,0
+1746342935971,253,Register New User,201,CREATED,TYV API Users 1-10,text,true,,608,343,1,1,http://localhost:5001/api/auth/register,253,0,0
+1746342936225,10,Get User Profile,200,OK,TYV API Users 1-10,text,true,,573,527,1,1,http://localhost:5001/api/users/681714188ef92345aa001788,10,0,0
+1746342936235,3,Login User,401,UNAUTHORIZED,TYV API Users 1-10,text,false,,251,276,1,1,http://localhost:5001/api/auth/login,3,0,0
+1746342936239,4,Logout User,200,OK,TYV API Users 1-10,text,true,,241,528,1,1,http://localhost:5001/api/auth/logout,4,0,0
+1746342936243,249,Register New User,201,CREATED,TYV API Users 1-10,text,true,,608,343,1,1,http://localhost:5001/api/auth/register,249,0,1
+1746342936492,6,Get User Profile,200,OK,TYV API Users 1-10,text,true,,573,527,1,1,http://localhost:5001/api/users/681714188ef92345aa00178e,6,0,0
+1746342936498,4,Login User,401,UNAUTHORIZED,TYV API Users 1-10,text,false,,251,276,1,1,http://localhost:5001/api/auth/login,4,0,0
+1746342936502,3,Logout User,200,OK,TYV API Users 1-10,text,true,,241,528,1,1,http://localhost:5001/api/auth/logout,3,0,0
+1746342936506,253,Register New User,201,CREATED,TYV API Users 1-10,text,true,,608,343,1,1,http://localhost:5001/api/auth/register,253,0,0
+1746342936760,6,Get User Profile,200,OK,TYV API Users 1-10,text,true,,572,527,1,1,http://localhost:5001/api/users/681714188ef92345aa001794,6,0,0
+1746342936766,4,Login User,401,UNAUTHORIZED,TYV API Users 1-10,text,false,,251,276,1,1,http://localhost:5001/api/auth/login,4,0,0
+1746342936770,5,Logout User,200,OK,TYV API Users 1-10,text,true,,241,528,1,1,http://localhost:5001/api/auth/logout,4,0,0
