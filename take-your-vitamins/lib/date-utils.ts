@@ -1,6 +1,6 @@
 import { format, parseISO, isValid } from 'date-fns';
-// Import specific named function (for version 3.2.0+)
-import { utcToZonedTime } from 'date-fns-tz';
+// Import for date-fns-tz version 3.x
+import { formatInTimeZone } from 'date-fns-tz';
 
 /**
  * Convert a UTC date string to local time
@@ -26,8 +26,10 @@ export function utcToLocal(dateString: string): Date {
     const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     
     try {
-      // Try with direct import of utcToZonedTime
-      return utcToZonedTime(date, timeZone);
+      // In date-fns-tz v3.x, utcToZonedTime was removed
+      // Create a new Date with the offset from the user's timezone
+      const isoInUserTz = formatInTimeZone(date, timeZone, "yyyy-MM-dd'T'HH:mm:ss.SSS");
+      return new Date(isoInUserTz);
     } catch (tzError) {
       console.warn('date-fns-tz failed, using fallback method:', tzError);
       
