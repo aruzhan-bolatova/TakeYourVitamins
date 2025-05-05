@@ -29,21 +29,25 @@ export const metadata = {
     ],
   },
 }
-
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="h-full">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
           montserrat.variable,
-          "relative h-full min-h-screen font-sans",
+          "relative h-full min-h-screen font-sans"
         )}
       >
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
           <AuthProvider>
             <TrackerProvider>
               <RootLayoutClient>{children}</RootLayoutClient>
@@ -55,4 +59,3 @@ export default function RootLayout({
     </html>
   )
 }
-

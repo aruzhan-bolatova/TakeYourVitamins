@@ -26,7 +26,8 @@ export default function DashboardPage() {
         getIntakeLogsForDate,
         symptomLogs,
         formatLocalDate,
-        getTodayLocalDate
+        getTodayLocalDate,
+        getDatesWithSymptoms
     } = useTracker()
 
     const [selectedDate, setSelectedDate] = useState(new Date());
@@ -54,7 +55,7 @@ export default function DashboardPage() {
     const [streak, setStreak] = useState(0)
     const [improvement, setImprovement] = useState(0)
     const [daysToNextAchievement, setDaysToNextAchievement] = useState(0)
-    const [progressData, setProgressData] = useState<Array<{date: string; consistency: number; taken: number; total: number}>>([])
+    const [progressData, setProgressData] = useState<Array<{ date: string; consistency: number; taken: number; total: number }>>([])
 
     // Update dates with symptoms whenever symptomLogs changes
     useEffect(() => {
@@ -68,9 +69,25 @@ export default function DashboardPage() {
 
         // Convert to Date objects
         const dates = Array.from(uniqueDates).map((dateStr) => new Date(dateStr))
+
         setDatesWithSymptoms(dates)
 
     }, [symptomLogs])
+
+    // Memoized function to fetch dates with symptoms
+    const fetchDatesWithSymptoms = useCallback(async () => {
+        try {
+            // Get all symptom logs to determine which dates have symptoms
+            const allDates = await getDatesWithSymptoms()
+            console.log("Dates with symptoms:", allDates)
+
+            // Convert string dates to Date objects
+            const dateObjects = allDates.map((dateStr) => new Date(dateStr))
+            setDatesWithSymptoms(dateObjects)
+        } catch (error) {
+            console.error("Error fetching dates with symptoms:", error)
+        }
+    }, [getDatesWithSymptoms])
 
     useEffect(() => {
         if (trackedSupplements.length === 0) return;
@@ -126,21 +143,21 @@ export default function DashboardPage() {
     // Generate data for the progress chart
     const generateProgressData = (logsMap: Record<string, IntakeLog[]>, dates: string[]) => {
         const chartData = [];
-        
+
         // Process the last 14 days for the chart
         const recentDates = dates.slice(0, 14).reverse();
-        
+
         for (const dateStr of recentDates) {
             const logs = logsMap[dateStr];
             const totalSupplements = trackedSupplements.length;
-            const takenSupplements = trackedSupplements.filter(supplement => 
+            const takenSupplements = trackedSupplements.filter(supplement =>
                 logs.some(log => log.tracked_supplement_id === supplement.id)
             ).length;
-            
-            const consistency = totalSupplements > 0 
-                ? Math.round((takenSupplements / totalSupplements) * 100) 
+
+            const consistency = totalSupplements > 0
+                ? Math.round((takenSupplements / totalSupplements) * 100)
                 : 0;
-                
+
             chartData.push({
                 date: formatLocalDate(dateStr),
                 consistency: consistency,
@@ -148,7 +165,7 @@ export default function DashboardPage() {
                 total: totalSupplements
             });
         }
-        
+
         setProgressData(chartData);
     };
 
@@ -172,7 +189,7 @@ export default function DashboardPage() {
                 const dosage = parseFloat(supplement.dosage) || 1
                 await logIntake(supplement.id, dateStr, dosage, supplement.unit || "pill", "")
             }
-            
+
             // Reload supplement status after logging
             await loadSupplementStatus()
         } catch (error) {
@@ -214,16 +231,8 @@ export default function DashboardPage() {
         if (trackedSupplements.length > 0) {
             loadSupplementStatus();
         }
-    }, [trackedSupplements, weekStartDate]);
-
-    // // Update the supplement taken status when logging
-    // const handleLogIntakeWithState = async (supplement: TrackedSupplement, dayIndex: number) => {
-    //     await handleLogIntake(supplement, dayIndex)
-        
-    //     // Do not manually update state here as we'll reload the full status
-    //     // Let loadSupplementStatus handle updating the UI accurately
-    // }
-
+        fetchDatesWithSymptoms();
+    }, [fetchDatesWithSymptoms, trackedSupplements, weekStartDate]);
 
     // Handle logging intake with state update
     const handleLogIntakeWithState = useCallback(
@@ -284,16 +293,16 @@ export default function DashboardPage() {
                 progressData,
                 generatedDate: new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })
             };
-            
+
             // Show loading toast
             toast({
                 title: "Generating report",
                 description: "Please wait while we generate your progress report...",
             });
-            
+
             // Generate PDF report
             await generateProgressReport(reportData);
-            
+
             // Show success toast
             toast({
                 title: "Report generated",
@@ -340,7 +349,7 @@ export default function DashboardPage() {
                                     <div key={supplement.id} className="space-y-2">
                                         <h3 className="font-medium">{supplement.supplementName}</h3>
                                         <div className="flex justify-between">
-                                        {weekdays.map((day, index) => {
+                                            {weekdays.map((day, index) => {
                                                 const logDate = addDays(weekStartDate, index)
                                                 const isFutureDate = isAfter(logDate, parseISO(getTodayLocalDate())) // Compare to local today
 
@@ -438,7 +447,7 @@ export default function DashboardPage() {
                                 <Dialog open={symptomsDialogOpen} onOpenChange={setSymptomsDialogOpen}>
                                     <DialogTrigger asChild>
                                         <Button className="flex items-center gap-2 btn-yellow"
-                                        disabled={dateString > getTodayLocalDate()}
+                                            disabled={dateString > getTodayLocalDate()}
                                         >
                                             <Activity className="h-4 w-4" />
                                             Log Symptoms
@@ -487,7 +496,7 @@ export default function DashboardPage() {
                                     <span className="truncate">Search Supplements</span>
                                 </Link>
                             </Button>
-                            <Button 
+                            <Button
                                 className="w-full justify-start btn-yellow text-sm"
                                 onClick={(e) => {
                                     e.preventDefault();
@@ -520,38 +529,38 @@ export default function DashboardPage() {
                                         margin={{ top: 5, right: 5, left: 0, bottom: 5 }}
                                     >
                                         <CartesianGrid strokeDasharray="3 3" className="chart-grid" />
-                                        <XAxis 
-                                            dataKey="date" 
+                                        <XAxis
+                                            dataKey="date"
                                             className="chart-axis"
                                             tick={{ fontSize: 10 }}
                                             interval="preserveStartEnd"
                                         />
-                                        <YAxis 
+                                        <YAxis
                                             className="chart-axis"
                                             domain={[0, 100]}
                                             tick={{ fontSize: 10 }}
                                             width={30}
-                                            label={{ 
-                                                value: 'Consistency %', 
-                                                angle: -90, 
+                                            label={{
+                                                value: 'Consistency %',
+                                                angle: -90,
                                                 position: 'insideLeft',
                                                 style: { fill: '#000000', fontWeight: 'bold', fontSize: '0.8rem' }
                                             }}
                                         />
-                                        <Tooltip 
+                                        <Tooltip
                                             contentStyle={{
-                                                backgroundColor: '#ffffff', 
+                                                backgroundColor: '#ffffff',
                                                 borderColor: '#000000',
                                                 color: '#000000',
                                                 fontWeight: 'bold'
                                             }}
-                                            labelStyle={{color: '#000000'}}
+                                            labelStyle={{ color: '#000000' }}
                                         />
                                         <Legend />
-                                        <Line 
-                                            type="monotone" 
-                                            dataKey="consistency" 
-                                            name="Consistency %" 
+                                        <Line
+                                            type="monotone"
+                                            dataKey="consistency"
+                                            name="Consistency %"
                                             className="chart-line"
                                             strokeWidth={3}
                                             activeDot={{ r: 8, className: "chart-point" }}
@@ -560,7 +569,7 @@ export default function DashboardPage() {
                                 </ResponsiveContainer>
                             </div>
                         </div>
-                        
+
                         <div className="space-y-4">
                             <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
                                 <div className="flex items-center gap-2 mb-2">
@@ -570,20 +579,20 @@ export default function DashboardPage() {
                                 <p className="text-base md:text-lg font-bold text-yellow-600">+{improvement}%</p>
                                 <p className="text-xs md:text-sm text-yellow-700">from last week</p>
                             </div>
-                            
+
                             <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
                                 <div className="flex items-center gap-2 mb-2">
                                     <TrendingUp className="h-4 w-4 md:h-5 md:w-5 text-yellow-600" />
                                     <h3 className="text-sm md:text-base font-semibold text-yellow-800">Current Streak</h3>
                                 </div>
                                 <p className="text-base md:text-lg font-bold text-yellow-600">{streak} days</p>
-                                {daysToNextAchievement > 0 && 
+                                {daysToNextAchievement > 0 &&
                                     <p className="text-xs md:text-sm text-yellow-700">
                                         {daysToNextAchievement} days until next achievement
                                     </p>
                                 }
                             </div>
-                            
+
                             <div className="mt-4">
                                 <Button className="w-full btn-yellow" asChild>
                                     <Link href="/dashboard/tracker">
