@@ -53,18 +53,22 @@ export function SiteHeader() {
               >
                 Home
               </Link>
-              <Link 
-                href="/dashboard" 
-                className="text-sm font-medium transition-colors hover:text-primary"
-              >
-                Dashboard
-              </Link>
-              <Link 
-                href="/dashboard/tracker" 
-                className="text-sm font-medium transition-colors hover:text-primary"
-              >
-                My Supplements
-              </Link>
+              {user && (
+                <>
+                  <Link 
+                    href="/dashboard" 
+                    className="text-sm font-medium transition-colors hover:text-primary"
+                  >
+                    Dashboard
+                  </Link>
+                  <Link 
+                    href="/dashboard/tracker" 
+                    className="text-sm font-medium transition-colors hover:text-primary"
+                  >
+                    My Supplements
+                  </Link>
+                </>
+              )}
               <Link 
                 href="/supplements/search" 
                 className="text-sm font-medium transition-colors hover:text-primary"
@@ -156,36 +160,40 @@ export function SiteHeader() {
               <Home className="mr-2 h-4 w-4" />
               Home
             </Link>
-            <Link
-              href="/dashboard"
-              className="flex items-center py-2 text-sm font-medium"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              <div className="relative w-4 h-4 mr-2">
-                <Image
-                  src="/images/logo-32.png"
-                  alt="Dashboard"
-                  fill
-                  className="object-contain"
-                />
-              </div>
-              Dashboard
-            </Link>
-            <Link
-              href="/dashboard/tracker"
-              className="flex items-center py-2 text-sm font-medium"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              <div className="relative w-4 h-4 mr-2">
-                <Image
-                  src="/images/logo-32.png"
-                  alt="My Supplements"
-                  fill
-                  className="object-contain"
-                />
-              </div>
-              My Supplements
-            </Link>
+            {user && (
+              <>
+                <Link
+                  href="/dashboard"
+                  className="flex items-center py-2 text-sm font-medium"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <div className="relative w-4 h-4 mr-2">
+                    <Image
+                      src="/images/logo-32.png"
+                      alt="Dashboard"
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                  Dashboard
+                </Link>
+                <Link
+                  href="/dashboard/tracker"
+                  className="flex items-center py-2 text-sm font-medium"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <div className="relative w-4 h-4 mr-2">
+                    <Image
+                      src="/images/logo-32.png"
+                      alt="My Supplements"
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                  My Supplements
+                </Link>
+              </>
+            )}
             <Link
               href="/supplements/search"
               className="flex items-center py-2 text-sm font-medium"
