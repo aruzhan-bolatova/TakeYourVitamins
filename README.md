@@ -172,6 +172,22 @@ make format
 make check
 ```
 
+### Generating a Coverage Report
+
+To generate a coverage report locally, run:
+
+```bash
+pytest --cov=app --cov-report=term-missing
+```
+
+This will display a coverage summary in your terminal. To generate an HTML report, use:
+
+```bash
+pytest --cov=app --cov-report=html
+```
+
+The HTML report will be saved in the `htmlcov/` directory.
+
 ### Continuous Integration
 
 This project uses GitHub Actions for continuous integration. The CI pipeline runs whenever code is pushed to the main branch or when a pull request is opened.
