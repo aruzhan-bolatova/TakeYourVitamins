@@ -5,6 +5,7 @@ import re
 
 class User:
     def __init__(self, user_data: dict):
+        self._id = user_data.get('_id')
         self.user_id = user_data.get('userId')
         self.name = user_data.get('name')
         self.email = user_data.get('email')
@@ -15,6 +16,25 @@ class User:
         self.created_at = user_data.get('createdAt')
         self.updated_at = user_data.get('updatedAt')
         self.deleted_at = user_data.get('deletedAt')
+        
+        
+    def to_dict(self) -> dict:
+        """
+        Convert the User object to a dictionary for database operations.
+        """
+        return {
+            '_id': str(self._id) if self._id else None,
+            'userId': self.user_id,
+            'name': self.name,
+            'email': self.email,
+            'password': self.password,
+            'age': self.age,
+            'gender': self.gender,
+            'role': self.role,
+            'createdAt': self.created_at,
+            'updatedAt': self.updated_at,
+            'deletedAt': self.deleted_at,
+        }
 
     @staticmethod
     def validate_email(email: str) -> bool:
@@ -44,7 +64,7 @@ class User:
         
         # If exclude_user_id is provided, exclude that user from the check
         if exclude_user_id:
-            query['userId'] = {'$ne': exclude_user_id}
+            query['_id'] = {'$ne': exclude_user_id}
             
         existing_user = db.Users.find_one(query)
         return existing_user is None
@@ -59,7 +79,8 @@ class User:
         # Check if email already exists
         if not User.is_email_unique(email):
             raise ValueError('Email already exists')
-            
+        
+        
         user_id = f"USER{str(datetime.now(timezone.utc).timestamp()).replace('.', '')}"
         user = {
             'userId': user_id,
@@ -73,7 +94,8 @@ class User:
             'updatedAt': None,
             'deletedAt': None
         }
-        db.Users.insert_one(user)
+        result = db.Users.insert_one(user)
+        user['_id'] = result.inserted_id
         return User(user)
 
     @staticmethod
@@ -85,18 +107,17 @@ class User:
         return User(user)
 
     @staticmethod
-    def find_by_id(user_id: str, include_deleted: bool = False):
+    def find_by_id(_id: str):
+        print(f"User ID received: {_id}")
         db = get_db()
-        query = {'userId': user_id}
-        if not include_deleted:
-            query['deletedAt'] = None
-        user = db.Users.find_one(query)
+        user = db.Users.find_one({'_id': _id, 'deletedAt': None})
+        print(f"User found: {user}")
         return User(user) if user else None
 
     @staticmethod
-    def update(user_id: str, data: dict):
+    def update(_id: str, data: dict):
         db = get_db()
-        user = db.Users.find_one({'userId': user_id, 'deletedAt': None})
+        user = db.Users.find_one({'_id': _id, 'deletedAt': None})
         if not user:
             return None
         
@@ -111,7 +132,7 @@ class User:
                 raise ValueError('Invalid email format')
                 
             # Check if new email is unique (excluding current user)
-            if not User.is_email_unique(update_data['email'], user_id):
+            if not User.is_email_unique(update_data['email'], _id):
                 raise ValueError('Email already exists')
         
         # Handle password separately for security
@@ -121,24 +142,24 @@ class User:
         if update_data:
             update_data['updatedAt'] = datetime.now(timezone.utc).isoformat()
             db.Users.update_one(
-                {'userId': user_id},
+                {'_id': _id},
                 {'$set': update_data}
             )
         
         # Get updated user data
-        updated_user = db.Users.find_one({'userId': user_id})
+        updated_user = db.Users.find_one({'_id': _id})
         return User(updated_user)
 
     @staticmethod
-    def delete(user_id: str):
+    def delete(_id: str):
         db = get_db()
-        user = db.Users.find_one({'userId': user_id, 'deletedAt': None})
+        user = db.Users.find_one({'_id': _id, 'deletedAt': None})
         if not user:
             return None
         
         # Soft delete - set deletedAt timestamp
         db.Users.update_one(
-            {'userId': user_id},
+            {'_id': _id},
             {'$set': {
                 'deletedAt': datetime.now(timezone.utc).isoformat(),
                 'updatedAt': datetime.now(timezone.utc).isoformat()
@@ -146,5 +167,5 @@ class User:
         )
         
         # Return the updated user
-        deleted_user = db.Users.find_one({'userId': user_id})
+        deleted_user = db.Users.find_one({'_id': _id})
         return User(deleted_user)

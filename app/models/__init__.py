@@ -16,7 +16,7 @@ from app.models.init_db import init_db
 # These are the symbols that will be exposed when using `from app.models import *`
 __all__ = [
     'User', 'Supplement', 'IntakeLog', 'SymptomLog', 
-    'Interaction', 'TokenBlacklist', 'init_db'
+    'Interaction', 'TokenBlacklist', 'init_db' 'Symptoms', 'SymptomCatergories', 
 ]
 
 # Function to initialize database indexes
@@ -35,8 +35,6 @@ def init_db():
     # Create unique indexes for the IntakeLogs collection
     db.IntakeLogs.create_index('intakeLogId', unique=True)  # Ensure intakeLogId is unique
     
-    # Create unique indexes for the SymptomLogs collection
-    db.SymptomLogs.create_index('symptomLogId', unique=True)  # Ensure symptomLogId is unique
-    
     # Create unique indexes for the Interactions collection
     db.Interactions.create_index('interactionId', unique=True)  # Ensure interactionId is unique
+    

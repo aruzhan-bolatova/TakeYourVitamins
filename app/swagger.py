@@ -96,7 +96,7 @@ swagger_template = {
                     "supplement1Id": {"type": "string", "description": "ID of the first supplement"},
                     "supplement2Id": {"type": "string", "description": "ID of the second supplement"},
                     "interactionType": {"type": "string", "description": "Type of interaction (enhancing, inhibiting, etc.)"},
-                    "severity": {"type": "string", "enum": ["low", "medium", "high"], "description": "Severity of the interaction"},
+                    "effect": {"type": "string", "description": "Effect of the interaction"},
                     "description": {"type": "string", "description": "Description of the interaction"},
                     "recommendation": {"type": "string", "description": "Recommendations regarding this interaction"},
                     "createdAt": {"type": "string", "format": "date-time", "description": "Timestamp when the interaction was created"},

@@ -196,7 +196,7 @@
         "Reduces inflammation"
       ],
       "sideEffects": [
-        "Considered safe"
+        "Milk thistle may cause allergic reactions, particularly among people who are allergic to related plants (for example, ragweed, chrysanthemum, marigold, and daisy). Little is known about whether it’s safe to use milk thistle during pregnancy or while breastfeeding"
       ],
       "studies": [
         {
@@ -372,7 +372,7 @@
         "Provides protection to the brain"
       ],
       "sideEffects": [
-        "Considered safe"
+        " It is usually well-tolerated. The most common side effects are headache, heartburn, nausea, and vomiting."
       ],
       "studies": [
         {
@@ -384,6 +384,2314 @@
       ]
     },
     "category": "",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP113",
+    "name": "Riboflavin",
+    "aliases": [
+      "Vitamin B2",
+      "Vitamin B-2"
+    ],
+    "description": "Riboflavin is a water-soluble vitamin that is important for energy production, cellular function, growth, and development. It is found in dairy products, eggs, green leafy vegetables, nuts, and enriched cereals.",
+    "intakePractices": {
+      "dosage": "The daily requirement of riboflavin is 1.1-1.3 mg/day for adults.",
+      "timing": "Can be taken any time of day.",
+      "specialInstructions": "Riboflavin is best absorbed when taken with a meal."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Supports energy production",
+        "Promotes healthy skin and eyes",
+        "Supports nervous system function"
+      ],
+      "sideEffects": [
+        "Generally considered safe at recommended doses",
+        "High doses may cause diarrhea and increased urine output"
+      ],
+      "studies": [
+        {
+          "title": "Riboflavin",
+          "journal": "https://ods.od.nih.gov/factsheets/Riboflavin-Consumer/",
+          "year": null,
+          "summary": ""
+        }
+      ]
+    },
+    "category": "Vitamins",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP114",
+    "name": "Thiamin",
+    "aliases": [
+      "Vitamin B1",
+      "Thiamine",
+      "Vitamin B-1"
+    ],
+    "description": "Thiamine is a water-soluble vitamin that is important for energy metabolism and the proper functioning of the nervous system. It is found in whole grains, legumes, nuts, and meat.",
+    "intakePractices": {
+      "dosage": "The daily requirement of thiamine is 1.1-1.2 mg/day for adults.",
+      "timing": "Can be taken any time of day.",
+      "specialInstructions": "Thiamine is best absorbed when taken with a meal."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Supports energy metabolism",
+        "Promotes healthy nervous system function"
+      ],
+      "sideEffects": [
+        "Generally considered safe at recommended doses",
+        "High doses may cause allergic reactions"
+      ],
+      "studies": [
+        {
+          "title": "Thiamin",
+          "journal": "https://ods.od.nih.gov/factsheets/Thiamin-Consumer/",
+          "year": null,
+          "summary": ""
+        }
+      ]
+    },
+    "category": "Vitamins",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP115",
+    "name": "Panthothenic Acid",
+    "aliases": [
+      "Vitamin B5",
+      "Vitamin B-5",
+      "Pantothenate"
+    ],
+    "description": "Pantothenic acid is a water-soluble vitamin that is important for energy metabolism and the synthesis of hormones and cholesterol. It is found in a wide variety of foods, including meat, eggs, whole grains, and legumes.",
+    "intakePractices": {
+      "dosage": "The daily requirement of panthothenic acid is 5mg/day for adults.",
+      "timing": "Can be taken any time of day.",
+      "specialInstructions": "Pantothenic acid is best absorbed when taken with a meal."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Supports energy metabolism",
+        "Involed in the synthesis of hormones and cholesterol"
+      ],
+      "sideEffects": [
+        "Generally considered safe at recommended doses",
+        "High doses may cause diarrhea and gastrointestinal upset"
+      ],
+      "studies": [
+        {
+          "title": "Pantothenic Acid",
+          "journal": "https://ods.od.nih.gov/factsheets/PantothenicAcid-Consumer/",
+          "year": null,
+          "summary": ""
+        }
+      ]
+    },
+    "category": "Vitamins",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP116",
+    "name": "Biotin",
+    "aliases": [
+      "Vitamin B7",
+      "Vitamin B-7",
+      "Vitamin H"
+    ],
+    "description": "Biotin is a water-soluble vitamin that is important for energy metabolism and the health of skin, hair, and nails. It is found in eggs, nuts, seeds, and certain vegetables.",
+    "intakePractices": {
+      "dosage": "The daily requirement of biotin is 2.5mg/day for adults.",
+      "timing": "Can be taken any time of day.",
+      "specialInstructions": "Biotin is best absorbed when taken with a meal."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Supports energy metabolism",
+        "Promotes healthy skin, hair, and nails"
+      ],
+      "sideEffects": [
+        "Generally considered safe at recommended doses"
+      ],
+      "studies": [
+        {
+          "title": "Biotin",
+          "journal": "https://ods.od.nih.gov/factsheets/Biotin-Consumer/",
+          "year": null,
+          "summary": ""
+        }
+      ]
+    },
+    "category": "Vitamins",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP117",
+    "name": "Ashwagandha",
+    "aliases": [
+      "Withania somnifera",
+      "Indian ginseng",
+      "Winter cherry"
+    ],
+    "description": "Ashwagandha is a herb that is known for its stress-reducing and energy-boosting properties. It is also used to support cognitive function and immune health.",
+    "intakePractices": {
+      "dosage": "The usual dosage for ashwagandha is around 300-500 mg/day.",
+      "timing": "No specific timing, can be taken any time of day.",
+      "specialInstructions": "May interract with many medications, including sedatives, thyroid medications, and immunosuppressants. Consult a healthcare professional before use."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Reduces stress and anxiety",
+        "Boosts energy levels",
+        "Supports cognitive function"
+      ],
+      "sideEffects": [
+        "Generally considered safe at recommended doses and when used up to 3 months",
+        "High doses may cause gastrointestinal upset, nausea, and diarrhea",
+        "Not recommended for pregnant patients",
+        "Not recommended for patients with liver disease"
+      ],
+      "studies": [
+        {
+          "title": "Ashwagandha",
+          "journal": "The Health Professional's Guide to Dietary Supplements",
+          "year": 2007,
+          "summary": ""
+        }
+      ]
+    },
+    "category": "herbs",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP701",
+    "name": "Alfalfa",
+    "aliases": [
+      "Medicago Sativa"
+    ],
+    "description": "Alfalfa truly is a nutritive food, with high levels of protein (up to 50%), B vitamins, and minerals. These characteristics may play a large part in explaining alfalfa's claims for energy and reduction of fatigue. Additionally, alfalfa contains saponins, which could explain some of its adaptogenic reputation; its antioxidants and alkalizing nature could explain its detoxification claims. The use of alfalfa for hot flashes and cancer may be explained by its high estrogenic activity.",
+    "intakePractices": {
+      "dosage": "Although the clinical study on alfalfa for lowering cholesterol used an extremely high dosage (120 g/day), typical dosages for alfalfa tend to range from 250-1,000 mg 2-3 times daily with meals.",
+      "timing": "With meals",
+      "specialInstructions": null
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Increase cell proliferation",
+        "Lower cholesterol levels",
+        "Increase energy levels",
+        "Promote liver health and detoxification"
+      ],
+      "sideEffects": [
+        "Possible mild blood-thinng effect"
+      ],
+      "studies": []
+    },
+    "category": "Herbs",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP702",
+    "name": "Arginine",
+    "aliases": [
+      "L-arginine"
+    ],
+    "description": "Arginine is a substance that is produced in the body. It plays an essential role in the nitric oxide pathway—a pathway involved in the cascade reactions responsible for vasodilation. Thus, arginine supplements are associated with cardiovascular health, especially in conditions in which the nitric oxide pathway may not be working sufficiently.",
+    "intakePractices": {
+      "dosage": "The daily requirement of arginine supplementation has been calculated to be approximately 8 g/day (for a 70-kg person). Supplements in the range of 8-21 g/day have been used clinically.",
+      "timing": "",
+      "specialInstructions": ""
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Combat cardiovascular disease",
+        "Combat sexual dysfunction",
+        "Improve immune function"
+      ],
+      "sideEffects": [
+        "May be dangerous to patients recovering from heart attacks",
+        "May be dangerous for patients infected with simplex virus"
+      ],
+      "studies": []
+    },
+    "category": "Amino acids",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP703",
+    "name": "Vitamin B-6",
+    "aliases": [
+      "Vitamin B6",
+      "Pyridoxine",
+      "Pyridoxamine",
+      "Pyridoxal"
+    ],
+    "description": "Vitamin B6 is a water-soluble vitamin. It is also known by the names pyridoxine, pyridoxamine, and pyridoxal. Vitamin B6 performs functions as a cofactor for about 70 enzyme systems, most ofwhich have something to do with amino acid and protein metabolism. Because vitamin B6 is also involved in the synthesis of neurotransmitters in the brain and nerve cells, it is frequently recommended as a nutrient to support mental function (mood) and nerve conduction.",
+    "intakePractices": {
+      "dosage": "2-12.5 mg/day",
+      "timing": "",
+      "specialInstructions": ""
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Control homocysteine levels for heart health",
+        "Support mental and nervous function"
+      ],
+      "sideEffects": [
+        "Long-term use of very high dosages (500 to 5,000 mg/day) is associated with neuropathy that is reversible with discontinuation."
+      ],
+      "studies": []
+    },
+    "category": "Vitamins",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP704",
+    "name": "Vitamin B-12",
+    "aliases": [
+      "Vitamin B12",
+      "Cobalamin",
+      "Cyanocobalamin"
+    ],
+    "description": "The water-soluble vitamin B12 is also known as cobalamin because it contains cobalt. The B12 form most commonly used in dietary supplements is called cyanocobalamin. Vitamin B12 is only produced by bacteria, so it is only found in food products of animal origin and in some fermented vegetable products such as tempeh and miso (fermented soybeans).",
+    "intakePractices": {
+      "dosage": "50-800 μg/day",
+      "timing": "",
+      "specialInstructions": ""
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Control homocysteine levels for heart health"
+      ],
+      "sideEffects": [],
+      "studies": []
+    },
+    "category": "Vitamins",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP705",
+    "name": "Folate",
+    "aliases": [
+      "Folic Acid",
+      "Vitamin B9",
+      "Vitamin B-9"
+    ],
+    "description": "Folic acid is a B vitamin that plays an important role in the synthesis of DNA and RNA, the production ofred blood cells, and the maintenance of the nervous system.",
+    "intakePractices": {
+      "dosage": "400-1,000 μg/day",
+      "timing": "",
+      "specialInstructions": "Extremely high intakes of folic acid (1-5 mg/day) have been associated with masking the signs and symptoms of pernicious anemia (vitamin B12 deficiency) and should be avoided"
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Control homocysteine levels for heart health",
+        "Prevent neural tube defects during pregnancy"
+      ],
+      "sideEffects": [
+        "Very high dosages may induce sleep and mental disturbances"
+      ],
+      "studies": []
+    },
+    "category": "Vitamins",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP706",
+    "name": "Vitamin B-3",
+    "aliases": [
+      "Niacin",
+      "Vitamin B3"
+    ],
+    "description": "Niacin is a water-soluble B vitamin and the common name for two very different compounds: nicotinic acid and niacinamide. Like all B vitamins, niacin plays a role in many aspects of energy metabolism and nervous system function.",
+    "intakePractices": {
+      "dosage": "250-2,000 μg/day",
+      "timing": "For niacinamide, take with food to reduce gastrointestinal side effects. For nicotinic acid, take on an empty stomach to reduce flushing and itching of the skin.",
+      "specialInstructions": "For high dosages, divide into two or three doses throughout the day. "
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Control cholesterol"
+      ],
+      "sideEffects": [
+        "With high doses of niacin used for controlling cholesterol levels (anything above 100 mg/ day), nicotinic acid can cause skin flushing and itching of the skin as well as headaches and hypotension."
+      ],
+      "studies": []
+    },
+    "category": "Vitamins",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP707",
+    "name": "Coenzyme Q10",
+    "aliases": [
+      "CoQ10"
+    ],
+    "description": "Coenzyme Q10 (CoQ10) is found in the mitochondria of all cells and is particularly enriched in tissues ofthe heart, liver, kidney, and pancreas. CoQ10 functions as part ofthe cellular system that generates energy from oxygen (in the form of ATP) for bodily processes and can act as an antioxidant to help prevent cellular damage from free radicals created during exercise and during the generation ofenergy.",
+    "intakePractices": {
+      "dosage": "50-100mg/day",
+      "timing": "With a meal",
+      "specialInstructions": ""
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Beneficial for heart patients",
+        "Serve as antioxidant"
+      ],
+      "sideEffects": [
+        "Possible epigastric distress (heartburn, nausea, stomachache)"
+      ],
+      "studies": []
+    },
+    "category": "Other",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP708",
+    "name": "Essential Fatty Acids",
+    "aliases": [
+      "Fish Oil",
+      "Evening Primrose Oil",
+      "Flaxseed"
+    ],
+    "description": "The term essential fatty acids refers to two fatty adds, linoleic acid and linolenic acid, that our bodies cannot synthesize. These fatty acids, like the essential vitamins and minerals, must be consumed in the diet. These essential fatty acids are needed for the production of prostaglandins and eicosanoids, which help regulate blood clotting, blood pressure, heart rate, immune response, and a wide variety of other biological processes.",
+    "intakePractices": {
+      "dosage": "Product-specific, typically 1-3 g/day",
+      "timing": "With meals",
+      "specialInstructions": ""
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Promote heart health",
+        "Reduce inflammation"
+      ],
+      "sideEffects": [
+        ""
+      ],
+      "studies": []
+    },
+    "category": "Other",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP709",
+    "name": "Garlic",
+    "aliases": [
+      "Allium sativum"
+    ],
+    "description": "Modern-day use of garlic as a dietary supplement generally centers around promotion of heart health by reducing serum lipid levels (total cholesterol, LDL, triglycerides), lowering blood pressure, and inhibiting blood clotting.",
+    "intakePractices": {
+      "dosage": "4-10g/day",
+      "timing": "With meals",
+      "specialInstructions": ""
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Control blood pressure",
+        "Control cholesterol"
+      ],
+      "sideEffects": [
+        "Mild gastrointestinal symptoms such as heartburn and nausea may occur with high intakes"
+      ],
+      "studies": []
+    },
+    "category": "Herbs",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP710",
+    "name": "Hawthorn",
+    "aliases": [
+      "Crataegus oxmcmum L."
+    ],
+    "description": "Hawthorn is an English shrub that has a long history of medicinal use in herbal medicine, including cardiovascular disorders, digestive complaints, dyspnea, and kidney stones. Today, hawthorn is a popular phytomedicine in Europe for use in cardiovascular disorders. With its ability to increase the integrity of the blood vessel walls, hawthorne can improve coronary blood flow and oxygen utilization and possesses positive inotropic activity.",
+    "intakePractices": {
+      "dosage": "160-900mg, 2-3 times daily",
+      "timing": "",
+      "specialInstructions": ""
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Improve cardiovascular health",
+        "Serve as antioxidant",
+        "Control blood pressure"
+      ],
+      "sideEffects": [
+        ""
+      ],
+      "studies": []
+    },
+    "category": "Herbs",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP711",
+    "name": "Red yeast rice",
+    "aliases": [
+      ""
+    ],
+    "description": "In Traditional Chinese Medicine (TCM), red yeast rice is used for healthy blood and to strengthen the heart; modern dietary supplements use red yeast rice to lower cholesterol levels.",
+    "intakePractices": {
+      "dosage": "1-3g/day",
+      "timing": "",
+      "specialInstructions": ""
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Control cholesterol"
+      ],
+      "sideEffects": [
+        "May affect liver functions"
+      ],
+      "studies": []
+    },
+    "category": "Herbs",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP712",
+    "name": "Soy",
+    "aliases": [
+      "Soybean",
+      "Soy protein",
+      "Isoflavones"
+    ],
+    "description": "In terms of health and wellness, the two most important dietary supplements derived from soybeans are isolated or concentrated soy proteins and soy extracts containing high amounts of compounds called isoflavones. Isoflavones have been associated with many beneficial health effects, ranging from protection from cancer and osteoporosis to a reduction in hot flashes and other symptoms of menopause. Soy protein, which may or may not contain a high level of isoflavones (depending on how it is processed) has been associated with a reduction in serum cholesterol and triglyceride levels and may protect against the development of coronary heart disease.",
+    "intakePractices": {
+      "dosage": "25-50g/day",
+      "timing": "",
+      "specialInstructions": ""
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Combat cardiovascular disease",
+        "Reduce menopausal symptoms",
+        "Combat osteoporosis",
+        "Combat cancer"
+      ],
+      "sideEffects": [
+        ""
+      ],
+      "studies": []
+    },
+    "category": "Herbs",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP801",
+    "name": "Astragalus",
+    "aliases": [
+      ""
+    ],
+    "description": "Astragalus is an herb used in Traditional Chinese Medicine (TCM) for its immune-enhancing properties, but is also recommended in TCM for \"deficiency of chi\" (life force), which might include symptoms such as lack of energy and fatigue.",
+    "intakePractices": {
+      "dosage": "100-500mg/day",
+      "timing": "",
+      "specialInstructions": ""
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Stimulate immunes system",
+        "Promote resistance to stress"
+      ],
+      "sideEffects": [
+        "Gastrointestinal distress and diarrhea are possible at high intakes"
+      ],
+      "studies": []
+    },
+    "category": "Herbs",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP802",
+    "name": "Cat's claw",
+    "aliases": [
+      "Una de gato",
+      "Uncaria tomentosa"
+    ],
+    "description": "Although cat's claw (or una de gato) is generally thought of as only coming from the rainforests of Peru, it is also found in the rainforests of surrounding countries such as Brazil and Bolivia. It has a number of traditional medicine uses, along with current uses such as immune system stimulation and modulation.",
+    "intakePractices": {
+      "dosage": "20-60mg/day",
+      "timing": "",
+      "specialInstructions": ""
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Immune modulation",
+        "Anti-inflammatory",
+        "Treat infections"
+      ],
+      "sideEffects": [
+        "Not recommended for pregnant patients"
+      ],
+      "studies": []
+    },
+    "category": "Herbs",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP803",
+    "name": "Colostrum",
+    "aliases": [
+      "Bovine colostrum"
+    ],
+    "description": "Colostrum is the clear or cloudy \"premilk\" that female mammals secrete after giving birth and before producing milk. Colostrum for dietary supplements is usually derived from bovine sources and contains various immunoglobulins (also called antibodies) and antimicrobial factors (i.e., lactoferrin, lactoperoxidase, lysozyme) as well as insulin-like growth factors such as IGF-I and IGF-II.",
+    "intakePractices": {
+      "dosage": "1-60g/day",
+      "timing": "",
+      "specialInstructions": ""
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Boost gastrointestitinal immunity",
+        "boost systemic immunity"
+      ],
+      "sideEffects": [
+        ""
+      ],
+      "studies": []
+    },
+    "category": "Other",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP804",
+    "name": "Echinacea",
+    "aliases": [
+      "Echinacea angustifolia",
+      "Echinacea purpurea",
+      "Echinacea pallida"
+    ],
+    "description": "Echinacea is native to the United States and a small region ofsouthern Canada. Although there are nine species of echinacea (Echinacea angustifolia, E. dicksoni, E. dubia, E. gloruisa, E. pallida, E. paradoxa, E. purpurea, E. simulate, and E. angustifolia), only three are normally harvested for medicinal purposes (E. angustifolia, E. pallida, and E. purpurea). Echinacea was originally used in North America by Native Americansfortherapeutic uses such as blood purification and treatment ofsnake bites, infections, and malignancy.",
+    "intakePractices": {
+      "dosage": "1-2g 3 times a day in dired or tea form; reduced dosages for exract or freeze-dried form",
+      "timing": "",
+      "specialInstructions": "Long term use recommended, chronic use discouraged"
+    },
+    "scientificDetails": {
+      "benefits": [
+        "For prophylaxis and treatment of cold and flu symptoms",
+        "Increase resistance to flus and colds",
+        "For wounds and skin inflammations"
+      ],
+      "sideEffects": [
+        "May cause allergic reaction in patients with asthma, atopy, or allergies to grass pollens"
+      ],
+      "studies": []
+    },
+    "category": "Herbs",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP805",
+    "name": "Glutamine",
+    "aliases": [
+      ""
+    ],
+    "description": "Glutamine is the most abundant amino acid in the body, comprising approximately half of the free amino acids in the blood and muscle. Glutamine has two main functions in the body: as a precursor in the synthesis of other amino acids and to convert into glucose for energy.",
+    "intakePractices": {
+      "dosage": "1-20g/day",
+      "timing": "",
+      "specialInstructions": ""
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Promote tissue repair",
+        "Promote immune function",
+        "reduce muscle catabolism"
+      ],
+      "sideEffects": [
+        "May cause mild gastrointestinal distress at high dosages"
+      ],
+      "studies": []
+    },
+    "category": "Amino acids",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP806",
+    "name": "Goldenseal",
+    "aliases": [
+      "Berberine"
+    ],
+    "description": "Many people consider the main active constituent in goldenseal to be berberine, and most ofthe clinical studies have been done on the single compound. Berberine is an alkaloid that also comes from several other plants which has a long history in folk medicine for diarrhea.",
+    "intakePractices": {
+      "dosage": "4-6g/day for powedered root, 250-500mg/day for extract",
+      "timing": "",
+      "specialInstructions": "Do not use during pregnancy or lactation."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Ease diarrhea",
+        "For immune system support",
+        "Antimicrobial"
+      ],
+      "sideEffects": [
+        "Long-term use at high doses (500 mg berberine) has been associated with cardiac spasms and death."
+      ],
+      "studies": []
+    },
+    "category": "Herbs",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP807",
+    "name": "Vitamin A",
+    "aliases": [
+      "Retinol",
+      "Beta carotene"
+    ],
+    "description": "Vitamin A is a fat-soluble vitamin that is part of a family of compounds including retinol, retinal, and  beta-carotene. Vitamin A is involved in myriad metabolic reactions in the body. As a dietary supplement, however, the most prevalent claims are for promoting skin health, eyesight, and general immune function, with occasional claims made for antiaging and anticancer effects.",
+    "intakePractices": {
+      "dosage": "900 μg/day for men; 700 μg/day for nonpregnant, nonlactating women",
+      "timing": "",
+      "specialInstructions": "Pregnant women on balanced diets should not take supplemental vitamin A"
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Correct vitamin A deficiency",
+        "Support immune function",
+        "Support eye health"
+      ],
+      "sideEffects": [
+        "Very high dosages are toxic and can cause nausea, vomiting, headache, dizziness, and blurred vision, and abortion and birth defects for pregnant women"
+      ],
+      "studies": []
+    },
+    "category": "Vitamins",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP808",
+    "name": "Zinc",
+    "aliases": [
+      ""
+    ],
+    "description": "Zinc is an essential trace mineral that functions as part of about 300 enzymes. As such, zinc plays a role in numerous biochemical pathways and physiological processes. More than 90% ofthe body's zinc is stored in the bones (30%) and muscles (60%), but zinc is also found widely distributed in small amounts in virtually all body tissues.",
+    "intakePractices": {
+      "dosage": "13-23mg every 2-4 hours",
+      "timing": "",
+      "specialInstructions": "Not recommended to take at periods of more than two weeks"
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Support immune function",
+        "Treat colds",
+        "Serve as a general antioxidant"
+      ],
+      "sideEffects": [
+        "High doses of zinc (gram levels) can cause nausea, diarrhea, and vomiting"
+      ],
+      "studies": []
+    },
+    "category": "Minerals",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP901",
+    "name": "Bilberry",
+    "aliases": [
+      "Vaccinium myrtillus l."
+    ],
+    "description": "Bilberry has been used in several therapeutic applications because ofits wide range of activities. Bilberry has been reported to be vasoprotective, antiedemic, antioxidant, anti-inflammatory, antiulcer, and astringent.",
+    "intakePractices": {
+      "dosage": "240-640mg/day",
+      "timing": "With meals",
+      "specialInstructions": ""
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Serve as antioxidant",
+        "Support eye health",
+        "Combat peripheral vascular disease"
+      ],
+      "sideEffects": [
+        ""
+      ],
+      "studies": []
+    },
+    "category": "Herbs",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP902",
+    "name": "Grape Seed",
+    "aliases": [
+      "Grape seed extract",
+      "vitis vinifera"
+    ],
+    "description": "Grape seed extract has been confirmed in both preclinical and clinical studies to be a potent antioxidant, and it has good clinical evidence of its usefulness in preventing and ameliorating cardiovascular and circulatory disorders.",
+    "intakePractices": {
+      "dosage": "30-150mg/day",
+      "timing": "",
+      "specialInstructions": ""
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Serve as antioxidant",
+        "Cardioprotective and circulatory benefits",
+        "Treat and prevent varicose veins"
+      ],
+      "sideEffects": [
+        "Possible mild gastrointestinal discomfort, vertigo, nausea, allergic reactions, and headaches"
+      ],
+      "studies": []
+    },
+    "category": "Herbs",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP903",
+    "name": "Green tea",
+    "aliases": [
+      "Green tea extract",
+      "Camellia sinensis"
+    ],
+    "description": "A number of beneficial health effects are attributed to regular consumption of green tea, and dried or powdered extracts of green tea are available as dietary supplements.",
+    "intakePractices": {
+      "dosage": "100-500mg/day for extract",
+      "timing": "Consume with or after having food",
+      "specialInstructions": ""
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Serve as antioxidant",
+        "Anticancer effects",
+        "For weight loss"
+      ],
+      "sideEffects": [
+        "Possible nausea if taken with empty stomach"
+      ],
+      "studies": []
+    },
+    "category": "Herbs",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP904",
+    "name": "Lutein",
+    "aliases": [
+      "Zeaxanthin"
+    ],
+    "description": "Lutein and zeaxanthin are carotenoids found in highest concentrations in the macular region of the eyes (the back of the eye where the retina is located), where they are believed to help filter out damaging blue light and prevent free-radical damage to the delicate structures in the back of the eye. Dietary supplements containing lutein and zeaxanthin are commonly recommended to help prevent age-related macular degeneration (ARMD) and the development of glaucoma and cataracts.",
+    "intakePractices": {
+      "dosage": "4-6mg/day",
+      "timing": "",
+      "specialInstructions": "Split intake into two doses per day for better absorption"
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Promote eye health",
+        "Prevent age-related macular degeneration"
+      ],
+      "sideEffects": [
+        ""
+      ],
+      "studies": []
+    },
+    "category": "Botanical compounds",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP905",
+    "name": "Lycopene",
+    "aliases": [
+      ""
+    ],
+    "description": "Lycopene is a naturally occurring carotenoid pigment that is classified as a nonprovitamin A carotenoid. Lycopene is an open-chain unsaturated carotenoid that imparts red color to tomatoes, guava, watermelon, and pink grapefruit. Although not as potent as beta carotene, lycopene acts as an antioxidant and affects cell growth and communication.",
+    "intakePractices": {
+      "dosage": "10-40mg/day",
+      "timing": "",
+      "specialInstructions": ""
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Serve as antioxidant",
+        "Prevent prostate and cervical cancers"
+      ],
+      "sideEffects": [
+        ""
+      ],
+      "studies": []
+    },
+    "category": "Botanical compounds",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP906",
+    "name": "N-Acetylcysteine",
+    "aliases": [
+      "NAC"
+    ],
+    "description": "N-acetylcysteine (NAC) is a derivative of the sulfur-containing amino acid cysteine. It is produced naturally in the body and is found in many protein-containing foods. NAC is an intermediary, along with glutamic acid and glycine, in the conversion of cysteine into glutathione (GTH), the body's primary cellular antioxidant. Dietary supplements containing NAC are recommended as general antioxidants and specifically to increase cellular glutathione levels, enhance immune system function, and treat bronchitis and other respiratory conditions.",
+    "intakePractices": {
+      "dosage": "250-1500mg/day",
+      "timing": "",
+      "specialInstructions": ""
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Serve as antioxidant",
+        "For general immune support"
+      ],
+      "sideEffects": [
+        ""
+      ],
+      "studies": []
+    },
+    "category": "Amino acids",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP907",
+    "name": "Quercetin",
+    "aliases": [
+      ""
+    ],
+    "description": "Quercetin is a phytochemical found naturally in many foods, such as red wine, green tea, onions, apples, and leafy vegetables. Quercetin exhibits strong antioxidant, anti-inflammatory, and possibly some antihistamine and antitumor activities. Quercetin also inhibits the activity of an enzyme that breaks down norepinephine. These activities are theorized to be at least partially responsible for some of the healthy benefits offoods like red wine and green tea.",
+    "intakePractices": {
+      "dosage": "100-1000mg/day",
+      "timing": "",
+      "specialInstructions": "Split intake into multiple doses per day"
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Serve as antioxidant",
+        "Combat cardiovascular disease",
+        "For venous and capillary health"
+      ],
+      "sideEffects": [
+        "Possible blood-thinng effects"
+      ],
+      "studies": []
+    },
+    "category": "Botanical compounds",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP908",
+    "name": "Selenium",
+    "aliases": [
+      ""
+    ],
+    "description": "y. In the body, selenium functions as part of an antioxidant enzyme called glutathione peroxidase and is necessary for normal growth and proper utilization of iodine in thyroid function. Selenium also supports the antioxidant effect of vitamin E. ",
+    "intakePractices": {
+      "dosage": "50-200μg/day",
+      "timing": "",
+      "specialInstructions": ""
+    },
+    "scientificDetails": {
+      "benefits": [
+        "For correcting selenium deficiency",
+        "Serve as antioxidant",
+        "Anticancer effects"
+      ],
+      "sideEffects": [
+        "High dosages may cause selenium toxicity (nausea, vomiting, depression, irritability, nervousness, skin rashes, and loss of hair and fingernails)"
+      ],
+      "studies": []
+    },
+    "category": "Minerals",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP909",
+    "name": "Spirulina",
+    "aliases": [
+      "spirulina maxima",
+      "s. platensis",
+      "blue-green algae"
+    ],
+    "description": "Spirulina is a blue-green algae that grows naturally in lakes and has been part of the diet supplementation of people in South America, Central America, and Africa for centuries. Spirulina has gained popularity as a dietary and food supplement and for its numerous health benefits, including as a \"holistic\" multivitamin; for promoting health, wellness, and energy; to stimulate the immune system; for improving blood lipid levels, as a chemoprotective; and for promoting weight loss.",
+    "intakePractices": {
+      "dosage": "2-3g/day",
+      "timing": "",
+      "specialInstructions": "Split intake into multiple doses per day"
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Serve as antioxidant",
+        "Stimulate immune system"
+      ],
+      "sideEffects": [
+        ""
+      ],
+      "studies": []
+    },
+    "category": "Herbs",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP910",
+    "name": "Vitamin C",
+    "aliases": [
+      ""
+    ],
+    "description": "Vitamin C, also known as ascorbic acid, is a water-solublevitamin needed by the body for hundreds of vital metabolic reactions.",
+    "intakePractices": {
+      "dosage": "20-1000mg/day",
+      "timing": "",
+      "specialInstructions": ""
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Correct vitamin C deficiency",
+        "Prevent and treat colds and flu",
+        "Serve as antioxidant"
+      ],
+      "sideEffects": [
+        "Very large dosages may cause gastrointestinal side effects such as stomach cramps, nausea, and diarrhea"
+      ],
+      "studies": []
+    },
+    "category": "Vitamins",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP911",
+    "name": "Vitamin E",
+    "aliases": [
+      ""
+    ],
+    "description": "Vitamin E is actually a family of related compounds known as tocopherols and tocotrienols. It is believed to be able to reduce the risk of cardiovascular disease and cancer, and has also been shown to play a role in immune function, DNA repair, and other metabolic processes.",
+    "intakePractices": {
+      "dosage": "100-800 IU/day",
+      "timing": "",
+      "specialInstructions": ""
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Promote heart health",
+        "Serve as antioxidant",
+        "Correct vitamin E deficiency"
+      ],
+      "sideEffects": [
+        ""
+      ],
+      "studies": []
+    },
+    "category": "Vitamins",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP720",
+    "name": "Bladderwrack",
+    "aliases": [
+      "Fucus vesiculosus"
+    ],
+    "description": "Bladderwrack, a type of seaweed, is primarily used for its high iodine content, which supports thyroid hormone production. It is often included in weight loss, fat-burning, and energy-enhancing formulations, as well as cosmetic products for skin health. Its trace minerals, fiber, and vitamin B12 content contribute to its nutritional benefits, though it is rarely used alone and lacks clinical support for therapeutic claims.",
+    "intakePractices": {
+      "dosage": "Dosage is not well-established due to limited clinical studies. Typical recommendations suggest starting with a small dose and increasing gradually, not exceeding 150 μg/day of iodine as per German Commission E guidelines.",
+      "timing": "With meals",
+      "specialInstructions": "Monitor for signs of thyroid imbalance due to iodine content. Avoid if sourced from waters with heavy metal contamination."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Source of iodine for thyroid support",
+        "Potential antioxidant effects",
+        "May reduce blood glucose",
+        "Supports nutritional balance"
+      ],
+      "sideEffects": [
+        "Risk of thyroid imbalance from iodine excess",
+        "Potential heavy metal contamination"
+      ],
+      "studies": [
+        "Reilly W, Reeve V. Body contouring using an oral herbal antioxidant formulation. Redox Report 2000;5(2-3):144-145.",
+        "Phaneuf D, et al. Environmental Research 1999;80(2 pt 2):S175-S182."
+      ]
+    },
+    "category": "Herbs",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP721",
+    "name": "Carnitine",
+    "aliases": [
+      "L-Carnitine"
+    ],
+    "description": "Carnitine, an amino acid found in meat and dairy and synthesized in the body, facilitates the transport of long-chain fatty acids into mitochondria for energy production. Marketed for weight loss, endurance, and cardiovascular health, it shows modest benefits for heart function in specific conditions but limited efficacy for weight loss or athletic performance in healthy adults.",
+    "intakePractices": {
+      "dosage": "Typical doses range from 2-6 g/day, often in divided doses.",
+      "timing": "With meals or before exercise",
+      "specialInstructions": "Ensure use of L-carnitine, as D-carnitine may cause muscle weakness."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Enhances heart function in congestive heart failure",
+        "May reduce cholesterol and triglycerides",
+        "Potential recovery aid post-exercise"
+      ],
+      "sideEffects": [
+        "No significant adverse effects at 2-6 g/day",
+        "D-carnitine may displace active form"
+      ],
+      "studies": [
+        "Villani RG, et al. Int J Sport Nutr Exerc Metab 2000;10(2):199-207.",
+        "Pichard C, et al. Am J Clin Nutr 1989;49(2):283-289."
+      ]
+    },
+    "category": "Amino Acids",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP722",
+    "name": "Chitosan",
+    "aliases": [
+      "Aminopolysaccharide"
+    ],
+    "description": "Chitosan, derived from shellfish shells, is a dietary fiber that binds to dietary fats, potentially blocking their absorption. It is marketed for weight loss and cholesterol reduction but shows mixed results, with benefits most apparent when combined with a low-calorie diet.",
+    "intakePractices": {
+      "dosage": "Recommended doses are 2-6 g/day, in divided 1-g doses with meals.",
+      "timing": "Before meals",
+      "specialInstructions": "Not recommended for those with shellfish allergies. May cause gas or bloating."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "May reduce body weight with low-calorie diet",
+        "Increases HDL cholesterol",
+        "Lowers total and LDL cholesterol"
+      ],
+      "sideEffects": [
+        "Gas, bloating, diarrhea",
+        "Potential fat-soluble vitamin malabsorption"
+      ],
+      "studies": [
+        "Zahorska-Markiewicz B, et al. Pol Merkuriusz Lek 2002;13(74):129-132.",
+        "Maezaki Y, et al. Biosci Biotech Biochem 1993;57(9):1439-1444."
+      ]
+    },
+    "category": "Dietary Fibers",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP723",
+    "name": "Citrus Aurantium",
+    "aliases": [
+      "Bitter Orange",
+      "Zhi Shi"
+    ],
+    "description": "Citrus Aurantium, containing synephrine, is used as a thermogenic agent for weight loss and athletic performance. It stimulates β-3 adrenergic receptors, potentially increasing metabolism, but lacks robust clinical evidence for fat burning and may pose cardiovascular risks in susceptible individuals.",
+    "intakePractices": {
+      "dosage": "200-600 mg of extract (4-20 mg synephrine) daily.",
+      "timing": "Before meals or exercise",
+      "specialInstructions": "Contraindicated for those with cardiac issues, hypertension, or using MAO inhibitors."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "May promote thermogenesis",
+        "Potential weight loss aid"
+      ],
+      "sideEffects": [
+        "Possible cardiovascular effects (increased heart rate, blood pressure)"
+      ],
+      "studies": [
+        "Kalman DS, et al. Curr Ther Res 2000;61(4):199-205.",
+        "Penzak SR, et al. J Clin Pharmacol 2001;41(10):1059-1063."
+      ]
+    },
+    "category": "Herbs",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP724",
+    "name": "Conjugated Linoleic Acid",
+    "aliases": [
+      "CLA"
+    ],
+    "description": "Conjugated Linoleic Acid (CLA), an isomer of linoleic acid found in meat and dairy, is marketed for fat loss and muscle building. It shows modest benefits for fat reduction in overweight adults but not in trained athletes, with mixed evidence for blood lipid control.",
+    "intakePractices": {
+      "dosage": "3-6 g/day, in divided doses.",
+      "timing": "With meals",
+      "specialInstructions": "Prefer blended isomer supplements to avoid potential insulin resistance from t10/c12 isomer."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Modest fat loss in overweight adults",
+        "May reduce triglycerides and cholesterol"
+      ],
+      "sideEffects": [
+        "t10/c12 isomer may cause insulin resistance, oxidative stress"
+      ],
+      "studies": [
+        "Blankson H, et al. J Nutr 2000;130(12):2943-2948.",
+        "Noone EJ, et al. Br J Nutr 2002;88(3):243-251."
+      ]
+    },
+    "category": "Fatty Acids",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP725",
+    "name": "Guarana",
+    "aliases": [
+      "Paullinia cupana"
+    ],
+    "description": "Guarana, a Brazilian herb high in caffeine, is used for energy, athletic performance, and weight loss. Its effects are largely attributed to caffeine, though polyphenols and saponins may contribute. No clinical studies support its use as a single ingredient, and it poses risks when combined with other stimulants.",
+    "intakePractices": {
+      "dosage": "200-2,000 mg/day of extract (11-200 mg caffeine), in divided doses.",
+      "timing": "Before meals or exercise",
+      "specialInstructions": "Not recommended for caffeine-sensitive individuals, pregnant women, or children. Avoid high doses."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Increases energy and alertness",
+        "May suppress appetite",
+        "Potential thermogenic effects"
+      ],
+      "sideEffects": [
+        "Insomnia, restlessness, heart palpitations at high doses"
+      ],
+      "studies": [
+        "Boozer CN, et al. Int J Obes Relat Metab Disord 2001;25(3):316-324."
+      ]
+    },
+    "category": "Herbs",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP726",
+    "name": "DHEA",
+    "aliases": [
+      "Dehydroepiandrosterone"
+    ],
+    "description": "DHEA, an adrenal hormone, is a precursor to testosterone and estrogen. It is promoted for anti-aging, muscle building, and sexual function, with benefits in restoring DHEA levels in the elderly and overtrained athletes but limited efficacy in healthy young adults.",
+    "intakePractices": {
+      "dosage": "25-100 mg/day.",
+      "timing": "Morning or with meals",
+      "specialInstructions": "Use only in those with low DHEA levels. Monitor for hormonal side effects."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Restores DHEA levels in elderly",
+        "May improve bone density and well-being",
+        "Potential immune support"
+      ],
+      "sideEffects": [
+        "Virilization in women",
+        "Gynecomastia in men",
+        "Possible liver abnormalities"
+      ],
+      "studies": [
+        "Labrie F, et al. J Clin Endocrinol Metab 1997;82(8):2403-2409.",
+        "Wallace MB, et al. Med Sci Sports Exerc 1999;31(12):1788-1792."
+      ]
+    },
+    "category": "Hormones",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP727",
+    "name": "Glycerol",
+    "aliases": [
+      "Glycerin"
+    ],
+    "description": "Glycerol, a component of triglycerides, is used to enhance hydration by increasing blood volume, particularly for endurance athletes in hot environments. It may delay dehydration and improve performance but is less effective in temperate conditions.",
+    "intakePractices": {
+      "dosage": "1 g/kg body weight, diluted in 20-25 mL liquid per g (e.g., 70 g in 1.4-1.75 L for a 70-kg person).",
+      "timing": "1-2 hours before exercise",
+      "specialInstructions": "Consume slowly to avoid gastrointestinal distress. Avoid in pregnancy, hypertension, or kidney disease."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Enhances hydration status",
+        "Improves endurance in hot environments"
+      ],
+      "sideEffects": [
+        "Headaches, nausea, diarrhea at high doses"
+      ],
+      "studies": [
+        "Inder WJ, et al. Med Sci Sports Exerc 1998;30(8):1263-1269.",
+        "Wagner DR. J Am Diet Assoc 1999;99(2):207-212."
+      ]
+    },
+    "category": "Hydration Aids",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP728",
+    "name": "HMB",
+    "aliases": [
+      "β-Hydroxy-β-Methylbutyrate"
+    ],
+    "description": "HMB, a metabolite of leucine, is used to reduce muscle catabolism during intense exercise and slow muscle loss in conditions like cancer or AIDS. It may increase muscle mass and strength when combined with resistance training.",
+    "intakePractices": {
+      "dosage": "3-6 g/day, in two or three divided doses.",
+      "timing": "With meals or post-exercise",
+      "specialInstructions": "Best used during high-intensity training periods."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Reduces muscle catabolism",
+        "Increases muscle strength and mass",
+        "Aids recovery"
+      ],
+      "sideEffects": [
+        "No significant side effects reported at 3-6 g/day"
+      ],
+      "studies": [
+        "Panton LB, et al. Nutrition 2000;16(9):734-739.",
+        "May PE, et al. Am J Surg 2002;183(4):471-479."
+      ]
+    },
+    "category": "Amino Acid Metabolites",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP729",
+    "name": "Medium-Chain Triglycerides",
+    "aliases": [
+      "MCTs"
+    ],
+    "description": "Medium-Chain Triglycerides (MCTs), fats with 6-12 carbon chains, are rapidly absorbed and metabolized for energy. Marketed for endurance, weight loss, and muscle preservation, they show modest metabolic rate increases but limited benefits for performance or fat loss.",
+    "intakePractices": {
+      "dosage": "1-2 tablespoons (14-28 g) daily, starting with 1/2 tablespoon.",
+      "timing": "With food or beverages",
+      "specialInstructions": "Not recommended for diabetics or those with liver disease. Start with small doses to avoid intestinal cramping."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Modestly increases metabolic rate",
+        "May reduce protein breakdown"
+      ],
+      "sideEffects": [
+        "Intestinal cramping at high doses (70-90 g)"
+      ],
+      "studies": [
+        "Tsuji H, et al. J Nutr 2001;131(11):2853-2859.",
+        "Keller U, et al. Metabolism 2002;51(6):754-760."
+      ]
+    },
+    "category": "Fatty Acids",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP730",
+    "name": "Proteolytic Enzymes",
+    "aliases": [
+      "Trypsin",
+      "Chymotrypsin",
+      "Bromelain",
+      "Papain"
+    ],
+    "description": "Proteolytic enzymes, sourced from plants, animals, or fungi, digest proteins and are used as digestive aids, anti-inflammatory agents, and for post-exercise recovery. They show strong evidence for reducing inflammation and accelerating healing.",
+    "intakePractices": {
+      "dosage": "Varies by enzyme activity units; typically enteric-coated blends taken 2-3 times daily.",
+      "timing": "Between meals for systemic effects, with meals for digestion",
+      "specialInstructions": "Avoid in those with gastric ulcers or on blood-thinning medications."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Reduces inflammation and pain",
+        "Enhances post-exercise recovery",
+        "Aids digestive function"
+      ],
+      "sideEffects": [
+        "Mild gastrointestinal upset",
+        "Potential anticoagulant effects"
+      ],
+      "studies": [
+        "Buck JE, Phillips N. Br J Clin Pract 1970;24(9):375-377.",
+        "Adamek J, et al. Rozhl Chir 1997;76(4):203-204."
+      ]
+    },
+    "category": "Enzymes",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP731",
+    "name": "Ribose",
+    "aliases": [
+      "D-Ribose"
+    ],
+    "description": "Ribose, a five-carbon sugar, is a component of ATP and nucleotides. It is marketed for energy, endurance, and muscle power, with benefits in preventing exercise-induced ischemia in cardiac patients but modest effects in healthy athletes.",
+    "intakePractices": {
+      "dosage": "3-10 g/day, with higher doses (up to 60 g) studied.",
+      "timing": "Before or after exercise",
+      "specialInstructions": "High doses may cause gastrointestinal distress or hypoglycemia."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Prevents exercise-induced ischemia",
+        "May enhance ATP recovery"
+      ],
+      "sideEffects": [
+        "Gastrointestinal distress, diarrhea, hypoglycemia at high doses"
+      ],
+      "studies": [
+        "Pliml W, et al. Lancet 1992;340(8818):507-510.",
+        "Wagner DR, et al. Ann Nutr Metab 1991;35(5):297-302."
+      ]
+    },
+    "category": "Sugars",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP732",
+    "name": "Tribulus Terrestris",
+    "aliases": [
+      "Tribulus"
+    ],
+    "description": "Tribulus Terrestris, a traditional Chinese herb, is used for sexual performance, athletic performance, and as a tonic. Its steroidal saponins and protodioscin may enhance sexual function by increasing DHEA, but clinical evidence for athletic benefits is limited.",
+    "intakePractices": {
+      "dosage": "100-500 mg of 60% saponin extract, 3 times daily, or 750-1,350 mg/day of unspecified preparations.",
+      "timing": "With meals",
+      "specialInstructions": "Avoid in dehydration due to diuretic effects."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Improves sexual function and fertility",
+        "May enhance hormonal markers"
+      ],
+      "sideEffects": [
+        "Frequent urination",
+        "Possible hepatotoxicity at high doses"
+      ],
+      "studies": [
+        "Nikolova V, Stanislavov R. Dokladi na B’lgarskata Akademiya na Naukite 2000;53(12):113-116.",
+        "Adaikan PG, et al. Annals Academy of Medicine Singapore 2000;29(1):22-26."
+      ]
+    },
+    "category": "Herbs",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP733",
+    "name": "Bee Products",
+    "aliases": [
+      "Bee Pollen",
+      "Propolis",
+      "Royal Jelly"
+    ],
+    "description": "Bee Products, including bee pollen, propolis, and royal jelly, are used as immune stimulants, cholesterol reducers, and general tonics. Their variable content of vitamins, minerals, and amino acids supports claims for energy and overall health, though specific benefits lack robust clinical evidence.",
+    "intakePractices": {
+      "dosage": "Not specified; varies by product formulation.",
+      "timing": "With meals",
+      "specialInstructions": "Use cautiously in those with pollen allergies."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Stimulates immune system",
+        "May reduce cholesterol",
+        "General tonic effects"
+      ],
+      "sideEffects": [
+        "Potential allergic reactions in pollen-sensitive individuals"
+      ],
+      "studies": []
+    },
+    "category": "Natural Products",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP200",
+    "name": "Boron",
+    "aliases": [],
+    "description": "Boron is a trace mineral that supports bone health, aids in the metabolism of minerals, and may influence hormone levels and cognitive function.",
+    "intakePractices": {
+      "dosage": "Generally, boron is taken in doses of 1 to 3 mg per day.",
+      "timing": "Can be taken with or without food.",
+      "specialInstructions": "Avoid excessive intake above 20 mg/day to prevent toxicity."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Supports bone health",
+        "Helps in the metabolism of calcium, magnesium, and phosphorus",
+        "May influence hormone levels and cognitive function"
+      ],
+      "sideEffects": [
+        "High doses may cause nausea, vomiting, or skin inflammation"
+      ],
+      "studies": [
+        {
+          "title": "Boron",
+          "journal": "The Health Professional's Guide to Dietary Supplements",
+          "year": 2007,
+          "summary": ""
+        }
+      ]
+    },
+    "category": "",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP201",
+    "name": "Vitamin D",
+    "aliases": [
+      "Calciferol",
+      "Cholecalciferol"
+    ],
+    "description": "Vitamin D is essential for calcium absorption, bone health, and immune function. It also plays a role in regulating mood and reducing inflammation.",
+    "intakePractices": {
+      "dosage": "Typical dosage is 600 to 800 IU/day; higher doses may be used for deficiencies under medical supervision.",
+      "timing": "Best taken with meals containing fat to enhance absorption.",
+      "specialInstructions": "Vitamin D3 (Cholecalciferol) is more effective than D2 (Ergocalciferol) for raising blood levels."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Enhances calcium absorption and bone health",
+        "Supports immune system",
+        "May help regulate mood and reduce inflammation"
+      ],
+      "sideEffects": [
+        "High doses may lead to hypercalcemia and kidney problems"
+      ],
+      "studies": [
+        {
+          "title": "Vitamin D",
+          "journal": "The Health Professional's Guide to Dietary Supplements",
+          "year": 2007,
+          "summary": ""
+        }
+      ]
+    },
+    "category": "",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP202",
+    "name": "Calcium",
+    "aliases": [],
+    "description": "Calcium is a mineral critical for the development and maintenance of strong bones and teeth, muscle contraction, and nerve function.",
+    "intakePractices": {
+      "dosage": "Recommended intake is 1000 to 1200 mg/day, divided into smaller doses for better absorption.",
+      "timing": "Should be taken with meals to improve absorption.",
+      "specialInstructions": "Avoid taking calcium with high doses of iron or certain medications as it may interfere with absorption."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Supports bone and dental health",
+        "Assists in muscle contraction and nerve transmission"
+      ],
+      "sideEffects": [
+        "May cause constipation or kidney stones if taken in excess"
+      ],
+      "studies": [
+        {
+          "title": "Calcium",
+          "journal": "The Health Professional's Guide to Dietary Supplements",
+          "year": 2007,
+          "summary": ""
+        }
+      ]
+    },
+    "category": "",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP203",
+    "name": "Vitamin K",
+    "aliases": [
+      "Phylloquinone",
+      "Menaquinone"
+    ],
+    "description": "Vitamin K is essential for blood clotting and bone metabolism. It helps regulate calcium in the blood and supports cardiovascular health.",
+    "intakePractices": {
+      "dosage": "Typical intake ranges from 90 to 120 mcg/day depending on age and gender.",
+      "timing": "Best taken with meals containing fat.",
+      "specialInstructions": "Consult a doctor before using if on blood thinners like warfarin."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Supports blood clotting",
+        "Improves bone health and reduces fracture risk",
+        "May support heart health by preventing arterial calcification"
+      ],
+      "sideEffects": [
+        "May interact with anticoagulant medications"
+      ],
+      "studies": [
+        {
+          "title": "Vitamin K",
+          "journal": "The Health Professional's Guide to Dietary Supplements",
+          "year": 2007,
+          "summary": ""
+        }
+      ]
+    },
+    "category": "",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP204",
+    "name": "Magnesium",
+    "aliases": [],
+    "description": "Magnesium is a vital mineral involved in over 300 enzymatic reactions, including muscle and nerve function, blood glucose control, and blood pressure regulation.",
+    "intakePractices": {
+      "dosage": "Recommended daily allowance is 310-420 mg depending on age and gender.",
+      "timing": "Can be taken at any time of day, often at night to promote relaxation.",
+      "specialInstructions": "High doses may cause diarrhea; magnesium glycinate is a gentler form for digestion."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Supports nerve and muscle function",
+        "Regulates blood pressure and glucose levels",
+        "Promotes relaxation and sleep"
+      ],
+      "sideEffects": [
+        "High doses may lead to diarrhea or abdominal cramping"
+      ],
+      "studies": [
+        {
+          "title": "Magnesium",
+          "journal": "The Health Professional's Guide to Dietary Supplements",
+          "year": 2007,
+          "summary": ""
+        }
+      ]
+    },
+    "category": "",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP205",
+    "name": "Boswellia",
+    "aliases": [
+      "Boswellia serrata"
+    ],
+    "description": "Boswellia is an herbal extract from the Boswellia serrata tree, traditionally used to reduce inflammation, particularly in joint disorders like arthritis.",
+    "intakePractices": {
+      "dosage": "Typically 300-500 mg taken two to three times daily.",
+      "timing": "Best taken with meals.",
+      "specialInstructions": "Standardized extracts with 60-65% boswellic acids are considered most effective."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Reduces inflammation",
+        "Supports joint health",
+        "May relieve symptoms of osteoarthritis and rheumatoid arthritis"
+      ],
+      "sideEffects": [
+        "May cause gastrointestinal discomfort or skin rash in some individuals"
+      ],
+      "studies": [
+        {
+          "title": "Boswellia",
+          "journal": "The Health Professional's Guide to Dietary Supplements",
+          "year": 2007,
+          "summary": ""
+        }
+      ]
+    },
+    "category": "",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP206",
+    "name": "Cetyl Myristoleate",
+    "aliases": [],
+    "description": "Cetyl Myristoleate is a fatty acid ester used to support joint mobility and reduce inflammation in arthritis.",
+    "intakePractices": {
+      "dosage": "Dosages range from 350 mg to 2 g daily in divided doses.",
+      "timing": "Often taken with food to enhance absorption.",
+      "specialInstructions": "Should be taken for at least 30 days for optimal results."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Promotes joint flexibility",
+        "Reduces joint pain and inflammation"
+      ],
+      "sideEffects": [
+        "Rare, but may include mild digestive upset"
+      ],
+      "studies": [
+        {
+          "title": "Cetyl Myristoleate",
+          "journal": "The Health Professional's Guide to Dietary Supplements",
+          "year": 2007,
+          "summary": ""
+        }
+      ]
+    },
+    "category": "",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP207",
+    "name": "Chondroitin Sulfate",
+    "aliases": [],
+    "description": "Chondroitin sulfate is a compound found in cartilage and is commonly used to manage symptoms of osteoarthritis.",
+    "intakePractices": {
+      "dosage": "Commonly used dose is 800-1200 mg daily, often divided.",
+      "timing": "Can be taken with or without food.",
+      "specialInstructions": "Often combined with glucosamine for synergistic effects."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Supports joint structure and function",
+        "Reduces symptoms of osteoarthritis",
+        "May slow cartilage breakdown"
+      ],
+      "sideEffects": [
+        "May cause mild stomach upset, nausea, or headaches"
+      ],
+      "studies": [
+        {
+          "title": "Chondroitin Sulfate",
+          "journal": "The Health Professional's Guide to Dietary Supplements",
+          "year": 2007,
+          "summary": ""
+        }
+      ]
+    },
+    "category": "",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP208",
+    "name": "Devil's Claw",
+    "aliases": [
+      "Harpagophytum procumbens"
+    ],
+    "description": "Devil's Claw is an herbal supplement used to relieve pain and inflammation, particularly in arthritis and lower back pain.",
+    "intakePractices": {
+      "dosage": "Typically 600-1200 mg of extract per day, standardized to 1.5\u20133% harpagoside.",
+      "timing": "Take with meals to reduce gastrointestinal irritation.",
+      "specialInstructions": "Use caution in individuals with ulcers or on anticoagulants."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Relieves joint pain and inflammation",
+        "May reduce symptoms of lower back pain and osteoarthritis"
+      ],
+      "sideEffects": [
+        "Can cause gastrointestinal upset, especially at high doses"
+      ],
+      "studies": [
+        {
+          "title": "Devil's Claw",
+          "journal": "The Health Professional's Guide to Dietary Supplements",
+          "year": 2007,
+          "summary": ""
+        }
+      ]
+    },
+    "category": "",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP209",
+    "name": "Glucosamine",
+    "aliases": [],
+    "description": "Glucosamine is an amino sugar that helps build cartilage and is widely used for joint support and osteoarthritis symptom relief.",
+    "intakePractices": {
+      "dosage": "1500 mg daily, often split into two or three doses.",
+      "timing": "Can be taken with or without food.",
+      "specialInstructions": "Best results seen after several weeks of consistent use."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Supports cartilage repair",
+        "May reduce joint pain and stiffness in osteoarthritis"
+      ],
+      "sideEffects": [
+        "May cause nausea, heartburn, or diarrhea"
+      ],
+      "studies": [
+        {
+          "title": "Glucosamine",
+          "journal": "The Health Professional's Guide to Dietary Supplements",
+          "year": 2007,
+          "summary": ""
+        }
+      ]
+    },
+    "category": "",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP210",
+    "name": "Green-Lipped Mussel",
+    "aliases": [
+      "Perna canaliculus"
+    ],
+    "description": "Green-lipped mussel is a marine extract rich in omega-3 fatty acids and glycosaminoglycans, used to reduce inflammation and support joint health.",
+    "intakePractices": {
+      "dosage": "500-1000 mg daily of standardized extract.",
+      "timing": "Best taken with meals.",
+      "specialInstructions": "May not be suitable for individuals with shellfish allergies."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Reduces inflammation",
+        "Supports joint function and cartilage health"
+      ],
+      "sideEffects": [
+        "May cause gastrointestinal discomfort or allergic reaction"
+      ],
+      "studies": [
+        {
+          "title": "Green-Lipped Mussel",
+          "journal": "The Health Professional's Guide to Dietary Supplements",
+          "year": 2007,
+          "summary": ""
+        }
+      ]
+    },
+    "category": "",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP211",
+    "name": "Hydrolyzed Collagen Protein",
+    "aliases": [
+      "HCP",
+      "Gelatin"
+    ],
+    "description": "Hydrolyzed collagen protein, or gelatin, is a broken-down form of collagen used to support skin, joints, and connective tissues.",
+    "intakePractices": {
+      "dosage": "5-10 grams per day in powder or capsule form.",
+      "timing": "Can be taken at any time, often added to beverages or food.",
+      "specialInstructions": "Ensure adequate vitamin C intake to support collagen synthesis."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Supports joint and skin health",
+        "May improve elasticity and hydration of the skin"
+      ],
+      "sideEffects": [
+        "Generally well tolerated; possible digestive upset in large doses"
+      ],
+      "studies": [
+        {
+          "title": "Hydrolyzed Collagen Protein",
+          "journal": "The Health Professional's Guide to Dietary Supplements",
+          "year": 2007,
+          "summary": ""
+        }
+      ]
+    },
+    "category": "",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP212",
+    "name": "MSM",
+    "aliases": [
+      "Methylsulfonylmethane"
+    ],
+    "description": "MSM is a sulfur-containing compound used to reduce inflammation, support joint health, and alleviate pain.",
+    "intakePractices": {
+      "dosage": "1500-3000 mg daily in divided doses.",
+      "timing": "Can be taken with meals to avoid stomach upset.",
+      "specialInstructions": "Start with a lower dose and increase gradually to minimize side effects."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Reduces joint pain and inflammation",
+        "Supports skin, hair, and nail health"
+      ],
+      "sideEffects": [
+        "May cause bloating, fatigue, or headache"
+      ],
+      "studies": [
+        {
+          "title": "MSM",
+          "journal": "The Health Professional's Guide to Dietary Supplements",
+          "year": 2007,
+          "summary": ""
+        }
+      ]
+    },
+    "category": "",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP213",
+    "name": "Sea Cucumber",
+    "aliases": [
+      "Stichopusjaponicus",
+      "Other Genera Depending on Location"
+    ],
+    "description": "Sea cucumber is a marine animal extract used in traditional medicine for its anti-inflammatory, joint-supporting, and immune-boosting properties.",
+    "intakePractices": {
+      "dosage": "500-1000 mg daily of dried or powdered extract.",
+      "timing": "Can be taken with or without food.",
+      "specialInstructions": "Ensure product is from a reputable source to avoid contamination."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Supports joint and connective tissue health",
+        "May enhance immune response",
+        "Traditionally used for wound healing and inflammation"
+      ],
+      "sideEffects": [
+        "May cause allergic reactions in sensitive individuals"
+      ],
+      "studies": [
+        {
+          "title": "Sea Cucumber",
+          "journal": "The Health Professional's Guide to Dietary Supplements",
+          "year": 2007,
+          "summary": ""
+        }
+      ]
+    },
+    "category": "",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP214",
+    "name": "5-HTP",
+    "aliases": [
+      "5-Hydroxy-Tryptophan"
+    ],
+    "description": "5-HTP is a naturally occurring amino acid used to support mood, reduce anxiety, and improve sleep by increasing serotonin levels in the brain.",
+    "intakePractices": {
+      "dosage": "Typical dose is 100-300 mg per day, often divided into 2-3 doses.",
+      "timing": "Best taken before meals or in the evening for sleep support.",
+      "specialInstructions": "Avoid combining with SSRIs or MAOIs due to risk of serotonin syndrome."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Supports serotonin production",
+        "May reduce symptoms of depression and anxiety",
+        "Improves sleep quality"
+      ],
+      "sideEffects": [
+        "Possible nausea, drowsiness, or gastrointestinal discomfort"
+      ],
+      "studies": [
+        {
+          "title": "5-HTP",
+          "journal": "The Health Professional's Guide to Dietary Supplements",
+          "year": 2007,
+          "summary": ""
+        }
+      ]
+    },
+    "category": "",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP215",
+    "name": "Phosphatidylserine",
+    "aliases": [],
+    "description": "Phosphatidylserine is a phospholipid that plays a key role in cell membrane integrity and cognitive function.",
+    "intakePractices": {
+      "dosage": "Common dose is 100 mg taken 2-3 times daily.",
+      "timing": "Can be taken with meals for better absorption.",
+      "specialInstructions": "May interact with blood thinners and cholinergic drugs."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Supports memory and cognitive function",
+        "May reduce cortisol and improve mood"
+      ],
+      "sideEffects": [
+        "Rare but may include insomnia or stomach upset"
+      ],
+      "studies": [
+        {
+          "title": "Phosphatidylserine",
+          "journal": "The Health Professional's Guide to Dietary Supplements",
+          "year": 2007,
+          "summary": ""
+        }
+      ]
+    },
+    "category": "",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP216",
+    "name": "Choline",
+    "aliases": [],
+    "description": "Choline is an essential nutrient involved in liver function, brain development, and muscle movement.",
+    "intakePractices": {
+      "dosage": "Recommended intake is 425-550 mg daily depending on age and gender.",
+      "timing": "Can be taken at any time of day.",
+      "specialInstructions": "Excessive intake may cause a fishy body odor or hypotension."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Supports brain health and neurotransmitter synthesis",
+        "Promotes liver function and fat metabolism"
+      ],
+      "sideEffects": [
+        "Excessive doses may lead to low blood pressure or body odor"
+      ],
+      "studies": [
+        {
+          "title": "Choline",
+          "journal": "The Health Professional's Guide to Dietary Supplements",
+          "year": 2007,
+          "summary": ""
+        }
+      ]
+    },
+    "category": "",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP217",
+    "name": "SAMe",
+    "aliases": [
+      "S-Adenosyl-L-Methionine"
+    ],
+    "description": "SAMe is a compound naturally found in the body that supports mood, liver health, and joint comfort.",
+    "intakePractices": {
+      "dosage": "Common dose is 400-1600 mg daily in divided doses.",
+      "timing": "Best taken on an empty stomach.",
+      "specialInstructions": "Gradual dose increase is advised to avoid gastrointestinal side effects."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Supports mood and emotional well-being",
+        "May improve joint health and liver function"
+      ],
+      "sideEffects": [
+        "Possible nausea, dry mouth, or anxiety at high doses"
+      ],
+      "studies": [
+        {
+          "title": "SAMe",
+          "journal": "The Health Professional's Guide to Dietary Supplements",
+          "year": 2007,
+          "summary": ""
+        }
+      ]
+    },
+    "category": "",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP218",
+    "name": "Feverfew",
+    "aliases": [],
+    "description": "Feverfew is a medicinal herb traditionally used to prevent migraines and alleviate inflammation.",
+    "intakePractices": {
+      "dosage": "Typically 100-300 mg daily of standardized extract containing 0.2%-0.4% parthenolide.",
+      "timing": "Taken once daily, with or without food.",
+      "specialInstructions": "Do not abruptly discontinue after long-term use; may cause rebound headaches."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "May reduce frequency and severity of migraines",
+        "Anti-inflammatory properties"
+      ],
+      "sideEffects": [
+        "Mouth ulcers, gastrointestinal upset, or allergic reactions"
+      ],
+      "studies": [
+        {
+          "title": "Feverfew",
+          "journal": "The Health Professional's Guide to Dietary Supplements",
+          "year": 2007,
+          "summary": ""
+        }
+      ]
+    },
+    "category": "",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP219",
+    "name": "St. John's Wort",
+    "aliases": [],
+    "description": "St. John's Wort is an herbal remedy commonly used for mild to moderate depression and mood disorders.",
+    "intakePractices": {
+      "dosage": "300 mg three times daily of standardized extract (0.3% hypericin).",
+      "timing": "Taken with meals.",
+      "specialInstructions": "Interacts with many medications including antidepressants, contraceptives, and anticoagulants."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Improves mood and alleviates symptoms of mild depression",
+        "May reduce anxiety and fatigue"
+      ],
+      "sideEffects": [
+        "Photosensitivity, dizziness, and gastrointestinal symptoms"
+      ],
+      "studies": [
+        {
+          "title": "St. John's Wort",
+          "journal": "The Health Professional's Guide to Dietary Supplements",
+          "year": 2007,
+          "summary": ""
+        }
+      ]
+    },
+    "category": "",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP220",
+    "name": "Ginkgo biloba",
+    "aliases": [],
+    "description": "Ginkgo biloba is an herbal extract known for enhancing memory, concentration, and blood circulation.",
+    "intakePractices": {
+      "dosage": "120-240 mg per day in divided doses.",
+      "timing": "Taken with meals to reduce risk of gastrointestinal side effects.",
+      "specialInstructions": "Use caution with anticoagulant medications; may increase bleeding risk."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Enhances memory and cognitive function",
+        "Improves circulation, particularly in the brain"
+      ],
+      "sideEffects": [
+        "Headache, dizziness, or gastrointestinal discomfort"
+      ],
+      "studies": [
+        {
+          "title": "Ginkgo biloba",
+          "journal": "The Health Professional's Guide to Dietary Supplements",
+          "year": 2007,
+          "summary": ""
+        }
+      ]
+    },
+    "category": "",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP221",
+    "name": "Valerian",
+    "aliases": [],
+    "description": "Valerian is a root extract traditionally used to promote relaxation, relieve anxiety, and improve sleep quality.",
+    "intakePractices": {
+      "dosage": "400-900 mg taken 30 minutes to 2 hours before bedtime.",
+      "timing": "Primarily used in the evening or at night.",
+      "specialInstructions": "Do not combine with alcohol or sedatives; effects may be delayed with first use."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Promotes sleep and relaxation",
+        "May reduce anxiety symptoms"
+      ],
+      "sideEffects": [
+        "Drowsiness, dizziness, or vivid dreams"
+      ],
+      "studies": [
+        {
+          "title": "Valerian",
+          "journal": "The Health Professional's Guide to Dietary Supplements",
+          "year": 2007,
+          "summary": ""
+        }
+      ]
+    },
+    "category": "",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP222",
+    "name": "Kava Kava",
+    "aliases": [
+      "Piper methysticum"
+    ],
+    "description": "Kava Kava is a root extract used traditionally in the South Pacific to relieve anxiety, stress, and promote calmness.",
+    "intakePractices": {
+      "dosage": "60-250 mg kavalactones daily, often standardized.",
+      "timing": "Evening use is common due to its sedative effects.",
+      "specialInstructions": "Long-term use may cause liver toxicity; avoid alcohol and hepatotoxic drugs."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Reduces anxiety and promotes relaxation",
+        "May improve sleep quality"
+      ],
+      "sideEffects": [
+        "Liver toxicity, drowsiness, and potential drug interactions"
+      ],
+      "studies": [
+        {
+          "title": "Kava Kava",
+          "journal": "The Health Professional's Guide to Dietary Supplements",
+          "year": 2007,
+          "summary": ""
+        }
+      ]
+    },
+    "category": "",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP223",
+    "name": "Melatonin",
+    "aliases": [],
+    "description": "Melatonin is a hormone that regulates sleep-wake cycles, often used to treat insomnia and jet lag.",
+    "intakePractices": {
+      "dosage": "0.5-5 mg taken 30 minutes before bedtime.",
+      "timing": "Evening or bedtime use.",
+      "specialInstructions": "Start with a lower dose; light exposure during the day can improve effectiveness."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Regulates sleep cycles",
+        "May reduce symptoms of jet lag and insomnia"
+      ],
+      "sideEffects": [
+        "Drowsiness, dizziness, or vivid dreams"
+      ],
+      "studies": [
+        {
+          "title": "Melatonin",
+          "journal": "The Health Professional's Guide to Dietary Supplements",
+          "year": 2007,
+          "summary": ""
+        }
+      ]
+    },
+    "category": "",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP224",
+    "name": "Vinpocetine",
+    "aliases": [
+      "from Vinca minor"
+    ],
+    "description": "Vinpocetine is a synthetic compound derived from the periwinkle plant, used to support brain function and blood flow.",
+    "intakePractices": {
+      "dosage": "5-20 mg daily, typically in divided doses.",
+      "timing": "Best taken with food to enhance absorption.",
+      "specialInstructions": "May lower blood pressure; use caution in hypotensive individuals."
+    },
+    "scientificDetails": {
+      "benefits": [
+        "Supports cognitive function and memory",
+        "Improves cerebral blood flow"
+      ],
+      "sideEffects": [
+        "May cause flushing, nausea, or lowered blood pressure"
+      ],
+      "studies": [
+        {
+          "title": "Vinpocetine",
+          "journal": "The Health Professional's Guide to Dietary Supplements",
+          "year": 2007,
+          "summary": ""
+        }
+      ]
+    },
+    "category": "",
+    "updatedAt": null
+  },
+  {
+    "supplementId": "SUPP1901",
+    "name": "Iron",
+    "aliases": [""],
+    "description": "Iron is one of the most plentiful trace metals on earth. It is essential for the formation of red blood cells and hemoglobin and is a constituent of myoglobin, which carries oxygen in muscle. A deficiency in iron decreases oxygen delivery to cells and can result in an iron deficiency that can lead to anemia. ",
+    "intakePractices": {
+      "dosage": "8mg/day for adult men, 18mg/day for adult women",
+      "timing": "",
+      "specialInstructions": "Children and adolescents should not take iron supplements unless prescribed by a healthcare provider. Iron supplements should be taken with food to reduce gastrointestinal side effects. Avoid taking iron with calcium, dairy products, or antacids, as these can interfere with absorption."
+    },
+    "scientificDetails": {
+      "benefits": ["Treats and prevents iron-deficiency anemia","Treats anemia of chronic disease","Improves cognitive function in iron-deficient children and adolescents"],
+      "sideEffects": [""],
+      "studies": [
+        
+      ]
+    },
+    "category": "Minerals",
+    "updatedAt": null
+  },
+
+  {
+    "supplementId": "SUPP1902",
+    "name": "Chromium",
+    "aliases": [""],
+    "description": "Chromium is an essential trace mineral that, in the form of a low molecular weight chromium binding substance, potentiates insulin, which influences carbohydrate, lipid, and protein metabolism.",
+    "intakePractices": {
+      "dosage": "120μg/day",
+      "timing": "",
+      "specialInstructions": ""
+    },
+    "scientificDetails": {
+      "benefits": ["Correct chromium deficiency","Improve activity of insulin and reduce blood sugar","Reduce body fat and increase lean body mass"],
+      "sideEffects": ["May experience headaches, sleep disturbances, and mood swings after intake; may acculumate in body after long-term use and cause undersired side effects"],
+      "studies": [
+        
+      ]
+    },
+    "category": "Minerals",
+    "updatedAt": null
+  },
+
+  {
+    "supplementId": "SUPP1903",
+    "name": "Iodine",
+    "aliases": [""],
+    "description": "Iodine is a mineral found in some foods. The body needs iodine to make thyroid hormones. These hormones control the body’s metabolism and many other important functions. The body also needs thyroid hormones for proper bone and brain development during pregnancy and infancy.",
+    "intakePractices": {
+      "dosage": "150mcg/day for adults",
+      "timing": "",
+      "specialInstructions": ""
+    },
+    "scientificDetails": {
+      "benefits": ["Correct iodine deficiency","Improve thyroid function"],
+      "sideEffects": [""],
+      "studies": [
+        
+      ]
+    },
+    "category": "Minerals",
+    "updatedAt": null
+  },
+
+  {
+    "supplementId": "SUPP1904",
+    "name": "Senna",
+    "aliases": [""],
+    "description": "Senna is the fruit (pod) or leaf of the plant Senna alexandrina. It is approved in the US as a laxative for short-term treatment of constipation. Senna contains many chemicals called sennosides. Sennosides irritate the lining of the bowel, which causes a laxative effect.",
+    "intakePractices": {
+      "dosage": "1-2g/day in dried form",
+      "timing": "In the morning or at bedtime.",
+      "specialInstructions": "Should not be taken for more than 10 days consecutively."
+    },
+    "scientificDetails": {
+      "benefits": ["Relieves constipation"],
+      "sideEffects": ["Prolonged use can lead to chronic diarrhea, weight loss, electrolyte imbalance, hypokalemia, changes in heart rhythm, and clubbing of the fingers and toes."],
+      "studies": [
+        
+      ]
+    },
+    "category": "Herbs",
+    "updatedAt": null
+  },
+
+  {
+    "supplementId": "SUPP1905",
+    "name": "Turmeric",
+    "aliases": ["Curcuma longa"],
+    "description": "Turmeric, a plant in the ginger family, is native to Southeast Asia. Today, turmeric is promoted as a dietary supplement for a variety of conditions, including arthritis, digestive disorders, respiratory infections, allergies, liver disease, depression, and many others.",
+    "intakePractices": {
+      "dosage": "375-500mg, 3-4 times a day",
+      "timing": "",
+      "specialInstructions": ""
+    },
+    "scientificDetails": {
+      "benefits": ["Treats dyspepsia","Anti-inflammatory","Protection against cancer"],
+      "sideEffects": [""],
+      "studies": [
+        
+      ]
+    },
+    "category": "Herbs",
+    "updatedAt": null
+  },
+
+  {
+    "supplementId": "SUPP1906",
+    "name": "Ashwagandha",
+    "aliases": ["Winter cherry"],
+    "description": "Ashwagandha is an evergreen shrub that grows in Asia and Africa. It is commonly used for stress. Ashwagandha contains chemicals that might help calm the brain, reduce swelling, lower blood pressure, and alter the immune system.",
+    "intakePractices": {
+      "dosage": "<1000mg/day",
+      "timing": "",
+      "specialInstructions": "Taking it for periods longer than 3 months may cause undesired effects."
+    },
+    "scientificDetails": {
+      "benefits": ["Calming effect","Mitigate anxiety, insomnia, and stress","Improve cognitive function"],
+      "sideEffects": [""],
+      "studies": [
+        
+      ]
+    },
+    "category": "Herbs",
     "updatedAt": null
   }
 ]

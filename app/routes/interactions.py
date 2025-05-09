@@ -1,3 +1,7 @@
+'''
+GET http://10.228.244.25:5001/api/interactions/ - Get all interactions
+GET http://10.228.244.25:5001/api/interactions/67fe0fe4c0edae0f50b57350 - Get interaction by ID
+'''
 from flask import Blueprint, jsonify, request
 from app.models.interaction import Interaction
 from flask_jwt_extended import jwt_required, get_jwt_identity
@@ -11,6 +15,7 @@ bp = Blueprint('interactions', __name__, url_prefix='/api/interactions')
 # Helper function to check admin privileges
 def is_admin(user_id):
     """Check if user has admin role"""
+    user_id = ObjectId(user_id)
     user = User.find_by_id(user_id)
     if not user or user.role != 'admin':
         return False
@@ -23,7 +28,6 @@ def get_interactions():
     try:
         # Get query parameters
         interaction_type = request.args.get('type')
-        severity = request.args.get('severity')
         search_query = request.args.get('query', '')
         
         # Build query
@@ -31,9 +35,6 @@ def get_interactions():
         
         if interaction_type:
             query['interactionType'] = interaction_type
-            
-        if severity:
-            query['severity'] = severity
             
         if search_query:
             # Search in effect, description, and recommendation fields
@@ -108,6 +109,7 @@ def update_interaction(interaction_id):
     try:
         # Get user ID and check if admin
         user_id = get_jwt_identity()
+        
         if not is_admin(user_id):
             return jsonify({"error": "Admin privileges required"}), 403
             
@@ -163,40 +165,40 @@ def delete_interaction(interaction_id):
     except Exception as e:
         return jsonify({"error": "Failed to delete interaction", "details": str(e)}), 500
 
-@bp.route('/check', methods=['POST'])
-@jwt_required()
-def check_interactions():
-    """Check for interactions between supplements, food items, and medications"""
-    try:
-        # Check for JSON content
-        if not request.is_json:
-            return jsonify({"error": "Missing JSON in request"}), 400
+# @bp.route('/check', methods=['POST'])
+# @jwt_required()
+# def check_interactions():
+#     """Check for interactions between supplements, food items, and medications"""
+#     try:
+#         # Check for JSON content
+#         if not request.is_json:
+#             return jsonify({"error": "Missing JSON in request"}), 400
             
-        # Get data
-        data = request.json
+#         # Get data
+#         data = request.json
         
-        # Get parameters
-        supplement_ids = data.get('supplementIds', [])
-        food_items = data.get('foodItems', [])
-        medications = data.get('medications', [])
+#         # Get parameters
+#         supplement_ids = data.get('supplementIds', [])
+#         food_items = data.get('foodItems', [])
+#         medications = data.get('medications', [])
         
-        # Check for required parameters
-        if not supplement_ids:
-            return jsonify({"error": "At least one supplement ID is required"}), 400
+#         # Check for required parameters
+#         if not supplement_ids:
+#             return jsonify({"error": "At least one supplement ID is required"}), 400
             
-        # Check interactions
-        interactions = Interaction.check_interactions(
-            supplement_ids=supplement_ids,
-            food_items=food_items,
-            medications=medications
-        )
+#         # Check interactions
+#         interactions = Interaction.check_interactions(
+#             supplement_ids=supplement_ids,
+#             food_items=food_items,
+#             medications=medications
+#         )
         
-        # Return interactions
-        return jsonify({
-            "interactions": [i.to_dict() for i in interactions],
-            "count": len(interactions)
-        }), 200
-    except ValueError as e:
-        return jsonify({"error": str(e)}), 400
-    except Exception as e:
-        return jsonify({"error": "Failed to check interactions", "details": str(e)}), 500
+#         # Return interactions
+#         return jsonify({
+#             "interactions": [i.to_dict() for i in interactions],
+#             "count": len(interactions)
+#         }), 200
+#     except ValueError as e:
+#         return jsonify({"error": str(e)}), 400
+#     except Exception as e:
+#         return jsonify({"error": "Failed to check interactions", "details": str(e)}), 500

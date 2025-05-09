@@ -3,20 +3,18 @@ from bson.objectid import ObjectId
 from datetime import datetime
 
 class Interaction:
-    REQUIRED_FIELDS = ['supplements', 'interactionType', 'effect', 'severity']
-    VALID_SEVERITY = ['Low', 'Medium', 'High', 'Severe']
-    VALID_INTERACTION_TYPES = ['Supplement-Supplement', 'Supplement-Food', 'Supplement-Medication']
+    REQUIRED_FIELDS = ['supplements', 'interactionType', 'effect']
+    VALID_INTERACTION_TYPES = ['Supplement-Supplement', 'Supplement-Food']
+    VALID_EFFECTS = ['Enhances Absorption', 'Inhibits Absorption', 'No Effect']
     
     def __init__(self, interaction_data: dict):
         self._id = interaction_data.get('_id')
         self.interaction_id = interaction_data.get('interactionId')
         self.supplements = interaction_data.get('supplements', [])  # List of supplements
         self.food_item = interaction_data.get('foodItem')
-        self.medication = interaction_data.get('medication')
         self.interaction_type = interaction_data.get('interactionType')
         self.effect = interaction_data.get('effect')
         self.description = interaction_data.get('description')
-        self.severity = interaction_data.get('severity')
         self.recommendation = interaction_data.get('recommendation')
         self.sources = interaction_data.get('sources', [])  # List of sources
         self.created_at = interaction_data.get('createdAt')
@@ -43,12 +41,10 @@ class Interaction:
         for field in self.REQUIRED_FIELDS:
             if field not in interaction_data or not interaction_data[field]:
                 raise ValueError(f"Missing required field: {field}")
-        
-        # Validate severity
-        if 'severity' in interaction_data:
-            if interaction_data['severity'] not in self.VALID_SEVERITY:
-                raise ValueError(f"Invalid severity. Must be one of: {', '.join(self.VALID_SEVERITY)}")
-                
+        # Validate effect
+        if 'effect' in interaction_data:
+            if interaction_data['effect'] not in self.VALID_EFFECTS:
+                raise ValueError(f"Invalid effect. Must be one of: {', '.join(self.VALID_EFFECTS)}")
         # Validate interaction type
         if 'interactionType' in interaction_data:
             if interaction_data['interactionType'] not in self.VALID_INTERACTION_TYPES:
@@ -70,7 +66,6 @@ class Interaction:
             "interactionType": self.interaction_type,
             "effect": self.effect,
             "description": self.description,
-            "severity": self.severity,
             "recommendation": self.recommendation,
             "sources": self.sources,
             "createdAt": self.created_at,
@@ -86,9 +81,7 @@ class Interaction:
             
         if self.food_item:
             result["foodItem"] = self.food_item
-            
-        if self.medication:
-            result["medication"] = self.medication
+
             
         return result
     
@@ -103,9 +96,11 @@ class Interaction:
         now = datetime.now().isoformat()
         interaction_data['createdAt'] = now
         interaction_data['updatedAt'] = now
-        
+        interaction_data['interactionId'] = f"INT{str(datetime.now().timestamp()).replace('.', '')}"
+        interaction_data['deletedAt'] = None
         # Insert into database
         db = get_db()
+        
         result = db.Interactions.insert_one(interaction_data)
         
         if not result.inserted_id:
@@ -206,72 +201,72 @@ class Interaction:
         except Exception as e:
             raise ValueError(f"Error deleting interaction: {e}")
     
-    @staticmethod
-    def check_interactions(supplement_ids=None, food_items=None, medications=None):
-        """Check for interactions between supplements, food items, and medications"""
-        db = get_db()
-        interactions = []
+    # @staticmethod
+    # def check_interactions(supplement_ids=None, food_items=None, medications=None):
+    #     """Check for interactions between supplements, food items, and medications"""
+    #     db = get_db()
+    #     interactions = []
         
-        try:
-            # Search for supplement-supplement interactions
-            if supplement_ids and len(supplement_ids) > 1:
-                # Find interactions where at least 2 of the provided supplements are involved
-                # Using MongoDB's $elemMatch to match array elements
-                supp_interactions = list(db.Interactions.find({
-                    'interactionType': 'Supplement-Supplement',
-                    'deletedAt': None,
-                    'supplements.supplementId': {'$in': supplement_ids}
-                }))
+    #     try:
+    #         # Search for supplement-supplement interactions
+    #         if supplement_ids and len(supplement_ids) > 1:
+    #             # Find interactions where at least 2 of the provided supplements are involved
+    #             # Using MongoDB's $elemMatch to match array elements
+    #             supp_interactions = list(db.Interactions.find({
+    #                 'interactionType': 'Supplement-Supplement',
+    #                 'deletedAt': None,
+    #                 'supplements.supplementId': {'$in': supplement_ids}
+    #             }))
                 
-                # Verify multiple supplements in the list match our criteria
-                for interaction in supp_interactions:
-                    interaction_supp_ids = [s.get('supplementId') for s in interaction.get('supplements', [])]
-                    matching_ids = [sid for sid in supplement_ids if sid in interaction_supp_ids]
+    #             # Verify multiple supplements in the list match our criteria
+    #             for interaction in supp_interactions:
+    #                 interaction_supp_ids = [s.get('supplementId') for s in interaction.get('supplements', [])]
+    #                 matching_ids = [sid for sid in supplement_ids if sid in interaction_supp_ids]
                     
-                    # Only include if at least 2 supplements match
-                    if len(matching_ids) >= 2:
-                        interactions.append(Interaction(interaction))
+    #                 # Only include if at least 2 supplements match
+    #                 if len(matching_ids) >= 2:
+    #                     interactions.append(Interaction(interaction))
             
-            # Search for supplement-food interactions
-            if supplement_ids and food_items:
-                for food_item in food_items:
-                    food_interactions = list(db.Interactions.find({
-                        'interactionType': 'Supplement-Food',
-                        'deletedAt': None,
-                        'foodItem': food_item,
-                        'supplements.supplementId': {'$in': supplement_ids}
-                    }))
+    #         # Search for supplement-food interactions
+    #         if supplement_ids and food_items:
+    #             for food_item in food_items:
+    #                 food_interactions = list(db.Interactions.find({
+    #                     'interactionType': 'Supplement-Food',
+    #                     'deletedAt': None,
+    #                     'foodItem': food_item,
+    #                     'supplements.supplementId': {'$in': supplement_ids}
+    #                 }))
                     
-                    for interaction in food_interactions:
-                        interactions.append(Interaction(interaction))
+    #                 for interaction in food_interactions:
+    #                     interactions.append(Interaction(interaction))
             
-            # Search for supplement-medication interactions
-            if supplement_ids and medications:
-                for medication in medications:
-                    med_interactions = list(db.Interactions.find({
-                        'interactionType': 'Supplement-Medication',
-                        'deletedAt': None,
-                        'medication': medication,
-                        'supplements.supplementId': {'$in': supplement_ids}
-                    }))
+    #         # Search for supplement-medication interactions
+    #         if supplement_ids and medications:
+    #             for medication in medications:
+    #                 med_interactions = list(db.Interactions.find({
+    #                     'interactionType': 'Supplement-Medication',
+    #                     'deletedAt': None,
+    #                     'medication': medication,
+    #                     'supplements.supplementId': {'$in': supplement_ids}
+    #                 }))
                     
-                    for interaction in med_interactions:
-                        interactions.append(Interaction(interaction))
+    #                 for interaction in med_interactions:
+    #                     interactions.append(Interaction(interaction))
                         
-            return interactions
-        except Exception as e:
-            raise ValueError(f"Error checking interactions: {e}")
+    #         return interactions
+    #     except Exception as e:
+    #         raise ValueError(f"Error checking interactions: {e}")
             
-    @staticmethod
-    def get_supplement_interactions(supplement_id):
-        """Get all interactions for a specific supplement"""
-        db = get_db()
-        try:
-            # Find interactions involving this supplement
-            interactions = list(db.Interactions.find({
-                'supplements.supplementId': supplement_id,
-                'deletedAt': None
-            }))
-            return [Interaction(interaction) for interaction in interactions]
-        except Exception as e:
-            raise ValueError(f"Error getting supplement interactions: {e}")
+    # @staticmethod
+    # def get_supplement_interactions(supplement_id):
+    #     """Get all interactions for a specific supplement"""
+    #     db = get_db()
+    #     try:
+    #         # Find interactions involving this supplement
+    #         interactions = list(db.Interactions.find({
+    #             'supplements.supplementId': supplement_id,
+    #             'deletedAt': None
+    #         }))
+    #         return [Interaction(interaction) for interaction in interactions]
+    #     except Exception as e:
+    #         raise ValueError(f"Error getting supplement interactions: {e}")

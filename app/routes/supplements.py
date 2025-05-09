@@ -2,7 +2,6 @@
 Explanation of Endpoints
 GET /api/supplements/:
     Retrieves a list of supplements.
-    Supports optional search (?search=<query>), pagination (?page=<number>), and limit (?limit=<number>).
     Uses the Supplement.search method to query the database.
     
     test: GET

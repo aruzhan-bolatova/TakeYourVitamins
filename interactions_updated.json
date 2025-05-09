@@ -1,0 +1,1498 @@
+[
+  {
+    "interactionId": "INT005",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e396",
+        "name": "Alpha-Lipoic Acid"
+      },
+      {
+        "supplementId": "",
+        "name": null
+      }
+    ],
+    "foodItem": "Alcohol",
+    "interactionType": "Supplement-Food",
+    "effect": "Negative",
+    "description": "Alcohol lowers the amount of thiamin in the body. Taking alpha-lipoic acid when there is a shortage of thiamine might cause serious health problems.",
+    "severity": "Negative",
+    "recommendation": "Avoid taking alpha-lipoic acid with alcohol.",
+    "sources": [
+      "The Health Professional's Guide to Dietary Supplements, Talbott & Hughes, 2007",
+      "Clinical Pharmacology & Therapeutics, 2005"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT007",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e396",
+        "name": "Alpha-Lipoic Acid"
+      },
+      {
+        "supplementId": "681314416d54c4408b68e38c",
+        "name": "Aloe Vera"
+      }
+    ],
+    "foodItem": null,
+    "interactionType": "Supplement-Supplement",
+    "effect": "Negative",
+    "description": "Alpha-lipoic acid might lower blood sugar. Taking it with Aloe Vera might lower blood sugar too much.",
+    "recommendation": "Avoid taking alpha-lipoic acid with Aloe Vera.",
+    "sources": [
+      "https://medlineplus.gov/druginfo/natural/767.html"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT008",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e396",
+        "name": "Alpha-Lipoic Acid"
+      },
+      {
+        "supplementId": "",
+        "name": "Bitter Melon"
+      }
+    ],
+    "foodItem": null,
+    "interactionType": "Supplement-Supplement",
+    "effect": "Negative",
+    "description": "Alpha-lipoic acid might lower blood sugar. Taking it with Bitter Melon might lower blood sugar too much.",
+    "recommendation": "Avoid taking alpha-lipoic acid with Bitter Melon.",
+    "sources": [
+      "https://medlineplus.gov/druginfo/natural/767.html"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT009",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e396",
+        "name": "Alpha-Lipoic Acid"
+      },
+      {
+        "supplementId": "",
+        "name": "Cassia Cinnamon"
+      }
+    ],
+    "foodItem": null,
+    "interactionType": "Supplement-Supplement",
+    "effect": "Negative",
+    "description": "Alpha-lipoic acid might lower blood sugar. Taking it with Cassia Cinnamon might lower blood sugar too much.",
+    "recommendation": "Avoid taking alpha-lipoic acid with Cassia Cinnamon.",
+    "sources": [
+      "https://medlineplus.gov/druginfo/natural/767.html"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT010",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e396",
+        "name": "Alpha-Lipoic Acid"
+      },
+      {
+        "supplementId": "",
+        "name": "Chromium"
+      }
+    ],
+    "foodItem": null,
+    "interactionType": "Supplement-Supplement",
+    "effect": "Negative",
+    "description": "Alpha-lipoic acid might lower blood sugar. Taking it with Chromium might lower blood sugar too much.",
+    "recommendation": "Avoid taking alpha-lipoic acid with Chromium.",
+    "sources": [
+      "https://medlineplus.gov/druginfo/natural/767.html"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT011",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e396",
+        "name": "Alpha-Lipoic Acid"
+      },
+      {
+        "supplementId": "",
+        "name": "Prickly Pear Cactus"
+      }
+    ],
+    "foodItem": null,
+    "interactionType": "Supplement-Supplement",
+    "effect": "Negative",
+    "description": "Alpha-lipoic acid might lower blood sugar. Taking it with Prickly Pear Cactus might lower blood sugar too much.",
+    "recommendation": "Avoid taking alpha-lipoic acid with Prickly Pear Cactus.",
+    "sources": [
+      "https://medlineplus.gov/druginfo/natural/767.html"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT012",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e396",
+        "name": "Alpha-Lipoic Acid"
+      },
+      {
+        "supplementId": "681314416d54c4408b68e3a4",
+        "name": "Garlic"
+      }
+    ],
+    "foodItem": null,
+    "interactionType": "Supplement-Supplement",
+    "effect": "Negative",
+    "description": "Alpha-lipoic acid might slow blood clotting. Taking it with Garlic might increase the risk of bleeding.",
+    "recommendation": "Use caution when taking alpha-lipoic acid with Garlic.",
+    "sources": [
+      "https://medlineplus.gov/druginfo/natural/767.html"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT013",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e396",
+        "name": "Alpha-Lipoic Acid"
+      },
+      {
+        "supplementId": "681314416d54c4408b68e38f",
+        "name": "Ginger"
+      }
+    ],
+    "foodItem": null,
+    "interactionType": "Supplement-Supplement",
+    "effect": "Negative",
+    "description": "Alpha-lipoic acid might slow blood clotting. Taking it with Ginger might increase the risk of bleeding.",
+    "recommendation": "Use caution when taking alpha-lipoic acid with Ginger.",
+    "sources": [
+      "https://medlineplus.gov/druginfo/natural/767.html"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT014",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e396",
+        "name": "Alpha-Lipoic Acid"
+      },
+      {
+        "supplementId": "",
+        "name": "Ginkgo"
+      }
+    ],
+    "foodItem": null,
+    "interactionType": "Supplement-Supplement",
+    "effect": "Negative",
+    "description": "Alpha-lipoic acid might slow blood clotting. Taking it with Ginkgo might increase the risk of bleeding.",
+    "recommendation": "Use caution when taking alpha-lipoic acid with Ginkgo.",
+    "sources": [
+      "https://medlineplus.gov/druginfo/natural/767.html"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT015",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e396",
+        "name": "Alpha-Lipoic Acid"
+      },
+      {
+        "supplementId": "",
+        "name": "Nattokinase"
+      }
+    ],
+    "foodItem": null,
+    "interactionType": "Supplement-Supplement",
+    "effect": "Negative",
+    "description": "Alpha-lipoic acid might slow blood clotting. Taking it with Nattokinase might increase the risk of bleeding.",
+    "recommendation": "Use caution when taking alpha-lipoic acid with Nattokinase.",
+    "sources": [
+      "https://medlineplus.gov/druginfo/natural/767.html"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT016",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e396",
+        "name": "Alpha-Lipoic Acid"
+      },
+      {
+        "supplementId": "",
+        "name": "Panax Ginseng"
+      }
+    ],
+    "foodItem": null,
+    "interactionType": "Supplement-Supplement",
+    "effect": "Negative",
+    "description": "Alpha-lipoic acid might slow blood clotting. Taking it with Panax Ginseng might increase the risk of bleeding.",
+    "recommendation": "Use caution when taking alpha-lipoic acid with Panax Ginseng.",
+    "sources": [
+      "https://medlineplus.gov/druginfo/natural/767.html"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT017",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e396",
+        "name": "Alpha-Lipoic Acid"
+      },
+      {
+        "supplementId": "",
+        "name": "Bugleweed"
+      }
+    ],
+    "foodItem": null,
+    "interactionType": "Supplement-Supplement",
+    "effect": "Negative",
+    "description": "Alpha-lipoic acid might affect thyroid hormone production. Taking it with Bugleweed might cause thyroid function changes.",
+    "recommendation": "Use caution or monitor thyroid function when taking alpha-lipoic acid with Bugleweed.",
+    "sources": [
+      "https://medlineplus.gov/druginfo/natural/767.html"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT018",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e396",
+        "name": "Alpha-Lipoic Acid"
+      },
+      {
+        "supplementId": "",
+        "name": "Lemon Balm"
+      }
+    ],
+    "foodItem": null,
+    "interactionType": "Supplement-Supplement",
+    "effect": "Negative",
+    "description": "Alpha-lipoic acid might affect thyroid hormone production. Taking it with Lemon Balm might cause thyroid function changes.",
+    "recommendation": "Use caution or monitor thyroid function when taking alpha-lipoic acid with Lemon Balm.",
+    "sources": [
+      "https://medlineplus.gov/druginfo/natural/767.html"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT019",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e396",
+        "name": "Alpha-Lipoic Acid"
+      },
+      {
+        "supplementId": "",
+        "name": "Tiratricol"
+      }
+    ],
+    "foodItem": null,
+    "interactionType": "Supplement-Supplement",
+    "effect": "Negative",
+    "description": "Alpha-lipoic acid might affect thyroid hormone production. Taking it with Tiratricol might cause thyroid function changes.",
+    "recommendation": "Use caution or monitor thyroid function when taking alpha-lipoic acid with Tiratricol.",
+    "sources": [
+      "https://medlineplus.gov/druginfo/natural/767.html"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT020",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e39d",
+        "name": "L-arginine"
+      },
+      {
+        "supplementId": "",
+        "name": "Andrographis"
+      }
+    ],
+    "foodItem": null,
+    "interactionType": "Supplement-Supplement",
+    "effect": "Negative",
+    "description": "L-arginine might lower blood pressure. Taking it with other supplements that also lower blood pressure may cause it to drop too much.",
+    "recommendation": "Avoid combining L-arginine with blood pressure-lowering supplements such as Andrographis.",
+    "sources": [
+      "https://medlineplus.gov/druginfo/natural/875.html"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT021",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e39d",
+        "name": "L-arginine"
+      },
+      {
+        "supplementId": "",
+        "name": "Casein Peptides"
+      }
+    ],
+    "foodItem": null,
+    "interactionType": "Supplement-Supplement",
+    "effect": "Negative",
+    "description": "L-arginine might lower blood pressure. Taking it with other supplements that also lower blood pressure may cause it to drop too much.",
+    "recommendation": "Avoid combining L-arginine with blood pressure-lowering supplements such as Casein Peptides.",
+    "sources": [
+      "https://medlineplus.gov/druginfo/natural/875.html"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT022",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e39d",
+        "name": "L-arginine"
+      },
+      {
+        "supplementId": "681314416d54c4408b68e3a1",
+        "name": "Niacin"
+      }
+    ],
+    "foodItem": null,
+    "interactionType": "Supplement-Supplement",
+    "effect": "Negative",
+    "description": "L-arginine might lower blood pressure. Taking it with other supplements that also lower blood pressure may cause it to drop too much.",
+    "recommendation": "Avoid combining L-arginine with blood pressure-lowering supplements such as Niacin.",
+    "sources": [
+      "https://medlineplus.gov/druginfo/natural/875.html"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT023",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e39d",
+        "name": "L-arginine"
+      },
+      {
+        "supplementId": "",
+        "name": "Stinging Nettle"
+      }
+    ],
+    "foodItem": null,
+    "interactionType": "Supplement-Supplement",
+    "effect": "Negative",
+    "description": "L-arginine might lower blood pressure. Taking it with other supplements that also lower blood pressure may cause it to drop too much.",
+    "recommendation": "Avoid combining L-arginine with blood pressure-lowering supplements such as Stinging Nettle.",
+    "sources": [
+      "https://medlineplus.gov/druginfo/natural/875.html"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT024",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e39d",
+        "name": "L-arginine"
+      },
+      {
+        "supplementId": "681314416d54c4408b68e38c",
+        "name": "Aloe Vera"
+      }
+    ],
+    "foodItem": null,
+    "interactionType": "Supplement-Supplement",
+    "effect": "Negative",
+    "description": "L-arginine might lower blood sugar. Taking it with other supplements with similar effects might lower blood sugar too much.",
+    "recommendation": "Avoid combining L-arginine with blood sugar-lowering supplements such as Aloe Vera.",
+    "sources": [
+      "https://medlineplus.gov/druginfo/natural/875.html"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT025",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e39d",
+        "name": "L-arginine"
+      },
+      {
+        "supplementId": "",
+        "name": "Bitter Melon"
+      }
+    ],
+    "foodItem": null,
+    "interactionType": "Supplement-Supplement",
+    "effect": "Negative",
+    "description": "L-arginine might lower blood sugar. Taking it with other supplements with similar effects might lower blood sugar too much.",
+    "recommendation": "Avoid combining L-arginine with blood sugar-lowering supplements such as Bitter Melon.",
+    "sources": [
+      "https://medlineplus.gov/druginfo/natural/875.html"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT026",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e39d",
+        "name": "L-arginine"
+      },
+      {
+        "supplementId": "",
+        "name": "Cassia Cinnamon"
+      }
+    ],
+    "foodItem": null,
+    "interactionType": "Supplement-Supplement",
+    "effect": "Negative",
+    "description": "L-arginine might lower blood sugar. Taking it with other supplements with similar effects might lower blood sugar too much.",
+    "recommendation": "Avoid combining L-arginine with blood sugar-lowering supplements such as Cassia Cinnamon.",
+    "sources": [
+      "https://medlineplus.gov/druginfo/natural/875.html"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT027",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e39d",
+        "name": "L-arginine"
+      },
+      {
+        "supplementId": "",
+        "name": "Chromium"
+      }
+    ],
+    "foodItem": null,
+    "interactionType": "Supplement-Supplement",
+    "effect": "Negative",
+    "description": "L-arginine might lower blood sugar. Taking it with other supplements with similar effects might lower blood sugar too much.",
+    "recommendation": "Avoid combining L-arginine with blood sugar-lowering supplements such as Chromium.",
+    "sources": [
+      "https://medlineplus.gov/druginfo/natural/875.html"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT028",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e39d",
+        "name": "L-arginine"
+      },
+      {
+        "supplementId": "",
+        "name": "Prickly Pear Cactus"
+      }
+    ],
+    "foodItem": null,
+    "interactionType": "Supplement-Supplement",
+    "effect": "Negative",
+    "description": "L-arginine might lower blood sugar. Taking it with other supplements with similar effects might lower blood sugar too much.",
+    "recommendation": "Avoid combining L-arginine with blood sugar-lowering supplements such as Prickly Pear Cactus.",
+    "sources": [
+      "https://medlineplus.gov/druginfo/natural/875.html"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT029",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e39d",
+        "name": "L-arginine"
+      },
+      {
+        "supplementId": "681314416d54c4408b68e3a4",
+        "name": "Garlic"
+      }
+    ],
+    "foodItem": null,
+    "interactionType": "Supplement-Supplement",
+    "effect": "Negative",
+    "description": "L-arginine might slow blood clotting and increase the risk of bleeding. Taking it with other supplements with similar effects might increase the risk of bleeding.",
+    "recommendation": "Avoid combining L-arginine with blood-thinning supplements such as Garlic.",
+    "sources": [
+      "https://medlineplus.gov/druginfo/natural/875.html"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT030",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e39d",
+        "name": "L-arginine"
+      },
+      {
+        "supplementId": "681314416d54c4408b68e38f",
+        "name": "Ginger"
+      }
+    ],
+    "foodItem": null,
+    "interactionType": "Supplement-Supplement",
+    "effect": "Negative",
+    "description": "L-arginine might slow blood clotting and increase the risk of bleeding. Taking it with other supplements with similar effects might increase the risk of bleeding.",
+    "recommendation": "Avoid combining L-arginine with blood-thinning supplements such as Ginger.",
+    "sources": [
+      "https://medlineplus.gov/druginfo/natural/875.html"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT031",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e39d",
+        "name": "L-arginine"
+      },
+      {
+        "supplementId": "",
+        "name": "Ginkgo"
+      }
+    ],
+    "foodItem": null,
+    "interactionType": "Supplement-Supplement",
+    "effect": "Negative",
+    "description": "L-arginine might slow blood clotting and increase the risk of bleeding. Taking it with other supplements with similar effects might increase the risk of bleeding.",
+    "recommendation": "Avoid combining L-arginine with blood-thinning supplements such as Ginkgo.",
+    "sources": [
+      "https://medlineplus.gov/druginfo/natural/875.html"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT032",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e39d",
+        "name": "L-arginine"
+      },
+      {
+        "supplementId": "",
+        "name": "Nattokinase"
+      }
+    ],
+    "foodItem": null,
+    "interactionType": "Supplement-Supplement",
+    "effect": "Negative",
+    "description": "L-arginine might slow blood clotting and increase the risk of bleeding. Taking it with other supplements with similar effects might increase the risk of bleeding.",
+    "recommendation": "Avoid combining L-arginine with blood-thinning supplements such as Nattokinase.",
+    "sources": [
+      "https://medlineplus.gov/druginfo/natural/875.html"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT033",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e39d",
+        "name": "L-arginine"
+      },
+      {
+        "supplementId": "",
+        "name": "Panax Ginseng"
+      }
+    ],
+    "foodItem": null,
+    "interactionType": "Supplement-Supplement",
+    "effect": "Negative",
+    "description": "L-arginine might slow blood clotting and increase the risk of bleeding. Taking it with other supplements with similar effects might increase the risk of bleeding.",
+    "recommendation": "Avoid combining L-arginine with blood-thinning supplements such as Panax Ginseng.",
+    "sources": [
+      "https://medlineplus.gov/druginfo/natural/875.html"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT034",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e39d",
+        "name": "L-arginine"
+      },
+      {
+        "supplementId": "681314416d54c4408b68e3a9",
+        "name": "Cat's Claw"
+      }
+    ],
+    "foodItem": null,
+    "interactionType": "Supplement-Supplement",
+    "effect": "Negative",
+    "description": "Cat's Claw might slow blood clotting and increase the risk of bleeding. Taking it with other supplements with similar effects might increase the risk of bleeding.",
+    "recommendation": "Avoid combining Cat's Claw with blood-thinning supplements such as L-arginine.",
+    "sources": [
+      "https://medlineplus.gov/druginfo/natural/875.html"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT035",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e3a0",
+        "name": "Folic Acid"
+      },
+      {
+        "supplementId": "681314416d54c4408b68e3af",
+        "name": "Zinc"
+      }
+    ],
+    "foodItem": null,
+    "interactionType": "Supplement-Supplement",
+    "effect": "Negative",
+    "description": "Folic acid might interfere with zinc absorption. But people who get enough zinc in their diet do not need to worry about this effect.",
+    "recommendation": "Use caution when taking folic acid with zinc.",
+    "sources": [
+      "https://medlineplus.gov/druginfo/natural/1017.html#HerbInteractions"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT036",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e3a0",
+        "name": "Folic Acid"
+      },
+      {
+        "supplementId": "",
+        "name": null
+      }
+    ],
+    "foodItem": "Green Tea",
+    "interactionType": "Supplement-Food",
+    "effect": "Negative",
+    "description": "Drinking green tea might lower folic acid levels in the body.",
+    "recommendation": "Avoid drinking green tea if you have low folic acid levels.",
+    "sources": [
+      "https://medlineplus.gov/druginfo/natural/1017.html#HerbInteractions"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT720",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e3c0",
+        "name": "Guarana"
+      },
+      {
+        "supplementId": "",
+        "name": "Ma Huang"
+      }
+    ],
+    "foodItem": null,
+    "interactionType": "Supplement-Supplement",
+    "effect": "Negative",
+    "description": "Guarana, a source of caffeine, and Ma Huang, containing ephedrine alkaloids, have a synergistic effect that increases cardiovascular risks, including elevated heart rate, blood pressure, and potential heart palpitations. This combination is particularly dangerous for individuals with pre-existing cardiovascular conditions.",
+    "recommendation": "Avoid combining Guarana with Ma Huang due to significant cardiovascular risks.",
+    "sources": [
+      "The Health Professional's Guide to Dietary Supplements, Shawn M. Talbott, Kerry Hughes, 2007, p. 18"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT721",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e3c0",
+        "name": "Guarana"
+      },
+      {
+        "supplementId": "681314416d54c4408b68e3be",
+        "name": "Citrus Aurantium"
+      }
+    ],
+    "foodItem": null,
+    "interactionType": "Supplement-Supplement",
+    "effect": "Negative",
+    "description": "Guarana, a source of caffeine, and Citrus Aurantium, containing synephrine, are both stimulants that may increase heart rate and blood pressure. Combining them could amplify cardiovascular effects, potentially leading to overstimulation, increased blood pressure, or heart palpitations, especially in individuals sensitive to stimulants or with pre-existing cardiac conditions.",
+    "recommendation": "Avoid combining Guarana with Citrus Aurantium, particularly in individuals with cardiovascular issues, hypertension, or sensitivity to stimulants.",
+    "sources": [
+      "The Health Professional's Guide to Dietary Supplements, Shawn M. Talbott, Kerry Hughes, 2007, pp. 12-14, 17-18"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT722",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e3c1",
+        "name": "DHEA"
+      },
+      {
+        "supplementId": "681314416d54c4408b68e3c7",
+        "name": "Tribulus Terrestris"
+      }
+    ],
+    "foodItem": null,
+    "interactionType": "Supplement-Supplement",
+    "effect": "Negative",
+    "description": "DHEA and Tribulus Terrestris both increase testosterone levels, with DHEA acting as a precursor to sex hormones and Tribulus converting protodioscin to DHEA. Combining them may lead to excessive testosterone elevation, potentially causing side effects such as virilization in women, gynecomastia in men, or increased risk of hormone-related issues like prostate hyperplasia.",
+    "recommendation": "Avoid combining DHEA with Tribulus Terrestris to prevent excessive hormonal changes and associated side effects.",
+    "sources": [
+      "The Health Professional's Guide to Dietary Supplements, Shawn M. Talbott, Kerry Hughes, 2007, pp. 54-55, 69-71"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT723",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e3c5",
+        "name": "Proteolytic Enzymes"
+      },
+      {
+        "supplementId": "",
+        "name": "White Willow Bark"
+      }
+    ],
+    "foodItem": null,
+    "interactionType": "Supplement-Supplement",
+    "effect": "Negative",
+    "description": "Proteolytic enzymes have a modest anticoagulant effect, which may enhance the blood-thinning properties of White Willow Bark, a source of salicylates similar to aspirin. Combining them could increase the risk of bleeding, particularly in individuals taking other blood-thinning medications or with bleeding disorders.",
+    "recommendation": "Avoid combining Proteolytic Enzymes with White Willow Bark to minimize the risk of excessive bleeding.",
+    "sources": [
+      "The Health Professional's Guide to Dietary Supplements, Shawn M. Talbott, Kerry Hughes, 2007, pp. 1, 65-66"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT701",
+    "interactionType": "Supplement-Food",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e39e",
+        "name": "Vitamin B-6"
+      }
+    ],
+    "foodItem": "Amiodarone",
+    "effect": "negative",
+    "description": "Combining vitamin B-6 with amiodarone may increase risk for photosensitivity.",
+    "recommendation": "Avoid taking vitamin B-6 with amiodarone",
+    "sources": [],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT702",
+    "interactionType": "Supplement-Food",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e39e",
+        "name": "Vitamin B-6"
+      }
+    ],
+    "foodItem": "levodopa",
+    "effect": "negative",
+    "description": "Pyridoxine increases levodopa clearance, which reduces the drug's efficacy in Parkinson's disease treatment.",
+    "recommendation": "Avoid taking Vitamin B-6 with levodopa",
+    "sources": [],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT703",
+    "interactionType": "Supplement-Supplement",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e39f",
+        "name": "Vitamin B-12"
+      },
+      {
+        "supplementId": "681314416d54c4408b68e3a0",
+        "name": "Folate"
+      }
+    ],
+    "foodItem": "",
+    "effect": "negative",
+    "description": "Folic acid supplementation may mask vitamin B-12 deficiency.",
+    "recommendation": "Avoid taking Vitamin B-12 with folate",
+    "sources": [],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT704",
+    "interactionType": "Supplement-Supplement",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e39f",
+        "name": "Vitamin B-12"
+      },
+      {
+        "supplementId": "681314416d54c4408b68e3b9",
+        "name": "Vitamin C"
+      }
+    ],
+    "foodItem": "",
+    "effect": "negative",
+    "description": "Supplemental vitamin C may interfere with the bioavailability of vitamin B-12.",
+    "recommendation": "Avoid taking Vitamin B-12 with Vitamin C",
+    "sources": [],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT705",
+    "interactionType": "Supplement-Supplement",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e39f",
+        "name": "Vitamin B-12"
+      },
+      {
+        "supplementId": "",
+        "name": "Iron"
+      }
+    ],
+    "foodItem": "",
+    "effect": "negative",
+    "description": "Supplemental iron may interfere with the bioavailability of vitamin B-12.",
+    "recommendation": "Avoid taking Vitamin B-12 with Iron",
+    "sources": [],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT706",
+    "interactionType": "Supplement-Food",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e3a2",
+        "name": "Coenzyme Q10"
+      }
+    ],
+    "foodItem": "Smoking",
+    "effect": "positive",
+    "description": "CoQ10 may help reduce the oxidative stress caused by smoking.",
+    "recommendation": "If you smoke, taking CoQ10 may be beneficial",
+    "sources": [],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT801",
+    "interactionType": "Supplement-Food",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e3ae",
+        "name": "Vitamin A"
+      }
+    ],
+    "foodItem": "Bile acid sequestrants",
+    "effect": "positive",
+    "description": "Bile acid sequestrants reduces vitamin A absorption, so supplementation may be necessary.",
+    "recommendation": "Taking supplemental vitamin A may be beneficial when taking bile acid sequestrants",
+    "sources": [],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT802",
+    "interactionType": "Supplement-Food",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e3ae",
+        "name": "Vitamin A"
+      }
+    ],
+    "foodItem": "Mineral oil",
+    "effect": "positive",
+    "description": "Mineral oil reduces vitamin A absorption, so supplementation may be necessary.",
+    "recommendation": "Taking supplemental vitamin A may be beneficial when taking mineral oil",
+    "sources": [],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT803",
+    "interactionType": "Supplement-Food",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e3ae",
+        "name": "Vitamin A"
+      }
+    ],
+    "foodItem": "Isotretinoin (Accutane)",
+    "effect": "negative",
+    "description": "Isotretinoin (Accutane) is similar in structure to vitamin A. Using vitamin A supplements with this drug may result in toxicity.",
+    "recommendation": "Avoid taking vitamin A supplements with isotretinoin (Accutane)",
+    "sources": [],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT804",
+    "interactionType": "Supplement-Food",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e3af",
+        "name": "Zinc"
+      }
+    ],
+    "foodItem": "Copper",
+    "effect": "negative",
+    "description": "Zinc supplements interfere with copper absorption.",
+    "recommendation": "Avoid taking excessive zinc supplements, or taking zinc for periods of more than 2 weeks",
+    "sources": [],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT805",
+    "interactionType": "Supplement-Supplement",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e3af",
+        "name": "Zinc"
+      },
+      {
+        "supplementId": "",
+        "name": "Iron"
+      }
+    ],
+    "foodItem": "",
+    "effect": "negative",
+    "description": "Zinc and iron may interfere with the absorption of one another.",
+    "recommendation": "Avoid taking Zinc with Iron",
+    "sources": [],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT806",
+    "interactionType": "Supplement-Food",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e3af",
+        "name": "Zinc"
+      }
+    ],
+    "foodItem": "Penicilin",
+    "effect": "negative",
+    "description": "Zinc and penicillin bind, interfering with the absorption of both.",
+    "recommendation": "Avoid taking Zinc with Penicillin",
+    "sources": [],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT807",
+    "interactionType": "Supplement-Food",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e3af",
+        "name": "Zinc"
+      }
+    ],
+    "foodItem": "tetracycline",
+    "effect": "negative",
+    "description": "Zinc may reduce the absorption of tetracycline (antibiotic).",
+    "recommendation": "Avoid taking Zinc with tetracycline",
+    "sources": [],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT808",
+    "interactionType": "Supplement-Food",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e3af",
+        "name": "Zinc"
+      }
+    ],
+    "foodItem": "warfarin",
+    "effect": "negative",
+    "description": "Zinc may bind with warfarin (anticoagulant), thus reducing efficacy.",
+    "recommendation": "Avoid taking Zinc with warfarin",
+    "sources": [],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT809",
+    "interactionType": "Supplement-Food",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e3af",
+        "name": "Zinc"
+      }
+    ],
+    "foodItem": "cisplatin",
+    "effect": "negative",
+    "description": "Zinc may increase toxicity of cisplatin.",
+    "recommendation": "Avoid taking Zinc with cisplatin",
+    "sources": [],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT901",
+    "interactionType": "Supplement-Supplement",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e3b2",
+        "name": "Green tea"
+      },
+      {
+        "supplementId": "681314416d54c4408b68e3ba",
+        "name": "Vitamin E"
+      }
+    ],
+    "foodItem": "",
+    "effect": "negative",
+    "description": "Possible inhibition of blood clotting capability, prolonging bleeding time.",
+    "recommendation": "Avoid taking Vitamin E with green tea",
+    "sources": [],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT902",
+    "interactionType": "Supplement-Supplement",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e3b2",
+        "name": "Green tea"
+      },
+      {
+        "supplementId": "681314416d54c4408b68e3dd",
+        "name": "Ginkgo biloba"
+      }
+    ],
+    "foodItem": "",
+    "effect": "negative",
+    "description": "Possible inhibition of blood clotting capability, prolonging bleeding time.",
+    "recommendation": "Avoid taking Ginkgo with green tea",
+    "sources": [],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT903",
+    "interactionType": "Supplement-Food",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e3b2",
+        "name": "Green tea"
+      }
+    ],
+    "foodItem": "Aspirin",
+    "effect": "negative",
+    "description": "Possible inhibition of blood clotting capability, prolonging bleeding time.",
+    "recommendation": "Avoid taking aspirin with green tea",
+    "sources": [],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT904",
+    "interactionType": "Supplement-Supplement",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e3b9",
+        "name": "Vitamin C"
+      },
+      {
+        "supplementId": "",
+        "name": "Iron"
+      }
+    ],
+    "foodItem": "",
+    "effect": "positive",
+    "description": "Vitamin C increases iron absorption (ferric acid).",
+    "recommendation": "Taking Vitamin C and iron together may be beneficial",
+    "sources": [],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT905",
+    "interactionType": "Supplement-Supplement",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e3b9",
+        "name": "Vitamin C"
+      },
+      {
+        "supplementId": "",
+        "name": "Chromium"
+      }
+    ],
+    "foodItem": "",
+    "effect": "negative",
+    "description": "Excessive vitamin C intake may interfere with chromium absorption and metabolism.",
+    "recommendation": "Avoid taking high dosages of vitamin C with chromium",
+    "sources": [],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT906",
+    "interactionType": "Supplement-Food",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e3b9",
+        "name": "Vitamin C"
+      }
+    ],
+    "foodItem": "Copper",
+    "effect": "negative",
+    "description": "Excessive vitamin C intake may interfere with copper absorption and metabolism.",
+    "recommendation": "Avoid taking high dosages of vitamin C with copper or copper-rich foods",
+    "sources": [],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT907",
+    "interactionType": "Supplement-Food",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e3b9",
+        "name": "Vitamin C"
+      }
+    ],
+    "foodItem": "Aspirin",
+    "effect": "positive",
+    "description": "Aspirin increases urinary vitamin C losses.",
+    "recommendation": "Taking supplemental vitamin C may be beneficial when taking aspirin",
+    "sources": [],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT908",
+    "interactionType": "Supplement-Food",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e3ba",
+        "name": "Vitamin E"
+      }
+    ],
+    "foodItem": "Mineral oil",
+    "effect": "positive",
+    "description": "Mineral oil reduces vitamin E absorption, so supplementation may be necessary.",
+    "recommendation": "Taking supplemental vitamin E may be beneficial when taking mineral oil",
+    "sources": [],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT909",
+    "interactionType": "Supplement-Supplement",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e39a",
+        "name": "Biotin"
+      },
+      {
+        "supplementId": "681314416d54c4408b68e396",
+        "name": "Alpha-Lipoic Acid"
+      }
+    ],
+    "foodItem": null,
+    "effect": "Negative",
+    "description": "Taking alpha-lipoic acid and biotin together can reduce the absorption of both alpha-lipoic acid and biotin into the body.",
+    "recommendation": "Avoid taking alpha-lipoic acid with biotin.",
+    "sources": [
+      "https://medlineplus.gov/druginfo/natural/313.html"
+    ],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT910",
+    "interactionType": "Supplement-Supplement",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e39a",
+        "name": "Biotin"
+      },
+      {
+        "supplementId": "681314416d54c4408b68e399",
+        "name": "Vitamin B-5"
+      }
+    ],
+    "foodItem": null,
+    "effect": "Negative",
+    "description": "Taking biotin and vitamin B5 together can reduce the absorption of both biotin and vitamin B5 into the body.",
+    "recommendation": "Avoid taking biotin with vitamin B5.",
+    "sources": [
+      "https://medlineplus.gov/druginfo/natural/313.html"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT911",
+    "interactionType": "Supplement-Food",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e39a",
+        "name": "Biotin"
+      }
+    ],
+    "foodItem": "Egg whites",
+    "effect": "Negative",
+    "description": "Raw egg whites contain avidin, which can bind to biotin and reduce its absorption in the body. Eating 2 or more uncooked egg whites daily for several months can cause biotin deficiency.",
+    "recommendation": "Avoid eating raw egg whites if you are taking biotin supplements.",
+    "sources": [
+      "https://medlineplus.gov/druginfo/natural/313.html"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT912",
+    "interactionType": "Supplement-Supplement",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e39b",
+        "name": "Ashwagandha"
+      },
+      {
+        "supplementId": "681314416d54c4408b68e3b2",
+        "name": "Green tea"
+      }
+    ],
+    "foodItem": null,
+    "effect": "Negative",
+    "description": "Both Ashwagandha and Green tea have  side effects on liver function. Taking them together may increase the risk of liver damage.",
+    "recommendation": "Avoid taking Ashwagandha with Green tea.",
+    "sources": [
+      "https://medlineplus.gov/druginfo/natural/953.html"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT913",
+    "interactionType": "Supplement-Supplement",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e39b",
+        "name": "Ashwagandha"
+      },
+      {
+        "supplementId": "681314416d54c4408b68e39d",
+        "name": "L-arginine"
+      }
+    ],
+    "foodItem": null,
+    "effect": "Negative",
+    "description": "Both Ashwagandha and L-arginine have blood pressure-lowering effects. Taking them together may cause blood pressure to drop too low.",
+    "recommendation": "Avoid taking Ashwagandha with L-arginine.",
+    "sources": [
+      "https://medlineplus.gov/druginfo/natural/953.html"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT914",
+    "interactionType": "Supplement-Supplement",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e39b",
+        "name": "Ashwagandha"
+      },
+      {
+        "supplementId": "",
+        "name": "Andrographis"
+      }
+    ],
+    "foodItem": null,
+    "effect": "Negative",
+    "description": "Both Ashwagandha and Andrographis have blood pressure-lowering effects. Taking them together may cause blood pressure to drop too low.",
+    "recommendation": "Avoid taking Ashwagandha with Andrographis.",
+    "sources": [
+      "https://medlineplus.gov/druginfo/natural/953.html"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT915",
+    "interactionType": "Supplement-Supplement",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e39b",
+        "name": "Ashwagandha"
+      },
+      {
+        "supplementId": "",
+        "name": "Casein Peptides"
+      }
+    ],
+    "foodItem": null,
+    "effect": "Negative",
+    "description": "Both Ashwagandha and Casein Peptides have blood pressure-lowering effects. Taking them together may cause blood pressure to drop too low.",
+    "recommendation": "Avoid taking Ashwagandha with Casein Peptides.",
+    "sources": [
+      "https://medlineplus.gov/druginfo/natural/953.html"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT916",
+    "interactionType": "Supplement-Supplement",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e39b",
+        "name": "Ashwagandha"
+      },
+      {
+        "supplementId": "681314416d54c4408b68e3a1",
+        "name": "Niacin"
+      }
+    ],
+    "foodItem": null,
+    "effect": "Negative",
+    "description": "Both Ashwagandha and Niacin have blood pressure-lowering effects. Taking them together may cause blood pressure to drop too low.",
+    "recommendation": "Avoid taking Ashwagandha with Niacin.",
+    "sources": [
+      "https://medlineplus.gov/druginfo/natural/953.html"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT917",
+    "interactionType": "Supplement-Supplement",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e39b",
+        "name": "Ashwagandha"
+      },
+      {
+        "supplementId": "",
+        "name": "Stinging Nettle"
+      }
+    ],
+    "foodItem": null,
+    "effect": "Negative",
+    "description": "Both Ashwagandha and Stinging Nettle have blood pressure-lowering effects. Taking them together may cause blood pressure to drop too low.",
+    "recommendation": "Avoid taking Ashwagandha with Stinging Nettle.",
+    "sources": [
+      "https://medlineplus.gov/druginfo/natural/953.html"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT918",
+    "interactionType": "Supplement-Supplement",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e39b",
+        "name": "Ashwagandha"
+      },
+      {
+        "supplementId": "681314416d54c4408b68e3de",
+        "name": "Valerian"
+      }
+    ],
+    "foodItem": null,
+    "effect": "Negative",
+    "description": "Both Ashwagandha and Valerian have sedative effects. Taking them together may cause excessive drowsiness.",
+    "recommendation": "Avoid taking Ashwagandha with Valerian.",
+    "sources": [
+      "https://medlineplus.gov/druginfo/natural/953.html"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT919",
+    "interactionType": "Supplement-Supplement",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e39b",
+        "name": "Ashwagandha"
+      },
+      {
+        "supplementId": "681314416d54c4408b68e3e0",
+        "name": "Melatonin"
+      }
+    ],
+    "description": "Melatonin is a hormone that regulates sleep-wake cycles. Ashwagandha may enhance the effects of melatonin, potentially leading to excessive drowsiness or sedation.",
+    "recommendation": "Avoid taking Ashwagandha with Melatonin.",
+    "sources": [
+      "https://medlineplus.gov/druginfo/natural/953.html"
+    ],
+    "updatedAt": ""
+  },
+  {
+    "interactionId": "INT1901",
+    "interactionType": "Supplement-Supplement",
+    "supplements": [
+      {
+        "supplementId": "681314416d54c4408b68e3cb",
+        "name": "Calcium"
+      },
+      {
+        "supplementId": "",
+        "name": "Iron"
+      }
+    ],
+    "foodItem": "",
+    "effect": "negative",
+    "description": "Calcium might interfere with iron absorption",
+    "recommendation": "Avoid taking calcium and iron together, or take them at different times of the day.",
+    "sources": [],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT1902",
+    "interactionType": "Supplement-Food",
+    "supplements": [
+      {
+        "supplementId": "",
+        "name": "Iron"
+      }
+    ],
+    "foodItem": "Antibiotics",
+    "effect": "negative",
+    "description": "Taking iron supplements with certain antibiotics such as quinolone and tetracycline may result in serious side effects",
+    "recommendation": "Avoid taking iron supplements with these antibiotics. ",
+    "sources": [],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT1903",
+    "interactionType": "Supplement-Food",
+    "supplements": [
+      {
+        "supplementId": "",
+        "name": "Iron"
+      }
+    ],
+    "foodItem": "Levodopa",
+    "effect": "negative",
+    "description": "Taking iron supplements with levodopa may result in serious side effects",
+    "recommendation": "Avoid taking iron supplements with levodopa",
+    "sources": [],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT1904",
+    "interactionType": "Supplement-Food",
+    "supplements": [
+      {
+        "supplementId": "",
+        "name": "Iron"
+      }
+    ],
+    "foodItem": "Penicillamine",
+    "effect": "negative",
+    "description": "Taking iron supplements with penicillamine may result in serious side effects",
+    "recommendation": "Avoid taking iron supplements with penicillamine",
+    "sources": [],
+    "updatedAt": null
+  },
+  {
+    "interactionId": "INT1905",
+    "interactionType": "Supplement-Supplement",
+    "supplements": [
+      {
+        "supplementId": "",
+        "name": "Chromium"
+      },
+      {
+        "supplementId": "681314416d54c4408b68e3af",
+        "name": "Zinc"
+      }
+    ],
+    "foodItem": "",
+    "effect": "negative",
+    "description": "Zinc may decrease chromium absorption.",
+    "recommendation": "Avoid taking zinc supplements with chromium supplements.",
+    "sources": [],
+    "updatedAt": null
+  }
+]

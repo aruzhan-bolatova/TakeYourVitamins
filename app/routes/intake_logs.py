@@ -1,312 +1,275 @@
-from flask import Blueprint, jsonify, request
-from app.models.interaction import Interaction
-from flask_jwt_extended import jwt_required, get_jwt_identity
-from app.models.user import User
+'''
+POST http://10.228.244.25:5001/api/intake_logs/
+    token required
+    {
+        "tracked_supplement_id": "680332671edd34b1c8995d4a", 
+        "intake_date": "2025-04-19",
+        "dosage_taken": 500,
+        "unit": "mg",
+        "notes": "Taken with breakfast"
+        }
+    output:
+    {
+        "_id": "680343bd87301efb7d3810b5", 
+        "created_at": "2025-04-19T06:33:33.661289+00:00", 
+        "deleted_at": null, 
+        "dosage_taken": 500, 
+        "intake_date": "2025-04-19", 
+        "intake_time": "2025-04-19T06:33:33.661289+00:00", 
+        "notes": "Taken with breakfast", 
+        "supplement_name": "Vitamin C", 
+        "tracked_supplement_id": "680332671edd34b1c8995d4a", 
+        "unit": "mg", 
+        "updated_at": "2025-04-19T06:33:33.661289+00:00", 
+        "user_id": "67fffb85f1c67a82bcb6b42e"
+        }
+
+GET http://10.228.244.25:5001/api/intake_logs/
+token required
+    output:
+    [
+        {
+            "_id": "680343bd87301efb7d3810b5", 
+            "created_at": "2025-04-19T06:33:33.661289+00:00", 
+            "deleted_at": null, 
+            "dosage_taken": 500, 
+            "intake_date": "2025-04-19", 
+            "intake_time": "2025-04-19T06:33:33.661289+00:00", 
+            "notes": "Taken with breakfast", 
+            "supplement_name": "Vitamin C", 
+            "tracked_supplement_id": "680332671edd34b1c8995d4a", 
+            "unit": "mg", 
+            "updated_at": "2025-04-19T06:33:33.661289+00:00", 
+            "user_id": "67fffb85f1c67a82bcb6b42e"
+        }
+        ]
+GET http://10.228.244.25:5001/api/intake_logs/today - get today's intake logs
+token required
+
+
+'''
+from flask import Blueprint, request, jsonify, g, send_file
 from app.models.intake_log import IntakeLog
 from datetime import datetime, timedelta
 from bson.objectid import ObjectId
+from flask_jwt_extended import jwt_required, get_jwt_identity
+from app.utils.pdf_utils import generate_supplement_pdf
 
-# Create the blueprint
-bp = Blueprint('intake_logs', __name__, url_prefix='/api/intake-logs')
+
+bp = Blueprint('intake_logs', __name__, url_prefix='/api/intake_logs')
+
+@bp.route('/', methods=['POST'])
+@jwt_required()
+def create_intake_log():
+    """
+    Create a new supplement intake log.
+    """
+    try:
+        user_id = get_jwt_identity()
+        print(f"User ID from JWT: {user_id}")
+        # Get data from request
+        data = request.get_json()
+        print(f"Data received: {data}")
+        if not data:
+            return jsonify({"error": "No data provided"}), 400
+            
+        # Validate required fields
+        required_fields = ['tracked_supplement_id', 'intake_date', 'dosage_taken']
+        for field in required_fields:
+            if field not in data:
+                return jsonify({"error": f"Missing required field: {field}"}), 400
+                
+        # Add user_id to the intake log data
+        user_id = ObjectId(user_id)
+        data['user_id'] = user_id
+        
+        # Create the intake log
+        created_log = IntakeLog.create(data)
+        return jsonify(created_log.to_dict()), 201
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
+    except Exception as e:
+        return jsonify({"error": f"Error creating intake log: {str(e)}"}), 500
 
 @bp.route('/', methods=['GET'])
-# TESTING on POSTMAN:
-# POST to http://localhost:5001/api/intake-logs/
 @jwt_required()
 def get_intake_logs():
-    """Get a list of intake logs for the current user"""
+    """
+    Get user's intake logs with optional filters.
+    """
     try:
-        # Get user ID from token
         user_id = get_jwt_identity()
+        user_id = ObjectId(user_id)
+        start_date = request.args.get('start_date')
+        end_date = request.args.get('end_date')
+        supplement_id = request.args.get('supplement_id')
         
-        # Get query parameters
-        start_date = request.args.get('startDate')
-        end_date = request.args.get('endDate')
-        supplement_id = request.args.get('supplementId')
+        # Apply filters if provided
+        if start_date and end_date:
+            logs = IntakeLog.find_by_date_range(user_id, start_date, end_date)
+        elif supplement_id:
+            logs = IntakeLog.find_by_supplement_id(user_id, supplement_id)
+        else:
+            # Default to last 7 days if no filters
+            today = datetime.now().strftime("%Y-%m-%d")
+            week_ago = (datetime.now() - timedelta(days=7)).strftime("%Y-%m-%d")
+            logs = IntakeLog.find_by_date_range(user_id, week_ago, today)
         
-        # Build query
-        query = {'userId': user_id}
-        
-        if start_date:
-            query['timestamp'] = query.get('timestamp', {})
-            query['timestamp']['$gte'] = start_date
-            
-        if end_date:
-            query['timestamp'] = query.get('timestamp', {})
-            query['timestamp']['$lte'] = end_date
-            
-        if supplement_id:
-            query['supplementId'] = supplement_id
-            
-        # Get intake logs
-        logs = IntakeLog.find_all(query)
-        
-        # Return logs
         return jsonify([log.to_dict() for log in logs]), 200
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
     except Exception as e:
-        return jsonify({"error": "Failed to get intake logs", "details": str(e)}), 500
+        return jsonify({"error": f"Error retrieving intake logs: {str(e)}"}), 500
 
-@bp.route('/', methods=['POST'])
-# TESTING on POSTMAN:
-# POST to http://localhost:5001/api/intake-logs/ with JSON body 
-# {"supplementId": "SUPPLEMENT_12345","dosage": 500, 
-# "unit": "mg", "timestamp": "2025-04-17T10:00:00Z",
-# "notes": "Taking vitamin D supplement"}
+@bp.route('/today', methods=['GET'])
 @jwt_required()
-def create_intake_log():
-    """Create a new intake log"""
+def get_today_intake_logs():
+    """
+    Get user's intake logs for today.
+    """
     try:
-        # Check for JSON content
-        if not request.is_json:
-            return jsonify({"error": "Missing JSON in request"}), 400
-            
-        # Get data
-        data = request.json
-        
-        # Add user ID
-        data['userId'] = get_jwt_identity()
-        
-        # Create log
-        log = IntakeLog.create(data)
-        
-        # Return response
-        return jsonify({
-            "message": "Intake log created successfully",
-            "_id": str(log._id) if log._id else None
-        }), 201
+        user_id = get_jwt_identity()
+        user_id = ObjectId(user_id)
+        today = datetime.now().strftime("%Y-%m-%d")
+        logs = IntakeLog.find_by_date_range(user_id, today, today)
+        return jsonify([log.to_dict() for log in logs]), 200
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
     except Exception as e:
-        return jsonify({"error": "Failed to create intake log", "details": str(e)}), 500
+        return jsonify({"error": f"Error retrieving today's intake logs: {str(e)}"}), 500
 
-# @bp.route('/check-interactions', methods=['POST'])
-# @jwt_required()
-# def check_intake_interactions():
-#     """Check for interactions in a potential intake"""
-#     try:
-#         # Check for JSON content
-#         if not request.is_json:
-#             return jsonify({"error": "Missing JSON in request"}), 400
+@bp.route('/summary', methods=['GET'])
+@jwt_required()
+def get_intake_summary():
+    """
+    Get a summary of supplement intake over a time period.
+    """
+    try:
+        user_id = get_jwt_identity()
+        user_id = ObjectId(user_id)
+        start_date = request.args.get('start_date')
+        end_date = request.args.get('end_date')
+        
+        # Default to last 30 days if no dates provided
+        if not start_date:
+            start_date = (datetime.now() - timedelta(days=30)).strftime("%Y-%m-%d")
+        if not end_date:
+            end_date = datetime.now().strftime("%Y-%m-%d")
             
-#         # Get data
-#         data = request.json
-        
-#         # Get parameters
-#         supplement_ids = data.get('supplementIds', [])
-#         food_items = data.get('foodItems', [])
-#         medications = data.get('medications', [])
-        
-#         # Check for required parameters
-#         if not supplement_ids:
-#             return jsonify({"error": "At least one supplement ID is required"}), 400
-            
-#         # Get user ID
-#         user_id = get_jwt_identity()
-        
-#         # Check interactions with specified items
-#         interactions = Interaction.check_interactions(
-#             supplement_ids=supplement_ids,
-#             food_items=food_items,
-#             medications=medications
-#         )
-        
-#         # Also check interactions with supplements taken in the last 24 hours
-#         recent_logs = IntakeLog.find_recent(user_id, hours=24)
-#         recent_supplement_ids = [log.supplement_id for log in recent_logs 
-#                               if log.supplement_id not in supplement_ids]
-        
-#         if recent_supplement_ids:
-#             # Combine with current supplements to check all interactions
-#             all_supplement_ids = supplement_ids + recent_supplement_ids
-#             all_interactions = Interaction.check_interactions(
-#                 supplement_ids=all_supplement_ids
-#             )
-            
-#             # Filter out interactions that don't involve any supplements from the current request
-#             additional_interactions = []
-#             for interaction in all_interactions:
-#                 if interaction not in interactions:  # This won't work without proper __eq__ implementation
-#                     # Check if any supplements in this interaction are in the current request
-#                     interaction_supp_ids = [s.get('supplementId') for s in interaction.supplements]
-#                     if any(sid in supplement_ids for sid in interaction_supp_ids):
-#                         additional_interactions.append(interaction)
-            
-#             # Add additional interactions
-#             interactions.extend(additional_interactions)
-        
-#         # Categorize interactions by severity
-#         categorized = {
-#             'severe': [],
-#             'high': [],
-#             'medium': [],
-#             'low': []
-#         }
-        
-#         for interaction in interactions:
-#             severity = interaction.severity.lower() if interaction.severity else 'low'
-#             if severity in categorized:
-#                 categorized[severity].append(interaction.to_dict())
-#             else:
-#                 categorized['low'].append(interaction.to_dict())
-        
-#         # Return interactions
-#         return jsonify({
-#             "interactions": [i.to_dict() for i in interactions],
-#             "count": len(interactions),
-#             "categorized": categorized,
-#             "recentSupplements": recent_supplement_ids
-#         }), 200
-#     except ValueError as e:
-#         return jsonify({"error": str(e)}), 400
-#     except Exception as e:
-#         return jsonify({"error": "Failed to check interactions", "details": str(e)}), 500
+        summary = IntakeLog.get_intake_summary(user_id, start_date, end_date)
+        return jsonify(summary), 200
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
+    except Exception as e:
+        return jsonify({"error": f"Error retrieving intake summary: {str(e)}"}), 500
 
 @bp.route('/<log_id>', methods=['GET'])
-# TESTING on POSTMAN:
-# GET to http://localhost:5001/api/intake-logs/<log_id>
-# with no body
-# link used with '_id' http://localhost:5001/api/intake-logs/680148aac6e4d1e7775e014d
 @jwt_required()
 def get_intake_log(log_id):
-    """Get a specific intake log"""
+    """
+    Get a specific intake log by ID.
+    """
     try:
-        # Get log
+        user_id = get_jwt_identity()
+        user_id = ObjectId(user_id)
         log = IntakeLog.find_by_id(log_id)
-        
         if not log:
             return jsonify({"error": "Intake log not found"}), 404
             
-        # Check user permission
-        user_id = get_jwt_identity()
-        if log.user_id != user_id:
-            # Check if user is admin
-            user = User.find_by_id(user_id)
-            if not user or user.role != 'admin':
-                return jsonify({"error": "You do not have permission to access this log"}), 403
+        # Check if the log belongs to the current user
+        if str(log.user_id) != str(user_id):
+            return jsonify({"error": "Not authorized to access this intake log"}), 403
             
-        # Return log
         return jsonify(log.to_dict()), 200
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
     except Exception as e:
-        return jsonify({"error": "Failed to get intake log", "details": str(e)}), 500
+        return jsonify({"error": f"Error retrieving intake log: {str(e)}"}), 500
 
 @bp.route('/<log_id>', methods=['PUT'])
-# TESTING on POSTMAN:
-# PUT to http://localhost:5001/api/intake-logs/<log_id> with JSON body
-# {"dosage": 1000, "unit": "mg", "notes": "Updated notes"}
-# link used with '_id' http://localhost:5001/api/intake-logs/6800de291b91e9e05cde378e
-
-#TESTING on POSTMAN (more than 7 day validation):
-# PUT to http://localhost:5001/api/intake-logs/<log_id> with JSON body
-# {"dosage": 1000, "unit": "mg", "notes": "Updated notes"}
-# link used with '_id' http://localhost:5001/api/intake-logs/68015dda5bccfac1e83cac54
 @jwt_required()
 def update_intake_log(log_id):
-    """Update an intake log"""
+    """
+    Update an intake log.
+    """
     try:
-        # Check for JSON content
-        if not request.is_json:
-            return jsonify({"error": "Missing JSON in request"}), 400
-            
-        # Get data
-        data = request.json
-        
-        if not data:
-            return jsonify({"error": "Empty update data"}), 400
-            
-        # Check user permission
         user_id = get_jwt_identity()
-        log = IntakeLog.find_by_id(log_id)
+        user_id = ObjectId(user_id)
         
+        # Get data from request
+        data = request.get_json()
+        if not data:
+            return jsonify({"error": "No data provided"}), 400
+            
+        # Check if the log exists and belongs to the user
+        log = IntakeLog.find_by_id(log_id)
         if not log:
             return jsonify({"error": "Intake log not found"}), 404
             
-        if log.user_id != user_id:
-            # Check if user is admin
-            user = User.find_by_id(user_id)
-            if not user or user.role != 'admin':
-                return jsonify({"error": "You do not have permission to update this log"}), 403
+        if str(log.user_id) != str(user_id):
+            return jsonify({"error": "Not authorized to update this intake log"}), 403
         
-        # Check if log is within 7-day update window
-        try:
-            # Handle timestamp in different formats
-            if isinstance(log.timestamp, str):
-                # Try to parse as ISO format with timezone
-                if 'Z' in log.timestamp or '+' in log.timestamp or '-' in log.timestamp and 'T' in log.timestamp:
-                    log_timestamp = datetime.fromisoformat(log.timestamp.replace('Z', '+00:00'))
-                    # Convert to naive datetime for comparison
-                    log_timestamp = log_timestamp.replace(tzinfo=None)
-                else:
-                    # Already naive ISO format
-                    log_timestamp = datetime.fromisoformat(log.timestamp)
-            else:
-                # Already a datetime object
-                log_timestamp = log.timestamp
-                # Convert to naive if it has timezone info
-                if log_timestamp.tzinfo is not None:
-                    log_timestamp = log_timestamp.replace(tzinfo=None)
-            
-            # Get current time (naive)
-            current_time = datetime.now()
-            
-            # Calculate time difference
-            time_difference = current_time - log_timestamp
-            if time_difference.days > 7:
-                return jsonify({"error": "Cannot update logs older than 7 days"}), 403
-        except Exception as e:
-            return jsonify({"error": f"Error processing timestamp: {str(e)}"}), 400
-            
-        # Update log
-        try:
-            updated_log = IntakeLog.update(log_id, data)
-        except ValueError as e:
-            return jsonify({"error": str(e)}), 400
-        except Exception as e:
-            raise
-        
-        # Return response
-        return jsonify({
-            "message": "Intake log updated successfully",
-            "_id": str(updated_log._id) if updated_log._id else None
-        }), 200
+        # Update the log
+        updated_log = IntakeLog.update(log_id, data)
+        return jsonify(updated_log.to_dict()), 200
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
     except Exception as e:
-        return jsonify({"error": "Failed to update intake log", "details": str(e)}), 500
+        return jsonify({"error": f"Error updating intake log: {str(e)}"}), 500
 
 @bp.route('/<log_id>', methods=['DELETE'])
-# TESTING on POSTMAN:
-# DELETE to http://localhost:5001/api/intake-logs/<log_id> with no body
-# link used with '_id' http://localhost:5001/api/intake-logs/680148aac6e4d1e7775e014d
 @jwt_required()
 def delete_intake_log(log_id):
-    """Delete an intake log"""
+    """
+    Delete an intake log.
+    """
     try:
-        # Check user permission
         user_id = get_jwt_identity()
+        user_id = ObjectId(user_id)
+        # Check if the log exists and belongs to the user
         log = IntakeLog.find_by_id(log_id)
-        
         if not log:
             return jsonify({"error": "Intake log not found"}), 404
             
-        if log.user_id != user_id:
-            # Check if user is admin
-            user = User.find_by_id(user_id)
-            if not user or user.role != 'admin':
-                return jsonify({"error": "You do not have permission to delete this log"}), 403
-            
-        # Delete log
-        deleted_log = IntakeLog.delete(log_id)
+        if str(log.user_id) != str(user_id):
+            return jsonify({"error": "Not authorized to delete this intake log"}), 403
         
-        # Return response
-        return jsonify({
-            "message": "Intake log deleted successfully",
-            "_id": str(deleted_log._id) if deleted_log._id else None
-        }), 200
+        # Delete the log
+        IntakeLog.delete(log_id)
+        return jsonify({"message": "Intake log deleted successfully"}), 200
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
     except Exception as e:
-        return jsonify({"error": "Failed to delete intake log", "details": str(e)}), 500
+        return jsonify({"error": f"Error deleting intake log: {str(e)}"}), 500
+
+@bp.route('/download', methods=['GET'])
+@jwt_required()
+def download_user_intake_logs_pdf():
+    """
+    Generate a PDF report of the user's supplement intake logs.
+    """
+    try:
+        user_id = ObjectId(get_jwt_identity())
+        today = datetime.now().strftime("%Y-%m-%d")
+        start = (datetime.now() - timedelta(days=90)).strftime("%Y-%m-%d")
+        logs = IntakeLog.find_by_date_range(user_id, start, today)
+
+        # Ensure logs are in a format the PDF function can use
+        class LogWrapper:
+            def __init__(self, log_dict):
+                self.supplement_name = log_dict.get("supplement_name", "Unknown")
+                self.intake_date = log_dict.get("intake_date", "N/A")
+                self.intake_time = log_dict.get("intake_time", "N/A")
+                self.dosage_taken = log_dict.get("dosage_taken", "N/A")
+                self.unit = log_dict.get("unit", "")
+                self.notes = log_dict.get("notes", "")
+
+        wrapped_logs = [LogWrapper(log.to_dict()) for log in logs]
+
+        pdf_buffer = generate_supplement_pdf(wrapped_logs)
+        return send_file(pdf_buffer,
+                         as_attachment=True,
+                         download_name="supplement_logs.pdf",
+                         mimetype="application/pdf")
+    except Exception as e:
+        return jsonify({"error": f"Failed to generate PDF: {str(e)}"}), 500

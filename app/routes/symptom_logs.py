@@ -1,219 +1,369 @@
-from flask import Blueprint, jsonify, request
-from app.models.symptom_log import SymptomLog
-from app.db.db import get_database as get_db
+from flask import Blueprint, request, jsonify, current_app
+from app.models.symptom_log import SymptomLog, SymptomCategoryManager
+from datetime import datetime, timedelta
 from bson.objectid import ObjectId
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from app.models.user import User
 
-# Create the blueprint
 bp = Blueprint('symptom_logs', __name__, url_prefix='/api/symptom-logs')
 
-@bp.route('/', methods=['GET'])
-@jwt_required()
-def get_symptom_logs():
-    """Get a list of symptom logs for the current user"""
-    try:
-        # Get user ID from token
-        user_id = get_jwt_identity()
-        
-        # Get query parameters
-        date_from = request.args.get('dateFrom', '')
-        date_to = request.args.get('dateTo', '')
-        
-        # Get symptom logs
-        symptom_logs = SymptomLog.search(user_id=user_id, date_from=date_from, date_to=date_to)
-        
-        # Return logs
-        return jsonify([log.to_dict() for log in symptom_logs]), 200
-    except ValueError as e:
-        return jsonify({"error": str(e)}), 400
-    except Exception as e:
-        return jsonify({"error": "Failed to get symptom logs", "details": str(e)}), 500
 
-@bp.route('/all', methods=['GET'])
-@jwt_required()
-def get_all_symptom_logs():
-    """Get all symptom logs (admin only)"""
+@bp.before_app_first_request    # This function will run once when the app starts
+def initialize_database():
+    """Initialize database with symptom categories and symptoms"""
     try:
-        # Check if user is admin
-        user_id = get_jwt_identity()
-        user = User.find_by_id(user_id)
-        
-        if not user or user.role != 'admin':
-            return jsonify({"error": "You do not have permission to access all symptom logs"}), 403
-        
-        # Get query parameters
-        user_id_param = request.args.get('userId', '')
-        date_from = request.args.get('dateFrom', '')
-        date_to = request.args.get('dateTo', '')
-        
-        # Get symptom logs
-        symptom_logs = SymptomLog.search(
-            user_id=user_id_param,
-            date_from=date_from,
-            date_to=date_to
-        )
-        
-        # Return logs
-        return jsonify([log.to_dict() for log in symptom_logs]), 200
-    except ValueError as e:
-        return jsonify({"error": str(e)}), 400
+        SymptomCategoryManager.initialize_symptom_data()
+        current_app.logger.info("Database initialized with symptom categories and symptoms")
+        print("Database initialized with symptom categories and symptoms")
     except Exception as e:
-        return jsonify({"error": "Failed to get symptom logs", "details": str(e)}), 500
+        current_app.logger.error(f"Error initializing database: {str(e)}")
 
-@bp.route('/<string:log_id>', methods=['GET'])
-@jwt_required()
-def get_symptom_log_by_id(log_id):
-    """Get a specific symptom log by its ID"""
+
+@bp.route('/symptoms', methods=['GET'])
+def get_all_symptoms():
+    """Get all symptoms with their categories"""
     try:
-        # Convert the string ID to ObjectId
-        _id = ObjectId(log_id)
+        symptoms = SymptomLog.get_symptom_details()
+        symptoms_list = list(symptoms.values())
         
-        # Get log
-        symptom_log = SymptomLog.find_by_id(_id)
-        
-        if not symptom_log:
-            return jsonify({"error": "Symptom log not found"}), 404
+        # Convert ObjectId to string for JSON serialization
+        for symptom in symptoms_list:
+            symptom["_id"] = str(symptom["_id"])
+            symptom["categoryId"] = str(symptom["categoryId"])
             
-        # Check user permission
-        user_id = get_jwt_identity()
-        if symptom_log.user_id != user_id:
-            # Check if user is admin
-            user = User.find_by_id(user_id)
-            if not user or user.role != 'admin':
-                return jsonify({"error": "You do not have permission to access this log"}), 403
-        
-        # Return log
-        return jsonify(symptom_log.to_dict()), 200
+        return jsonify({"symptoms": symptoms_list}), 200
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
     except Exception as e:
-        return jsonify({"error": "Failed to get symptom log", "details": str(e)}), 500
+        current_app.logger.error(f"Error getting symptoms: {str(e)}")
+        return jsonify({"error": str(e)}), 500
+
 
 @bp.route('/', methods=['POST'])
 @jwt_required()
 def create_symptom_log():
-    """Create a new symptom log"""
-    try:
-        # Check for JSON content
-        if not request.is_json:
-            return jsonify({"error": "Missing JSON in request"}), 400
-            
-        # Get data
-        log_data = request.json
-        
-        if not log_data:
-            return jsonify({"error": "Empty symptom log data"}), 400
-        
-        # Add user ID from token
-        log_data['userId'] = get_jwt_identity()
-            
-        # Create log
-        symptom_log = SymptomLog(log_data)
-        symptom_log.validate_data(log_data)
-        
-        # Insert into database
-        db = get_db()
-        log_dict = symptom_log.to_dict()
-        result = db.SymptomLogs.insert_one(log_dict)
-        
-        if not result.inserted_id:
-            return jsonify({"error": "Failed to insert symptom log"}), 500
-            
-        # Return response
-        response = {
-            "message": "Symptom log created successfully", 
-            "_id": str(result.inserted_id)
+    """Create or update a symptom log"""
+    ''' 
+    Example request body:
+        {
+            "date": "2025-05-01",
+            "severity": "average",
+            "notes": "after taking iron",
+            "symptom_id": "6813aa988a26dd0e3989ba01"
         }
-        return jsonify(response), 201
-    except ValueError as e:
-        return jsonify({"error": str(e)}), 400
-    except Exception as e:
-        return jsonify({"error": "Failed to create symptom log", "details": str(e)}), 500
-
-@bp.route('/<string:log_id>', methods=['PUT'])
-@jwt_required()
-def update_symptom_log(log_id):
-    """Update an existing symptom log"""
+    '''
     try:
-        # Check for JSON content
-        if not request.is_json:
-            return jsonify({"error": "Missing JSON in request"}), 400
-            
-        # Get data
-        log_data = request.json
-        
-        if not log_data:
-            return jsonify({"error": "No update data provided"}), 400
-            
-        # Convert ID
-        _id = ObjectId(log_id)
-        
-        # Check user permission
         user_id = get_jwt_identity()
-        symptom_log = SymptomLog.find_by_id(_id)
         
-        if not symptom_log:
-            return jsonify({"error": "Symptom log not found"}), 404
+        # Get data from request
+        data = request.json
+        if not data:
+            return jsonify({"error": "No data provided"}), 400
             
-        if symptom_log.user_id != user_id:
-            # Check if user is admin
-            user = User.find_by_id(user_id)
-            if not user or user.role != 'admin':
-                return jsonify({"error": "You do not have permission to update this log"}), 403
+        # Validate required fields
+        required_fields = ['symptom_id', 'date', 'severity']
+        for field in required_fields:
+            if field not in data:
+                return jsonify({"error": f"Missing required field: {field}"}), 400
         
-        # Update log
-        success = SymptomLog.update(_id, log_data)
+        # Add user_id to the symptom log data
+        data['user_id'] = user_id
         
-        if not success:
-            return jsonify({"error": "Failed to update symptom log"}), 500
-            
-        # Return response
+        # Create symptom log
+        created_log = SymptomLog.create(data)
+        
         return jsonify({
-            "message": "Symptom log updated successfully",
-            "_id": str(_id)
-        }), 200
+            "message": "Symptom log saved successfully",
+            "log_id": str(created_log._id),
+            "log": created_log.to_dict()
+        }), 201
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
     except Exception as e:
-        return jsonify({"error": "Failed to update symptom log", "details": str(e)}), 500
+        current_app.logger.error(f"Error creating symptom log: {str(e)}")
+        return jsonify({"error": str(e)}), 500
 
-@bp.route('/<string:log_id>', methods=['DELETE'])
+
+@bp.route('/', methods=['GET'])
+@jwt_required()
+def get_symptom_logs():
+    """Get all symptom logs with optional filters"""
+    try:
+        user_id = get_jwt_identity()
+        start_date = request.args.get('start_date')
+        end_date = request.args.get('end_date')
+        date = request.args.get('date')
+        
+        # Apply filters if provided
+        if start_date and end_date:
+            logs = SymptomLog.find_by_date_range(user_id, start_date, end_date)
+        elif date:
+            logs = SymptomLog.find_by_date(user_id, date)
+        else:
+            # Default to last 7 days if no filters
+            today = datetime.now().strftime("%Y-%m-%d")
+            week_ago = (datetime.now() - timedelta(days=7)).strftime("%Y-%m-%d")
+            logs = SymptomLog.find_by_date_range(user_id, week_ago, today)
+        
+        return jsonify([log.to_dict() for log in logs]), 200
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
+    except Exception as e:
+        current_app.logger.error(f"Error retrieving symptom logs: {str(e)}")
+        return jsonify({"error": str(e)}), 500
+
+
+@bp.route('/today', methods=['GET'])
+@jwt_required()
+def get_today_symptom_logs():
+    """Get symptom logs for today"""
+    try:
+        user_id = get_jwt_identity()
+        today = datetime.now().strftime("%Y-%m-%d")
+        
+        logs = SymptomLog.find_by_date(user_id, today)
+        return jsonify([log.to_dict() for log in logs]), 200
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
+    except Exception as e:
+        current_app.logger.error(f"Error retrieving today's symptom logs: {str(e)}")
+        return jsonify({"error": str(e)}), 500
+
+
+@bp.route('/date/<date>', methods=['GET'])
+@jwt_required()
+def get_logs_for_date(date):
+    """Get all symptom logs for a specific date"""
+    try:
+        user_id = get_jwt_identity()
+        
+        # Validate date format (YYYY-MM-DD)
+        try:
+            datetime.strptime(date, '%Y-%m-%d')
+        except ValueError:
+            return jsonify({"error": "Invalid date format. Use YYYY-MM-DD"}), 400
+        
+        # Get logs
+        logs = SymptomLog.find_by_date(user_id, date)
+        
+        # Get symptom details
+        symptoms = SymptomLog.get_symptom_details()
+        
+        # Enrich logs with symptom details
+        enriched_logs = []
+        for log in logs:
+            log_dict = log.to_dict()
+            symptom_id = log_dict['symptom_id']
+            if symptom_id in symptoms:
+                symptom_info = symptoms[symptom_id]
+                enriched_logs.append({
+                    "log_id": log_dict['_id'],
+                    "symptom_id": symptom_id,
+                    "symptom_name": symptom_info['name'],
+                    "symptom_icon": symptom_info['icon'],
+                    "category_name": symptom_info['categoryName'],
+                    "category_icon": symptom_info['categoryIcon'],
+                    "severity": log_dict['severity'],
+                    "notes": log_dict['notes'],
+                    "date": log_dict['date']
+                })
+        
+        return jsonify({"logs": enriched_logs}), 200
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
+    except Exception as e:
+        current_app.logger.error(f"Error getting logs for date: {str(e)}")
+        return jsonify({"error": str(e)}), 500
+
+
+@bp.route('/active/<date>', methods=['GET'])
+@jwt_required()
+def get_active_logs_for_date(date):
+    """Get active symptom logs for a specific date (severity not 'none')"""
+    try:
+        user_id = get_jwt_identity()
+        
+        # Validate date format
+        try:
+            datetime.strptime(date, '%Y-%m-%d')
+        except ValueError:
+            return jsonify({"error": "Invalid date format. Use YYYY-MM-DD"}), 400
+        
+        # Get active logs
+        logs = SymptomLog.find_active_symptoms_for_date(user_id, date)
+        
+        # Get symptom details
+        symptoms = SymptomLog.get_symptom_details()
+        
+        # Enrich logs with symptom details
+        enriched_logs = []
+        for log in logs:
+            log_dict = log.to_dict()
+            symptom_id = log_dict['symptom_id']
+            if symptom_id in symptoms:
+                symptom_info = symptoms[symptom_id]
+                enriched_logs.append({
+                    "log_id": log_dict['_id'],
+                    "symptom_id": symptom_id,
+                    "symptom_name": symptom_info['name'],
+                    "symptom_icon": symptom_info['icon'],
+                    "category_name": symptom_info['categoryName'],
+                    "category_icon": symptom_info['categoryIcon'],
+                    "severity": log_dict['severity'],
+                    "notes": log_dict['notes'],
+                    "date": log_dict['date']
+                })
+        
+        return jsonify({"logs": enriched_logs}), 200
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
+    except Exception as e:
+        current_app.logger.error(f"Error getting active logs for date: {str(e)}")
+        return jsonify({"error": str(e)}), 500
+
+
+@bp.route('/range', methods=['GET'])
+@jwt_required()
+def get_logs_for_date_range():
+    """Get symptom logs for a date range"""
+    try:
+        user_id = get_jwt_identity()
+        start_date = request.args.get('start_date')
+        end_date = request.args.get('end_date')
+        
+        # Validate required parameters
+        if not start_date or not end_date:
+            return jsonify({"error": "Both start_date and end_date are required"}), 400
+        
+        # Validate date format
+        try:
+            datetime.strptime(start_date, '%Y-%m-%d')
+            datetime.strptime(end_date, '%Y-%m-%d')
+        except ValueError:
+            return jsonify({"error": "Invalid date format. Use YYYY-MM-DD"}), 400
+        
+        # Get logs
+        logs = SymptomLog.find_by_date_range(user_id, start_date, end_date)
+        
+        return jsonify({"logs": [log.to_dict() for log in logs]}), 200
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
+    except Exception as e:
+        current_app.logger.error(f"Error getting logs for date range: {str(e)}")
+        return jsonify({"error": str(e)}), 500
+
+
+@bp.route('/dates-with-symptoms', methods=['GET'])
+@jwt_required()
+def get_dates_with_symptoms():
+    """Get all dates where the user has logged symptoms"""
+    try:
+        user_id = get_jwt_identity()
+        
+        dates = SymptomLog.get_dates_with_symptoms(user_id)
+        return jsonify({"dates": dates}), 200
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
+    except Exception as e:
+        current_app.logger.error(f"Error getting dates with symptoms: {str(e)}")
+        return jsonify({"error": str(e)}), 500
+
+
+@bp.route('/<log_id>', methods=['DELETE'])
 @jwt_required()
 def delete_symptom_log(log_id):
-    """Delete a symptom log (soft delete by default)"""
+    """Delete a symptom log"""
     try:
-        # Convert ID
-        _id = ObjectId(log_id)
-        
-        # Check user permission
-        user_id = get_jwt_identity()
-        symptom_log = SymptomLog.find_by_id(_id)
-        
-        if not symptom_log:
-            return jsonify({"error": "Symptom log not found"}), 404
-            
-        if symptom_log.user_id != user_id:
-            # Check if user is admin
-            user = User.find_by_id(user_id)
-            if not user or user.role != 'admin':
-                return jsonify({"error": "You do not have permission to delete this log"}), 403
-        
-        # Get soft delete parameter (default to true)
-        soft_delete = request.args.get('soft', 'true').lower() == 'true'
-        
         # Delete log
-        success = SymptomLog.delete(_id, soft_delete=soft_delete)
+        deleted = SymptomLog.delete(log_id)
+        if not deleted:
+            return jsonify({"error": "Symptom log not found"}), 404
         
-        if not success:
-            return jsonify({"error": "Failed to delete symptom log"}), 500
-            
-        # Return response
-        return jsonify({
-            "message": "Symptom log deleted successfully",
-            "_id": str(_id)
-        }), 200
+        return jsonify({"message": "Symptom log deleted successfully"}), 200
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
     except Exception as e:
-        return jsonify({"error": "Failed to delete symptom log", "details": str(e)}), 500
+        current_app.logger.error(f"Error deleting symptom log: {str(e)}")
+        return jsonify({"error": str(e)}), 500
+
+
+@bp.route('/summary/<date>', methods=['GET'])
+@jwt_required()
+def get_symptoms_summary(date):
+    """Get a summary of symptoms by category for a specific date"""
+    try:
+        user_id = get_jwt_identity()
+        
+        # Validate date format
+        try:
+            datetime.strptime(date, '%Y-%m-%d')
+        except ValueError:
+            return jsonify({"error": "Invalid date format. Use YYYY-MM-DD"}), 400
+        
+        # Get active logs
+        logs = SymptomLog.find_active_symptoms_for_date(user_id, date)
+        
+        # Get symptom details
+        symptoms = SymptomLog.get_symptom_details()
+        
+        # Group by category
+        categories = {
+            "general": {"name": "General", "icon": "🔍", "symptoms": []},
+            "mood": {"name": "Mood", "icon": "😊", "symptoms": []},
+            "sleep": {"name": "Sleep", "icon": "😴", "symptoms": []},
+            "digestive": {"name": "Digestive", "icon": "🍽️", "symptoms": []},
+            "appetite": {"name": "Appetite", "icon": "🥑", "symptoms": []},
+            "activity": {"name": "Physical Activity", "icon": "🏃‍♀️", "symptoms": []}
+        }
+        
+        # Parse notes from any log
+        notes = ""
+        for log in logs:
+            log_dict = log.to_dict()
+            if log_dict.get('notes'):
+                notes = log_dict['notes']
+                break
+        
+        # Populate categories with symptoms
+        for log in logs:
+            log_dict = log.to_dict()
+            symptom_id = log_dict['symptom_id']
+            if symptom_id in symptoms:
+                symptom_info = symptoms[symptom_id]
+                category_name = symptom_info['categoryName'].lower()
+                
+                # Map category name to id if needed
+                category_id = ""
+                if "general" in category_name:
+                    category_id = "general"
+                elif "mood" in category_name:
+                    category_id = "mood"
+                elif "sleep" in category_name:
+                    category_id = "sleep"
+                elif "digestive" in category_name:
+                    category_id = "digestive"
+                elif "appetite" in category_name:
+                    category_id = "appetite"
+                elif "activity" in category_name or "physical" in category_name:
+                    category_id = "activity"
+                
+                if category_id in categories:
+                    categories[category_id]["symptoms"].append({
+                        "id": symptom_id,
+                        "name": symptom_info['name'],
+                        "icon": symptom_info['icon'],
+                        "severity": log_dict['severity']
+                    })
+        
+        # Filter out empty categories
+        summary = {
+            "categories": [cat for cat in categories.values() if cat["symptoms"]],
+            "notes": notes,
+            "date": date
+        }
+        
+        return jsonify(summary), 200
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
+    except Exception as e:
+        current_app.logger.error(f"Error getting symptoms summary: {str(e)}")
+        return jsonify({"error": str(e)}), 500

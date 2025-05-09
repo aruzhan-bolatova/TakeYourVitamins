@@ -33,3 +33,4 @@ coverage.xml
 build-manifest.json
 app-build-manifest.json
 *.rscinfo
+.DS_Store

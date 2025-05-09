@@ -73,10 +73,16 @@ export function SearchBar() {
   }
 
   return (
-    <form onSubmit={handleSearch} className="w-full max-w-2xl mx-auto">
+    <div className="w-full max-w-3xl mx-auto relative z-10">
+      <div className="text-center mb-6">
+        <h2 className="text-2xl font-bold mb-2">Search Our Database</h2>
+        <p className="text-muted-foreground">Try searching for: Vitamin D, Omega-3, Zinc, Magnesium...</p>
+      </div>
+      
+      <form onSubmit={handleSearch} className="w-full">
       <div className="flex w-full items-center space-x-2 relative">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Search className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-primary" />
           <Input
             type="text"
             placeholder="Search for a supplement (e.g., Vitamin D, Magnesium, Omega-3)"
@@ -88,7 +94,7 @@ export function SearchBar() {
                 setShowSuggestions(true)
               }
             }}
-            className="pl-10"
+              className="pl-10 py-6 text-base border-primary/20 focus:border-primary"
           />
 
           {showSuggestions && (
@@ -100,8 +106,8 @@ export function SearchBar() {
                 {suggestions.map((suggestion, index) => (
                   <li
                     key={suggestion.id}
-                    className={`px-4 py-2 cursor-pointer hover:bg-muted ${
-                      index === activeSuggestion ? "bg-muted" : ""
+                      className={`px-4 py-3 cursor-pointer hover:bg-primary/5 font-medium ${
+                        index === activeSuggestion ? "bg-primary/5 text-primary" : ""
                     }`}
                     onClick={() => handleSuggestionClick(suggestion)}
                     onMouseEnter={() => setActiveSuggestion(index)}
@@ -113,8 +119,12 @@ export function SearchBar() {
             </div>
           )}
         </div>
-        <Button type="submit">Search</Button>
+          <Button type="submit" size="lg" className="py-6 px-8">
+            <Search className="h-5 w-5 mr-2" />
+            Search
+          </Button>
       </div>
     </form>
+    </div>
   )
 }

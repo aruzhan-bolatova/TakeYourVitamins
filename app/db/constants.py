@@ -33,7 +33,6 @@ SUPPLEMENT_FIELDS = {
 }
 
 INTAKE_LOG_FIELDS = {
-    "INTAKE_LOG_ID": "intakeLogId",
     "USER_ID": "userId",
     "SUPPLEMENT_ID": "supplementId",
     "INTAKE_DATE": "intakeDate",
@@ -67,8 +66,9 @@ INTERACTION_FIELDS = {
     "INTERACTION_TYPE": "interactionType",
     "EFFECT": "effect",
     "DESCRIPTION": "description",
-    "SEVERITY": "severity",
     "RECOMMENDATION": "recommendation",
     "SOURCES": "sources",
-    "UPDATED_AT": "updatedAt"
+    "UPDATED_AT": "updatedAt",
+    "CREATED_AT": "createdAt",
+    "DELETED_AT": "deletedAt"
 }

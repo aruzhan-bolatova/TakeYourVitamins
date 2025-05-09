@@ -16,28 +16,6 @@ bp = Blueprint('reports', __name__, url_prefix='/api/reports')
 @check_user_access
 def get_user_report(user_id):
     """Get a report for a specific user"""
-    # Standard response structure with defaults
-    report_data = {
-        "userId": user_id,
-        "reportType": "weekly",  # Default
-        "startDate": "",
-        "endDate": "",
-        "intakeSummary": [],
-        "symptomSummary": [],
-        "correlations": [],
-        "streaks": [],
-        "progress": {
-            "supplementProgress": [],
-            "overallTrends": {
-                "totalSupplements": 0,
-                "monthlyTotals": [],
-                "consistencyTrend": "stable"
-            },
-            "milestones": []
-        },
-        "recommendations": []
-    }
-    
     try:
         # Get report type from query parameters
         report_type = request.args.get('range', 'weekly').lower()
@@ -46,9 +24,6 @@ def get_user_report(user_id):
         valid_types = ['daily', 'weekly', 'monthly', 'yearly']
         if report_type not in valid_types:
             return jsonify({"error": f"Invalid report type. Must be one of: {', '.join(valid_types)}"}), 400
-        
-        # Set report type in response
-        report_data["reportType"] = report_type
         
         # Get date range for report
         end_date = datetime.now()
@@ -66,96 +41,38 @@ def get_user_report(user_id):
         start_str = start_date.isoformat()
         end_str = end_date.isoformat()
         
-        # Set date range in response
-        report_data["startDate"] = start_str
-        report_data["endDate"] = end_str
-
-        # Safely retrieve data with individual error handling for each section
-        # This ensures that one section failing won't crash the entire report
+        # Get intake logs for time period
+        intake_logs = IntakeLog.find_by_date_range(user_id, start_str, end_str)
         
-        # 1. Get intake logs with error handling
-        try:
-            intake_logs = IntakeLog.find_by_date_range(user_id, start_str, end_str)
-        except Exception as e:
-            import logging
-            logging.error(f"Error fetching intake logs: {e}")
-            intake_logs = []
+        # Get symptom logs for time period
+        symptom_logs = SymptomLog.find_by_date_range(user_id, start_str, end_str)
         
-        # 2. Get symptom logs with error handling
-        try:
-            symptom_logs = SymptomLog.find_by_date_range(user_id, start_str, end_str)
-        except Exception as e:
-            import logging
-            logging.error(f"Error fetching symptom logs: {e}")
-            symptom_logs = []
-        
-        # 3. Generate each section of the report with individual error handling
-        
-        # Intake summary
-        try:
-            report_data["intakeSummary"] = _generate_intake_summary(intake_logs)
-        except Exception as e:
-            import logging
-            logging.error(f"Error generating intake summary: {e}")
-        
-        # Symptom summary
-        try:
-            report_data["symptomSummary"] = _generate_symptom_summary(symptom_logs)
-        except Exception as e:
-            import logging
-            logging.error(f"Error generating symptom summary: {e}")
-        
-        # Correlations
-        try:
-            report_data["correlations"] = _analyze_correlations(intake_logs, symptom_logs)
-        except Exception as e:
-            import logging
-            logging.error(f"Error analyzing correlations: {e}")
-        
-        # Streaks
-        try:
-            # _calculate_streaks now returns a flat list of supplement streaks directly
-            report_data["streaks"] = _calculate_streaks(user_id, intake_logs)
-        except Exception as e:
-            import logging
-            logging.error(f"Error calculating streaks: {e}")
-        
-        # Progress
-        try:
-            report_data["progress"] = _calculate_progress(user_id, intake_logs)
-        except Exception as e:
-            import logging
-            logging.error(f"Error calculating progress: {e}")
-        
-        # Recommendations
-        try:
-            report_data["recommendations"] = _generate_recommendations(user_id, intake_logs, symptom_logs)
-        except Exception as e:
-            import logging
-            logging.error(f"Error generating recommendations: {e}")
+        # Generate report data
+        report_data = {
+            "userId": user_id,
+            "reportType": report_type,
+            "startDate": start_str,
+            "endDate": end_str,
+            "intakeSummary": _generate_intake_summary(intake_logs),
+            "symptomSummary": _generate_symptom_summary(symptom_logs),
+            "correlations": _analyze_correlations(intake_logs, symptom_logs),
+            "streaks": _calculate_streaks(user_id, intake_logs),
+            "progress": _calculate_progress(user_id, intake_logs),
+            "recommendations": _generate_recommendations(user_id, intake_logs, symptom_logs)
+        }
         
         # Return report
         return jsonify(report_data), 200
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
     except Exception as e:
-        import logging
-        logging.error(f"Error generating full report: {e}")
-        # Return partial report with error indicator
-        report_data["error"] = "Partial data available due to processing issues"
-        return jsonify(report_data), 200  # Return 200 with partial data instead of 500
+        return jsonify({"error": "Failed to generate report", "details": str(e)}), 500
 
 @bp.route('/streaks/<user_id>', methods=['GET'])
 @jwt_required()
 @check_user_access
 def get_user_streaks(user_id):
     """Get streak information for a specific user"""
-    # Default response structure
-    response_data = {
-        "userId": user_id,
-        "streaks": []
-    }
-    
     try:
         # Get intake logs for the user (limit to last 365 days for performance)
         end_date = datetime.now()
@@ -165,52 +82,27 @@ def get_user_streaks(user_id):
         start_str = start_date.isoformat()
         end_str = end_date.isoformat()
         
-        # Get intake logs with error handling
-        try:
-            intake_logs = IntakeLog.find_by_date_range(user_id, start_str, end_str)
-        except Exception as e:
-            import logging
-            logging.error(f"Error fetching intake logs for streaks: {e}")
-            intake_logs = []
+        # Get intake logs
+        intake_logs = IntakeLog.find_by_date_range(user_id, start_str, end_str)
         
-        # Calculate streaks with error handling
-        try:
-            # _calculate_streaks now returns a flat list of supplement streaks
-            response_data["streaks"] = _calculate_streaks(user_id, intake_logs)
-        except Exception as e:
-            import logging
-            logging.error(f"Error calculating streaks: {e}")
+        # Calculate streaks
+        streaks = _calculate_streaks(user_id, intake_logs)
         
         # Return streaks
-        return jsonify(response_data), 200
+        return jsonify({
+            "userId": user_id,
+            "streaks": streaks
+        }), 200
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
     except Exception as e:
-        import logging
-        logging.error(f"Error generating streaks: {e}")
-        # Return partial data with error indicator
-        response_data["error"] = "Partial data available due to processing issues"
-        return jsonify(response_data), 200  # Return 200 with partial data instead of 500
+        return jsonify({"error": "Failed to calculate streaks", "details": str(e)}), 500
 
 @bp.route('/progress/<user_id>', methods=['GET'])
 @jwt_required()
 @check_user_access
 def get_user_progress(user_id):
     """Get progress information for a specific user"""
-    # Default response structure
-    response_data = {
-        "userId": user_id,
-        "progress": {
-            "supplementProgress": [],
-            "overallTrends": {
-                "totalSupplements": 0,
-                "monthlyTotals": [],
-                "consistencyTrend": "stable"
-            },
-            "milestones": []
-        }
-    }
-    
     try:
         # Get intake logs for the user (limit to last 365 days for performance)
         end_date = datetime.now()
@@ -220,31 +112,21 @@ def get_user_progress(user_id):
         start_str = start_date.isoformat()
         end_str = end_date.isoformat()
         
-        # Get intake logs with error handling
-        try:
-            intake_logs = IntakeLog.find_by_date_range(user_id, start_str, end_str)
-        except Exception as e:
-            import logging
-            logging.error(f"Error fetching intake logs for progress: {e}")
-            intake_logs = []
+        # Get intake logs
+        intake_logs = IntakeLog.find_by_date_range(user_id, start_str, end_str)
         
-        # Calculate progress with error handling
-        try:
-            response_data["progress"] = _calculate_progress(user_id, intake_logs)
-        except Exception as e:
-            import logging
-            logging.error(f"Error calculating progress: {e}")
+        # Calculate progress
+        progress = _calculate_progress(user_id, intake_logs)
         
         # Return progress
-        return jsonify(response_data), 200
+        return jsonify({
+            "userId": user_id,
+            "progress": progress
+        }), 200
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
     except Exception as e:
-        import logging
-        logging.error(f"Error generating progress data: {e}")
-        # Return partial data with error indicator
-        response_data["error"] = "Partial data available due to processing issues"
-        return jsonify(response_data), 200  # Return 200 with partial data instead of 500
+        return jsonify({"error": "Failed to calculate progress", "details": str(e)}), 500
 
 # Helper functions for report generation
 
@@ -318,198 +200,131 @@ def _generate_intake_summary(intake_logs):
 
 def _generate_symptom_summary(symptom_logs):
     """Generate a summary of symptom logs"""
-    try:
-        # Group symptom logs by symptom (not symptom_type which doesn't exist)
-        symptoms = {}
-        for log in symptom_logs:
-            # Use the 'symptom' property instead of 'symptom_type'
-            symptom = getattr(log, 'symptom', None)
-            if not symptom:
-                continue  # Skip logs without a valid symptom
-                
-            if symptom not in symptoms:
-                symptoms[symptom] = {
-                    'symptom': symptom,
-                    'count': 0,
-                    'dates': [],
-                    'severities': [],
-                    'notes': []
-                }
-            
-            symptoms[symptom]['count'] += 1
-            
-            # Safely access timestamp with a fallback
-            timestamp = getattr(log, 'timestamp', None) or getattr(log, 'logDate', None)
-            if timestamp:
-                symptoms[symptom]['dates'].append(timestamp)
-            
-            # Safely access severity
-            severity = getattr(log, 'severity', None) or getattr(log, 'rating', None)
-            if severity is not None:  # Allow 0 severity
-                symptoms[symptom]['severities'].append(severity)
-                
-            # Safely access notes
-            notes = getattr(log, 'notes', None) or getattr(log, 'comments', None)
-            if notes:
-                symptoms[symptom]['notes'].append(notes)
+    # Group symptom logs by type
+    symptoms = {}
+    for log in symptom_logs:
+        symptom_type = log.symptom_type
+        if symptom_type not in symptoms:
+            symptoms[symptom_type] = {
+                'symptomType': symptom_type,
+                'count': 0,
+                'dates': [],
+                'severities': [],
+                'notes': []
+            }
         
-        # Calculate averages and trends for each symptom
-        for symptom in symptoms:
-            # Calculate average severity
-            severities = symptoms[symptom]['severities']
-            if severities and all(s is not None and isinstance(s, (int, float)) for s in severities):
-                avg_severity = sum(severities) / len(severities)
-                symptoms[symptom]['averageSeverity'] = round(avg_severity, 1)
+        symptoms[symptom_type]['count'] += 1
+        symptoms[symptom_type]['dates'].append(log.timestamp)
+        
+        if hasattr(log, 'severity') and log.severity:
+            symptoms[symptom_type]['severities'].append(log.severity)
+            
+        if hasattr(log, 'notes') and log.notes:
+            symptoms[symptom_type]['notes'].append(log.notes)
+    
+    # Calculate averages and trends for each symptom
+    for symptom_type in symptoms:
+        # Calculate average severity
+        severities = symptoms[symptom_type]['severities']
+        if severities and all(isinstance(s, (int, float)) for s in severities):
+            avg_severity = sum(severities) / len(severities)
+            symptoms[symptom_type]['averageSeverity'] = round(avg_severity, 1)
+            
+        # Sort dates for trend analysis
+        dates = []
+        for date_str in symptoms[symptom_type]['dates']:
+            try:
+                date = datetime.fromisoformat(date_str)
+                dates.append(date)
+            except (ValueError, TypeError):
+                pass
+                
+        # Sort dates
+        dates.sort()
+        
+        # If we have severities that match dates, calculate trend
+        if len(dates) >= 3 and len(dates) == len(severities):
+            # Check if severity is increasing, decreasing, or stable
+            first_half = severities[:len(severities)//2]
+            second_half = severities[len(severities)//2:]
+            
+            avg_first = sum(first_half) / len(first_half)
+            avg_second = sum(second_half) / len(second_half)
+            
+            if avg_second > avg_first * 1.1:  # 10% increase
+                symptoms[symptom_type]['trend'] = 'increasing'
+            elif avg_second < avg_first * 0.9:  # 10% decrease
+                symptoms[symptom_type]['trend'] = 'decreasing'
             else:
-                symptoms[symptom]['averageSeverity'] = 0  # Default value
-                
-            # Sort dates for trend analysis
-            dates = []
-            for date_str in symptoms[symptom]['dates']:
-                try:
-                    date = datetime.fromisoformat(date_str)
-                    dates.append(date)
-                except (ValueError, TypeError):
-                    pass
-                    
-            # Sort dates
-            dates.sort()
-            
-            # If we have severities that match dates, calculate trend
-            if len(dates) >= 3 and len(dates) == len(severities):
-                # Check if severity is increasing, decreasing, or stable
-                first_half = severities[:len(severities)//2]
-                second_half = severities[len(severities)//2:]
-                
-                avg_first = sum(first_half) / len(first_half)
-                avg_second = sum(second_half) / len(second_half)
-                
-                if avg_second > avg_first * 1.1:  # 10% increase
-                    symptoms[symptom]['trend'] = 'increasing'
-                elif avg_second < avg_first * 0.9:  # 10% decrease
-                    symptoms[symptom]['trend'] = 'decreasing'
-                else:
-                    symptoms[symptom]['trend'] = 'stable'
-        
-        return list(symptoms.values())
-    except Exception as e:
-        # Log the error and return an empty list instead of crashing
-        import logging
-        logging.error(f"Error in _generate_symptom_summary: {e}")
-        return []
+                symptoms[symptom_type]['trend'] = 'stable'
+    
+    return list(symptoms.values())
 
 def _analyze_correlations(intake_logs, symptom_logs):
     """Analyze correlations between intake and symptoms"""
-    try:
-        # This is a simplified analysis
-        # In a real implementation, this would use more sophisticated statistical methods
-        
-        correlations = []
-        
-        # Skip analysis if we have insufficient data
-        if not intake_logs or not symptom_logs:
-            return []
-        
-        # Group intake logs by supplement and day
-        supplement_days = {}
-        for log in intake_logs:
-            supp_id = getattr(log, 'supplement_id', None)
-            if not supp_id:
-                continue
+    # This is a simplified analysis
+    # In a real implementation, this would use more sophisticated statistical methods
+    
+    correlations = []
+    
+    # Group intake logs by supplement and day
+    supplement_days = {}
+    for log in intake_logs:
+        supp_id = log.supplement_id
+        try:
+            date = datetime.fromisoformat(log.timestamp).date()
+            if supp_id not in supplement_days:
+                supplement_days[supp_id] = set()
+            supplement_days[supp_id].add(date)
+        except (ValueError, TypeError, AttributeError):
+            pass
+    
+    # Group symptom logs by type and day
+    symptom_days = {}
+    for log in symptom_logs:
+        symptom_type = log.symptom_type
+        try:
+            date = datetime.fromisoformat(log.timestamp).date()
+            if symptom_type not in symptom_days:
+                symptom_days[symptom_type] = []
+            symptom_days[symptom_type].append((date, log.severity if hasattr(log, 'severity') else None))
+        except (ValueError, TypeError, AttributeError):
+            pass
+    
+    # Check for correlations
+    for supp_id, supp_dates in supplement_days.items():
+        for symptom_type, symptom_data in symptom_days.items():
+            # Check for symptom occurrences within 2 days of supplement intake
+            potential_correlations = []
+            
+            for date in supp_dates:
+                # Check for symptoms on the same day or within 2 days after
+                for symptom_date, severity in symptom_data:
+                    if date <= symptom_date <= date + timedelta(days=2):
+                        potential_correlations.append({
+                            'intakeDate': date.isoformat(),
+                            'symptomDate': symptom_date.isoformat(),
+                            'daysDifference': (symptom_date - date).days,
+                            'severity': severity
+                        })
+            
+            # If we have enough potential correlations, consider it significant
+            if len(potential_correlations) >= 3:
+                # Get supplement info
+                supplement = Supplement.find_by_id(supp_id) if supp_id else None
+                supplement_name = supplement.name if supplement else 'Unknown Supplement'
                 
-            try:
-                timestamp = getattr(log, 'timestamp', None)
-                if not timestamp:
-                    continue
+                correlation = {
+                    'supplementId': supp_id,
+                    'supplementName': supplement_name,
+                    'symptomType': symptom_type,
+                    'occurrences': len(potential_correlations),
+                    'details': potential_correlations
+                }
                 
-                date = datetime.fromisoformat(timestamp).date()
-                if supp_id not in supplement_days:
-                    supplement_days[supp_id] = set()
-                supplement_days[supp_id].add(date)
-            except (ValueError, TypeError, AttributeError):
-                continue
-        
-        # Group symptom logs by symptom name (not type) and day
-        symptom_days = {}
-        for log in symptom_logs:
-            # Use the correct 'symptom' property instead of 'symptom_type'
-            symptom = getattr(log, 'symptom', None)
-            if not symptom:
-                continue
-                
-            try:
-                # Try different property names for timestamp
-                timestamp = getattr(log, 'timestamp', None) or getattr(log, 'logDate', None)
-                if not timestamp:
-                    continue
-                
-                date = datetime.fromisoformat(timestamp).date()
-                
-                # Try different property names for severity
-                severity = getattr(log, 'severity', None) or getattr(log, 'rating', None)
-                
-                if symptom not in symptom_days:
-                    symptom_days[symptom] = []
-                symptom_days[symptom].append((date, severity))
-            except (ValueError, TypeError, AttributeError):
-                continue
-        
-        # Check for correlations
-        for supp_id, supp_dates in supplement_days.items():
-            for symptom, symptom_data in symptom_days.items():
-                # Check for symptom occurrences within 2 days of supplement intake
-                potential_correlations = []
-                
-                for date in supp_dates:
-                    # Check for symptoms on the same day or within 2 days after
-                    for symptom_date, severity in symptom_data:
-                        if date <= symptom_date <= date + timedelta(days=2):
-                            potential_correlations.append({
-                                'intakeDate': date.isoformat(),
-                                'symptomDate': symptom_date.isoformat(),
-                                'daysDifference': (symptom_date - date).days,
-                                'severity': severity
-                            })
-                
-                # If we have enough potential correlations, consider it significant
-                if len(potential_correlations) >= 3:
-                    # Get supplement info - but handle potential errors
-                    supplement_name = 'Unknown Supplement'
-                    try:
-                        # Use find_by_id only if the ID looks valid
-                        if supp_id and isinstance(supp_id, (str, ObjectId)):
-                            supplement = Supplement.find_by_id(supp_id)
-                            if supplement and hasattr(supplement, 'name'):
-                                supplement_name = supplement.name
-                    except Exception:
-                        pass
-                    
-                    # Calculate correlation strength (0-1)
-                    correlation_strength = min(1.0, len(potential_correlations) / 10)
-                    
-                    # Calculate confidence level (0-1)
-                    # Higher confidence for more occurrences and shorter time gaps
-                    avg_days_diff = sum(c['daysDifference'] for c in potential_correlations) / len(potential_correlations)
-                    confidence = correlation_strength * (1 - min(1, avg_days_diff/2))
-                    
-                    correlation = {
-                        'supplementId': supp_id,
-                        'supplementName': supplement_name,
-                        'symptom': symptom,
-                        'correlationStrength': round(correlation_strength, 2),
-                        'confidence': round(confidence, 2),
-                        'description': f"Potential relationship between {supplement_name} and {symptom}",
-                        'occurrences': len(potential_correlations)
-                    }
-                    
-                    correlations.append(correlation)
-        
-        return correlations
-    except Exception as e:
-        # Log error and return empty list rather than crashing
-        import logging
-        logging.error(f"Error in _analyze_correlations: {e}")
-        return []
+                correlations.append(correlation)
+    
+    return correlations
 
 def _calculate_streaks(user_id, intake_logs):
     """Calculate streaks for a user"""
@@ -564,7 +379,7 @@ def _calculate_streaks(user_id, intake_logs):
     longest_streak = max(longest_streak, current_run)
     
     # Calculate supplement streaks
-    supplement_streaks = []
+    supplement_streaks = {}
     
     for log in intake_logs:
         supp_id = log.supplement_id
@@ -574,37 +389,21 @@ def _calculate_streaks(user_id, intake_logs):
         try:
             date = datetime.fromisoformat(log.timestamp).date()
             
-            # Check if this supplement is already in our list
-            existing_supp = next((s for s in supplement_streaks if s['supplementId'] == supp_id), None)
-            
-            if not existing_supp:
-                supplement_name = log.supplement_name if hasattr(log, 'supplement_name') else 'Unknown'
-                existing_supp = {
+            if supp_id not in supplement_streaks:
+                supplement_streaks[supp_id] = {
                     'supplementId': supp_id,
-                    'supplementName': supplement_name,
+                    'supplementName': log.supplement_name if hasattr(log, 'supplement_name') else 'Unknown',
                     'dates': set(),
                     'currentStreak': 0,
-                    'longestStreak': 0,
-                    'lastTaken': log.timestamp  # Add lastTaken field for frontend
+                    'longestStreak': 0
                 }
-                supplement_streaks.append(existing_supp)
                 
-            existing_supp['dates'].add(date)
-            
-            # Update lastTaken if this log is more recent
-            try:
-                log_date = datetime.fromisoformat(log.timestamp)
-                last_taken = datetime.fromisoformat(existing_supp['lastTaken'])
-                if log_date > last_taken:
-                    existing_supp['lastTaken'] = log.timestamp
-            except (ValueError, TypeError):
-                pass
-                
+            supplement_streaks[supp_id]['dates'].add(date)
         except (ValueError, TypeError, AttributeError):
             pass
     
     # Calculate streaks for each supplement
-    for data in supplement_streaks:
+    for supp_id, data in supplement_streaks.items():
         # Sort dates
         sorted_supp_dates = sorted(data['dates'])
         
@@ -644,16 +443,15 @@ def _calculate_streaks(user_id, intake_logs):
         longest_supp_streak = max(longest_supp_streak, current_supp_run)
         
         # Update streak data
-        data['currentStreak'] = current_supp_streak
-        data['longestStreak'] = longest_supp_streak
-        
-        # Remove the dates set since we don't need it in the response
-        # and it can't be JSON serialized
-        data.pop('dates', None)
+        supplement_streaks[supp_id]['currentStreak'] = current_supp_streak
+        supplement_streaks[supp_id]['longestStreak'] = longest_supp_streak
+        supplement_streaks[supp_id]['dates'] = [d.isoformat() for d in sorted_supp_dates]
     
-    # For now, return only supplement streaks as a flat list
-    # This matches the frontend's expectations
-    return supplement_streaks
+    return {
+        'currentStreak': current_streak,
+        'longestStreak': longest_streak,
+        'supplementStreaks': list(supplement_streaks.values())
+    }
 
 def _calculate_progress(user_id, intake_logs):
     """Calculate progress for a user"""
@@ -768,11 +566,7 @@ def _calculate_progress(user_id, intake_logs):
     milestones = []
     
     # Total intake milestone
-    total_intake = 0
-    for month_data in monthly_logs.values():
-        for supplement_data in month_data.values():
-            # Supplement data is a dictionary with 'count' key
-            total_intake += supplement_data['count']
+    total_intake = sum(log.count for month in monthly_logs.values() for log in month.values())
     
     if total_intake >= 100:
         milestones.append({
