@@ -201,6 +201,33 @@ The pipeline performs the following tasks:
 
 The complete configuration can be found in `.github/workflows/ci.yml`.
 
+### Running Automated System Tests with Selenium
+
+Automated end-to-end system tests are implemented using Selenium. These tests simulate user interactions in a real browser and require Google Chrome to be installed on your system.
+
+**Prerequisites:**
+- Google Chrome installed
+- ChromeDriver (automatically managed by `webdriver_manager`)
+- The backend API and frontend must both be running (see setup instructions above)
+- Test user credentials set in your `.env` file (see variables like `TEST_USER_EMAIL`, `TEST_USER_PASSWORD`, etc.)
+
+**To run all Selenium system tests:**
+
+```bash
+pytest selenium_tests.py
+```
+
+You can also run other Selenium-based test scripts in a similar way, for example:
+
+```bash
+pytest supplement_intake_tests.py
+pytest supplement_search_tests.py
+pytest search_functionality_tests.py
+pytest symptom_logging_tests.py
+```
+
+Test results and any screenshots (for debugging) will be saved in the project directory.
+
 ## API Endpoints
 
 ### Vitamins API
