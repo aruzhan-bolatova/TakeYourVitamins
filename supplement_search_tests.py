@@ -57,11 +57,13 @@ def navigate_to_supplements_page(driver):
             EC.visibility_of_element_located((By.CSS_SELECTOR, "input[type='text'][placeholder*='Search']"))
         )
         print("Supplements search page loaded with search bar")
-        driver.save_screenshot("supplements_search_page.png")
+        # Before saving a screenshot, ensure the 'screenshots' directory exists
+        os.makedirs('screenshots', exist_ok=True)
+        driver.save_screenshot(os.path.join('screenshots', 'supplements_search_page.png'))
         return True
     except Exception as e:
         print(f"Error loading supplements search page: {str(e)}")
-        driver.save_screenshot("supplements_search_page_error.png")
+        driver.save_screenshot(os.path.join('screenshots', 'supplements_search_page_error.png'))
         return False
 
 def test_supplements_page_search(driver):
@@ -90,7 +92,7 @@ def test_supplements_page_search(driver):
         time.sleep(2)
         
         # Take screenshot of results
-        driver.save_screenshot("supplements_search_results.png")
+        driver.save_screenshot(os.path.join('screenshots', 'supplements_search_results.png'))
         
         # Verify that results are displayed
         supplement_cards = driver.find_elements(By.CSS_SELECTOR, ".card, article, div[class*='hover:shadow']")
@@ -102,7 +104,7 @@ def test_supplements_page_search(driver):
         
     except Exception as e:
         print(f"Error in test_supplements_page_search: {str(e)}")
-        driver.save_screenshot("supplements_search_error.png")
+        driver.save_screenshot(os.path.join('screenshots', 'supplements_search_error.png'))
         print(f"Current URL: {driver.current_url}")
         print(f"Page source excerpt: {driver.page_source[:500]}...")
         raise
@@ -133,7 +135,7 @@ def test_navigate_to_supplement_detail(driver):
         time.sleep(2)
         
         # Take screenshot of search results
-        driver.save_screenshot("supplement_detail_search_results.png")
+        driver.save_screenshot(os.path.join('screenshots', 'supplement_detail_search_results.png'))
         
         # Find all supplement cards
         supplement_cards = driver.find_elements(By.CSS_SELECTOR, ".card, article, div[class*='hover:shadow']")
@@ -154,7 +156,7 @@ def test_navigate_to_supplement_detail(driver):
         time.sleep(2)
         
         # Take screenshot of the detail page
-        driver.save_screenshot("supplement_detail_page.png")
+        driver.save_screenshot(os.path.join('screenshots', 'supplement_detail_page.png'))
         
         # Verify that we're on a supplement detail page
         assert "supplements/" in driver.current_url, "Should navigate to a supplement detail page"
@@ -167,7 +169,7 @@ def test_navigate_to_supplement_detail(driver):
         
     except Exception as e:
         print(f"Error in test_navigate_to_supplement_detail: {str(e)}")
-        driver.save_screenshot("supplement_detail_error.png")
+        driver.save_screenshot(os.path.join('screenshots', 'supplement_detail_error.png'))
         print(f"Current URL: {driver.current_url}")
         print(f"Page source excerpt: {driver.page_source[:500]}...")
         raise
@@ -210,7 +212,7 @@ def test_supplement_detail_related_navigation(driver):
         time.sleep(2)
         
         # Take screenshot of the first supplement detail page
-        driver.save_screenshot("first_supplement_detail.png")
+        driver.save_screenshot(os.path.join('screenshots', 'first_supplement_detail.png'))
         
         # Get the initial content to compare later
         initial_content = driver.find_element(By.CSS_SELECTOR, "body").text
@@ -237,7 +239,7 @@ def test_supplement_detail_related_navigation(driver):
                 assert new_tab_content != current_tab_content, "Tab content should change after clicking interactions tab"
                 
                 tab_clicked = True
-                driver.save_screenshot("interactions_tab_content.png")
+                driver.save_screenshot(os.path.join('screenshots', 'interactions_tab_content.png'))
                 break
         
         if not tab_clicked:
@@ -269,7 +271,7 @@ def test_supplement_detail_related_navigation(driver):
         
     except Exception as e:
         print(f"Error in test_supplement_detail_related_navigation: {str(e)}")
-        driver.save_screenshot("related_navigation_error.png")
+        driver.save_screenshot(os.path.join('screenshots', 'related_navigation_error.png'))
         print(f"Current URL: {driver.current_url}")
         print(f"Page source excerpt: {driver.page_source[:500]}...")
         raise
@@ -315,7 +317,7 @@ def test_back_navigation_from_detail(driver):
         time.sleep(2)
         
         # Take screenshot of the detail page
-        driver.save_screenshot("detail_before_back.png")
+        driver.save_screenshot(os.path.join('screenshots', 'detail_before_back.png'))
         
         # Check for "Back to Home" button which will go to the homepage
         back_home_elements = driver.find_elements(By.PARTIAL_LINK_TEXT, "Back to Home")
@@ -349,7 +351,7 @@ def test_back_navigation_from_detail(driver):
         time.sleep(2)
         
         # Take screenshot of the search results page
-        driver.save_screenshot("back_to_search_results.png")
+        driver.save_screenshot(os.path.join('screenshots', 'back_to_search_results.png'))
         
         # We need to validate the return path, which could be:
         # 1. Back to search results page (ideal case)
@@ -368,7 +370,7 @@ def test_back_navigation_from_detail(driver):
         
     except Exception as e:
         print(f"Error in test_back_navigation_from_detail: {str(e)}")
-        driver.save_screenshot("back_navigation_error.png")
+        driver.save_screenshot(os.path.join('screenshots', 'back_navigation_error.png'))
         print(f"Current URL: {driver.current_url}")
         print(f"Page source excerpt: {driver.page_source[:500]}...")
         raise
