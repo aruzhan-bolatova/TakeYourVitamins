@@ -1,0 +1,9 @@
+[run]
+omit =
+    app/routes/reports.py
+    app/routes/intake_logs.py
+
+[report]
+omit =
+    app/routes/reports.py
+    app/routes/intake_logs.py 
