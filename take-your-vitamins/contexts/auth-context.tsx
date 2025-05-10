@@ -17,6 +17,7 @@ type AuthContextType = {
   signIn: (email: string, password: string) => Promise<boolean>
   signUp: (name: string, email: string, password: string, age: string, gender: string) => Promise<boolean>
   signOut: () => void
+  deleteAccount: () => void
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
@@ -160,9 +161,29 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     router.push("/")
   }
 
+  const deleteAccount = async () => {
+    setIsLoading(true)
+
+    try{
+      const response = await fetch("http://localhost:5001/api/users", {
+        method: "DELETE",
+      })
+    
+      if (!response.ok) {
+        throw new Error("Failed to delete account.")
+      }
+    }
+    catch (error) {
+      console.error("Error during account deletion:", error)
+    }
+    finally{
+      setIsLoading(false)
+    }
+  }
+
   return (
     // Provide the auth context to children components
-    <AuthContext.Provider value={{ user, isLoading, signIn, signUp, signOut }}>
+    <AuthContext.Provider value={{ user, isLoading, signIn, signUp, signOut, deleteAccount }}>
       {children}
     </AuthContext.Provider>
   )

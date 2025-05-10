@@ -1,3 +1,6 @@
+This README.md file is for the backend part of the system. Please refer to the take-your-vitamins folder for the front end.
+
+
 # Take Your Vitamins
 
 A Flask-based API for managing vitamin information with MongoDB.
