@@ -90,11 +90,14 @@ def update_user_profile(user_id):
         return jsonify({"error": "Failed to update user", "details": str(e)}), 500
 
 
-@bp.route('/<user_id>', methods=['DELETE'])
+@bp.route('/', methods=['DELETE'])
 @jwt_required()
 @check_user_access
-def delete_user(user_id):
-    """Soft delete a user"""
+def delete_user():
+    """Delete a user"""
+    user_id = get_jwt_identity()
+    print(f"User ID from JWT: {user_id}")
+
     # Convert the string ID to ObjectId
     try:
         user_id = ObjectId(user_id)

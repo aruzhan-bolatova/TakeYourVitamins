@@ -157,15 +157,9 @@ class User:
         if not user:
             return None
         
-        # Soft delete - set deletedAt timestamp
-        db.Users.update_one(
-            {'_id': _id},
-            {'$set': {
-                'deletedAt': datetime.now(timezone.utc).isoformat(),
-                'updatedAt': datetime.now(timezone.utc).isoformat()
-            }}
-        )
+        db.IntakeLogs.delete_many({'user_id': _id})
+        db.SymptomLogs.delete_many({'user_id': _id})
+        db.TrackerSupplementList.delete_one({'user_id': _id})
+        db.Users.delete_one({'_id': _id})
         
-        # Return the updated user
-        deleted_user = db.Users.find_one({'_id': _id})
-        return User(deleted_user)
+        return _id

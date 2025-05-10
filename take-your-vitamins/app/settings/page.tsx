@@ -8,8 +8,19 @@ import { PageContainer } from "@/components/page-container"
 import { PageHeader } from "@/components/page-header"
 import { Bell, Moon, LifeBuoy, AlertOctagon, ChevronLeft, UserCog } from "lucide-react"
 import Link from "next/link"
+import { useAuth } from "@/contexts/auth-context"
 
 export default function SettingsPage() {
+  const { signOut, deleteAccount } = useAuth()
+
+  const handleDeleteAccount = async () => {
+    if (confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
+      
+      await deleteAccount()
+      signOut()
+    }
+  }
+
   return (
     <PageContainer withGradient>
       <PageHeader 
@@ -87,7 +98,8 @@ export default function SettingsPage() {
             </div>
             
             <div className="pt-4">
-              <Button variant="destructive" className="w-full flex items-center justify-center">
+              <Button variant="destructive" className="w-full flex items-center justify-center"
+              onClick={handleDeleteAccount}>
                 <AlertOctagon className="mr-2 h-4 w-4" />
               Delete Account
             </Button>
