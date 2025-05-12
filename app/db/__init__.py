@@ -1,4 +1,4 @@
-from .db import get_database, get_collection, close_connection
+from .db import get_database, get_collection
 from .utils import hash_password, check_password
 from .constants import (
     USERS_COLLECTION, SUPPLEMENTS_COLLECTION, INTAKE_LOGS_COLLECTION,
@@ -8,7 +8,7 @@ from .constants import (
 )
 
 __all__ = [
-    'get_database', 'get_collection', 'close_connection',
+    'get_database', 'get_collection',
     'hash_password', 'check_password',
     'USERS_COLLECTION', 'SUPPLEMENTS_COLLECTION', 'INTAKE_LOGS_COLLECTION',
     'SYMPTOM_LOGS_COLLECTION', 'INTERACTIONS_COLLECTION',

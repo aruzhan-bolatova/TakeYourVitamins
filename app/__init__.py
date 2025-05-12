@@ -1,6 +1,5 @@
 # In app/__init__.py
 from app.routes import auth, users, supplements, intake_logs, symptom_logs, interactions, alerts, reports, tracker_supplements_lists
-from app.db import close_connection
 from app.models import init_db, TokenBlacklist
 from app.utils.error_handlers import register_error_handlers, APIError, handle_api_error
 from flask import Flask, jsonify, redirect
@@ -60,10 +59,6 @@ def create_app():
     with app.app_context():
         init_db()
 
-    @app.teardown_appcontext
-    def teardown_db(exception):
-        close_connection()
-        
     # Add a basic route for the root path that redirects to the Swagger UI
     @app.route('/')
     def index():
