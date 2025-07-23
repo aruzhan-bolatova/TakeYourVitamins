@@ -21,7 +21,7 @@ def import_vitamins_from_json(json_file_path):
         
         # Get MongoDB connection info
         mongo_uri = os.getenv('MONGO_URI', 'mongodb://localhost:27017/')
-        db_name = os.getenv('DB_NAME', 'vitamins_db')
+        db_name = os.getenv('DB_NAME', 'take-your-vitamins')
         
         # Connect to MongoDB
         client = MongoClient(mongo_uri)

@@ -12,8 +12,9 @@ logger = logging.getLogger(__name__)
 load_dotenv()
 
 # MongoDB connection settings
-MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017/tyv")
-DB_NAME = os.getenv("DB_NAME", "tyv")
+MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017/")
+print(f"Connecting to MongoDB: {MONGO_URI}")
+DB_NAME = os.getenv("DB_NAME", "take-your-vitamins")
 
 client = None
 db = None
@@ -25,20 +26,21 @@ def get_database():
     Raises an exception if the connection fails.
     """
     global client, db
-    if not client:
+    if client is None or db is None:
         try:
             client = MongoClient(MONGO_URI)
             # Test the connection
             client.admin.command('ping')
             logger.info("Successfully connected to MongoDB")
             db = client[DB_NAME]
+            logger.info(f"Using database: {DB_NAME}")
         except ConnectionFailure as e:
             logger.error(f"Failed to connect to MongoDB: {e}")
             raise RuntimeError("Could not connect to MongoDB") from e
         except Exception as e:
             logger.error(f"Unexpected error while connecting to MongoDB: {e}")
             raise RuntimeError("Unexpected error during MongoDB connection") from e
-    return db
+    return db   
 
 def get_collection(collection_name):
     """

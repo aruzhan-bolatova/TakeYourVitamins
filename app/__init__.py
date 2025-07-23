@@ -60,9 +60,11 @@ def create_app():
     with app.app_context():
         init_db()
 
-    @app.teardown_appcontext
-    def teardown_db(exception):
-        close_connection()
+    # Note: Removing teardown to prevent connection issues
+    # MongoDB connections can be persistent across requests
+    # @app.teardown_appcontext
+    # def teardown_db(exception):
+    #     close_connection()
         
     # Add a basic route for the root path that redirects to the Swagger UI
     @app.route('/')

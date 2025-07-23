@@ -45,9 +45,13 @@ class Supplement:
         return [Supplement(s) for s in db.Supplements.find(query)]
 
     @staticmethod
-    def find_by_id(_id: str):
+    def find_by_id(_id):
         db = get_db()
         try:
+            # Handle both ObjectId and string inputs
+            from bson.objectid import ObjectId
+            if isinstance(_id, str):
+                _id = ObjectId(_id)
             supplement = db.Supplements.find_one({'_id': _id})
             return Supplement(supplement) if supplement else None
         except Exception as e:

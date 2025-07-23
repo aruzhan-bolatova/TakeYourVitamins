@@ -16,25 +16,9 @@ from app.models.init_db import init_db
 # These are the symbols that will be exposed when using `from app.models import *`
 __all__ = [
     'User', 'Supplement', 'IntakeLog', 'SymptomLog', 
-    'Interaction', 'TokenBlacklist', 'init_db' 'Symptoms', 'SymptomCatergories', 
+    'Interaction', 'TokenBlacklist', 'init_db', 'Symptoms', 'SymptomCategories', 
 ]
 
-# Function to initialize database indexes
-def init_db():
-    # Get the database connection
-    db = get_db()
-    
-    # Create unique indexes for the Users collection
-    db.Users.create_index('userId', unique=True)  # Ensure userId is unique
-    db.Users.create_index('email', unique=True)  # Ensure email is unique
-    
-    # Create unique indexes for the Supplements collection
-    db.Supplements.create_index('supplementId', unique=True)  # Ensure supplementId is unique
-    db.Supplements.create_index('name', unique=True)  # Ensure name is unique
-    
-    # Create unique indexes for the IntakeLogs collection
-    db.IntakeLogs.create_index('intakeLogId', unique=True)  # Ensure intakeLogId is unique
-    
-    # Create unique indexes for the Interactions collection
-    db.Interactions.create_index('interactionId', unique=True)  # Ensure interactionId is unique
+# Note: Database initialization is handled in app/models/init_db.py
+# This prevents duplicate init_db function definitions
     

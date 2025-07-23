@@ -56,7 +56,7 @@ The project includes a Makefile for easy setup and management:
 2. Configure environment variables in `.env` file:
    ```
    MONGO_URI=mongodb://localhost:27017/
-   DB_NAME=vitamins_db
+   DB_NAME=take-your-vitamins
    ```
 
 3. Start MongoDB:
@@ -107,7 +107,7 @@ The project includes a Makefile for easy setup and management:
 4. Configure environment variables in `.env` file:
    ```
    MONGO_URI=mongodb://localhost:27017/
-   DB_NAME=vitamins_db
+   DB_NAME=take-your-vitamins
    ```
 
 5. Ensure MongoDB is running:
